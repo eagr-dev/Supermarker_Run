@@ -6,46 +6,52 @@ public class Area : MonoBehaviour
 {
     public Areas.Area_product Tag;
 
-    private List<Transform> Get_List_Rand()
+    private List<int> Get_List_Rand()
     {
-        List<Transform> list_return = new List<Transform>();
-        bool[] pos = { false, false, false, false, false, false, false, false, false ,false };
-        foreach (Transform child_area in transform)
-        {
-            int pos_pos = Random.Range(0, 9);
-            if (pos[pos_pos] != true)
-            {
-                list_return.Add(child_area);
-                pos[pos_pos] = true;
-            }
-            else
-            {
-                for (int i = 0; i < 10; i++)
-                {
-                    if (pos[i] != true)
-                    {
-                        list_return.Add(child_area);
-                        pos[i] = true;
-                    }
-                }
-            }
+        List<int> list_return = new List<int>();
+        int count = 0;
 
+        while (count < 9)
+        {
+            int r = Random.Range(0, 9);
+            if (!Find(r, list_return))
+            {
+                list_return.Add(r);
+                count++;
+            }
         }
+
         return list_return;
+    }
+
+    private bool Find(int number, List<int> list_number)
+    {
+        foreach (int i in list_number)
+        {
+            if (i == number)
+                return true;
+        }
+        return false;
     }
 
     public void Acomodar_Estantes()
     {
         int count = 0;
-        foreach (Transform child in Get_List_Rand())
+        foreach (Transform child in transform)
+        {
+            child.SetSiblingIndex(Get_List_Rand()[count++]);
+        }
+
+        count = 0;
+
+        foreach(Transform child in transform)
         {
             child.GetComponent<Estante>().Tag = Tag;
-            child.GetComponent<Estante>().count_obj = count;
-            count++;
+            child.GetComponent<Estante>().count_obj = count++;
         }
     }
 
-    private void Start()
+    private void Awake()
     {
         Acomodar_Estantes();
     }

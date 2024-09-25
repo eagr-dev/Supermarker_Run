@@ -19,41 +19,46 @@ public class Areas : MonoBehaviour
     };
 
 
-    private List<Transform> Get_List_Rand()
+    private List<int> Get_List_Rand()
     {
-        List<Transform> list_return = new List<Transform>();
-        bool[] pos = { false, false, false, false, false, false, false, false };
-        foreach (Transform child_area in transform)
-        {
-            int pos_pos = Random.Range(0, 7);
-           if (pos[pos_pos] != true)
-           {
-                list_return.Add(child_area);
-                pos[pos_pos] = true;
-           }
-           else
-           {
-                for(int i = 0;i < 8;i++)
-                {
-                    if(pos[i] != true)
-                    {
-                        list_return.Add(child_area);
-                        pos[i] = true;
-                    }
-                }
-           }
+        List<int> list_return = new List<int>();
+        int count = 0;
 
+        while(count < 7)
+        {
+            int r = Random.Range(0, 7);
+            if(!Find(r,list_return))
+            {
+                list_return.Add(r);
+                count++;
+            }
         }
+        
         return list_return;
+    }
+
+    private bool Find(int number, List<int> list_number)
+    {
+        foreach(int i in list_number)
+        {
+            if (i == number)
+                return true;
+        }
+        return false;
     }
 
     private void Awake()
     {
         int count = 0;
-        foreach(Transform child_area in Get_List_Rand())
+        foreach (Transform child_area in transform)
         {
-            child_area.GetComponent<Area>().Tag = (Area_product)count;
-            count++;
+            child_area.SetSiblingIndex(Get_List_Rand()[count++]);
         }
+        count = 0;
+        foreach (Transform child_area in transform)
+        {
+            child_area.GetComponent<Area>().Tag = (Area_product)count++;
+        }
+
     }
 }
