@@ -5,36 +5,40 @@ using TMPro;
 
 public class Mision : MonoBehaviour
 {
-    private string[] objects_mision = new string[3];
+    private List<string> objects_mision = new List<string>();
     private int position_Text = 0;
     public TMP_Text Text;
     private string object_act = "";
 
-    // Start is called before the first frame update
     private void Awake()
     {
-        Set_Object();
+        GameObject TMP = GameObject.Find("Mision_Actual");
+        Text = TMP.GetComponent<TMP_Text>();
     }
+
     void Start()
     {
-        Text = GetComponent<TMP_Text>();
-        New_Text_In_TextMesh();
+        if(objects_mision != null)
+        {
+            Set_Object(objects_mision);
+            New_Text_In_TextMesh();
+        }
     }
 
-    private void Set_Object()
+    private void Set_Object(List<string> obj_m)
     {
-        string obj = "";
         Estante estante = FindObjectOfType<Estante>();
         int i = 0;
-        while(objects_mision[2] != "")
+        while (obj_m.Count < 3)
         {
-            obj = estante.Objetos[Random.Range(0, 8)];
-
-            if(!Is_Repeat_Object(obj))
+            int area = Random.Range(0,7);
+            string obj = Areas.Objetos[area][Random.Range(0, 9)];
+            if (!Is_Repeat_Object(obj))
             {
-                objects_mision[i] = obj;
+                obj_m.Add(obj);
                 i++;
             }
+            if (i >= 3) return;
         }
     }
 
@@ -52,7 +56,7 @@ public class Mision : MonoBehaviour
     {
         if(position_Text < 3 && obj == object_act)
         {
-            Text.text += objects_mision[position_Text];
+            Text.text = objects_mision[position_Text];
             object_act = objects_mision[position_Text];
             position_Text++;
         }
@@ -60,9 +64,12 @@ public class Mision : MonoBehaviour
 
     private void New_Text_In_TextMesh()
     {
-        Text.text += objects_mision[position_Text];
-        object_act = objects_mision[position_Text];
-        position_Text++;
+        if(objects_mision != null)
+        {
+            Text.text = objects_mision[position_Text];
+            object_act = objects_mision[position_Text];
+            position_Text++;
+        }
     }
 
 }

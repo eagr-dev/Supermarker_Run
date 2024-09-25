@@ -6,7 +6,8 @@ public class Player : MonoBehaviour
 {
     public float max_speed_H = 2, max_speed_V = 2, Vertical_Move = 0, Horizontal_Move = 0, speed = 0;
     public Joystick joystick;
-    public GameObject player_object, camera;
+    public GameObject player_object;
+    [SerializeField]private new GameObject camera;
     Vector3 position_camera = new Vector3(0,4,-7);
     private Mision mision;
 
@@ -46,7 +47,7 @@ public class Player : MonoBehaviour
         if(other.CompareTag("Estante"))
         {
            Estante estante = other.gameObject.GetComponent<Estante>();
-           mision.New_Text_In_TextMesh(estante.objeto);
+           mision.New_Text_In_TextMesh(estante.Get_Object());
         }
     }
 }

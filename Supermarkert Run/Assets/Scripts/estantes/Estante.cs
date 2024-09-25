@@ -2,14 +2,16 @@ using UnityEngine;
 
 public class Estante : MonoBehaviour
 {
-    public readonly string[] Objetos = new string[8]
-    { "Producto_Limpieza", "Jabon", "Shampoo", "Pasta_Dientes", "Articulos_Escolares", "Cuadernos", "LLantas", "Tapiceria"};
+    private string objeto;
 
-    public string objeto;
+    public Areas.Area_product Tag;
 
-    // Start is called before the first frame update
-    void Awake()
+    public int count_obj = 0;
+
+    void Start()
     {
-        objeto = Objetos[Random.Range(0, 7)];
+        objeto = Areas.Objetos[(int)Tag][count_obj];
     }
+
+    public string Get_Object() => objeto;
 }
