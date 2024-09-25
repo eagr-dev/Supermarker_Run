@@ -53,7 +53,6 @@ public class Areas : MonoBehaviour
         foreach(Transform child_area in Get_List_Rand())
         {
             child_area.GetComponent<Area>().Tag = (Area_product)count;
-            child_area.GetComponent<Area>().Acomodar_Estantes();
             count++;
         }
     }

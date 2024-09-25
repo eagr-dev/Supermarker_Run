@@ -9,10 +9,10 @@ public class Area : MonoBehaviour
     private List<Transform> Get_List_Rand()
     {
         List<Transform> list_return = new List<Transform>();
-        bool[] pos = { false, false, false, false, false, false, false, false };
+        bool[] pos = { false, false, false, false, false, false, false, false, false ,false };
         foreach (Transform child_area in transform)
         {
-            int pos_pos = Random.Range(0, 7);
+            int pos_pos = Random.Range(0, 9);
             if (pos[pos_pos] != true)
             {
                 list_return.Add(child_area);
@@ -20,7 +20,7 @@ public class Area : MonoBehaviour
             }
             else
             {
-                for (int i = 0; i < 8; i++)
+                for (int i = 0; i < 10; i++)
                 {
                     if (pos[i] != true)
                     {
@@ -43,5 +43,10 @@ public class Area : MonoBehaviour
             child.GetComponent<Estante>().count_obj = count;
             count++;
         }
+    }
+
+    private void Start()
+    {
+        Acomodar_Estantes();
     }
 }
