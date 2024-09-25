@@ -8,8 +8,13 @@ public class Player : MonoBehaviour
     public Joystick joystick;
     public GameObject player_object, camera;
     Vector3 position_camera = new Vector3(0,4,-7);
+    private Mision mision;
 
-    // Update is called once per frame
+    private void Awake()
+    {
+        mision = FindObjectOfType<Mision>();   
+    }
+
     void Update()
     {
         Move_Player();
@@ -38,11 +43,10 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log($"choque {other.tag} : {other.name}");
         if(other.CompareTag("Estante"))
         {
-            Debug.Log("Estante");
-            Debug.Log(other.GetComponent<Estante>().objeto);
+           Estante estante = other.gameObject.GetComponent<Estante>();
+           mision.New_Text_In_TextMesh(estante.objeto);
         }
     }
 }

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Estante : MonoBehaviour
 {
-    private readonly string[] Objetos = new string[8]
+    public readonly string[] Objetos = new string[8]
     { "Producto_Limpieza", "Jabon", "Shampoo", "Pasta_Dientes", "Articulos_Escolares", "Cuadernos", "LLantas", "Tapiceria"};
 
     public string objeto;
