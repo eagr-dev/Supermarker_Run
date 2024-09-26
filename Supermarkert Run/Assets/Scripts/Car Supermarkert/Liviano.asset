@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fdc222640aea6240990c32f14f08ede, type: 3}
   m_Name: Liviano
   m_EditorClassIdentifier: 
-  peso: 10
+  peso: 20
   velocidad_adicional: 3
   cant_limite_carga: 10
   resistencia_choque: 30

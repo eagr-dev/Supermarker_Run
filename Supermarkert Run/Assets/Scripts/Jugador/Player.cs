@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField]private float max_speed_H = 2, max_speed_V = 2, Vertical_Move = 0, Horizontal_Move = 0, speed = 2, resistencia_porcentual = 0;
+    [SerializeField]private float max_speed_H = 1, max_speed_V = 1, Vertical_Move = 0, Horizontal_Move = 0, speed = 1, resistencia_porcentual = 0,velocidad_porcentual = 0;
     Vector3 obtener_velocidad;
     public Joystick joystick;
     public GameObject player_object;
@@ -20,6 +20,10 @@ public class Player : MonoBehaviour
     {
         mision = FindObjectOfType<Mision>();  
         rigidbody = GetComponent<Rigidbody>();
+    }
+
+    private void Start()
+    {
         carrito_contenido = FindObjectOfType<Get_Content_Car>();
         carrito = carrito_contenido.GetComponent<Get_Content_Car>().Get_Car();
         Init();
@@ -38,13 +42,9 @@ public class Player : MonoBehaviour
         Horizontal_Move = joystick.Horizontal * max_speed_H;
         Vector3 Movimiento = new Vector3(Horizontal_Move, 0, Vertical_Move).normalized;
         obtener_velocidad = new Vector3(Horizontal_Move, 0, Vertical_Move) * Time.deltaTime * speed;
-        float velocidad_porcentual = (obtener_velocidad.magnitude * 100) / speed;
+        velocidad_porcentual = (obtener_velocidad.magnitude * 100) / speed;
         transform.position += new Vector3(Horizontal_Move, 0, Vertical_Move) * Time.deltaTime * speed;
         
-        if(velocidad_porcentual >= resistencia_porcentual)
-        {
-            Debug.Log("velocidad maxima pasada");
-        }
         if(Movimiento.magnitude >= 1)
         {
             float angle = Mathf.Atan2(Movimiento.x, Movimiento.z) * Mathf.Rad2Deg;
@@ -67,6 +67,13 @@ public class Player : MonoBehaviour
         resistencia_porcentual = ((float)carrito.resistencia_choque / 100) * speed;
     }
 
+    private void New_Init()
+    {
+        speed = 1 + carrito.velocidad_adicional;
+        max_speed_H = 1 + carrito.velocidad_adicional;
+        max_speed_V = 1 + carrito.velocidad_adicional;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Estante"))
@@ -75,4 +82,23 @@ public class Player : MonoBehaviour
            mision.New_Text_In_TextMesh(estante.Get_Object());
         }
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.CompareTag("Estante"))
+        {
+            speed = 0.5f;
+            if (velocidad_porcentual >= resistencia_porcentual)
+                Debug.Log("colision");
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Estante"))
+        {
+            New_Init();
+        }
+    }
+
 }
