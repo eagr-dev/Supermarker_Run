@@ -27,7 +27,6 @@ public class Mision : MonoBehaviour
 
     private void Set_Object(List<string> obj_m)
     {
-        Estante estante = FindObjectOfType<Estante>();
         int i = 0;
         while (obj_m.Count < 3)
         {

@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Car : MonoBehaviour
+[CreateAssetMenu]
+public class Car : ScriptableObject
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public float peso;
+    public float velocidad_adicional;
+    public int cant_limite_carga;
+    //porcentaje necesario de velocidad para accidente
+    public int resistencia_choque;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public string nombre;
+    [TextArea(2,3)]
+    public string descripcion;
+    public Sprite imagen;
 }
