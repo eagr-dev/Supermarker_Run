@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     private Get_Content_Car carrito_contenido;
     private Car carrito;
     private new Rigidbody rigidbody;
+    private Interfaz_PowerUp Efecto;
 
 
     private void Awake()
@@ -24,6 +25,9 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        if(FindObjectOfType<Repartir_power>().Get_Power_Up() != null)
+            Efecto = FindObjectOfType<Repartir_power>().Get_Power_Up();
+
         carrito_contenido = FindObjectOfType<Get_Content_Car>();
         carrito = carrito_contenido.GetComponent<Get_Content_Car>().Get_Car();
         Init();
@@ -65,6 +69,17 @@ public class Player : MonoBehaviour
         max_speed_H += carrito.velocidad_adicional;
         max_speed_V += carrito.velocidad_adicional;
         resistencia_porcentual = ((float)carrito.resistencia_choque / 100) * speed;
+
+        if(Efecto != null)
+        {
+            if (Efecto.Get_Efecto() is float)
+            {
+                Efecto.Efecto(speed);
+                speed = (float)Efecto.Get_Efecto();
+                max_speed_H = (float)Efecto.Get_Efecto();
+                max_speed_V = (float)Efecto.Get_Efecto();
+            }
+        }
     }
 
     private void New_Init()
@@ -73,6 +88,8 @@ public class Player : MonoBehaviour
         max_speed_H = 1 + carrito.velocidad_adicional;
         max_speed_V = 1 + carrito.velocidad_adicional;
     }
+
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -85,11 +102,34 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.CompareTag("Estante"))
+        if(!collision.gameObject.CompareTag("Piso"))
         {
             speed = 0.5f;
+
             if (velocidad_porcentual >= resistencia_porcentual)
-                Debug.Log("colision");
+            {
+                Debug.Log("Choque");
+                if(Efecto != null)
+                {
+                    switch (Efecto.Get_Efecto())
+                    {
+                        case true:
+                            Efecto.Efecto();
+                            Debug.Log("Proteccion usada");
+                            break;
+                        case false:
+                            //sacamos anuncio o no vamos a menu principal
+                            Debug.Log("Sin proteccion");
+                            break;
+                        case 2:
+                        case 1:
+                        case 0:
+                            Efecto.Efecto(transform.position);
+                            break;
+                    }
+                }
+            }
+                
         }
     }
 
