@@ -15,4 +15,6 @@ public class Car : ScriptableObject
     [TextArea(2,3)]
     public string descripcion;
     public Sprite imagen;
+    public Material skin_car;
+    [SerializeField] private uint precio;
 }

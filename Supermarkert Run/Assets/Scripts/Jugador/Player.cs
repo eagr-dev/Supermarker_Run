@@ -39,6 +39,8 @@ public class Player : MonoBehaviour
         Camera_Move();
         
     }
+
+    //Movimiento
     private void Move_Player()
     {
 
@@ -62,6 +64,7 @@ public class Player : MonoBehaviour
         camera.transform.position = transform.position + position_camera;
     }
 
+    //Inicio
     private void Init()
     {
         rigidbody.mass += carrito.peso;
@@ -89,8 +92,7 @@ public class Player : MonoBehaviour
         max_speed_V = 1 + carrito.velocidad_adicional;
     }
 
-
-
+    //Collisiones
     private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Estante"))
