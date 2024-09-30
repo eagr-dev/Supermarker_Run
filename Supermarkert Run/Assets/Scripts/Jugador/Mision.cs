@@ -6,7 +6,7 @@ using TMPro;
 public class Mision : MonoBehaviour
 {
     private List<string> objects_mision = new List<string>();
-    private int position_Text = 0;
+    [SerializeField]private int position_Text = 0;
     public TMP_Text Text;
     private string object_act = "";
 
@@ -25,10 +25,17 @@ public class Mision : MonoBehaviour
         }
     }
 
+    public int Cantidad_Nivel()
+    {
+        int misiones = (int)(FindObjectOfType<Nivel>().nivel / 10);
+        misiones = misiones != 0 ? misiones : 10;
+        return misiones;
+    }
+
     private void Set_Object(List<string> obj_m)
     {
         int i = 0;
-        while (obj_m.Count < 3)
+        while (obj_m.Count < Cantidad_Nivel())
         {
             int area = Random.Range(0,7);
             string obj = Areas.Objetos[area][Random.Range(0, 9)];
@@ -53,7 +60,7 @@ public class Mision : MonoBehaviour
 
     public void New_Text_In_TextMesh(string obj)
     {
-        if(position_Text < 3 && obj == object_act)
+        if(position_Text < Cantidad_Nivel() && obj == object_act)
         {
             Text.text = objects_mision[position_Text];
             object_act = objects_mision[position_Text];
@@ -70,5 +77,7 @@ public class Mision : MonoBehaviour
             position_Text++;
         }
     }
+
+    public int Get_Position() => position_Text - 1;
 
 }

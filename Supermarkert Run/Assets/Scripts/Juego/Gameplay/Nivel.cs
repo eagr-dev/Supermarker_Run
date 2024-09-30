@@ -5,5 +5,4 @@ using UnityEngine;
 public class Nivel : MonoBehaviour
 {
     public uint nivel = 1;
-    
 }

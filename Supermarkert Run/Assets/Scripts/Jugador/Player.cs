@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -99,12 +100,17 @@ public class Player : MonoBehaviour
         {
            Estante estante = other.gameObject.GetComponent<Estante>();
            mision.New_Text_In_TextMesh(estante.Get_Object());
+        }else if(other.CompareTag("Caja"))
+        {
+            Caja caja = other.gameObject.GetComponent<Caja>();
+
+            caja.Visible_Objects(mision.Cantidad_Nivel(), mision.Get_Position());
         }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(!collision.gameObject.CompareTag("Piso"))
+        if(!collision.gameObject.CompareTag("Piso") && !collision.gameObject.CompareTag("Caja"))
         {
             speed = 0.5f;
 
@@ -130,6 +136,7 @@ public class Player : MonoBehaviour
                             break;
                     }
                 }
+
             }
                 
         }
@@ -142,5 +149,6 @@ public class Player : MonoBehaviour
             New_Init();
         }
     }
+
 
 }

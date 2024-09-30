@@ -51,7 +51,7 @@ public class Area : MonoBehaviour
         }
     }
 
-    private void Awake()
+    private void Start()
     {
         Acomodar_Estantes();
     }

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Estante : MonoBehaviour
 {
-    private string objeto;
+    [SerializeField]private string objeto;
 
     public Areas.Area_product Tag;
 

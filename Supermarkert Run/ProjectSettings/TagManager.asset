@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Estante
   - Piso
+  - Caja
   layers:
   - Default
   - TransparentFX
