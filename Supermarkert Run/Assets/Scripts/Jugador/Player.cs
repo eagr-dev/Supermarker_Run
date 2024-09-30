@@ -16,6 +16,8 @@ public class Player : MonoBehaviour
     private Car carrito;
     private new Rigidbody rigidbody;
     private Interfaz_PowerUp Efecto;
+    [SerializeField] private GameObject Muerte_canvas;
+    [SerializeField] private GameObject Ganar_canvas;
 
 
     private void Awake()
@@ -105,6 +107,7 @@ public class Player : MonoBehaviour
             Caja caja = other.gameObject.GetComponent<Caja>();
 
             caja.Visible_Objects(mision.Cantidad_Nivel(), mision.Get_Position());
+            Ganador(caja);
         }
     }
 
@@ -136,9 +139,14 @@ public class Player : MonoBehaviour
                             break;
                     }
                 }
+                else
+                {
+                    speed = 0;
+                    Muerte_canvas.SetActive(true);
+                }
 
             }
-                
+
         }
     }
 
@@ -149,6 +157,28 @@ public class Player : MonoBehaviour
             New_Init();
         }
     }
+
+    //Botones
+
+    //Botones->Perder
+    public void Reiniciar()
+    {
+        SceneManager.LoadScene(1);
+    }
+
+
+    //Botones->Ganar
+
+    private void Ganador(Caja caja)
+    {
+        Ganar_canvas.SetActive(caja.Get_Porcentaje() == 10);
+    }
+
+    public void Ganar_Button()
+    {
+        SceneManager.LoadScene(0);
+    }
+
 
 
 }
