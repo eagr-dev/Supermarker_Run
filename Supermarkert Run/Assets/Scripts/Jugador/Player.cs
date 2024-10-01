@@ -24,13 +24,15 @@ public class Player : MonoBehaviour
     {
         mision = FindObjectOfType<Mision>();  
         rigidbody = GetComponent<Rigidbody>();
+        if (FindObjectOfType<Repartir_power>().Get_Power_Up() != null)
+        {
+            Efecto = FindObjectOfType<Repartir_power>().Get_Power_Up();
+            Debug.Log("Poder");
+        }
     }
 
     private void Start()
     {
-        if(FindObjectOfType<Repartir_power>().Get_Power_Up() != null)
-            Efecto = FindObjectOfType<Repartir_power>().Get_Power_Up();
-
         carrito_contenido = FindObjectOfType<Get_Content_Car>();
         carrito = carrito_contenido.GetComponent<Get_Content_Car>().Get_Car();
         Init();
@@ -38,8 +40,6 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        camera = GameObject.Find("Main Camera");
-        joystick = FindObjectOfType<Joystick>();
         Move_Player();
         Camera_Move();
         
@@ -130,10 +130,6 @@ public class Player : MonoBehaviour
                         case true:
                             Efecto.Efecto();
                             Debug.Log("Proteccion usada");
-                            break;
-                        case false:
-                            //sacamos anuncio o no vamos a menu principal
-                            Debug.Log("Sin proteccion");
                             break;
                         case 2:
                         case 1:

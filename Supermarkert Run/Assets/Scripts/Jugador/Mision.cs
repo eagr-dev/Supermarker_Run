@@ -9,22 +9,9 @@ public class Mision : MonoBehaviour
     [SerializeField]private int position_Text = 0;
     public TMP_Text Text;
     private string object_act = "";
-    static Mision instancia;
 
-    private void Awake()
-    {
-        if(instancia != null)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            Mision.instancia = this;
-            Mision.DontDestroyOnLoad(this.gameObject);
-        }
-    }
 
-    void Start()
+    void Awake()
     {
         GameObject TMP = GameObject.Find("Mision_Actual");
         if (TMP != null)

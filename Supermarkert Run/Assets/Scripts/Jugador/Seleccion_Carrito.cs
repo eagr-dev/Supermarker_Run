@@ -12,20 +12,13 @@ public class Seleccion_Carrito : MonoBehaviour
 
     public Seleccion_carrito Carrito = Seleccion_carrito.NINGUNO;
 
-    static Seleccion_Carrito instancia;
-
     private void Awake()
     {
-        if(instancia != null)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            instancia = this;
-            DontDestroyOnLoad(gameObject);
-        }
+        Seleccion_Menu_Carrito SMC = FindObjectOfType<Seleccion_Menu_Carrito>();
+        Carrito = (Seleccion_carrito)SMC.Get_Seleccion();
+        Debug.Log(Carrito);
     }
+
     void Start()
     {
         Carrito_pequeno.SetActive(false);
@@ -48,25 +41,5 @@ public class Seleccion_Carrito : MonoBehaviour
         }
     }
 
-    public void BTN_Chico()
-    {
-        Carrito_grande.SetActive(false);
-        Carrito_mediano.SetActive(false);
-        Carrito_pequeno.SetActive(true);
-    }
-
-    public void BTN_Mediante()
-    {
-        Carrito_grande.SetActive(false);
-        Carrito_mediano.SetActive(true);
-        Carrito_pequeno.SetActive(false);
-    }
-
-    public void BTN_Grande()
-    {
-        Carrito_grande.SetActive(true);
-        Carrito_mediano.SetActive(false);
-        Carrito_pequeno.SetActive(false);
-    }
 
 }
