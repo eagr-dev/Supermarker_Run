@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     [SerializeField]private float max_speed_H = 1, max_speed_V = 1, Vertical_Move = 0, Horizontal_Move = 0, speed = 1, resistencia_porcentual = 0,velocidad_porcentual = 0;
     Vector3 obtener_velocidad;
     public Joystick joystick;
-    public GameObject player_object;
+    [SerializeField]private GameObject player_object;
     [SerializeField]private new GameObject camera;
     Vector3 position_camera = new Vector3(0,4,-7);
     private Mision mision;
@@ -38,6 +38,8 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        camera = GameObject.Find("Main Camera");
+        joystick = FindObjectOfType<Joystick>();
         Move_Player();
         Camera_Move();
         
@@ -46,24 +48,27 @@ public class Player : MonoBehaviour
     //Movimiento
     private void Move_Player()
     {
-
-        Vertical_Move = joystick.Vertical * max_speed_V;
-        Horizontal_Move = joystick.Horizontal * max_speed_H;
-        Vector3 Movimiento = new Vector3(Horizontal_Move, 0, Vertical_Move).normalized;
-        obtener_velocidad = new Vector3(Horizontal_Move, 0, Vertical_Move) * Time.deltaTime * speed;
-        velocidad_porcentual = (obtener_velocidad.magnitude * 100) / speed;
-        transform.position += new Vector3(Horizontal_Move, 0, Vertical_Move) * Time.deltaTime * speed;
-        
-        if(Movimiento.magnitude >= 1)
+        if(joystick != null)
         {
-            float angle = Mathf.Atan2(Movimiento.x, Movimiento.z) * Mathf.Rad2Deg;
-            Quaternion rotate = Quaternion.Euler(0, angle, 0);
-            player_object.transform.rotation = Quaternion.Slerp(player_object.transform.rotation, rotate, speed * Time.deltaTime);
+            Vertical_Move = joystick.Vertical * max_speed_V;
+            Horizontal_Move = joystick.Horizontal * max_speed_H;
+            Vector3 Movimiento = new Vector3(Horizontal_Move, 0, Vertical_Move).normalized;
+            obtener_velocidad = new Vector3(Horizontal_Move, 0, Vertical_Move) * Time.deltaTime * speed;
+            velocidad_porcentual = (obtener_velocidad.magnitude * 100) / speed;
+            transform.position += new Vector3(Horizontal_Move, 0, Vertical_Move) * Time.deltaTime * speed;
+
+            if (Movimiento.magnitude >= 1)
+            {
+                float angle = Mathf.Atan2(Movimiento.x, Movimiento.z) * Mathf.Rad2Deg;
+                Quaternion rotate = Quaternion.Euler(0, angle, 0);
+                player_object.transform.rotation = Quaternion.Slerp(player_object.transform.rotation, rotate, speed * Time.deltaTime);
+            }
         }
     }
 
     private void Camera_Move()
     {
+        if(camera != null)
         camera.transform.position = transform.position + position_camera;
     }
 
@@ -115,8 +120,6 @@ public class Player : MonoBehaviour
     {
         if(!collision.gameObject.CompareTag("Piso") && !collision.gameObject.CompareTag("Caja"))
         {
-            speed = 0.5f;
-
             if (velocidad_porcentual >= resistencia_porcentual)
             {
                 Debug.Log("Choque");

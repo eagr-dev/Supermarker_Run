@@ -6,14 +6,26 @@ public class Get_Content_Car : MonoBehaviour
 {
     [SerializeField]private List<Car> car;
     [SerializeField]private List<Material> material;
-    private Renderer renderizado = new Renderer();
     public int posicion;
     public Car Get_Car() => car[posicion];
-
+    static Get_Content_Car instancia;
 
     private void Awake()
     {
-        renderizado = GetComponent<Renderer>();
-        renderizado.material = material[posicion];
+        if(instancia != null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            instancia = this;
+            DontDestroyOnLoad(gameObject);
+        }
+    }
+
+    private void Start()
+    {
+        MeshRenderer r = GetComponent<MeshRenderer>();
+        r.material = material[posicion];    
     }
 }

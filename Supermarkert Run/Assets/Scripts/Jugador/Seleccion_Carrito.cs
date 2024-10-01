@@ -8,11 +8,25 @@ public class Seleccion_Carrito : MonoBehaviour
     [SerializeField] private GameObject Carrito_mediano;
     [SerializeField] private GameObject Carrito_grande;
 
-    public enum Seleccion_carrito { PEQUEÑO, MEDIANO, GRANDE};
+    public enum Seleccion_carrito { PEQUEÑO, MEDIANO, GRANDE, NINGUNO};
 
-    public Seleccion_carrito Carrito = Seleccion_carrito.PEQUEÑO;
+    public Seleccion_carrito Carrito = Seleccion_carrito.NINGUNO;
 
-    void Awake()
+    static Seleccion_Carrito instancia;
+
+    private void Awake()
+    {
+        if(instancia != null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            instancia = this;
+            DontDestroyOnLoad(gameObject);
+        }
+    }
+    void Start()
     {
         Carrito_pequeno.SetActive(false);
         Carrito_mediano.SetActive(false);
@@ -32,6 +46,27 @@ public class Seleccion_Carrito : MonoBehaviour
                 Carrito_pequeno.SetActive(true);
                 break;
         }
+    }
+
+    public void BTN_Chico()
+    {
+        Carrito_grande.SetActive(false);
+        Carrito_mediano.SetActive(false);
+        Carrito_pequeno.SetActive(true);
+    }
+
+    public void BTN_Mediante()
+    {
+        Carrito_grande.SetActive(false);
+        Carrito_mediano.SetActive(true);
+        Carrito_pequeno.SetActive(false);
+    }
+
+    public void BTN_Grande()
+    {
+        Carrito_grande.SetActive(true);
+        Carrito_mediano.SetActive(false);
+        Carrito_pequeno.SetActive(false);
     }
 
 }

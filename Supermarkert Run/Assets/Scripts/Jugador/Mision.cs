@@ -9,16 +9,27 @@ public class Mision : MonoBehaviour
     [SerializeField]private int position_Text = 0;
     public TMP_Text Text;
     private string object_act = "";
+    static Mision instancia;
 
     private void Awake()
     {
-        GameObject TMP = GameObject.Find("Mision_Actual");
-        Text = TMP.GetComponent<TMP_Text>();
+        if(instancia != null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Mision.instancia = this;
+            Mision.DontDestroyOnLoad(this.gameObject);
+        }
     }
 
     void Start()
     {
-        if(objects_mision != null)
+        GameObject TMP = GameObject.Find("Mision_Actual");
+        if (TMP != null)
+            Text = TMP.GetComponent<TMP_Text>();
+        if (objects_mision != null)
         {
             Set_Object(objects_mision);
             New_Text_In_TextMesh();
@@ -60,7 +71,7 @@ public class Mision : MonoBehaviour
 
     public void New_Text_In_TextMesh(string obj)
     {
-        if(position_Text < Cantidad_Nivel() && obj == object_act)
+        if((position_Text < Cantidad_Nivel() && obj == object_act) && Text != null)
         {
             Text.text = objects_mision[position_Text];
             object_act = objects_mision[position_Text];
@@ -70,7 +81,7 @@ public class Mision : MonoBehaviour
 
     private void New_Text_In_TextMesh()
     {
-        if(objects_mision != null)
+        if(objects_mision != null && Text != null)
         {
             Text.text = objects_mision[position_Text];
             object_act = objects_mision[position_Text];
