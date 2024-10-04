@@ -10,6 +10,7 @@ public abstract class Interfaz_PowerUp : MonoBehaviour
 
     public abstract void Animacion();
 
-    public List<string> descripcion;
+    public string descripcion;
     public string nombre;
+    public Material sprite;
 }

@@ -20,9 +20,7 @@ public class Vida_extra : Interfaz_PowerUp
 
     public override void Set_Descripcion_Nombre()
     {
-        descripcion.Add("Vida Extra, solamente reinicia el nivel evitando regresar al menu");
-        descripcion.Add("Tienes una vida extra para seguir jugando.");
-        descripcion.Add("Este power Up se activa viendo un anuncio.");
+        descripcion = "Vida Extra, solamente reinicia el nivel evitando regresar al menu tienes una vida extra para seguir jugando.\nEste power Up se activa viendo un anuncio.";
         nombre = "Vidas Extras";
     }
 

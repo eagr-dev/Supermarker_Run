@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Seleccion_PU : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class Seleccion_PU : MonoBehaviour
     [SerializeField] Transform objetos;
     List<Vector3> posiciones_iniciales = new List<Vector3>();
     Repartir_power RP;
+    [SerializeField]TMP_Text Nombre,Descripcion;
 
     private void Awake()
     {
@@ -18,6 +20,9 @@ public class Seleccion_PU : MonoBehaviour
         slider.maxValue = RP.Get_Enum_Count();
         foreach (Transform obj in objetos)
             posiciones_iniciales.Add(obj.position);
+        objetos.GetChild(0).GetComponent<Interfaz_PowerUp>().Set_Descripcion_Nombre();
+        Nombre.text = objetos.GetChild(0).GetComponent<Interfaz_PowerUp>().nombre;
+        Descripcion.text = objetos.GetChild(0).GetComponent<Interfaz_PowerUp>().descripcion;
     }
 
     public void Slider_Value(float value)
@@ -30,8 +35,14 @@ public class Seleccion_PU : MonoBehaviour
             Vector3 targe = posiciones_iniciales[i] + new Vector3(value, 0, 0) * limite;
             objetos.GetChild(i).position = targe;
             objetos.GetChild(i).GetComponent<Interfaz_PowerUp>().Animacion();
-        }
 
+            if(objetos.GetChild(i).position.magnitude < 2)
+            {
+                objetos.GetChild(i).GetComponent<Interfaz_PowerUp>().Set_Descripcion_Nombre();
+                Nombre.text = objetos.GetChild(i).GetComponent<Interfaz_PowerUp>().nombre;
+                Descripcion.text = objetos.GetChild(i).GetComponent<Interfaz_PowerUp>().descripcion;
+            }
+        }
         valor_actual = (int)value;
         valor_ant = value;
     }

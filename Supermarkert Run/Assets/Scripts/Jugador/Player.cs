@@ -130,6 +130,10 @@ public class Player : MonoBehaviour
                             Efecto.Efecto();
                             Debug.Log("Proteccion usada");
                             break;
+                        case false:
+                            speed = 0;
+                            Muerte_canvas.SetActive(true);
+                            break;
                         case 2:
                         case 1:
                         case 0:
@@ -161,7 +165,7 @@ public class Player : MonoBehaviour
     //Botones->Perder
     public void Reiniciar()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(0);
     }
 
 

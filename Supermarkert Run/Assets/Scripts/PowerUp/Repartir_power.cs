@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Repartir_power : MonoBehaviour
 {
-    enum Power_Up { VIDA, VELOCIDAD, PROTECCION, NINGUNO};
-    Power_Up PU;
+    [SerializeField]enum Power_Up { VIDA, VELOCIDAD, PROTECCION, NINGUNO};
+    [SerializeField]Power_Up PU;
     private Interfaz_PowerUp clase;
     static Repartir_power RP;
     //Funciones de cuando se vea un anuncio
