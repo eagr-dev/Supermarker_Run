@@ -11126,7 +11126,19 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1329002555}
     - target: {fileID: 909401624415142311, guid: 22a78dbece569ef4d80a101a817f735c, type: 3}
+      propertyPath: r
+      value: 
+      objectReference: {fileID: 2249757947970534847}
+    - target: {fileID: 909401624415142311, guid: 22a78dbece569ef4d80a101a817f735c, type: 3}
+      propertyPath: car.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 909401624415142311, guid: 22a78dbece569ef4d80a101a817f735c, type: 3}
       propertyPath: car.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 74305ccb9df146d439ca8ec778277f54, type: 2}
+    - target: {fileID: 909401624415142311, guid: 22a78dbece569ef4d80a101a817f735c, type: 3}
+      propertyPath: car.Array.data[1]
       value: 
       objectReference: {fileID: 11400000, guid: 36923ed23a9e4564b98446eb0be21a02, type: 2}
     - target: {fileID: 909401624415142311, guid: 22a78dbece569ef4d80a101a817f735c, type: 3}
@@ -11190,13 +11202,41 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2747438017675297323, guid: 22a78dbece569ef4d80a101a817f735c, type: 3}
+      propertyPath: r
+      value: 
+      objectReference: {fileID: 2249757947970534846}
+    - target: {fileID: 2747438017675297323, guid: 22a78dbece569ef4d80a101a817f735c, type: 3}
+      propertyPath: car.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2747438017675297323, guid: 22a78dbece569ef4d80a101a817f735c, type: 3}
       propertyPath: car.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 26df334185f3877499dd6468c8a0e4fd, type: 2}
+    - target: {fileID: 2747438017675297323, guid: 22a78dbece569ef4d80a101a817f735c, type: 3}
+      propertyPath: car.Array.data[1]
       value: 
       objectReference: {fileID: 11400000, guid: 332ecd32beae3c544bcf113e29554a0c, type: 2}
     - target: {fileID: 2747438017675297323, guid: 22a78dbece569ef4d80a101a817f735c, type: 3}
       propertyPath: material.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2909693156510713774, guid: 22a78dbece569ef4d80a101a817f735c, type: 3}
+      propertyPath: r
+      value: 
+      objectReference: {fileID: 2249757947970534845}
+    - target: {fileID: 2909693156510713774, guid: 22a78dbece569ef4d80a101a817f735c, type: 3}
+      propertyPath: car.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2909693156510713774, guid: 22a78dbece569ef4d80a101a817f735c, type: 3}
+      propertyPath: car.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: de607cf44f064794797600b470cc3096, type: 2}
+    - target: {fileID: 2909693156510713774, guid: 22a78dbece569ef4d80a101a817f735c, type: 3}
+      propertyPath: car.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 5325ffe561973434c8fce9d4d534b81c, type: 2}
     - target: {fileID: 2909693156510713774, guid: 22a78dbece569ef4d80a101a817f735c, type: 3}
       propertyPath: material.Array.size
       value: 1
@@ -11270,6 +11310,21 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!23 &2249757947970534845 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 1038297025975759437, guid: 22a78dbece569ef4d80a101a817f735c, type: 3}
+  m_PrefabInstance: {fileID: 2249757947970534842}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &2249757947970534846 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 8203948700631935341, guid: 22a78dbece569ef4d80a101a817f735c, type: 3}
+  m_PrefabInstance: {fileID: 2249757947970534842}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &2249757947970534847 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 8474090501025360669, guid: 22a78dbece569ef4d80a101a817f735c, type: 3}
+  m_PrefabInstance: {fileID: 2249757947970534842}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5fdc222640aea6240990c32f14f08ede, type: 3}
-  m_Name: Pesado
+  m_Name: Mediano
   m_EditorClassIdentifier: 
-  peso: 50
-  velocidad_adicional: 1.7
-  cant_limite_carga: 100
-  resistencia_choque: 70
-  nombre: Pesado
-  descripcion: Carro pesado idea para misiones largas, gran resistencia pero poca
-    velocidad y agilidad
+  peso: 35
+  velocidad_adicional: 2.5
+  cant_limite_carga: 50
+  resistencia_choque: 50
+  nombre: Carrito Mediano
+  descripcion: "Carro mediano ideal para mapas entre grandes peque\xF1os"
   imagen: {fileID: 0}
+  skin_car: {fileID: 2100000, guid: 8f38aad73fa821e4d8c3d5c7f63ea916, type: 2}
+  precio: 0

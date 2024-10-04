@@ -19,8 +19,10 @@ public class Seleccion_PU : MonoBehaviour
         RP = FindObjectOfType<Repartir_power>();
         slider.maxValue = RP.Get_Enum_Count();
         foreach (Transform obj in objetos)
+        {
             posiciones_iniciales.Add(obj.position);
-        objetos.GetChild(0).GetComponent<Interfaz_PowerUp>().Set_Descripcion_Nombre();
+            obj.GetComponent<Interfaz_PowerUp>().Set_Descripcion_Nombre();
+        }
         Nombre.text = objetos.GetChild(0).GetComponent<Interfaz_PowerUp>().nombre;
         Descripcion.text = objetos.GetChild(0).GetComponent<Interfaz_PowerUp>().descripcion;
     }
@@ -43,7 +45,7 @@ public class Seleccion_PU : MonoBehaviour
                 Descripcion.text = objetos.GetChild(i).GetComponent<Interfaz_PowerUp>().descripcion;
             }
         }
-        valor_actual = (int)value;
+        valor_actual = (int)(value != slider.maxValue ? value : value -1);
         valor_ant = value;
     }
 

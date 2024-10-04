@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fdc222640aea6240990c32f14f08ede, type: 3}
+  m_Name: Pesado2
+  m_EditorClassIdentifier: 
+  peso: 50
+  velocidad_adicional: 1.7
+  cant_limite_carga: 100
+  resistencia_choque: 70
+  nombre: Pesado2
+  descripcion: Carro pesado idea para misiones largas, gran resistencia pero poca
+    velocidad y agilidad
+  imagen: {fileID: 0}
+  skin_car: {fileID: -3033667219593020291, guid: 85adb1390be377c478fca4b1221f0ef5, type: 3}
+  precio: 0

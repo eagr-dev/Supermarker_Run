@@ -10,12 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5fdc222640aea6240990c32f14f08ede, type: 3}
-  m_Name: Liviano
+  m_Name: Mediano2
   m_EditorClassIdentifier: 
-  peso: 20
-  velocidad_adicional: 3
-  cant_limite_carga: 10
-  resistencia_choque: 30
-  nombre: carrito liviano
-  descripcion: carrito liviano rapido, agil, pero poca resistencia de choque y carga
+  peso: 35
+  velocidad_adicional: 2.5
+  cant_limite_carga: 50
+  resistencia_choque: 50
+  nombre: Carrito Mediano 2
+  descripcion: "Carro mediano ideal para mapas entre grandes peque\xF1os"
   imagen: {fileID: 0}
+  skin_car: {fileID: -3033667219593020291, guid: 85adb1390be377c478fca4b1221f0ef5, type: 3}
+  precio: 0
