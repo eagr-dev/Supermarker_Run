@@ -13,7 +13,7 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
 
     private void Awake()
     {
-        if(Seleccion_Menu_Carrito.SMC != null)
+        if (Seleccion_Menu_Carrito.SMC != null)
         {
             Destroy(gameObject);
         }
@@ -50,4 +50,15 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
         Seleccion = 2;
     }
 
+
+    public GameObject Get_Active()
+    {
+        GameObject retorno = Carrito_pequeno;
+
+        if (Carrito_pequeno.activeInHierarchy) retorno = Carrito_pequeno;
+        else if (Carrito_mediano.activeInHierarchy) retorno = Carrito_mediano;
+        else if (Carrito_grande.activeInHierarchy) retorno = Carrito_grande;
+
+        return retorno;
+    }
 }

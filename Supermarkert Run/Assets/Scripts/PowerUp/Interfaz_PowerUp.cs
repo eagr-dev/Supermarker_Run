@@ -8,6 +8,8 @@ public abstract class Interfaz_PowerUp : MonoBehaviour
     public abstract object Get_Efecto();
     public abstract void Set_Descripcion_Nombre();
 
+    public abstract void Animacion();
+
     public List<string> descripcion;
     public string nombre;
 }

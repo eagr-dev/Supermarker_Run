@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Repartir_power : MonoBehaviour
 {
-    public enum Power_Up { VIDA, VELOCIDAD, PROTECCION, NINGUNO};
-    public Power_Up PU;
+    enum Power_Up { VIDA, VELOCIDAD, PROTECCION, NINGUNO};
+    Power_Up PU;
     private Interfaz_PowerUp clase;
     static Repartir_power RP;
     //Funciones de cuando se vea un anuncio
@@ -42,4 +42,8 @@ public class Repartir_power : MonoBehaviour
 
         return clase;
     }
+
+    public int Get_Enum_Count() => (int)Power_Up.NINGUNO;
+
+    public void Set_Enum(int posicion) => PU = (Power_Up)posicion;
 }

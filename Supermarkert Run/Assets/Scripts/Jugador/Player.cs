@@ -24,10 +24,9 @@ public class Player : MonoBehaviour
     {
         mision = FindObjectOfType<Mision>();  
         rigidbody = GetComponent<Rigidbody>();
-        if (FindObjectOfType<Repartir_power>().Get_Power_Up() != null)
+        if (FindObjectOfType<Repartir_power>() != null)
         {
             Efecto = FindObjectOfType<Repartir_power>().Get_Power_Up();
-            Debug.Log("Poder");
         }
     }
 
