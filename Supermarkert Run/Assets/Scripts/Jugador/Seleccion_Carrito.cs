@@ -14,9 +14,8 @@ public class Seleccion_Carrito : MonoBehaviour
 
     private void Awake()
     {
-        Seleccion_Menu_Carrito SMC = FindObjectOfType<Seleccion_Menu_Carrito>();
+        Pase_Conexion_Menu_Gameplay SMC = FindObjectOfType<Pase_Conexion_Menu_Gameplay>();
         Carrito = (Seleccion_carrito)SMC.Get_Seleccion();
-        Debug.Log(Carrito);
     }
 
     void Start()

@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     private Interfaz_PowerUp Efecto;
     [SerializeField] private GameObject Muerte_canvas;
     [SerializeField] private GameObject Ganar_canvas;
+    private bool resbalon = false;
 
 
     private void Awake()
@@ -41,7 +42,11 @@ public class Player : MonoBehaviour
     {
         Move_Player();
         Camera_Move();
-        
+        if(resbalon)
+        {
+            float vueltas = 3 * 360;
+            transform.Rotate(0, vueltas * Time.deltaTime, 0);
+        }
     }
 
     //Movimiento
@@ -99,6 +104,26 @@ public class Player : MonoBehaviour
         max_speed_V = 1 + carrito.velocidad_adicional;
     }
 
+    //Otros
+    private void Retroceso(float dis_retroceso, float velocidad, Collision collision)
+    {
+        Vector3 Retroceso = (transform.position - collision.transform.position).normalized;
+        Retroceso.y = 0;
+        Vector3 resultado_retroceso = transform.position + Retroceso * dis_retroceso;
+        transform.position = Vector3.Lerp(transform.position, resultado_retroceso, velocidad * Time.deltaTime);
+    }
+
+    private IEnumerator Resbalon()
+    {
+        resbalon = true;
+        joystick.gameObject.SetActive(false);
+        rigidbody.AddForce(transform.forward * 5, ForceMode.VelocityChange);
+        yield return new WaitForSeconds(1);
+        rigidbody.velocity = Vector3.zero;
+        joystick.gameObject.SetActive(true);
+        resbalon = false;
+    }
+
     //Collisiones
     private void OnTriggerEnter(Collider other)
     {
@@ -112,6 +137,9 @@ public class Player : MonoBehaviour
 
             caja.Visible_Objects(mision.Cantidad_Nivel(), mision.Get_Position());
             Ganador(caja);
+        }else if(other.CompareTag("Mojado"))
+        {
+            StartCoroutine(Resbalon());
         }
     }
 
@@ -122,18 +150,22 @@ public class Player : MonoBehaviour
             if (velocidad_porcentual >= resistencia_porcentual)
             {
                 Debug.Log("Choque");
-                if(Efecto != null)
+                if (Efecto != null)
                 {
                     switch (Efecto.Get_Efecto())
                     {
                         case true:
                             Efecto.Efecto();
                             Debug.Log("Proteccion usada");
+                            Retroceso(30, speed * 2, collision);
+                            StopAllCoroutines();
                             break;
                         case false:
                             speed = 0;
                             Muerte_canvas.SetActive(true);
-                            break;
+                            Retroceso(20, speed, collision);
+                            StopAllCoroutines();
+                            return;
                         case 2:
                         case 1:
                         case 0:
@@ -145,10 +177,12 @@ public class Player : MonoBehaviour
                 {
                     speed = 0;
                     Muerte_canvas.SetActive(true);
+                    Retroceso(20, speed, collision);
+                    StopAllCoroutines();
+                    return;
                 }
 
             }
-
         }
     }
 
@@ -175,12 +209,5 @@ public class Player : MonoBehaviour
     {
         Ganar_canvas.SetActive(caja.Get_Porcentaje() == 10);
     }
-
-    public void Ganar_Button()
-    {
-        SceneManager.LoadScene(0);
-    }
-
-
 
 }

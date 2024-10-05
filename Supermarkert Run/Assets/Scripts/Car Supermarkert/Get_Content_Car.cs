@@ -15,12 +15,11 @@ public class Get_Content_Car : MonoBehaviour
     {
         posicion = new_posicion;
         r.material = car[posicion].skin_car;
-        Debug.Log(car[posicion].skin_car);
     }
 
     private void Awake()
     {
-        posicion = FindObjectOfType<Seleccion_Menu_Carrito>().Get_Eleccion();
+        posicion = FindObjectOfType<Pase_Conexion_Menu_Gameplay>().Get_Eleccion();
         r.material = car[posicion].skin_car;    
     }
 }

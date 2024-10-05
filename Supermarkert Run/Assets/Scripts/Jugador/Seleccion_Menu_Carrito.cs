@@ -7,7 +7,7 @@ using TMPro;
 public class Seleccion_Menu_Carrito : MonoBehaviour
 {
 
-    static Seleccion_Menu_Carrito SMC;
+    //static Seleccion_Menu_Carrito SMC;
     int Seleccion = 0, eleccion = 0;
     [SerializeField] private GameObject Carrito_pequeno;
     [SerializeField] private GameObject Carrito_mediano;
@@ -29,22 +29,9 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
 
     private void Awake()
     {
-        if (Seleccion_Menu_Carrito.SMC != null)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            Seleccion_Menu_Carrito.SMC = this;
-            DontDestroyOnLoad(this.gameObject);
-        }
         slider.maxValue = Carrito_pequeno.GetComponent<Get_Content_Car>().Get_Counts_Car();
         Set_Skin_Eleccion();
     }
-
-    public int Get_Seleccion() => Seleccion;
-
-    public int Get_Eleccion() => eleccion;
 
     //BTN
     //BTN->Eleccion_Carrito
@@ -54,6 +41,7 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
         Carrito_mediano.SetActive(false);
         Carrito_pequeno.SetActive(true);
         Seleccion = 0;
+        FindObjectOfType<Pase_Conexion_Menu_Gameplay>().Set_Seleccion(Seleccion);
     }
 
     public void BTN_Mediante()
@@ -62,6 +50,7 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
         Carrito_mediano.SetActive(true);
         Carrito_pequeno.SetActive(false);
         Seleccion = 1;
+        FindObjectOfType<Pase_Conexion_Menu_Gameplay>().Set_Seleccion(Seleccion);
     }
 
     public void BTN_Grande()
@@ -70,6 +59,7 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
         Carrito_mediano.SetActive(false);
         Carrito_pequeno.SetActive(false);
         Seleccion = 2;
+        FindObjectOfType<Pase_Conexion_Menu_Gameplay>().Set_Seleccion(Seleccion);
     }
 
     //BTN->Canvas
@@ -102,6 +92,7 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
     {
         eleccion = (int)(value != slider.maxValue ? value : value - 1);
         Set_Skin_Eleccion();
+        FindObjectOfType<Pase_Conexion_Menu_Gameplay>().Set_Eleccion(eleccion);
     }
 
     //Slider_Fin
