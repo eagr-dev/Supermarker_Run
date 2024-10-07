@@ -2670,6 +2670,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   r: {fileID: 893906845}
+  TC: 1
   posicion: 0
 --- !u!1 &682576174
 GameObject:
@@ -5639,6 +5640,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   r: {fileID: 1501726425}
+  TC: 2
   posicion: 0
 --- !u!1 &1443228221
 GameObject:
@@ -6381,6 +6383,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   r: {fileID: 1723527475}
+  TC: 0
   posicion: 0
 --- !u!1 &1613191724
 GameObject:

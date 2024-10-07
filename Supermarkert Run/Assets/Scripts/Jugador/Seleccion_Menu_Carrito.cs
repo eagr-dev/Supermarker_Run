@@ -10,6 +10,7 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
     //static Seleccion_Menu_Carrito SMC;
     Pase_Conexion_Menu_Gameplay.Tipo_Carro Seleccion = Pase_Conexion_Menu_Gameplay.Tipo_Carro.PEQUEÑO;
     int eleccion = 0;
+    GameObject carrito_Actual;
     [SerializeField] private GameObject Carrito_pequeno;
     [SerializeField] private GameObject Carrito_mediano;
     [SerializeField] private GameObject Carrito_grande;
@@ -30,14 +31,19 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
 
     private void Awake()
     {
+        carrito_Actual = Get_Active();
         slider.maxValue = Carrito_pequeno.GetComponent<Get_Content_Car>().Get_Counts_Car();
         Set_Skin_Eleccion();
     }
+
+    public void Set_Seleccion(Pase_Conexion_Menu_Gameplay.Tipo_Carro New_TC) => Seleccion = New_TC;
 
     //BTN
     //BTN->Eleccion_Carrito
     public void BTN_Chico()
     {
+        Set_Skin_Eleccion();
+        slider.value = 0;
         Carrito_grande.SetActive(false);
         Carrito_mediano.SetActive(false);
         Carrito_pequeno.SetActive(true);
@@ -47,6 +53,8 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
 
     public void BTN_Mediante()
     {
+        Set_Skin_Eleccion();
+        slider.value = 0;
         Carrito_grande.SetActive(false);
         Carrito_mediano.SetActive(true);
         Carrito_pequeno.SetActive(false);
@@ -56,6 +64,8 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
 
     public void BTN_Grande()
     {
+        Set_Skin_Eleccion();
+        slider.value = 0;
         Carrito_grande.SetActive(true);
         Carrito_mediano.SetActive(false);
         Carrito_pequeno.SetActive(false);
@@ -80,6 +90,7 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
 
     public void BTN_Aceptar()
     {
+        Set_Skin_Eleccion();
         Carrito_pequeno.GetComponent<Get_Content_Car>().Set_Car(eleccion);
         Carrito_mediano.GetComponent<Get_Content_Car>().Set_Car(eleccion);
         Carrito_grande.GetComponent<Get_Content_Car>().Set_Car(eleccion);
@@ -100,8 +111,7 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
 
     private void Set_Skin_Eleccion()
     {
-        Debug.Log(FindObjectOfType<Pase_Conexion_Menu_Gameplay>().Get_Seleccion());
-        GameObject carrito_Actual = Get_Active();
+        carrito_Actual = Get_Active();
         carrito_Actual.GetComponent<Get_Content_Car>().Set_Car(eleccion);
         Car Info_Car = carrito_Actual.GetComponent<Get_Content_Car>().Get_Car();
 

@@ -1242,6 +1242,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   r: {fileID: 224203440}
+  TC: 2
   posicion: 0
 --- !u!1 &244395305
 GameObject:
@@ -5611,6 +5612,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   r: {fileID: 1098541009}
+  TC: 0
   posicion: 0
 --- !u!1 &1120384311
 GameObject:
@@ -8227,6 +8229,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   r: {fileID: 1657257631}
+  TC: 1
   posicion: 0
 --- !u!1 &1721919088
 GameObject:
@@ -10715,6 +10718,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2249757947970534847}
     - target: {fileID: 909401624415142311, guid: 22a78dbece569ef4d80a101a817f735c, type: 3}
+      propertyPath: TC
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 909401624415142311, guid: 22a78dbece569ef4d80a101a817f735c, type: 3}
       propertyPath: car.Array.size
       value: 2
       objectReference: {fileID: 0}
@@ -10790,6 +10797,10 @@ PrefabInstance:
       propertyPath: r
       value: 
       objectReference: {fileID: 2249757947970534846}
+    - target: {fileID: 2747438017675297323, guid: 22a78dbece569ef4d80a101a817f735c, type: 3}
+      propertyPath: TC
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2747438017675297323, guid: 22a78dbece569ef4d80a101a817f735c, type: 3}
       propertyPath: car.Array.size
       value: 2

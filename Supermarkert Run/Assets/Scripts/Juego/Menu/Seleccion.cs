@@ -44,6 +44,7 @@ public class Seleccion : MonoBehaviour
     {
         Menu_Canvas.SetActive(false);
         Carritos_Canvas.SetActive(true);
+        FindObjectOfType<Pase_Conexion_Menu_Gameplay>().Set_Seleccion(Pase_Conexion_Menu_Gameplay.Tipo_Carro.PEQUEÑO);
     }
 
     public void BTN_Jugar()
