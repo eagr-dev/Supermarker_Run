@@ -8,14 +8,13 @@ public class Seleccion_Carrito : MonoBehaviour
     [SerializeField] private GameObject Carrito_mediano;
     [SerializeField] private GameObject Carrito_grande;
 
-    public enum Seleccion_carrito { PEQUEÑO, MEDIANO, GRANDE, NINGUNO};
+    
 
-    public Seleccion_carrito Carrito = Seleccion_carrito.NINGUNO;
+    private Pase_Conexion_Menu_Gameplay SMC = new Pase_Conexion_Menu_Gameplay();
 
     private void Awake()
     {
-        Pase_Conexion_Menu_Gameplay SMC = FindObjectOfType<Pase_Conexion_Menu_Gameplay>();
-        Carrito = (Seleccion_carrito)SMC.Get_Seleccion();
+        SMC = FindObjectOfType<Pase_Conexion_Menu_Gameplay>();
     }
 
     void Start()
@@ -23,15 +22,15 @@ public class Seleccion_Carrito : MonoBehaviour
         Carrito_pequeno.SetActive(false);
         Carrito_mediano.SetActive(false);
         Carrito_grande.SetActive(false);
-        switch (Carrito)
+        switch (SMC.Get_Seleccion())
         {
-            case Seleccion_carrito.PEQUEÑO:
+            case Pase_Conexion_Menu_Gameplay.Tipo_Carro.PEQUEÑO:
                 Carrito_pequeno.SetActive(true);
                 break;
-            case Seleccion_carrito.MEDIANO:
+            case Pase_Conexion_Menu_Gameplay.Tipo_Carro.MEDIANO:
                 Carrito_mediano.SetActive(true);
                 break;
-            case Seleccion_carrito.GRANDE:
+            case Pase_Conexion_Menu_Gameplay.Tipo_Carro.GRANDE:
                 Carrito_grande.SetActive(true);
                 break;
             default:
