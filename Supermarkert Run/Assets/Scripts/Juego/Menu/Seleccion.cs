@@ -49,7 +49,8 @@ public class Seleccion : MonoBehaviour
 
     public void BTN_Jugar()
     {
-        SceneManager.LoadScene(1);
+        int pos = FindObjectOfType<Seleccion_Mapa>().Get_Seleccion().posicion_mapa;
+        SceneManager.LoadScene(pos);
     }
 
     public void BTN_Salida()

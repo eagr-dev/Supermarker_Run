@@ -15,10 +15,13 @@ MonoBehaviour:
   peso: 50
   velocidad_adicional: 1.7
   cant_limite_carga: 100
+  objetos_actuales: 0
   resistencia_choque: 70
   nombre: Pesado2
   descripcion: Carro pesado idea para misiones largas, gran resistencia pero poca
     velocidad y agilidad
-  imagen: {fileID: 0}
+  requisitos: ninguno
+  cantidad: 0
+  name_mapa: "mapa peque\xF1o"
   skin_car: {fileID: -3033667219593020291, guid: 85adb1390be377c478fca4b1221f0ef5, type: 3}
   precio: 0

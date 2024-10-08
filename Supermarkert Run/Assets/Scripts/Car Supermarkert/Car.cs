@@ -15,7 +15,20 @@ public class Car : ScriptableObject
     public string nombre;
     [TextArea(2,3)]
     public string descripcion;
-    public Sprite imagen;
+    [TextArea(2, 3)]
+    public string requisitos;
+    public string cantidad;
+    public string name_mapa;
+    public string Get_Juegos()
+    {
+        if (name_mapa == null || name_mapa == "") Debug.Log("no especifico requisitos");
+        return FindObjectOfType<Dinero_Obtenido>().Get_Mapa(name_mapa).cantidad_juegos.ToString();
+    }
+
+    public bool Get_Requisito()
+    {
+        return uint.Parse(cantidad) <= FindObjectOfType<Dinero_Obtenido>().Get_Mapa(name_mapa).cantidad_juegos;
+    }
     public Material skin_car;
     public uint precio;
 }

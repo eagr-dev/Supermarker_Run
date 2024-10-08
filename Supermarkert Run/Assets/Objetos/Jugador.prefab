@@ -16,7 +16,6 @@ GameObject:
   - component: {fileID: 2205838068578190394}
   - component: {fileID: 5426851580401399642}
   - component: {fileID: 90189639563291705}
-  - component: {fileID: 2263653055176136101}
   - component: {fileID: 6491318567429919303}
   m_Layer: 0
   m_Name: Jugador
@@ -181,6 +180,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position_Text: 0
   Text: {fileID: 0}
+  Misiones_echas: {fileID: 0}
+  Espacio_Disponible: {fileID: 0}
+  Sin_espacio: {fileID: 0}
+  Muerte: {fileID: 0}
 --- !u!114 &90189639563291705
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -196,20 +199,6 @@ MonoBehaviour:
   Carrito_pequeno: {fileID: 1486667572217463921}
   Carrito_mediano: {fileID: 0}
   Carrito_grande: {fileID: 0}
-  Carrito: 0
---- !u!114 &2263653055176136101
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6725006620304977698}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bda23dc6afa1493418a8ef9c0cd7bc2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Dinero: 0
 --- !u!114 &6491318567429919303
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -316,9 +305,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44065f3601ab28b41abb26e060e9668f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  car:
-  - {fileID: 11400000, guid: 5325ffe561973434c8fce9d4d534b81c, type: 2}
-  material: []
+  r: {fileID: 0}
+  TC: 0
   posicion: 0
 --- !u!4 &2299761520871808715 stripped
 Transform:
@@ -423,9 +411,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44065f3601ab28b41abb26e060e9668f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  car:
-  - {fileID: 11400000, guid: 5325ffe561973434c8fce9d4d534b81c, type: 2}
-  material: []
+  r: {fileID: 0}
+  TC: 0
   posicion: 0
 --- !u!1001 &7481147290808279552
 PrefabInstance:
@@ -525,7 +512,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44065f3601ab28b41abb26e060e9668f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  car:
-  - {fileID: 11400000, guid: 5325ffe561973434c8fce9d4d534b81c, type: 2}
-  material: []
+  r: {fileID: 0}
+  TC: 0
   posicion: 0

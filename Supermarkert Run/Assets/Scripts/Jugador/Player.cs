@@ -136,7 +136,7 @@ public class Player : MonoBehaviour
         {
             Caja caja = other.gameObject.GetComponent<Caja>();
 
-            caja.Visible_Objects(mision.Cantidad_Nivel(), mision.Get_Position());
+            caja.Visible_Objects(mision.Cantidad_Nivel(), mision.Get_Position(),carrito);
             Ganador(caja);
         }else if(other.CompareTag("Mojado"))
         {
@@ -207,6 +207,7 @@ public class Player : MonoBehaviour
     private void Ganador(Caja caja)
     {
         Ganar_canvas.SetActive(caja.Get_Porcentaje() == 10);
+        FindObjectOfType<Dinero_Obtenido>().Get_Mapa(SceneManager.GetActiveScene().name).cantidad_juegos++;
     }
 
 }

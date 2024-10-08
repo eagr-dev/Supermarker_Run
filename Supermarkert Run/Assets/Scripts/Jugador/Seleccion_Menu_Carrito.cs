@@ -29,6 +29,7 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
     [SerializeField] private TMP_Text Limite_Carga;
     [SerializeField] private TMP_Text Resistencia_choque;
     [SerializeField] private TMP_Text Precio;
+    [SerializeField] private TMP_Text Requisitos;
     
     [SerializeField] private TMP_Text Dinero;
     [SerializeField] private bool Comprar;
@@ -119,9 +120,17 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
         DINERO dinero = FindObjectOfType<DINERO>();
         carrito_Actual = Get_Active();
         Car carrito_comprar = carrito_Actual.GetComponent<Get_Content_Car>().Get_Car();
-        if (!dinero.Set_Compra(carrito_comprar.precio))
+
+        if (!dinero.Set_Compra(carrito_comprar.precio) || !carrito_comprar.Get_Requisito())
             StartCoroutine(Tiempo_Vision());
-        carrito_comprar.precio = 0;
+        else
+        {
+            carrito_comprar.Get_Requisito();
+            carrito_comprar.precio = 0;
+            Precio.text = "Precio: " + carrito_comprar.precio.ToString() + ".";
+            BTN_comprar.SetActive(false);
+            BTN_aceptar.SetActive(true);
+        }
         Mostrar_Dinero();
     }
 
@@ -171,6 +180,7 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
         Limite_Carga.text = "Carga: " + Info_Car.cant_limite_carga.ToString() + "Kg.";
         Resistencia_choque.text = "Choque Maximo: " + Info_Car.resistencia_choque.ToString() + "%.";
         Precio.text = "Precio: " + Info_Car.precio.ToString() + ".";
+        Requisitos.text = "Requisitos: " + Info_Car.requisitos + ":" + Info_Car.Get_Juegos() + "/" + Info_Car.cantidad;
     }
     public GameObject Get_Active()
     {
