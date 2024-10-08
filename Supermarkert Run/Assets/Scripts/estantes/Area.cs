@@ -40,14 +40,13 @@ public class Area : MonoBehaviour
         foreach (Transform child in transform)
         {
             child.SetSiblingIndex(Get_List_Rand()[count++]);
-            child.GetComponent<Estante>().Tag = Tag;
         }
 
         count = 0;
 
-        foreach(Transform child in transform)
+        foreach (Transform child in transform)
         {
-            child.GetComponent<Estante>().count_obj = count++;
+            child.GetComponent<Estante>().Set_Product(Tag, count++);
         }
     }
 

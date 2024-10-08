@@ -8554,6 +8554,7 @@ MonoBehaviour:
   Canvas_Eleccion: {fileID: 19061390}
   Canvas_Skin: {fileID: 1327050456}
   BTN_comprar: {fileID: 303925041}
+  BTN_aceptar: {fileID: 2117877154}
   Dinero_Insuficiente: {fileID: 1812877026}
   slider: {fileID: 776092130}
   Nombre: {fileID: 476264755}
@@ -8564,6 +8565,7 @@ MonoBehaviour:
   Resistencia_choque: {fileID: 2113347877}
   Precio: {fileID: 1877892991}
   Dinero: {fileID: 243872175}
+  Comprar: 0
 --- !u!4 &2125438122
 Transform:
   m_ObjectHideFlags: 0

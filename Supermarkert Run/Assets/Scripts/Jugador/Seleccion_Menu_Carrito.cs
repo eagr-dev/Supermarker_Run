@@ -17,6 +17,7 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
     [SerializeField] private GameObject Canvas_Eleccion;
     [SerializeField] private GameObject Canvas_Skin;
     [SerializeField] private GameObject BTN_comprar;
+    [SerializeField] private GameObject BTN_aceptar;
     [SerializeField] private GameObject Dinero_Insuficiente;
 
     [SerializeField] private Slider slider;
@@ -30,6 +31,7 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
     [SerializeField] private TMP_Text Precio;
     
     [SerializeField] private TMP_Text Dinero;
+    [SerializeField] private bool Comprar;
 
 
 
@@ -97,6 +99,7 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
     {
         Canvas_Eleccion.SetActive(true);
         Canvas_Skin.SetActive(false);
+        if (Comprar) slider.value = 0;
     }
 
     //BTN->Skin
@@ -148,8 +151,18 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
         carrito_Actual.GetComponent<Get_Content_Car>().Set_Car(eleccion);
         Car Info_Car = carrito_Actual.GetComponent<Get_Content_Car>().Get_Car();
 
-        if (Info_Car.precio != 0) BTN_comprar.SetActive(true);
-        else BTN_comprar.SetActive(false);
+        if (Info_Car.precio != 0)
+        {
+            BTN_comprar.SetActive(true);
+            BTN_aceptar.SetActive(false);
+            Comprar = true;
+        }
+        else
+        {
+            BTN_comprar.SetActive(false);
+            BTN_aceptar.SetActive(true);
+            Comprar = false;
+        }
 
         Nombre.text = Info_Car.nombre;
         Descripcion.text = Info_Car.descripcion;

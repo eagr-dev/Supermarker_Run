@@ -15,9 +15,10 @@ MonoBehaviour:
   peso: 20
   velocidad_adicional: 3
   cant_limite_carga: 15
+  objetos_actuales: 0
   resistencia_choque: 30
   nombre: carrito liviano
   descripcion: carrito liviano rapido, agil, pero poca resistencia de choque y carga
   imagen: {fileID: 0}
   skin_car: {fileID: 2100000, guid: 8f38aad73fa821e4d8c3d5c7f63ea916, type: 2}
-  precio: 0
+  precio: 1200

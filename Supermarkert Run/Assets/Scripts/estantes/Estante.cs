@@ -8,9 +8,11 @@ public class Estante : MonoBehaviour
 
     public int count_obj = 0;
 
-    void Start()
+    public void Set_Product(Areas.Area_product tag, int producto)
     {
-        objeto = Areas.Objetos[(int)Tag][count_obj];
+        objeto = Areas.Objetos[(int)tag][producto];
+        count_obj = producto;
+        Tag = tag;
     }
 
     public string Get_Object() => objeto;

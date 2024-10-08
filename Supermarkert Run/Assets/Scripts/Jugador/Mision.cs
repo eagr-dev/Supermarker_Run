@@ -70,7 +70,6 @@ public class Mision : MonoBehaviour
     {
         if ((position_Text < Cantidad_Nivel() && obj == object_act) && carro.objetos_actuales <= carro.cant_limite_carga)
         {
-            Debug.Log(position_Text);
             Text.text = objects_mision[position_Text];
             object_act = objects_mision[position_Text];
             position_Text++;
@@ -78,10 +77,11 @@ public class Mision : MonoBehaviour
             Misiones_echas.text = Get_Position().ToString() + "/" + Cantidad_Nivel().ToString();
             Espacio_Disponible.text = "Espacio Disponible: " + carro.objetos_actuales.ToString() + "/" + carro.cant_limite_carga.ToString();
         }
-        else if (obj == object_act && Cantidad_Nivel() <= position_Text)
+        else if (obj == object_act && Cantidad_Nivel() == position_Text)
         {
             carro.objetos_actuales++;
-            Debug.Log("ultimo");
+            position_Text++;
+            Text.text = "";
             Misiones_echas.text = "Ve a la caja";
             Espacio_Disponible.text = "Espacio Disponible: " + carro.objetos_actuales.ToString() + "/" + carro.cant_limite_carga.ToString();
         }
