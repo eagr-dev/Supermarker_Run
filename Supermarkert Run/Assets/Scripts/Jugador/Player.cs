@@ -208,6 +208,7 @@ public class Player : MonoBehaviour
     {
         Ganar_canvas.SetActive(caja.Get_Porcentaje() == 10);
         FindObjectOfType<Dinero_Obtenido>().Get_Mapa(SceneManager.GetActiveScene().name).cantidad_juegos++;
+        FindObjectOfType<Nivel>().nivel++;
     }
 
 }

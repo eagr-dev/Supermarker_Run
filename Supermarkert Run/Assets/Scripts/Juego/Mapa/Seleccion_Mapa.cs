@@ -19,7 +19,7 @@ public class Seleccion_Mapa : MonoBehaviour
     [SerializeField] private Image Muestra;
 
     
-    private Dinero_Obtenido DO = new();
+    private Dinero_Obtenido DO;
 
     
     private int seleccion, seleccion_actual;

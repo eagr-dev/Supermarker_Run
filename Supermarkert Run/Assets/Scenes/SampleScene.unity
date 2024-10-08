@@ -6784,7 +6784,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 831af8e48e0446248b43c2825b3c027d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Valor_mapa: 200
+  mapas: []
 --- !u!4 &1326527025
 Transform:
   m_ObjectHideFlags: 0
@@ -11600,6 +11600,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2263653055176136101, guid: 22a78dbece569ef4d80a101a817f735c, type: 3}
+    - {fileID: 6491318567429919303, guid: 22a78dbece569ef4d80a101a817f735c, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
