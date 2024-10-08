@@ -10,7 +10,7 @@ public class Seleccion_Carrito : MonoBehaviour
 
     
 
-    private Pase_Conexion_Menu_Gameplay SMC = new Pase_Conexion_Menu_Gameplay();
+    private Pase_Conexion_Menu_Gameplay SMC;
 
     private void Awake()
     {

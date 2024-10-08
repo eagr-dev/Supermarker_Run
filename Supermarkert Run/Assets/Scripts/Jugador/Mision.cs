@@ -8,8 +8,12 @@ public class Mision : MonoBehaviour
     private List<string> objects_mision = new List<string>();
     [SerializeField]private int position_Text = 0;
     public TMP_Text Text;
+    public TMP_Text Misiones_echas;
+    public TMP_Text Espacio_Disponible;
+    public GameObject Sin_espacio;
+    public GameObject Muerte;
     private string object_act = "";
-
+    Car carro;
 
     void Awake()
     {
@@ -21,6 +25,12 @@ public class Mision : MonoBehaviour
             Set_Object(objects_mision);
             New_Text_In_TextMesh();
         }
+    }
+
+    private void Start()
+    {
+        carro = FindObjectOfType<Get_Content_Car>().Get_Car();
+        Espacio_Disponible.text = "Espacio Disponible: " + carro.objetos_actuales.ToString() + "/" + carro.cant_limite_carga.ToString();
     }
 
     public int Cantidad_Nivel()
@@ -42,7 +52,7 @@ public class Mision : MonoBehaviour
                 obj_m.Add(obj);
                 i++;
             }
-            if (i >= 3) return;
+            if (i >= Cantidad_Nivel()) return;
         }
     }
 
@@ -58,12 +68,38 @@ public class Mision : MonoBehaviour
 
     public void New_Text_In_TextMesh(string obj)
     {
-        if((position_Text < Cantidad_Nivel() && obj == object_act) && Text != null)
+        if ((position_Text < Cantidad_Nivel() && obj == object_act) && carro.objetos_actuales <= carro.cant_limite_carga)
         {
+            Debug.Log(position_Text);
             Text.text = objects_mision[position_Text];
             object_act = objects_mision[position_Text];
             position_Text++;
+            carro.objetos_actuales++;
+            Misiones_echas.text = Get_Position().ToString() + "/" + Cantidad_Nivel().ToString();
+            Espacio_Disponible.text = "Espacio Disponible: " + carro.objetos_actuales.ToString() + "/" + carro.cant_limite_carga.ToString();
         }
+        else if (obj == object_act && Cantidad_Nivel() <= position_Text)
+        {
+            carro.objetos_actuales++;
+            Debug.Log("ultimo");
+            Misiones_echas.text = "Ve a la caja";
+            Espacio_Disponible.text = "Espacio Disponible: " + carro.objetos_actuales.ToString() + "/" + carro.cant_limite_carga.ToString();
+        }
+
+        else if (carro.objetos_actuales > carro.cant_limite_carga)
+            StartCoroutine(Tiempo_Aparicion());
+
+
+    }
+
+    private IEnumerator Tiempo_Aparicion()
+    {
+        Sin_espacio.SetActive(true);
+        yield return new WaitForSeconds(1);
+        carro.objetos_actuales = 0;
+        Sin_espacio.SetActive(false);
+        Muerte.SetActive(true);
+
     }
 
     private void New_Text_In_TextMesh()

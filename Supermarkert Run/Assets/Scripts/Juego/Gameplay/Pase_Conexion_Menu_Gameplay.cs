@@ -23,6 +23,13 @@ public class Pase_Conexion_Menu_Gameplay : MonoBehaviour
             Pase_Conexion_Menu_Gameplay.conector = this;
             DontDestroyOnLoad(this.gameObject);
         }
+
+        for(int i = 0; i < cars_Peq.Count; i++)
+        {
+            cars_Peq[i].objetos_actuales = 0;
+            cars_Med[i].objetos_actuales = 0;
+            cars_Gra[i].objetos_actuales = 0;
+        }
     }
 
     public Tipo_Carro Get_Seleccion() => sel;

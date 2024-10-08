@@ -24,6 +24,7 @@ public class Dinero_Obtenido : MonoBehaviour
     public void BTN_X2()
     {
         Dinero.Set_Agregar((uint)(Get_Dinero() * X2));
+        SceneManager.LoadScene(0);
     }
 
     public void BTN_Money()

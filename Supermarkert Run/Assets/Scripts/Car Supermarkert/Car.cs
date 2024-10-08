@@ -8,6 +8,7 @@ public class Car : ScriptableObject
     public float peso;
     public float velocidad_adicional;
     public int cant_limite_carga;
+    public int objetos_actuales = 0;
     //porcentaje necesario de velocidad para accidente
     public int resistencia_choque;
 

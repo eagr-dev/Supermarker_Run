@@ -9,6 +9,7 @@ public class Tiempo : MonoBehaviour
     private int minutos, segundos = 0;
     private float contador;
     [SerializeField] private TMP_Text Texto;
+    public GameObject Muerte;
     void Start()
     {
         if(FindObjectOfType<Nivel>().nivel < 1000)
@@ -29,7 +30,6 @@ public class Tiempo : MonoBehaviour
     {
         uint nivel = FindObjectOfType<Nivel>().nivel;
         uint resultado = (nivel / 100);
-        Debug.Log(resultado);
         return resultado;
     }
     private void Actualizacion()
@@ -57,6 +57,7 @@ public class Tiempo : MonoBehaviour
         minutoss = minutos < 10 ? "0" + minutos.ToString() : minutos.ToString();
         segundoss = segundos < 10 ? "0" + segundos.ToString() : segundos.ToString();
         Texto.text = "Tiempo : " + minutoss + " : " + segundoss;
+        if (minutos <= 0 && segundos <= 0) Muerte.SetActive(true);
     }
 
     public int Get_Minutos() => minutos;

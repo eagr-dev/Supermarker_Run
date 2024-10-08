@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -149,14 +150,12 @@ public class Player : MonoBehaviour
         {
             if (velocidad_porcentual >= resistencia_porcentual)
             {
-                Debug.Log("Choque");
                 if (Efecto != null)
                 {
                     switch (Efecto.Get_Efecto())
                     {
                         case true:
                             Efecto.Efecto();
-                            Debug.Log("Proteccion usada");
                             Retroceso(30, speed * 2, collision);
                             StopAllCoroutines();
                             break;

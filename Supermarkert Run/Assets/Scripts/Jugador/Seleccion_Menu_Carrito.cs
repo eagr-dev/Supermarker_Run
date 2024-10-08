@@ -16,6 +16,8 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
     [SerializeField] private GameObject Carrito_grande;
     [SerializeField] private GameObject Canvas_Eleccion;
     [SerializeField] private GameObject Canvas_Skin;
+    [SerializeField] private GameObject BTN_comprar;
+    [SerializeField] private GameObject Dinero_Insuficiente;
 
     [SerializeField] private Slider slider;
 
@@ -26,14 +28,19 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
     [SerializeField] private TMP_Text Limite_Carga;
     [SerializeField] private TMP_Text Resistencia_choque;
     [SerializeField] private TMP_Text Precio;
+    
+    [SerializeField] private TMP_Text Dinero;
 
 
 
     private void Awake()
     {
+        Pase_Conexion_Menu_Gameplay pinit = FindObjectOfType<Pase_Conexion_Menu_Gameplay>();
+        Set_Car_Menu(pinit.Get_Seleccion(),pinit.Get_Eleccion());
         carrito_Actual = Get_Active();
         slider.maxValue = Carrito_pequeno.GetComponent<Get_Content_Car>().Get_Counts_Car();
         Set_Skin_Eleccion();
+        Mostrar_Dinero();
     }
 
     public void Set_Seleccion(Pase_Conexion_Menu_Gameplay.Tipo_Carro New_TC) => Seleccion = New_TC;
@@ -42,6 +49,8 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
     //BTN->Eleccion_Carrito
     public void BTN_Chico()
     {
+        if (Seleccion != Pase_Conexion_Menu_Gameplay.Tipo_Carro.PEQUEÑO) slider.value = 0;
+        else slider.value = eleccion;
         Set_Skin_Eleccion();
         slider.value = 0;
         Carrito_grande.SetActive(false);
@@ -53,6 +62,8 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
 
     public void BTN_Mediante()
     {
+        if (Seleccion != Pase_Conexion_Menu_Gameplay.Tipo_Carro.MEDIANO) slider.value = 0;
+        else slider.value = eleccion;
         Set_Skin_Eleccion();
         slider.value = 0;
         Carrito_grande.SetActive(false);
@@ -64,6 +75,8 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
 
     public void BTN_Grande()
     {
+        if (Seleccion != Pase_Conexion_Menu_Gameplay.Tipo_Carro.GRANDE) slider.value = 0;
+        else slider.value = eleccion;
         Set_Skin_Eleccion();
         slider.value = 0;
         Carrito_grande.SetActive(true);
@@ -96,6 +109,26 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
         Carrito_grande.GetComponent<Get_Content_Car>().Set_Car(eleccion);
     }
 
+    //BTN->Compra
+
+    public void BTN_Comprar()
+    {
+        DINERO dinero = FindObjectOfType<DINERO>();
+        carrito_Actual = Get_Active();
+        Car carrito_comprar = carrito_Actual.GetComponent<Get_Content_Car>().Get_Car();
+        if (!dinero.Set_Compra(carrito_comprar.precio))
+            StartCoroutine(Tiempo_Vision());
+        carrito_comprar.precio = 0;
+        Mostrar_Dinero();
+    }
+
+    private IEnumerator Tiempo_Vision()
+    {
+        Dinero_Insuficiente.SetActive(true);
+        yield return new WaitForSeconds(1);
+        Dinero_Insuficiente.SetActive(false);
+    }
+
     //BTN_Fin
 
     //Slider
@@ -115,6 +148,9 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
         carrito_Actual.GetComponent<Get_Content_Car>().Set_Car(eleccion);
         Car Info_Car = carrito_Actual.GetComponent<Get_Content_Car>().Get_Car();
 
+        if (Info_Car.precio != 0) BTN_comprar.SetActive(true);
+        else BTN_comprar.SetActive(false);
+
         Nombre.text = Info_Car.nombre;
         Descripcion.text = Info_Car.descripcion;
         Peso.text = "Peso: " + Info_Car.peso.ToString() + "Kg.";
@@ -133,4 +169,27 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
 
         return retorno;
     }
+
+    public void Set_Car_Menu(Pase_Conexion_Menu_Gameplay.Tipo_Carro TC, int posicion)
+    {
+        eleccion = posicion;
+        Seleccion = TC;
+        switch(TC)
+        {
+            case Pase_Conexion_Menu_Gameplay.Tipo_Carro.PEQUEÑO:
+                Carrito_pequeno.SetActive(true);
+                Carrito_pequeno.GetComponent<Get_Content_Car>().Set_Car(eleccion);
+                break;
+            case Pase_Conexion_Menu_Gameplay.Tipo_Carro.MEDIANO:
+                Carrito_mediano.SetActive(true);
+                Carrito_mediano.GetComponent<Get_Content_Car>().Set_Car(eleccion);
+                break;
+            case Pase_Conexion_Menu_Gameplay.Tipo_Carro.GRANDE:
+                Carrito_grande.SetActive(true);
+                Carrito_grande.GetComponent<Get_Content_Car>().Set_Car(eleccion);
+                break;
+        }
+    }
+
+    private void Mostrar_Dinero() => Dinero.text = "Dinero: " + FindObjectOfType<DINERO>().Get_Dinero();
 }

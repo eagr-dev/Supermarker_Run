@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Get_Content_Car : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class Get_Content_Car : MonoBehaviour
     [SerializeField]MeshRenderer r;
     public Pase_Conexion_Menu_Gameplay.Tipo_Carro TC;
     public int posicion;
+    Player player;
     public Car Get_Car() => car[posicion];
 
     public int Get_Counts_Car() => car.Count;

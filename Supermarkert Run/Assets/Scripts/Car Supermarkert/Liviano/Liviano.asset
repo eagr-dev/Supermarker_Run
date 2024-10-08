@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   peso: 20
   velocidad_adicional: 3
-  cant_limite_carga: 10
+  cant_limite_carga: 15
   resistencia_choque: 30
   nombre: carrito liviano
   descripcion: carrito liviano rapido, agil, pero poca resistencia de choque y carga
