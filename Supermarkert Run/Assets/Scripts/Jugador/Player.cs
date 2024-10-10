@@ -136,7 +136,7 @@ public class Player : MonoBehaviour
         {
             Caja caja = other.gameObject.GetComponent<Caja>();
 
-            caja.Visible_Objects(mision.Cantidad_Nivel(), mision.Get_Position(),carrito);
+            caja.Visible_Objects(mision.Cantidad_Nivel(), mision.Get_Position(),carrito, 1);
             Ganador(caja);
         }else if(other.CompareTag("Mojado"))
         {

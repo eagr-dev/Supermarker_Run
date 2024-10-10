@@ -13,4 +13,5 @@ public class Mapa : ScriptableObject
     public int precio;
     public int Valor_mapa;
     public uint cantidad_juegos;
+    public float X_minimo, X_maximo, Y_minimo, Y_maximo;
 }

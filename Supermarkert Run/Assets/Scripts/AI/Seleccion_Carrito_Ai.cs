@@ -11,6 +11,5 @@ public class Seleccion_Carrito_Ai : MonoBehaviour
         Carritos[pos].SetActive(true);
         int posmat = Random.Range(0, Carritos[pos].GetComponent<Get_Content_Car>().Get_Counts_Car());
         Carritos[pos].GetComponent<Get_Content_Car>().Set_Car(posmat);
-        Debug.Log($"{pos}\n{posmat}");
     }
 }
