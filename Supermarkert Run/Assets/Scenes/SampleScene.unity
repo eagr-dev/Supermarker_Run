@@ -5295,13 +5295,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.29345658, y: -0, z: -0, w: 0.9559725}
+  m_LocalRotation: {x: 0.30070576, y: 0, z: 0, w: 0.953717}
   m_LocalPosition: {x: 0, y: 6.79, z: -17.31}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 34.13, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 35, y: 0, z: 0}
 --- !u!1 &971796670
 GameObject:
   m_ObjectHideFlags: 0
@@ -6755,51 +6755,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1277558831}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1326527023
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1326527025}
-  - component: {fileID: 1326527024}
-  m_Layer: 0
-  m_Name: mapa
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1326527024
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1326527023}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 831af8e48e0446248b43c2825b3c027d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mapas: []
---- !u!4 &1326527025
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1326527023}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 411.1921, y: 155.92157, z: -4.755707}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1329002555 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7715569973548932945, guid: 22a78dbece569ef4d80a101a817f735c, type: 3}
@@ -7201,10 +7156,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   navegador: {fileID: 1359426490}
   objecto_seguir: {fileID: 394401256}
-  X_minimo: -48
-  X_maximo: 49
-  Y_minimo: -60
-  Y_maximo: 38
 --- !u!114 &1359426492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7847,8 +7798,9 @@ GameObject:
   - component: {fileID: 1452680638}
   - component: {fileID: 1452680637}
   - component: {fileID: 1452680641}
+  - component: {fileID: 1452680642}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Piso
   m_TagString: Piso
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7950,9 +7902,9 @@ AudioSource:
   m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 9ab6ca517cc5de045bc1d8503b4799b1, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 43ff99d223408af4bacfc03e38bc922b, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.6
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -8036,6 +7988,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1452680642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1452680636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05e73be68441ffe4d912950f60c9075f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Obstaculo: {fileID: 4337457}
+  min_obj: 1
+  max_obj: 10
 --- !u!1 &1473864282
 GameObject:
   m_ObjectHideFlags: 0
@@ -8482,7 +8449,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1326527024}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Dinero_Obtenido, Assembly-CSharp
         m_MethodName: BTN_X2
         m_Mode: 1
@@ -12159,7 +12126,7 @@ PrefabInstance:
     - target: {fileID: 2908453345835521422, guid: 1040f060447b730438c5785c2cf5b89a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1326527024}
+      objectReference: {fileID: 0}
     - target: {fileID: 2908453345835521422, guid: 1040f060447b730438c5785c2cf5b89a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: BTN_Money
@@ -12200,7 +12167,6 @@ SceneRoots:
   - {fileID: 963194228}
   - {fileID: 2249757947970534842}
   - {fileID: 705507995}
-  - {fileID: 1452680640}
   - {fileID: 487341771282764695}
   - {fileID: 798034672}
   - {fileID: 41533405}
@@ -12211,4 +12177,4 @@ SceneRoots:
   - {fileID: 1359426489}
   - {fileID: 272712141}
   - {fileID: 394401260}
-  - {fileID: 1326527025}
+  - {fileID: 1452680640}

@@ -13,9 +13,13 @@ MonoBehaviour:
   m_Name: Mapa_Mediano
   m_EditorClassIdentifier: 
   posicion_mapa: 1
-  nombre: Mapa_Mediano
+  nombre: Mapa mediano
   descripcion: "Un mapa un poco mas largo que el peque\xF1o"
   screen_map: {fileID: 0}
   precio: 100
   Valor_mapa: 300
   cantidad_juegos: 0
+  X_minimo: -45.9
+  X_maximo: 37.6
+  Y_minimo: -48
+  Y_maximo: 35

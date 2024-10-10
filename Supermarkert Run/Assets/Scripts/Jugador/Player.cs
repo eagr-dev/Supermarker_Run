@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     public Joystick joystick;
     [SerializeField]private GameObject player_object;
     [SerializeField]private new GameObject camera;
-    Vector3 position_camera = new Vector3(0,4,-7);
+    Vector3 position_camera = new Vector3(0,7,-10);
     private Mision mision;
     private Get_Content_Car carrito_contenido;
     private Car carrito;
