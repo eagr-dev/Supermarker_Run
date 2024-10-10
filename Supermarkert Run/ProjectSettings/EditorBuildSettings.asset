@@ -9,6 +9,15 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu_principal.unity
     guid: 9d1657181207aa04eb7749a9d2698c08
   - enabled: 1
+    path: "Assets/Scenes/Mapa peque\xF1o.unity"
+    guid: 351f20eeed7b42e4a94b14faa87415f7
+  - enabled: 1
+    path: Assets/Scenes/Mapa mediano.unity
+    guid: 1124f064acda6bb4ca6e032780c047f4
+  - enabled: 1
+    path: Assets/Scenes/Mapa grande.unity
+    guid: 0833eabde017be54e9bd909f1b4e6cb4
+  - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects: {}
