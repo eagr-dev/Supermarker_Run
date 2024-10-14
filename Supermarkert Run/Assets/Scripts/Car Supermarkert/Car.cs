@@ -11,6 +11,11 @@ public class Car : ScriptableObject
     public int objetos_actuales = 0;
     //porcentaje necesario de velocidad para accidente
     public int resistencia_choque;
+    //maximo
+    public float peso_maximo;
+    public float velocidad_maxima;
+    public int maximo_a_cargar;
+    public int maxima_resistencia;
 
     public string nombre;
     [TextArea(2,3)]

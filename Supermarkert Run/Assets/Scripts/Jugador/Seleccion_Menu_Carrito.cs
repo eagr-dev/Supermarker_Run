@@ -19,6 +19,7 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
     [SerializeField] private GameObject BTN_comprar;
     [SerializeField] private GameObject BTN_aceptar;
     [SerializeField] private GameObject Dinero_Insuficiente;
+    [SerializeField] private GameObject Canvas_Personalizar;
 
     [SerializeField] private Slider slider;
 
@@ -141,6 +142,28 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
         Dinero_Insuficiente.SetActive(false);
     }
 
+    //BTN->Personalizar
+
+    public void BTN_Personalizar()
+    {
+        Canvas_Eleccion.SetActive(false);
+        Canvas_Personalizar.SetActive(true);
+        eleccion = Get_Active().GetComponent<Get_Content_Car>().Get_Counts_Car() - 1;
+        Set_Skin_Eleccion();
+        FindObjectOfType<Personalizacion>().Guardado();
+    }
+
+    public void BTN_Salida()
+    {
+        if(Get_Active().GetComponent<Get_Content_Car>().Get_Car().precio != 0)
+        {
+            FindObjectOfType<Personalizacion>().Restar();
+        }
+        Canvas_Eleccion.SetActive(true);
+        Canvas_Personalizar.SetActive(false);
+
+    }
+
     //BTN_Fin
 
     //Slider
@@ -154,7 +177,7 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
 
     //Slider_Fin
 
-    private void Set_Skin_Eleccion()
+    public void Set_Skin_Eleccion()
     {
         carrito_Actual = Get_Active();
         carrito_Actual.GetComponent<Get_Content_Car>().Set_Car(eleccion);
@@ -197,6 +220,11 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
     {
         eleccion = posicion;
         Seleccion = TC;
+        Carrito_pequeno.SetActive(false);
+        Carrito_mediano.SetActive(false);
+        Carrito_grande.SetActive(false);
+
+
         switch(TC)
         {
             case Pase_Conexion_Menu_Gameplay.Tipo_Carro.PEQUEÑO:

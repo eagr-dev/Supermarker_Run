@@ -7,4 +7,7 @@ public class Contenido
 {
     public uint dinero;
     public uint nivel;
+    public Material materia;
+    public int posicion;
+    public Pase_Conexion_Menu_Gameplay.Tipo_Carro Tipo_Carro;
 }

@@ -5,7 +5,6 @@ using UnityEngine;
 public class Obstaculos : MonoBehaviour
 {
     [SerializeField] private GameObject Obstaculo;
-    private readonly List<GameObject> OBJS;
     [SerializeField] int min_obj, max_obj;
     private Mapa mapa_content;
 
@@ -15,14 +14,12 @@ public class Obstaculos : MonoBehaviour
         Create_OBJ();
     }
 
-    private void Posicion()
+    private Vector3 Posicion()
     {
-        foreach(GameObject obj in OBJS)
-        {
-            float X = Random.Range(mapa_content.X_minimo, mapa_content.X_maximo);
-            float Y = Random.Range(mapa_content.Y_minimo, mapa_content.Y_maximo);
-            obj.transform.position = new Vector3(X,0.2f,Y);
-        }
+        
+         float X = Random.Range(mapa_content.X_minimo, mapa_content.X_maximo);
+         float Y = Random.Range(mapa_content.Y_minimo, mapa_content.Y_maximo);
+         return new Vector3(X,0.2f,Y);
     }
 
     private void Create_OBJ()
@@ -32,8 +29,7 @@ public class Obstaculos : MonoBehaviour
         for(int i = 0; i < N_crear_OBJ; i++)
         {
             Instantiate(Obstaculo);
-            OBJS.Add(Obstaculo);
+            Obstaculo.transform.position = Posicion();
         }
-        Posicion();
     }
 }

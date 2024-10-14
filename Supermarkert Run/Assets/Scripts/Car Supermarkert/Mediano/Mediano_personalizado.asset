@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5fdc222640aea6240990c32f14f08ede, type: 3}
-  m_Name: Liviano
+  m_Name: Mediano_personalizado
   m_EditorClassIdentifier: 
-  peso: 20
-  velocidad_adicional: 3
-  cant_limite_carga: 10
+  peso: 0
+  velocidad_adicional: 0
+  cant_limite_carga: 0
   objetos_actuales: 0
-  resistencia_choque: 30
-  peso_maximo: 0
-  velocidad_maxima: 0
-  maximo_a_cargar: 0
-  maxima_resistencia: 0
-  nombre: carrito liviano
-  descripcion: carrito liviano rapido, agil, pero poca resistencia de choque y carga
-  requisitos: ninguno
+  resistencia_choque: 0
+  peso_maximo: 40
+  velocidad_maxima: 7
+  maximo_a_cargar: 20
+  maxima_resistencia: 60
+  nombre: Personalizado
+  descripcion: Carro mediano Personalizado
+  requisitos: 0
   cantidad: 0
   name_mapa: "Mapa peque\xF1o"
-  skin_car: {fileID: 2100000, guid: 8f38aad73fa821e4d8c3d5c7f63ea916, type: 2}
+  skin_car: {fileID: -3033667219593020291, guid: 531c3dc82f703834e9820323b3e01a1d, type: 3}
   precio: 0
