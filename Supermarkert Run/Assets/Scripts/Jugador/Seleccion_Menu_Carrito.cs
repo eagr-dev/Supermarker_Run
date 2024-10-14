@@ -31,18 +31,27 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
     [SerializeField] private TMP_Text Resistencia_choque;
     [SerializeField] private TMP_Text Precio;
     [SerializeField] private TMP_Text Requisitos;
-    
+
     [SerializeField] private TMP_Text Dinero;
     [SerializeField] private bool Comprar;
 
 
 
-    private void Awake()
+    /*private void Awake()
     {
-        Pase_Conexion_Menu_Gameplay pinit = FindObjectOfType<Pase_Conexion_Menu_Gameplay>();
-        Set_Car_Menu(pinit.Get_Seleccion(),pinit.Get_Eleccion());
+        //Pase_Conexion_Menu_Gameplay pinit = FindObjectOfType<Pase_Conexion_Menu_Gameplay>();
+        //Set_Car_Menu(pinit.Get_Seleccion(),pinit.Get_Eleccion());
         carrito_Actual = Get_Active();
         slider.maxValue = Carrito_pequeno.GetComponent<Get_Content_Car>().Get_Counts_Car();
+        Set_Skin_Eleccion();
+        Mostrar_Dinero();
+    } */
+
+    public void Inicializador()
+    {
+        carrito_Actual = Get_Active();
+        slider.maxValue = Carrito_pequeno.GetComponent<Get_Content_Car>().Get_Counts_Car();
+        carrito_Actual.GetComponent<Get_Content_Car>().Set_Car(eleccion);
         Set_Skin_Eleccion();
         Mostrar_Dinero();
     }
@@ -181,6 +190,7 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
     {
         carrito_Actual = Get_Active();
         carrito_Actual.GetComponent<Get_Content_Car>().Set_Car(eleccion);
+        FindObjectOfType<Pase_Conexion_Menu_Gameplay>().Set_Eleccion(eleccion);
         Car Info_Car = carrito_Actual.GetComponent<Get_Content_Car>().Get_Car();
 
         if (Info_Car.precio != 0)
@@ -240,6 +250,7 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
                 Carrito_grande.GetComponent<Get_Content_Car>().Set_Car(eleccion);
                 break;
         }
+
     }
 
     private void Mostrar_Dinero() => Dinero.text = "Dinero: " + FindObjectOfType<DINERO>().Get_Dinero();

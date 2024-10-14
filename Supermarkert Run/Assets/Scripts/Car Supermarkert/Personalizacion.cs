@@ -20,11 +20,6 @@ public class Personalizacion : MonoBehaviour
     {
         SMC = FindObjectOfType<Seleccion_Menu_Carrito>();
     }
-
-    private void Start()
-    {
-        carro = SMC.Get_Active().GetComponent<Get_Content_Car>().Get_Car();
-    }
     public void Rojo(float valor) 
     {
         rojo = valor;
@@ -47,12 +42,13 @@ public class Personalizacion : MonoBehaviour
     }
     private void Calculo()
     {
+        carro = SMC.Get_Active().GetComponent<Get_Content_Car>().Get_Car();
         carro.skin_car.color = new Color(rojo, verde, azul, alfa);
 
-        carro.peso = ((int)(rojo / 100) * carro.peso_maximo);
-        carro.velocidad_adicional = ((int)(verde / 100) * carro.velocidad_maxima);
-        carro.cant_limite_carga = (int)((int)(azul / 100) * carro.maximo_a_cargar);
-        carro.resistencia_choque = ((int)(alfa / 100) * carro.maxima_resistencia);
+        carro.peso = ((int)(rojo * carro.peso_maximo) % 100);
+        carro.velocidad_adicional = ((int)(verde * carro.velocidad_maxima) % 100);
+        carro.cant_limite_carga = (int)((int)(azul * carro.maximo_a_cargar) % 100);
+        carro.resistencia_choque = ((int)(alfa * carro.maxima_resistencia) % 100);
 
         carro.precio = (uint)((rojo + verde + azul + alfa) * Max);
 
@@ -66,6 +62,7 @@ public class Personalizacion : MonoBehaviour
 
     public void Guardado()
     {
+        carro = SMC.Get_Active().GetComponent<Get_Content_Car>().Get_Car();
         Grojo = rojo;
         Gazul = azul;
         Gverde = verde;
@@ -74,6 +71,7 @@ public class Personalizacion : MonoBehaviour
 
     public void Restar()
     {
+        carro = SMC.Get_Active().GetComponent<Get_Content_Car>().Get_Car();
         rojo = Grojo;
         verde = Gverde;
         azul = Gazul;

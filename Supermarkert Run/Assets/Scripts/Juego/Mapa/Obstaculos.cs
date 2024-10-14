@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Obstaculos : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class Obstaculos : MonoBehaviour
 
     private void Awake()
     {
-        mapa_content = FindObjectOfType<Mapa>();
+        mapa_content = FindObjectOfType<Dinero_Obtenido>().Get_Mapa(SceneManager.GetActiveScene().buildIndex);
         Create_OBJ();
     }
 

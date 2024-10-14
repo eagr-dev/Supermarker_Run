@@ -24,8 +24,7 @@ public class Sistema_Guardado : MonoBehaviour
 
     private void Start()
     {
-        carro = FindObjectOfType<Get_Content_Car>().Get_Car();
-        Cargar();   
+        Cargar();
     }
 
     public void Cargar()
@@ -40,12 +39,16 @@ public class Sistema_Guardado : MonoBehaviour
             Dinero.Set_Agregar(contenido_Leido.dinero);
             _Nivel.nivel = contenido_Leido.nivel;
             Nivel.text = "Nivel: " + _Nivel.nivel.ToString();
+
+            Seleccion_Menu_Carrito selec = FindObjectOfType<Seleccion_Menu_Carrito>();
+            selec.Set_Car_Menu(PCMG.Get_Seleccion(), _posicion);
+            selec.Inicializador();
+            carro = selec.Get_Active().GetComponent<Get_Content_Car>().Get_Car();
             carro.skin_car = contenido_Leido.materia;
-            FindObjectOfType<Seleccion_Menu_Carrito>().Set_Car_Menu(PCMG.Get_Seleccion(), _posicion);
         }
         else
         {
-            _Nivel.nivel = 0;
+            _Nivel.nivel = 1;
         }
     }
 

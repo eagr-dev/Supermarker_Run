@@ -21,7 +21,7 @@ MonoBehaviour:
   velocidad_maxima: 7
   maximo_a_cargar: 20
   maxima_resistencia: 60
-  nombre: Personalizado
+  nombre: Med P
   descripcion: Carro mediano Personalizado
   requisitos: 0
   cantidad: 0

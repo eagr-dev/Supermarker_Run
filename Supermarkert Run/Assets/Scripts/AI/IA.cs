@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 public class IA : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class IA : MonoBehaviour
 
     private void Awake()
     {
-        mapa_content = FindObjectOfType<Mapa>();
+        mapa_content = FindObjectOfType<Dinero_Obtenido>().Get_Mapa(SceneManager.GetActiveScene().buildIndex);
     }
 
     // Start is called before the first frame update
