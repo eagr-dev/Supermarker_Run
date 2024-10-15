@@ -254,4 +254,10 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
     }
 
     private void Mostrar_Dinero() => Dinero.text = "Dinero: " + FindObjectOfType<DINERO>().Get_Dinero();
+
+    private void OnApplicationQuit()
+    {
+        if (Canvas_Personalizar.activeInHierarchy) FindObjectOfType<Personalizacion>().Restar();
+        FindObjectOfType<Sistema_Guardado>().Guardar();
+    }
 }

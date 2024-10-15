@@ -5,33 +5,21 @@ using UnityEngine;
 public class Area : MonoBehaviour
 {
     public Areas.Area_product Tag;
+    public List<GameObject> Lista_Objetos;
 
     private List<int> Get_List_Rand()
     {
-        List<int> list_return = new List<int>();
-        int count = 0;
+        List<int> list_return = new() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
-        while (count < 9)
+        for(int i = 0; i < 9;i++)
         {
-            int r = Random.Range(0, 9);
-            if (!Find(r, list_return))
-            {
-                list_return.Add(r);
-                count++;
-            }
+            int random = Random.Range(0, 9);
+            int aux = list_return[i];
+            list_return[i] = list_return[random];
+            list_return[random] = aux; 
         }
 
         return list_return;
-    }
-
-    private bool Find(int number, List<int> list_number)
-    {
-        foreach (int i in list_number)
-        {
-            if (i == number)
-                return true;
-        }
-        return false;
     }
 
     public void Acomodar_Estantes()
@@ -46,7 +34,7 @@ public class Area : MonoBehaviour
 
         foreach (Transform child in transform)
         {
-            child.GetComponent<Estante>().Set_Product(Tag, count++);
+            child.GetComponent<Estante>().Set_Product(Tag, count, Lista_Objetos[count++]);
         }
     }
 

@@ -26,7 +26,6 @@ public class Obstaculos : MonoBehaviour
     private void Create_OBJ()
     {
         int N_crear_OBJ = (int)Random.Range(min_obj, max_obj);
-        Debug.Log(N_crear_OBJ);
         for(int i = 0; i < N_crear_OBJ; i++)
         {
             Instantiate(Obstaculo);
