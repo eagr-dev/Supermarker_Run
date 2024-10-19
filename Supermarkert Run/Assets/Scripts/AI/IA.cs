@@ -13,7 +13,7 @@ public class IA : MonoBehaviour
 
     private void Awake()
     {
-        mapa_content = FindObjectOfType<Dinero_Obtenido>().Get_Mapa(SceneManager.GetActiveScene().buildIndex);
+        mapa_content = FindObjectOfType<Dinero_Obtenido>().Get_Mapa(SceneManager.GetActiveScene().name);
     }
 
     // Start is called before the first frame update

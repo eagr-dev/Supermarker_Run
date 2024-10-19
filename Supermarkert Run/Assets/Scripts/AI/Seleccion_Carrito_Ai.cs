@@ -9,7 +9,7 @@ public class Seleccion_Carrito_Ai : MonoBehaviour
     {
         int pos = Random.Range(0, 2);
         Carritos[pos].SetActive(true);
-        int posmat = Random.Range(0, Carritos[pos].GetComponent<Get_Content_Car>().Get_Counts_Car());
+        int posmat = Random.Range(0, Carritos[pos].GetComponent<Get_Content_Car>().Get_Counts_Car() - 1);
         Carritos[pos].GetComponent<Get_Content_Car>().Set_Car(posmat);
     }
 }

@@ -19,3 +19,7 @@ MonoBehaviour:
   precio: 0
   Valor_mapa: 200
   cantidad_juegos: 0
+  X_minimo: -46
+  X_maximo: 0.6
+  Y_minimo: -2
+  Y_maximo: 36

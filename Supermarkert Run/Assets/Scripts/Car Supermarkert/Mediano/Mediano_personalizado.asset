@@ -26,5 +26,5 @@ MonoBehaviour:
   requisitos: 0
   cantidad: 0
   name_mapa: "Mapa peque\xF1o"
-  skin_car: {fileID: -3033667219593020291, guid: 531c3dc82f703834e9820323b3e01a1d, type: 3}
+  skin_car: {fileID: 2100000, guid: b2fa034672952f34295a0ad884662433, type: 2}
   precio: 0

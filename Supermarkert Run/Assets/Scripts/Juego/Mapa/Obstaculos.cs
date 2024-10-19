@@ -11,7 +11,7 @@ public class Obstaculos : MonoBehaviour
 
     private void Awake()
     {
-        mapa_content = FindObjectOfType<Dinero_Obtenido>().Get_Mapa(SceneManager.GetActiveScene().buildIndex);
+        mapa_content = FindObjectOfType<Dinero_Obtenido>().Get_Mapa(SceneManager.GetActiveScene().name);
         Create_OBJ();
     }
 

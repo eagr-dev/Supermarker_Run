@@ -49,7 +49,7 @@ public class Seleccion : MonoBehaviour
 
     public void BTN_Jugar()
     {
-        int pos = FindObjectOfType<Seleccion_Mapa>().Get_Seleccion().posicion_mapa;
+        string pos = FindObjectOfType<Seleccion_Mapa>().Get_Seleccion().nombre;
         SceneManager.LoadScene(pos);
     }
 
