@@ -12,10 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c59aae8228a85a846965c6a293bd31ba, type: 3}
   m_Name: Mapa_Grande
   m_EditorClassIdentifier: 
-  posicion_mapa: 1
+  posicion_mapa: 3
   nombre: Mapa grande
   descripcion: Un mapa bastante grande y bastantes objetos
   screen_map: {fileID: 0}
-  precio: 500
+  precio: 0
   Valor_mapa: 600
   cantidad_juegos: 0
+  X_minimo: -66
+  X_maximo: 60
+  Y_minimo: -110
+  Y_maximo: 60

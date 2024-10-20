@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c59aae8228a85a846965c6a293bd31ba, type: 3}
   m_Name: Mapa_Mediano
   m_EditorClassIdentifier: 
-  posicion_mapa: 1
+  posicion_mapa: 2
   nombre: Mapa mediano
   descripcion: "Un mapa un poco mas largo que el peque\xF1o"
   screen_map: {fileID: 0}
-  precio: 100
+  precio: 0
   Valor_mapa: 300
   cantidad_juegos: 0
   X_minimo: -45.9
