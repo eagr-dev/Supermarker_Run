@@ -63,12 +63,13 @@ public class Personalizacion : MonoBehaviour
     public void Guardado()
     {
         carro = SMC.Get_Active().GetComponent<Get_Content_Car>().Get_Car();
-        Grojo = rojo;
-        Gazul = azul;
-        Gverde = verde;
-        Galfa = alfa;
+        Grojo = carro.skin_car.color.r;
+        Gazul = carro.skin_car.color.b;
+        Gverde = carro.skin_car.color.g;
+        Galfa = carro.skin_car.color.a;
     }
 
+    //Solucionar error de al salir con skin personalizada retornar al guardada
     public void Restar()
     {
         carro = SMC.Get_Active().GetComponent<Get_Content_Car>().Get_Car();
@@ -76,7 +77,20 @@ public class Personalizacion : MonoBehaviour
         verde = Gverde;
         azul = Gazul;
         alfa = Galfa;
+
+        carro.peso = ((int)(rojo * carro.peso_maximo) % 100);
+        carro.velocidad_adicional = ((int)(verde * carro.velocidad_maxima) % 100);
+        carro.cant_limite_carga = (int)((int)(azul * carro.maximo_a_cargar) % 100);
+        carro.resistencia_choque = ((int)(alfa * carro.maxima_resistencia) % 100);
+
         carro.skin_car.color = new Color(rojo, verde, azul, alfa);
+        
+    }
+    
+    public float[] Get_RGB()
+    {
+        float[] retorno = { rojo, verde, azul, alfa };
+        return retorno;
     }
 
 }

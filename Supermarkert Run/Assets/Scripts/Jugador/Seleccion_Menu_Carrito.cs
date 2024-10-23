@@ -17,6 +17,7 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
     [SerializeField] private GameObject Canvas_Eleccion;
     [SerializeField] private GameObject Canvas_Skin;
     [SerializeField] private GameObject BTN_comprar;
+    [SerializeField] private GameObject BTN_comprar_personalizar;
     [SerializeField] private GameObject BTN_aceptar;
     [SerializeField] private GameObject Dinero_Insuficiente;
     [SerializeField] private GameObject Canvas_Personalizar;
@@ -30,6 +31,7 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
     [SerializeField] private TMP_Text Limite_Carga;
     [SerializeField] private TMP_Text Resistencia_choque;
     [SerializeField] private TMP_Text Precio;
+    [SerializeField] private TMP_Text Precio_personalizar;
     [SerializeField] private TMP_Text Requisitos;
 
     [SerializeField] private TMP_Text Dinero;
@@ -138,7 +140,15 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
             carrito_comprar.Get_Requisito();
             carrito_comprar.precio = 0;
             Precio.text = "Precio: " + carrito_comprar.precio.ToString() + ".";
+            Precio_personalizar.text = "Precio: " + carrito_comprar.precio.ToString() + ".";
             BTN_comprar.SetActive(false);
+            BTN_comprar_personalizar.SetActive(false);
+
+            if (Canvas_Personalizar.activeInHierarchy)
+            {
+                float[] retorno = FindObjectOfType<Personalizacion>().Get_RGB();
+                FindObjectOfType<Sistema_Guardado>().Guardar_Personalizado(retorno[0], retorno[1], retorno[2], retorno[3]);
+            }
             BTN_aceptar.SetActive(true);
         }
         Mostrar_Dinero();
@@ -257,7 +267,8 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        if (Canvas_Personalizar.activeInHierarchy) FindObjectOfType<Personalizacion>().Restar();
+        if (Canvas_Personalizar.activeInHierarchy && BTN_comprar_personalizar.activeInHierarchy) 
+            FindObjectOfType<Personalizacion>().Restar();
         FindObjectOfType<Sistema_Guardado>().Guardar();
     }
 }

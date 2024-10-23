@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fdc222640aea6240990c32f14f08ede, type: 3}
   m_Name: Liviano_Personalzado
   m_EditorClassIdentifier: 
-  peso: 20
-  velocidad_adicional: 10
-  cant_limite_carga: 10
+  peso: 0
+  velocidad_adicional: 0
+  cant_limite_carga: 0
   objetos_actuales: 0
-  resistencia_choque: 30
+  resistencia_choque: 0
   peso_maximo: 20
   velocidad_maxima: 10
   maximo_a_cargar: 10

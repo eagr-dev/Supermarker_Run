@@ -14,8 +14,8 @@ public class Seleccion : MonoBehaviour
     private GameObject Carrito;
     public void BTN_Regreso()
     {
-        Carrito = FindObjectOfType<Seleccion_Menu_Carrito>().Get_Active();
-        Carrito.SetActive(true);
+        Pase_Conexion_Menu_Gameplay conector = FindObjectOfType<Pase_Conexion_Menu_Gameplay>();
+        FindObjectOfType<Seleccion_Menu_Carrito>().Set_Car_Menu(conector.Get_Seleccion(),conector.Get_Eleccion());
         PowerUp_Canvas.SetActive(false);
         Mapas_Canvas.SetActive(false);
         Carritos_Canvas.SetActive(false);
@@ -62,6 +62,11 @@ public class Seleccion : MonoBehaviour
 
     private void OnApplicationQuit()
     {
+        if(Mapas_Canvas.activeInHierarchy)
+        {
+            Pase_Conexion_Menu_Gameplay conector = FindObjectOfType<Pase_Conexion_Menu_Gameplay>();
+            FindObjectOfType<Seleccion_Menu_Carrito>().Set_Car_Menu(conector.Get_Seleccion(), conector.Get_Eleccion());
+        }
         FindObjectOfType<Sistema_Guardado>().Guardar();
     }
 

@@ -7,6 +7,8 @@ using TMPro;
 public class Sistema_Guardado : MonoBehaviour
 {
     [SerializeField] private string URL_PATH;
+    [SerializeField] private string URL_PATH_PERSONALIZADA;
+    [SerializeField] private List<Material> Material_Personalizada;
     [SerializeField] private TMP_Text Nivel;
     private DINERO Dinero;
     private Nivel _Nivel;
@@ -17,6 +19,7 @@ public class Sistema_Guardado : MonoBehaviour
     private void Awake()
     {
         URL_PATH = Application.dataPath + "/datos.json";
+        URL_PATH_PERSONALIZADA = Application.dataPath + "/personalizado.json";
         Dinero = FindObjectOfType<DINERO>();
         _Nivel = FindObjectOfType<Nivel>();
         PCMG = FindObjectOfType<Pase_Conexion_Menu_Gameplay>();
@@ -25,6 +28,7 @@ public class Sistema_Guardado : MonoBehaviour
     private void Start()
     {
         Cargar();
+        Carga_Personalizada();
     }
 
     public void Cargar()
@@ -52,6 +56,23 @@ public class Sistema_Guardado : MonoBehaviour
         }
     }
 
+    public void Carga_Personalizada()
+    {
+        if(File.Exists(URL_PATH_PERSONALIZADA))
+        {
+            string leer = File.ReadAllText(URL_PATH_PERSONALIZADA);
+            Contenido_Personalizado CP = JsonUtility.FromJson<Contenido_Personalizado>(leer);
+
+            foreach(Material material in Material_Personalizada)
+            material.color = CP.color;
+        }
+        else
+        {
+            foreach (Material material in Material_Personalizada)
+                material.color = new Color(0, 0, 0, 0);
+        }
+    }
+
 
     public void Guardar()
     {
@@ -68,5 +89,18 @@ public class Sistema_Guardado : MonoBehaviour
         string contenido = JsonUtility.ToJson(conte);
 
         File.WriteAllText(URL_PATH,contenido);
+    }
+
+    public void Guardar_Personalizado(float r, float g, float b, float a)
+    {
+        Contenido_Personalizado contenido = new Contenido_Personalizado()
+        {
+            color = new Color(r, g, b, a)
+        };
+
+        string conte = JsonUtility.ToJson(contenido);
+
+        File.WriteAllText(URL_PATH_PERSONALIZADA, conte);
+
     }
 }
