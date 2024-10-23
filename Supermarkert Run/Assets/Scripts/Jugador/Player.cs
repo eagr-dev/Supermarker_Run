@@ -19,6 +19,7 @@ public class Player : MonoBehaviour
     private Interfaz_PowerUp Efecto;
     [SerializeField] private GameObject Muerte_canvas;
     [SerializeField] private GameObject Ganar_canvas;
+    [SerializeField] private Animator animacion;
     private bool resbalon = false;
 
 
@@ -61,6 +62,9 @@ public class Player : MonoBehaviour
             obtener_velocidad = new Vector3(Horizontal_Move, 0, Vertical_Move) * Time.deltaTime * speed;
             velocidad_porcentual = (obtener_velocidad.magnitude * 100) / speed;
             transform.position += new Vector3(Horizontal_Move, 0, Vertical_Move) * Time.deltaTime * speed;
+
+            animacion.SetFloat("VelX", Horizontal_Move);
+            animacion.SetFloat("VelY", Vertical_Move);
 
             if (Movimiento.magnitude >= 1)
             {

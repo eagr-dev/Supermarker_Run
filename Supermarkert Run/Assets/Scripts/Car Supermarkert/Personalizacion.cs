@@ -84,6 +84,7 @@ public class Personalizacion : MonoBehaviour
         carro.resistencia_choque = ((int)(alfa * carro.maxima_resistencia) % 100);
 
         carro.skin_car.color = new Color(rojo, verde, azul, alfa);
+        carro.precio = 0;
         
     }
     
