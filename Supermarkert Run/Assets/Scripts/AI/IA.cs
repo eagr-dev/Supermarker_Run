@@ -10,10 +10,13 @@ public class IA : MonoBehaviour
     public GameObject objecto_seguir;
     private Vector3 resultado;
     private Mapa mapa_content;
+    [SerializeField] private Animator animacion;
 
     private void Awake()
     {
         mapa_content = FindObjectOfType<Dinero_Obtenido>().Get_Mapa(SceneManager.GetActiveScene().name);
+        animacion.SetFloat("VelX", 1);
+        animacion.SetFloat("VelY", 1);
     }
 
     // Start is called before the first frame update
@@ -36,9 +39,13 @@ public class IA : MonoBehaviour
 
     private IEnumerator Tiempo_Muerto()
     {
+        animacion.SetFloat("VelX", 0);
+        animacion.SetFloat("VelY", 0);
         float tiempo = Random.Range(0, 10);
         yield return new WaitForSeconds(tiempo);
         New_position();
+        animacion.SetFloat("VelX", 1);
+        animacion.SetFloat("VelY", 1);
     }
 
     private void New_position()
