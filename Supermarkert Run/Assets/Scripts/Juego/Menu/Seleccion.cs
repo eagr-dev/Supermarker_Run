@@ -11,11 +11,13 @@ public class Seleccion : MonoBehaviour
     [SerializeField] private GameObject Carritos_Canvas;
     
     [SerializeField] private GameObject PU;
+    [SerializeField] private GameObject Personaje;
     private GameObject Carrito;
     public void BTN_Regreso()
     {
         Pase_Conexion_Menu_Gameplay conector = FindObjectOfType<Pase_Conexion_Menu_Gameplay>();
         FindObjectOfType<Seleccion_Menu_Carrito>().Set_Car_Menu(conector.Get_Seleccion(),conector.Get_Eleccion());
+        Personaje.SetActive(true);
         PowerUp_Canvas.SetActive(false);
         Mapas_Canvas.SetActive(false);
         Carritos_Canvas.SetActive(false);
@@ -27,6 +29,7 @@ public class Seleccion : MonoBehaviour
     {
         Carrito = FindObjectOfType<Seleccion_Menu_Carrito>().Get_Active();
         Carrito.SetActive(false);
+        Personaje.SetActive(false);
         Menu_Canvas.SetActive(false);
         PowerUp_Canvas.SetActive(true);
         PU.SetActive(true);
@@ -36,6 +39,7 @@ public class Seleccion : MonoBehaviour
     {
         Carrito = FindObjectOfType<Seleccion_Menu_Carrito>().Get_Active();
         Carrito.SetActive(false);
+        Personaje.SetActive(false);
         Menu_Canvas.SetActive(false);
         Mapas_Canvas.SetActive(true);
     }
@@ -44,6 +48,7 @@ public class Seleccion : MonoBehaviour
     {
         Menu_Canvas.SetActive(false);
         Carritos_Canvas.SetActive(true);
+        Personaje.SetActive(false);
         FindObjectOfType<Pase_Conexion_Menu_Gameplay>().Set_Seleccion(Pase_Conexion_Menu_Gameplay.Tipo_Carro.PEQUEÑO);
     }
 
