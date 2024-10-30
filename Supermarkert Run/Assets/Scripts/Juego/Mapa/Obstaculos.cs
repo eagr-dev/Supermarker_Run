@@ -47,12 +47,6 @@ public class Obstaculos : MonoBehaviour
             Enemigo.GetComponent<IA>().objecto_seguir = gameObject1;
             Enemigo.name = "Enemigo " + i.ToString();
         }
-
-        foreach (IA obj in FindObjectsOfType<IA>())
-        {
-            if (obj.name == "enemigo(Clone)") Destroy(obj.gameObject);
-        }
-            
     }
 
     private void Create_Objetos_Seguir()

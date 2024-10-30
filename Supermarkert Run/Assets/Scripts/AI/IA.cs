@@ -17,12 +17,16 @@ public class IA : MonoBehaviour
         mapa_content = FindObjectOfType<Dinero_Obtenido>().Get_Mapa(SceneManager.GetActiveScene().name);
         animacion.SetFloat("VelX", 1);
         animacion.SetFloat("VelY", 1);
+        New_Color();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        New_position();
+        if (objecto_seguir != null)
+            New_position();
+        else
+            Destroy(gameObject);
     }
 
     // Update is called once per frame
@@ -54,5 +58,10 @@ public class IA : MonoBehaviour
         float resultadoY = Random.Range(mapa_content.Y_minimo, mapa_content.Y_maximo);
         objecto_seguir.transform.position = new Vector3(resultadoX, 0, resultadoY);
         navegador.destination = objecto_seguir.transform.position;
+    }
+
+    private void New_Color()
+    {
+        transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().material.color = Random.ColorHSV();
     }
 }
