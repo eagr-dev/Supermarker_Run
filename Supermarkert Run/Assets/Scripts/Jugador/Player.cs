@@ -200,7 +200,7 @@ public class Player : MonoBehaviour
     //Botones
 
     //Botones->Perder
-    public void Reiniciar()
+    public void Perder()
     {
         SceneManager.LoadScene(0);
     }

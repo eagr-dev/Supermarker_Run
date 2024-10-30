@@ -121,9 +121,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1214457975653736139, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
         m_TargetAssemblyTypeName: Player, Assembly-CSharp
-        m_MethodName: Reiniciar
+        m_MethodName: Perder
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
