@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1268907435165996609}
   - component: {fileID: 4149780750749179770}
   - component: {fileID: 5314564534421929710}
+  - component: {fileID: 6672793876833970810}
   - component: {fileID: 4926900700097563307}
   m_Layer: 0
   m_Name: Power
@@ -47,8 +48,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8718322e8521a1e4e81c5ba580424eba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  descripcion: []
+  descripcion: 
   nombre: 
+  sprite: {fileID: 0}
 --- !u!114 &4149780750749179770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61,8 +63,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2f967bb96a41704aa875a560f5b77de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  descripcion: []
+  descripcion: 
   nombre: 
+  sprite: {fileID: 0}
 --- !u!114 &5314564534421929710
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75,8 +78,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33904da7e9b7c6e40aaa7f52dc299a98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  descripcion: []
+  descripcion: 
   nombre: 
+  sprite: {fileID: 0}
+--- !u!114 &6672793876833970810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5017323895217694619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41b9a30780b90f343877d13fe84e227f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  descripcion: 
+  nombre: 
+  sprite: {fileID: 0}
 --- !u!114 &4926900700097563307
 MonoBehaviour:
   m_ObjectHideFlags: 0

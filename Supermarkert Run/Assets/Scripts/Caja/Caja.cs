@@ -19,8 +19,8 @@ public class Caja : MonoBehaviour
         {
             yield return new WaitForSeconds(tiempo);
             transform.GetChild(i).gameObject.SetActive(true);
+            carro.objetos_actuales--;
         }
-        carro.objetos_actuales = 0;
     }
 
     public int Get_Porcentaje() => porcentaje;

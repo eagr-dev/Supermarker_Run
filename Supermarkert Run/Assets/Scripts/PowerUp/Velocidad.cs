@@ -18,7 +18,7 @@ public class Velocidad : Interfaz_PowerUp
 
     public override void Set_Descripcion_Nombre()
     {
-        descripcion = "Te da un 20% de velocidad, idea para supermercados espacioso o para hacer menos tiempo, cuidado como manejas porque sera mas facil chocar.\nEste power Up se activa viendo un anuncio.";
+        descripcion = "Obten un 20% de velocidad.";
         nombre = "Velocidad";
     }
 

@@ -138,9 +138,14 @@ public class Player : MonoBehaviour
            mision.New_Text_In_TextMesh(estante.Get_Object());
         }else if(other.CompareTag("Caja"))
         {
+            float tiempo = 1;
             Caja caja = other.gameObject.GetComponent<Caja>();
-
-            caja.Visible_Objects(mision.Cantidad_Nivel(), mision.Get_Position(),carrito, 1);
+            if (Efecto.Get_Efecto() is string reduccion)
+            {
+                float eliminar = tiempo * float.Parse(reduccion);
+                tiempo -= eliminar;
+            }
+            caja.Visible_Objects(mision.Cantidad_Nivel(), mision.Get_Position(),carrito, tiempo);
             Ganador(caja);
         }else if(other.CompareTag("Mojado"))
         {
@@ -174,6 +179,12 @@ public class Player : MonoBehaviour
                         case 0:
                             Efecto.Efecto(transform.position);
                             break;
+                        default:
+                            speed = 0;
+                            Muerte_canvas.SetActive(true);
+                            Retroceso(20, speed, collision);
+                            StopAllCoroutines();
+                            return;
                     }
                 }
                 else
