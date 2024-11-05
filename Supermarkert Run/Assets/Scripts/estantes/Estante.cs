@@ -13,15 +13,15 @@ public class Estante : MonoBehaviour
         objeto = Areas.Objetos[(int)tag][producto];
         transform.GetChild(1).GetComponent<MeshFilter>().mesh.vertices = ObjectCopy.transform.GetChild(0).GetComponent<MeshFilter>().sharedMesh.vertices;
         transform.GetChild(1).GetComponent<MeshFilter>().mesh.triangles = ObjectCopy.transform.GetChild(0).GetComponent<MeshFilter>().sharedMesh.triangles;
-        transform.GetChild(1).GetComponent<MeshRenderer>().material = new Material(Shader.Find("Standard"));
+        transform.GetChild(1).GetComponent<MeshRenderer>().material = ObjectCopy.transform.GetChild(0).GetComponent<MeshRenderer>().sharedMaterial;
 
         transform.GetChild(2).GetComponent<MeshFilter>().mesh.vertices = ObjectCopy.transform.GetChild(0).GetComponent<MeshFilter>().sharedMesh.vertices;
         transform.GetChild(2).GetComponent<MeshFilter>().mesh.triangles = ObjectCopy.transform.GetChild(0).GetComponent<MeshFilter>().sharedMesh.triangles;
-        transform.GetChild(2).GetComponent<MeshRenderer>().material = new Material(Shader.Find("Standard"));
+        transform.GetChild(2).GetComponent<MeshRenderer>().material = ObjectCopy.transform.GetChild(0).GetComponent<MeshRenderer>().sharedMaterial;
 
         transform.GetChild(3).GetComponent<MeshFilter>().mesh.vertices = ObjectCopy.transform.GetChild(0).GetComponent<MeshFilter>().sharedMesh.vertices;
         transform.GetChild(3).GetComponent<MeshFilter>().mesh.triangles = ObjectCopy.transform.GetChild(0).GetComponent<MeshFilter>().sharedMesh.triangles;
-        transform.GetChild(3).GetComponent<MeshRenderer>().material = new Material(Shader.Find("Standard"));
+        transform.GetChild(3).GetComponent<MeshRenderer>().material = ObjectCopy.transform.GetChild(0).GetComponent<MeshRenderer>().sharedMaterial;
 
         Tag = tag;
     }

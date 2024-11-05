@@ -5,11 +5,11 @@ OcclusionCullingSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_OcclusionBakeSettings:
-    smallestOccluder: 5
+    smallestOccluder: 3
     smallestHole: 0.25
     backfaceThreshold: 100
-  m_SceneGUID: 00000000000000000000000000000000
-  m_OcclusionCullingData: {fileID: 0}
+  m_SceneGUID: 351f20eeed7b42e4a94b14faa87415f7
+  m_OcclusionCullingData: {fileID: 36300000, guid: cf4f854a17cf0074bad1c31c910fc822, type: 2}
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
@@ -2179,7 +2179,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 100
+  far clip plane: 30
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -2206,13 +2206,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.29345635, y: 0, z: 0, w: 0.95597255}
-  m_LocalPosition: {x: 0, y: 50, z: -17.31}
+  m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
+  m_LocalPosition: {x: 4.38, y: 9.04, z: 26.27}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 34.13, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
 --- !u!114 &963419769 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1214457975653736139, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
@@ -4787,6 +4787,10 @@ PrefabInstance:
     - target: {fileID: 8592851397395496535, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
       propertyPath: m_Name
       value: Jugador
+      objectReference: {fileID: 0}
+    - target: {fileID: 8592851397395496535, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8967828480180511981, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
       propertyPath: m_LocalPosition.x
