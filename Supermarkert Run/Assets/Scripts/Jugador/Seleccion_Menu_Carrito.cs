@@ -139,8 +139,8 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
         {
             carrito_comprar.Get_Requisito();
             carrito_comprar.precio = 0;
-            Precio.text = "Precio: " + carrito_comprar.precio.ToString() + ".";
-            Precio_personalizar.text = "Precio: " + carrito_comprar.precio.ToString() + ".";
+            Precio.text = "Price: " + carrito_comprar.precio.ToString() + ".";
+            Precio_personalizar.text = "Price: " + carrito_comprar.precio.ToString() + ".";
             BTN_comprar.SetActive(false);
             BTN_comprar_personalizar.SetActive(false);
 
@@ -218,12 +218,12 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
 
         Nombre.text = Info_Car.nombre;
         Descripcion.text = Info_Car.descripcion;
-        Peso.text = "Peso: " + Info_Car.peso.ToString() + "Kg.";
-        Velocidad.text = "Velocidad: " + Info_Car.velocidad_adicional.ToString() + ".";
-        Limite_Carga.text = "Carga: " + Info_Car.cant_limite_carga.ToString() + "Kg.";
-        Resistencia_choque.text = "Choque Maximo: " + Info_Car.resistencia_choque.ToString() + "%.";
-        Precio.text = "Precio: " + Info_Car.precio.ToString() + ".";
-        Requisitos.text = "Requisitos: " + Info_Car.requisitos + ":" + Info_Car.Get_Juegos() + "/" + Info_Car.cantidad;
+        Peso.text = "Weight: " + Info_Car.peso.ToString() + "Kg.";
+        Velocidad.text = "Speed: " + Info_Car.velocidad_adicional.ToString() + ".";
+        Limite_Carga.text = "Burden: " + Info_Car.cant_limite_carga.ToString() + "Kg.";
+        Resistencia_choque.text = "Maximum shock: " + Info_Car.resistencia_choque.ToString() + "%.";
+        Precio.text = "Price: " + Info_Car.precio.ToString() + ".";
+        Requisitos.text = "Requirements: " + Info_Car.requisitos + ":" + Info_Car.Get_Juegos() + "/" + Info_Car.cantidad;
     }
     public GameObject Get_Active()
     {
@@ -263,7 +263,7 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
 
     }
 
-    private void Mostrar_Dinero() => Dinero.text = "Dinero: " + FindObjectOfType<DINERO>().Get_Dinero();
+    private void Mostrar_Dinero() => Dinero.text = "Money: " + FindObjectOfType<DINERO>().Get_Dinero();
 
     private void OnApplicationQuit()
     {

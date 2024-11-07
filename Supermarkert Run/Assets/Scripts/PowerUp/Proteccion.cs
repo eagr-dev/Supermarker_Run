@@ -8,8 +8,8 @@ public class Proteccion : Interfaz_PowerUp
 
     public override void Set_Descripcion_Nombre()
     {
-        descripcion = "Proteccion durante toda la partida en caso de chocar no se reinicia el nivel y te deja jugar.";
-        nombre = "Proteccion";
+        descripcion = "Protection throughout the game. If you crash, the level does not restart and you are allowed to play.";
+        nombre = "Protection";
     }
 
     public override void Efecto(params object[] parametros)

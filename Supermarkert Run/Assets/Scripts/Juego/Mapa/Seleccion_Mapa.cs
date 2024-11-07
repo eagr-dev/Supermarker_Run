@@ -39,8 +39,8 @@ public class Seleccion_Mapa : MonoBehaviour
         {
             DO.Get_Mapa(seleccion_actual).precio = 0;
             Mostrar(DO.Get_Mapa(seleccion_actual));
-            Dinero.text = "Dinero: " + FindObjectOfType<DINERO>().Get_Dinero();
-            Precio.text = "Precio: " + DO.Get_Mapa(seleccion).precio.ToString();
+            Dinero.text = "Money: " + FindObjectOfType<DINERO>().Get_Dinero();
+            Precio.text = "Buy: " + DO.Get_Mapa(seleccion).precio.ToString();
             Comprar.SetActive(false);
             Aceptar.SetActive(true);
 
@@ -82,7 +82,7 @@ public class Seleccion_Mapa : MonoBehaviour
     {
         Nombre.text = mapa.nombre;
         Descripcion.text = mapa.descripcion;
-        Precio.text = "Precio: " + mapa.precio.ToString();
+        Precio.text = "Price: " + mapa.precio.ToString();
         Cantidad_Dar.text = "Extra: " + mapa.Valor_mapa.ToString();
         if(mapa.screen_map != null)
         Muestra.sprite = mapa.screen_map;

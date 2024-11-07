@@ -8,14 +8,14 @@ public class Areas : MonoBehaviour
 
     public static readonly string[][] Objetos = new string[8][]
     {
-        new string[] { "Detergente", "Lejia", "Escoba", "Trapeador", "Limpiavidrios", "Esponja", "Guantes de limpieza", "Trapo", "Desinfectante", "Papel del baño"},//Limpieza de casa
-        new string[] { "Huevos", "Salchicha", "Jamon", "Pan", "Leche", "Pasta", "Arroz", "Carne", "Yogur", "Cereal"},//Comida
-        new string[] { "Microndas", "Estufa", "Television", "Radio", "Refrigerador", "Lavadora", "Licuadora", "Horno electrico", "Aspiradora", "Cafetera"},//Electrodomesticos
-        new string[] { "Agua", "Juguito", "Jugo", "Cola", "Sprite", "Bebida energetica", "Agua de sabor", "Pesip", "Agua Mineral", "Suero"},//bebidas y jugos
-        new string[] { "Llantas", "Tapiceria", "Aceite motor", "Liquido refrigerante", "Aceite para frenos", "Bateria", "Gato hidraulico", "Retrovisores", "Herramientas" , "Adornos"},//Carroceria
-        new string[] { "Lapiz", "Cuaderno", "Libro", "Sacapuntas", "Borrador", "Plumas", "Lapicero", "Colores", "Regla", "Marcadores" },//Articulos Escolares
-        new string[] { "Jabon", "Champu", "Pasta dientes", "Cepillo de dientes", "Hilo dental", "Toallas", "Rastrillos", "Desodorante", "Gel", "Espuma de afeitar"},//Limpieza Personal
-        new string[] { "Manzana", "Platano", "Naranja", "Fresa", "Uva", "Zanahoria", "Tomate", "Lechuga", "Brocoli", "Pepino"}//Frutas y verduras
+        new string[] { "Detergent", "Bleach", "Broom", "Mop", "Glass cleaner", "Sponge", "Cleaning gloves", "Cloth", "Disinfectant", "Toilet paper" }, // House cleaning
+        new string[] { "Eggs", "Sausage", "Ham", "Bread", "Milk", "Pasta", "Rice", "Meat", "Yogurt", "Cereal" }, // Food
+        new string[] { "Microwave", "Stove", "Television", "Radio", "Refrigerator", "Washing machine", "Blender", "Electric oven", "Vacuum cleaner", "Coffee maker" }, // Appliances
+        new string[] { "Water", "Juice", "Fruit juice", "Soda", "Sprite", "Energy drink", "Flavored water", "Pepsi", "Mineral water", "Oral rehydration solution" }, // Drinks and juices
+        new string[] { "Tires", "Upholstery", "Engine oil", "Coolant", "Brake fluid", "Battery", "Hydraulic jack", "Mirrors", "Tools", "Decorations" }, // Car parts
+        new string[] { "Pencil", "Notebook", "Book", "Pencil sharpener", "Eraser", "Pens", "Ballpoint pen", "Crayons", "Ruler", "Markers" }, // School supplies
+        new string[] { "Soap", "Shampoo", "Toothpaste", "Toothbrush", "Dental floss", "Towels", "Razors", "Deodorant", "Gel", "Shaving foam" }, // Personal hygiene
+        new string[] { "Apple", "Banana", "Orange", "Strawberry", "Grape", "Carrot", "Tomato", "Lettuce", "Broccoli", "Cucumber" } // Fruits and vegetables
     };
 
     public List<GameObject> Limpieza_HogarG;

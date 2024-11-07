@@ -20,8 +20,8 @@ public class Vida_extra : Interfaz_PowerUp
 
     public override void Set_Descripcion_Nombre()
     {
-        descripcion = "Solamente reinicia el nivel evitando regresar al menu tienes una vida extra para seguir jugando.";
-        nombre = "Vidas Extras";
+        descripcion = "Just restart the level without returning to the menu, you have an extra life to continue playing.";
+        nombre = "Extra Lives";
     }
 
     public override object Get_Efecto() => vidas;

@@ -21,9 +21,9 @@ MonoBehaviour:
   velocidad_maxima: 0
   maximo_a_cargar: 0
   maxima_resistencia: 0
-  nombre: Carrito Mediano 2
-  descripcion: "Carro mediano ideal para mapas entre grandes peque\xF1os"
-  requisitos: ninguno
+  nombre: Medium Cart 2
+  descripcion: Medium cart ideal for maps between large and small
+  requisitos: none
   cantidad: 0
   name_mapa: "Mapa peque\xF1o"
   skin_car: {fileID: 2100000, guid: 9f9fa50896e9a7542a6a80ccda3d9412, type: 2}

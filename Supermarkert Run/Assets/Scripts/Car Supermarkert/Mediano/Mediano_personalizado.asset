@@ -21,8 +21,8 @@ MonoBehaviour:
   velocidad_maxima: 7
   maximo_a_cargar: 20
   maxima_resistencia: 60
-  nombre: Med P
-  descripcion: Carro mediano Personalizado
+  nombre: Medium Cart P
+  descripcion: Custom Medium Car
   requisitos: 0
   cantidad: 0
   name_mapa: "Mapa peque\xF1o"

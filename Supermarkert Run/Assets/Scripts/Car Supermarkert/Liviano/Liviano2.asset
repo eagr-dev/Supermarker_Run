@@ -21,10 +21,10 @@ MonoBehaviour:
   velocidad_maxima: 0
   maximo_a_cargar: 0
   maxima_resistencia: 0
-  nombre: carrito liviano 2
-  descripcion: carrito liviano rapido, agil, pero poca resistencia de choque y carga
-  requisitos: ninguno
+  nombre: light cart 2
+  descripcion: Fast, agile light cart, but little shock and load resistance
+  requisitos: none
   cantidad: 0
   name_mapa: "Mapa peque\xF1o"
-  skin_car: {fileID: 0}
+  skin_car: {fileID: 2100000, guid: 9f9fa50896e9a7542a6a80ccda3d9412, type: 2}
   precio: 0

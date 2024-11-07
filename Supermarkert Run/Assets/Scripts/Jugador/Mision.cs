@@ -30,7 +30,7 @@ public class Mision : MonoBehaviour
     private void Start()
     {
         carro = FindObjectOfType<Get_Content_Car>().Get_Car();
-        Espacio_Disponible.text = "Espacio Disponible: " + carro.objetos_actuales.ToString() + "/" + carro.cant_limite_carga.ToString();
+        Espacio_Disponible.text = "Available Space: " + carro.objetos_actuales.ToString() + "/" + carro.cant_limite_carga.ToString();
     }
 
     public int Cantidad_Nivel()
@@ -75,15 +75,15 @@ public class Mision : MonoBehaviour
             position_Text++;
             carro.objetos_actuales++;
             Misiones_echas.text = Get_Position().ToString() + "/" + Cantidad_Nivel().ToString();
-            Espacio_Disponible.text = "Espacio Disponible: " + carro.objetos_actuales.ToString() + "/" + carro.cant_limite_carga.ToString();
+            Espacio_Disponible.text = "Available Space: " + carro.objetos_actuales.ToString() + "/" + carro.cant_limite_carga.ToString();
         }
         else if (obj == object_act && Cantidad_Nivel() == position_Text)
         {
             carro.objetos_actuales++;
             position_Text++;
             Text.text = "";
-            Misiones_echas.text = "Ve a la caja";
-            Espacio_Disponible.text = "Espacio Disponible: " + carro.objetos_actuales.ToString() + "/" + carro.cant_limite_carga.ToString();
+            Misiones_echas.text = "Go to the checkout";
+            Espacio_Disponible.text = "Available Space: " + carro.objetos_actuales.ToString() + "/" + carro.cant_limite_carga.ToString();
         }
 
         else if (carro.objetos_actuales > carro.cant_limite_carga)

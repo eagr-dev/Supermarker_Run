@@ -21,7 +21,7 @@ public class Manos_Rapidas : Interfaz_PowerUp
 
     public override void Set_Descripcion_Nombre()
     {
-        nombre = "Manos Rapidas";
-        descripcion = "Coloca objetos 50% mas rapido.";
+        nombre = "Quick Hands";
+        descripcion = "Place objects 50% faster.";
     }
 }

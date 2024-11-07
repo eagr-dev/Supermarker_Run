@@ -21,10 +21,10 @@ MonoBehaviour:
   velocidad_maxima: 0
   maximo_a_cargar: 0
   maxima_resistencia: 0
-  nombre: Pesado2
-  descripcion: Carro pesado idea para misiones largas, gran resistencia pero poca
-    velocidad y agilidad
-  requisitos: ninguno
+  nombre: Heavy 2
+  descripcion: Heavy tank ideal for long missions, great resistance but little speed
+    and agility
+  requisitos: none
   cantidad: 0
   name_mapa: "Mapa peque\xF1o"
   skin_car: {fileID: 2100000, guid: 9f9fa50896e9a7542a6a80ccda3d9412, type: 2}

@@ -18,8 +18,8 @@ public class Velocidad : Interfaz_PowerUp
 
     public override void Set_Descripcion_Nombre()
     {
-        descripcion = "Obten un 20% de velocidad.";
-        nombre = "Velocidad";
+        descripcion = "Get 20% speed.";
+        nombre = "Speed";
     }
 
     public override void Animacion()
