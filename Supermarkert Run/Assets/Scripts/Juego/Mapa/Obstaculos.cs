@@ -58,4 +58,5 @@ public class Obstaculos : MonoBehaviour
             obj_Seguir.Add(plane);
         }
     }
+
 }
