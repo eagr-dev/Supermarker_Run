@@ -2955,7 +2955,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 2
+  m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -6502,7 +6502,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5046546643355349093, guid: 012267cc22ee5bc44abf0052a3e0d444, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.57
+      value: 6.19
       objectReference: {fileID: 0}
     - target: {fileID: 5046546643355349093, guid: 012267cc22ee5bc44abf0052a3e0d444, type: 3}
       propertyPath: m_LocalPosition.y
@@ -6510,7 +6510,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5046546643355349093, guid: 012267cc22ee5bc44abf0052a3e0d444, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 37.67
+      value: 37.42
       objectReference: {fileID: 0}
     - target: {fileID: 5046546643355349093, guid: 012267cc22ee5bc44abf0052a3e0d444, type: 3}
       propertyPath: m_LocalRotation.w
@@ -7221,6 +7221,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 963194228}
+  - {fileID: 1065723972}
   - {fileID: 3705911046001335272}
   - {fileID: 798034672}
   - {fileID: 41533405}
@@ -7239,4 +7240,3 @@ SceneRoots:
   - {fileID: 1579119261}
   - {fileID: 1320275925}
   - {fileID: 1082694452}
-  - {fileID: 1065723972}

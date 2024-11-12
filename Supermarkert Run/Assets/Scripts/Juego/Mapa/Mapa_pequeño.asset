@@ -15,7 +15,7 @@ MonoBehaviour:
   posicion_mapa: 1
   nombre: "Mapa peque\xF1o"
   descripcion: "Un mapa peque\xF1o donde todo es rapido y agil"
-  screen_map: {fileID: 0}
+  screen_map: {fileID: 21300000, guid: 12bdced60a7ee61438a607a658f19277, type: 3}
   precio: 0
   Valor_mapa: 200
   cantidad_juegos: 0
