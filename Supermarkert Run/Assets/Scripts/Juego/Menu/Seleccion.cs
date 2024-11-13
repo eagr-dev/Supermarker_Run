@@ -9,6 +9,7 @@ public class Seleccion : MonoBehaviour
     [SerializeField] private GameObject PowerUp_Canvas;
     [SerializeField] private GameObject Mapas_Canvas;
     [SerializeField] private GameObject Carritos_Canvas;
+    [SerializeField] private GameObject Configuracion_Canvas;
     
     [SerializeField] private GameObject PU;
     [SerializeField] private GameObject Personaje;
@@ -23,6 +24,7 @@ public class Seleccion : MonoBehaviour
         Carritos_Canvas.SetActive(false);
         Menu_Canvas.SetActive(true);
         PU.SetActive(false);
+        Configuracion_Canvas.SetActive(false);
     }
 
     public void BTN_Power_Up()
@@ -50,6 +52,12 @@ public class Seleccion : MonoBehaviour
         Carritos_Canvas.SetActive(true);
         Personaje.SetActive(false);
         FindObjectOfType<Pase_Conexion_Menu_Gameplay>().Set_Seleccion(Pase_Conexion_Menu_Gameplay.Tipo_Carro.PEQUEÑO);
+    }
+
+    public void BTN_Configuraciones()
+    {
+        Menu_Canvas.SetActive(false);
+        Configuracion_Canvas.SetActive(true);
     }
 
     public void BTN_Jugar()

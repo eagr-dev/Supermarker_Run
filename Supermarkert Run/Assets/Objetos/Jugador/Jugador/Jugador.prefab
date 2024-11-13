@@ -569,7 +569,6 @@ GameObject:
   - component: {fileID: 7769115017106685587}
   - component: {fileID: 5062295853185548957}
   - component: {fileID: 4447426877263786348}
-  - component: {fileID: 3336759662866311234}
   m_Layer: 0
   m_Name: Sombra
   m_TagString: Untagged
@@ -586,7 +585,7 @@ Transform:
   m_GameObject: {fileID: 4927470395117186168}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.24119568, y: 0.01, z: 0.04}
+  m_LocalPosition: {x: -0.24119568, y: 0.11, z: 0.04}
   m_LocalScale: {x: 2, y: 0.001, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -642,29 +641,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &3336759662866311234
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4927470395117186168}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!1 &5739827388903550799
 GameObject:
   m_ObjectHideFlags: 0
@@ -1270,7 +1246,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7635826562936255635, guid: 85adb1390be377c478fca4b1221f0ef5, type: 3}
       propertyPath: m_CastShadows
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 85adb1390be377c478fca4b1221f0ef5, type: 3}
       propertyPath: m_Name
@@ -1840,7 +1816,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1630794972795428178, guid: 31e5e4601c394f644b274ac998aed966, type: 3}
       propertyPath: m_CastShadows
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 31e5e4601c394f644b274ac998aed966, type: 3}
       propertyPath: m_Enabled
@@ -1936,6 +1912,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 31e5e4601c394f644b274ac998aed966, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5381887594320282798}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 31e5e4601c394f644b274ac998aed966, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7850602263511872560}
   m_SourcePrefab: {fileID: 100100000, guid: 31e5e4601c394f644b274ac998aed966, type: 3}
 --- !u!4 &392639713905222666 stripped
 Transform:
@@ -2453,6 +2432,23 @@ MonoBehaviour:
   - m_Rig: {fileID: 3168330963420014068}
     m_Active: 0
   m_Effectors: []
+--- !u!114 &7850602263511872560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8592851397395496535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc8e7631ea00aac4ba67e6d89764956a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Sombras_Lista:
+  - {fileID: 4927470395117186168}
+  - {fileID: 4465369953648073998}
+  - {fileID: 8822535461578577129}
+  - {fileID: 8696445364207881198}
 --- !u!4 &8622027960968554392 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8333627713332763490, guid: 31e5e4601c394f644b274ac998aed966, type: 3}

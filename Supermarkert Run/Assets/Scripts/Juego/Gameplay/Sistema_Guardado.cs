@@ -14,6 +14,7 @@ public class Sistema_Guardado : MonoBehaviour
     private Nivel _Nivel;
     private Car carro;
     int _posicion;
+    int _nivel_calidad = 0;
     Pase_Conexion_Menu_Gameplay PCMG;
 
     private void Awake()
@@ -43,6 +44,8 @@ public class Sistema_Guardado : MonoBehaviour
             Dinero.Set_Agregar(contenido_Leido.dinero);
             _Nivel.nivel = contenido_Leido.nivel;
             Nivel.text = "Nivel: " + _Nivel.nivel.ToString();
+            QualitySettings.SetQualityLevel(contenido_Leido.nivel_calidad);
+            QualitySettings.shadows = contenido_Leido.Sombras;
 
             Seleccion_Menu_Carrito selec = FindObjectOfType<Seleccion_Menu_Carrito>();
             selec.Set_Car_Menu(PCMG.Get_Seleccion(), _posicion);
@@ -78,13 +81,17 @@ public class Sistema_Guardado : MonoBehaviour
     {
         carro = FindObjectOfType<Get_Content_Car>().Get_Car();
         _posicion = PCMG.Get_Eleccion();
+        _nivel_calidad = QualitySettings.GetQualityLevel();
         Contenido conte = new Contenido()
         {
             dinero = Dinero.Get_Dinero(),
             nivel = _Nivel.nivel,
             materia = carro.skin_car,
             posicion = _posicion,
-            Tipo_Carro = PCMG.Get_Seleccion()
+            Tipo_Carro = PCMG.Get_Seleccion(),
+            nivel_calidad = _nivel_calidad,
+            Sombras = QualitySettings.shadows
+            
         };
         string contenido = JsonUtility.ToJson(conte);
 

@@ -10,4 +10,6 @@ public class Contenido
     public Material materia;
     public int posicion;
     public Pase_Conexion_Menu_Gameplay.Tipo_Carro Tipo_Carro;
+    public int nivel_calidad;
+    public ShadowQuality Sombras;
 }
