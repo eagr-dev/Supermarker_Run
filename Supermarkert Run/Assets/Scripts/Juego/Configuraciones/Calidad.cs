@@ -13,7 +13,7 @@ public class Calidad : MonoBehaviour
 
     private void Start()
     {
-        calidad.value = QualitySettings.GetQualityLevel();
+        calidad.value = PlayerPrefs.GetInt("Calidad",QualitySettings.GetQualityLevel());
         Sombras.isOn = QualitySettings.shadows.Equals(ShadowQuality.All);
         Sombra_Falsa.SetActive(QualitySettings.shadows.Equals(ShadowQuality.Disable));
     }
@@ -21,11 +21,22 @@ public class Calidad : MonoBehaviour
     public  void Ajustar_Calidad()
     {
         QualitySettings.SetQualityLevel(calidad.value);
+        if (calidad.value <= 1)
+        {
+            Sombra_Falsa.SetActive(true);
+            QualitySettings.shadows = ShadowQuality.Disable;
+        }
+        else
+        {
+            Sombra_Falsa.SetActive(false);
+            QualitySettings.shadows = ShadowQuality.All;
+        }
+        PlayerPrefs.SetInt("Calidad", QualitySettings.GetQualityLevel());
     }
 
     public void Activar_Sombras(bool isOn)
     {
-        Sombras.isOn = isOn;
+        Sombras.isOn =  QualitySettings.GetQualityLevel() > 1 ? isOn : false;
         QualitySettings.shadows = !Sombras.isOn ? ShadowQuality.Disable : ShadowQuality.All;
         Sombra_Falsa.SetActive(QualitySettings.shadows.Equals(ShadowQuality.Disable));
     }
