@@ -7,6 +7,8 @@ public class Obstaculos : MonoBehaviour
 {
     [SerializeField] private GameObject Obstaculo;
     [SerializeField] private GameObject Enemigo;
+    [SerializeField] private GameObject Luz_Estatica;
+    [SerializeField] private GameObject Luz_Dinamica;
     [SerializeField] int min_obj, max_obj, cant_enemigos;
     private Mapa mapa_content;
     private List<GameObject> obj_Seguir = new();
@@ -17,6 +19,7 @@ public class Obstaculos : MonoBehaviour
         Create_OBJ();
         Create_Objetos_Seguir();
         Create_Enemigos();
+        Get_Dinamica();
     }
 
     private Vector3 Posicion(float altura)
@@ -57,6 +60,14 @@ public class Obstaculos : MonoBehaviour
             plane.transform.position = Posicion(-2);
             obj_Seguir.Add(plane);
         }
+    }
+
+    private void Get_Dinamica()
+    {
+        if (!FindObjectOfType<Pase_Conexion_Menu_Gameplay>().dinamica)
+            Luz_Estatica.SetActive(true);
+        else
+            Luz_Dinamica.SetActive(true);
     }
 
 }
