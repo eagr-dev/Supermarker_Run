@@ -56,6 +56,7 @@ public class Sistema_Guardado : MonoBehaviour
         else
         {
             _Nivel.nivel = 1;
+            Dinero.Set_Agregar(0);
         }
     }
 

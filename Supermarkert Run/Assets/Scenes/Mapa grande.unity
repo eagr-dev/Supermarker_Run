@@ -25091,6 +25091,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 65409d330eca3fd44908fc7697640309, type: 3}
+--- !u!224 &1750846021 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8884036946698572548, guid: 07a4c56f5b9e701468326be94edbb142, type: 3}
+  m_PrefabInstance: {fileID: 564910490}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1751763736 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2204893939720232477, guid: 07a4c56f5b9e701468326be94edbb142, type: 3}
@@ -28430,6 +28435,17 @@ Transform:
   - {fileID: 431846474}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1962123024 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5501954675219489817, guid: 07a4c56f5b9e701468326be94edbb142, type: 3}
+  m_PrefabInstance: {fileID: 564910490}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1993086630
 GameObject:
   m_ObjectHideFlags: 0
@@ -29829,13 +29845,29 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 564910493}
     - target: {fileID: 7395996999866375472, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
+      propertyPath: Flecha
+      value: 
+      objectReference: {fileID: 1750846021}
+    - target: {fileID: 7395996999866375472, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
       propertyPath: Muerte
       value: 
       objectReference: {fileID: 9163773}
     - target: {fileID: 7395996999866375472, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
+      propertyPath: camara
+      value: 
+      objectReference: {fileID: 963194228}
+    - target: {fileID: 7395996999866375472, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
+      propertyPath: Distancia
+      value: 
+      objectReference: {fileID: 1962123024}
+    - target: {fileID: 7395996999866375472, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
       propertyPath: Sin_espacio
       value: 
       objectReference: {fileID: 564910492}
+    - target: {fileID: 7395996999866375472, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
+      propertyPath: columnas_mapa
+      value: 42
+      objectReference: {fileID: 0}
     - target: {fileID: 7395996999866375472, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
       propertyPath: Misiones_echas
       value: 

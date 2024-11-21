@@ -30,6 +30,8 @@ public class Camara_Objetos_Desaparecer : MonoBehaviour
                 Padre = objeto.GetComponent<Transform>();
                 Padre.GetChild(0).GetComponent<MeshRenderer>().material = materia_Convertido;
                 Padre.GetChild(3).gameObject.SetActive(true);
+                Padre.GetChild(2).gameObject.SetActive(true);
+                Padre.GetChild(1).gameObject.SetActive(true);
                 objeto = null;
             }
             else
@@ -38,6 +40,8 @@ public class Camara_Objetos_Desaparecer : MonoBehaviour
                 Padre = objeto.GetComponent<Transform>();
                 Padre.GetChild(0).GetComponent<MeshRenderer>().material = materia_Convertir;
                 Padre.GetChild(3).gameObject.SetActive(false);
+                Padre.GetChild(2).gameObject.SetActive(false);
+                Padre.GetChild(1).gameObject.SetActive(false);
             }
 
         }

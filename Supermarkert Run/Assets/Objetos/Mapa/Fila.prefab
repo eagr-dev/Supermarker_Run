@@ -985,8 +985,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.2501602, y: 2.29874, z: 1.4465561}
-  m_Center: {x: -0.03319931, y: 0.90327, z: -1.6878128}
+  m_Size: {x: 2.2501602, y: 2.29874, z: 3}
+  m_Center: {x: -0.03319931, y: 0.90327, z: -2.2649212}
 --- !u!65 &5182065149461672634
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1468,8 +1468,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.2501602, y: 2.29874, z: 1.4465561}
-  m_Center: {x: -0.03319931, y: 0.90327, z: -1.6878128}
+  m_Size: {x: 2.2501602, y: 2.29874, z: 3}
+  m_Center: {x: -0.03319931, y: 0.90327, z: -2.2649212}
 --- !u!65 &8624113666538562887
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1895,8 +1895,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.2501602, y: 2.29874, z: 1.4465561}
-  m_Center: {x: -0.03319931, y: 0.90327, z: -1.6878128}
+  m_Size: {x: 2.2501602, y: 2.29874, z: 3}
+  m_Center: {x: -0.03319931, y: 0.90327, z: -2.2649212}
 --- !u!65 &2354146734766404465
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1990,8 +1990,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.2501602, y: 2.29874, z: 1.4465561}
-  m_Center: {x: -0.03319931, y: 0.90327, z: -1.6878128}
+  m_Size: {x: 2.2501602, y: 2.29874, z: 3}
+  m_Center: {x: -0.03319931, y: 0.90327, z: -2.2649212}
 --- !u!65 &4590464720902527112
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2168,8 +2168,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.2501602, y: 2.29874, z: 1.4465561}
-  m_Center: {x: -0.03319931, y: 0.90327, z: -1.6878128}
+  m_Size: {x: 2.2501602, y: 2.29874, z: 3}
+  m_Center: {x: -0.03319931, y: 0.90327, z: -2.2649212}
 --- !u!65 &3103424007180653023
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2263,8 +2263,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.2501602, y: 2.29874, z: 1.4465561}
-  m_Center: {x: -0.03319931, y: 0.90327, z: -1.6878128}
+  m_Size: {x: 2.2501602, y: 2.29874, z: 3}
+  m_Center: {x: -0.03319931, y: 0.90327, z: -2.2649212}
 --- !u!65 &5055275320682592331
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2690,8 +2690,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.2501602, y: 2.29874, z: 1.4465561}
-  m_Center: {x: -0.03319931, y: 0.90327, z: -1.6878128}
+  m_Size: {x: 2.2501602, y: 2.29874, z: 3}
+  m_Center: {x: -0.03319931, y: 0.90327, z: -2.2649212}
 --- !u!65 &3638545023573669289
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2951,8 +2951,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.2501602, y: 2.29874, z: 1.4465561}
-  m_Center: {x: -0.03319931, y: 0.90327, z: -1.6878128}
+  m_Size: {x: 2.2501602, y: 2.29874, z: 3}
+  m_Center: {x: -0.03319931, y: 0.90327, z: -2.2649212}
 --- !u!65 &5963605654779414968
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3295,8 +3295,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.2501602, y: 2.29874, z: 1.4465561}
-  m_Center: {x: -0.03319931, y: 0.90327, z: -1.6878128}
+  m_Size: {x: 2.2501602, y: 2.29874, z: 3}
+  m_Center: {x: -0.03319931, y: 0.90327, z: -2.2649212}
 --- !u!65 &3266521439557083526
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4303,8 +4303,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.2501602, y: 2.29874, z: 1.4465561}
-  m_Center: {x: -0.03319931, y: 0.90327, z: -1.6878128}
+  m_Size: {x: 2.2501602, y: 2.29874, z: 3}
+  m_Center: {x: -0.03319931, y: 0.90327, z: -2.2649212}
 --- !u!65 &5713956664922180165
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4393,6 +4393,14 @@ PrefabInstance:
     - target: {fileID: 2085486646532958311, guid: 6837630c3f2d65940bcc00071b08a7e2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 4588894153293558394, guid: 6837630c3f2d65940bcc00071b08a7e2, type: 3}
+      propertyPath: m_Size.z
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4588894153293558394, guid: 6837630c3f2d65940bcc00071b08a7e2, type: 3}
+      propertyPath: m_Center.z
+      value: -2.2649212
       objectReference: {fileID: 0}
     - target: {fileID: 7024745629696495806, guid: 6837630c3f2d65940bcc00071b08a7e2, type: 3}
       propertyPath: m_StaticEditorFlags

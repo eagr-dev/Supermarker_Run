@@ -159,6 +159,7 @@ public class Player : MonoBehaviour
         {
             if (velocidad_porcentual >= resistencia_porcentual)
             {
+                Debug.Log($"{velocidad_porcentual}\n{resistencia_porcentual}");
                 if (Efecto != null)
                 {
                     switch (Efecto.Get_Efecto())
