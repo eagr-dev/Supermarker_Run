@@ -20,6 +20,8 @@ public class Caja : MonoBehaviour
             yield return new WaitForSeconds(tiempo);
             transform.GetChild(i).gameObject.SetActive(true);
             carro.objetos_actuales--;
+            Debug.Log(carro.objetos_actuales);
+            if (carro.objetos_actuales <= 0) break;
         }
     }
 

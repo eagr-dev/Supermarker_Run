@@ -31,6 +31,7 @@ public class Mision : MonoBehaviour
             Set_Object(objects_mision);
             New_Text_In_TextMesh();
         }
+        Misiones_echas.text = "Mision complete: " + Get_Position().ToString() + "/" + Cantidad_Nivel().ToString();
     }
 
     private void Start()
@@ -88,7 +89,7 @@ public class Mision : MonoBehaviour
             object_act = objects_mision[position_Text];
             position_Text++;
             carro.objetos_actuales++;
-            Misiones_echas.text = Get_Position().ToString() + "/" + Cantidad_Nivel().ToString();
+            Misiones_echas.text =  "Mision complete: "+ Get_Position().ToString() + "/" + Cantidad_Nivel().ToString();
             Espacio_Disponible.text = "Available Space: " + carro.objetos_actuales.ToString() + "/" + carro.cant_limite_carga.ToString();
         }
         else if (obj == object_act && Cantidad_Nivel() == position_Text)

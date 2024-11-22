@@ -2697,16 +2697,16 @@ MonoBehaviour:
   - {fileID: 919132149155446097, guid: 099749b618d34d340a203d5f43ed5283, type: 3}
   - {fileID: 919132149155446097, guid: 099749b618d34d340a203d5f43ed5283, type: 3}
   Articulos_EscolaresG:
-  - {fileID: 919132149155446097, guid: c14e367af22bd564a97ec6e295631c20, type: 3}
-  - {fileID: 919132149155446097, guid: c14e367af22bd564a97ec6e295631c20, type: 3}
-  - {fileID: 919132149155446097, guid: c14e367af22bd564a97ec6e295631c20, type: 3}
-  - {fileID: 919132149155446097, guid: c14e367af22bd564a97ec6e295631c20, type: 3}
-  - {fileID: 919132149155446097, guid: c14e367af22bd564a97ec6e295631c20, type: 3}
-  - {fileID: 919132149155446097, guid: c14e367af22bd564a97ec6e295631c20, type: 3}
-  - {fileID: 919132149155446097, guid: c14e367af22bd564a97ec6e295631c20, type: 3}
-  - {fileID: 919132149155446097, guid: c14e367af22bd564a97ec6e295631c20, type: 3}
-  - {fileID: 919132149155446097, guid: c14e367af22bd564a97ec6e295631c20, type: 3}
-  - {fileID: 919132149155446097, guid: c14e367af22bd564a97ec6e295631c20, type: 3}
+  - {fileID: 919132149155446097, guid: a6cc43c8ecf74eb469e86581c34fafbe, type: 3}
+  - {fileID: 919132149155446097, guid: a6cc43c8ecf74eb469e86581c34fafbe, type: 3}
+  - {fileID: 919132149155446097, guid: a6cc43c8ecf74eb469e86581c34fafbe, type: 3}
+  - {fileID: 919132149155446097, guid: a6cc43c8ecf74eb469e86581c34fafbe, type: 3}
+  - {fileID: 919132149155446097, guid: a6cc43c8ecf74eb469e86581c34fafbe, type: 3}
+  - {fileID: 919132149155446097, guid: a6cc43c8ecf74eb469e86581c34fafbe, type: 3}
+  - {fileID: 919132149155446097, guid: a6cc43c8ecf74eb469e86581c34fafbe, type: 3}
+  - {fileID: 919132149155446097, guid: a6cc43c8ecf74eb469e86581c34fafbe, type: 3}
+  - {fileID: 919132149155446097, guid: a6cc43c8ecf74eb469e86581c34fafbe, type: 3}
+  - {fileID: 919132149155446097, guid: a6cc43c8ecf74eb469e86581c34fafbe, type: 3}
   Limpieza_PersonalG:
   - {fileID: 919132149155446097, guid: 4bbef0c31f8fe8a42a4ea59e118495df, type: 3}
   - {fileID: 919132149155446097, guid: 4bbef0c31f8fe8a42a4ea59e118495df, type: 3}
@@ -5936,7 +5936,7 @@ PrefabInstance:
     - target: {fileID: 7395996999866375472, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
       propertyPath: Distancia
       value: 
-      objectReference: {fileID: 3705911046001335274}
+      objectReference: {fileID: 0}
     - target: {fileID: 7395996999866375472, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
       propertyPath: Sin_espacio
       value: 
@@ -6811,17 +6811,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 07a4c56f5b9e701468326be94edbb142, type: 3}
---- !u!114 &3705911046001335274 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5501954675219489817, guid: 07a4c56f5b9e701468326be94edbb142, type: 3}
-  m_PrefabInstance: {fileID: 3705911046001335272}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &3916951617229644559
 PrefabInstance:
   m_ObjectHideFlags: 0

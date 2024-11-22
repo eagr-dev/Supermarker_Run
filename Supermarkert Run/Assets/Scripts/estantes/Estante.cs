@@ -27,6 +27,7 @@ public class Estante : MonoBehaviour
 
         if(tag == Areas.Area_product.Articulos_Escolares)
         {
+            //6.35x -24.77
             transform.GetChild(1).localPosition = new Vector3(18.29f, -0.203f, -73.85f);
             transform.GetChild(2).localPosition = new Vector3(18.29f, 1f, -73.85f);
             transform.GetChild(3).localPosition = new Vector3(18.29f, 2f, -73.85f);

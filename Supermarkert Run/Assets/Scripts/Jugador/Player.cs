@@ -164,7 +164,9 @@ public class Player : MonoBehaviour
             Caja caja = other.gameObject.GetComponent<Caja>();
             caja.Visible_Objects(mision.Cantidad_Nivel(), mision.Get_Position(),carrito, Tiempo_Dejar_Objeto);
             Ganador(caja);
-        }else if(other.CompareTag("Mojado"))
+            mision.Espacio_Disponible.text = "Available Space: " + carrito.objetos_actuales.ToString() + " / " + carrito.cant_limite_carga.ToString();
+        }
+        else if(other.CompareTag("Mojado"))
         {
             StartCoroutine(Resbalon());
         }
