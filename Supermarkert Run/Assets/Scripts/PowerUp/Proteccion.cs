@@ -12,9 +12,14 @@ public class Proteccion : Interfaz_PowerUp
         nombre = "Protection";
     }
 
-    public override void Efecto(params object[] parametros)
+    public override void Efecto()
     {
-        efecto = false;
+        RP = FindObjectOfType<Repartir_power>();
+        if (efecto == true)
+        {
+            efecto = false;
+            RP.Set_Enum(Repartir_power.NULLENUM);
+        }
     }
 
     public override void Animacion()
@@ -31,5 +36,8 @@ public class Proteccion : Interfaz_PowerUp
         }
     }
 
-    public override object Get_Efecto() => efecto;
+    public override T Get_Efecto<T>()
+    {
+        return default;
+    }
 }

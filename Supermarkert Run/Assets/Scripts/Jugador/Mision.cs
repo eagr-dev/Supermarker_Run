@@ -13,14 +13,13 @@ public class Mision : MonoBehaviour
     List<Transform> posicionesMision = new List<Transform>();
     Transform posicion_mas_cercana;
     public TMP_Text Text;
-    public TMP_Text Distancia;
     public TMP_Text Misiones_echas;
     public TMP_Text Espacio_Disponible;
     public GameObject Sin_espacio;
     public GameObject Muerte;
     private string object_act = "", mision_ant = "";
     Car carro;
-    [SerializeField] RectTransform Flecha;
+    [SerializeField] GameObject Flecha;
 
     void Awake()
     {
@@ -134,14 +133,17 @@ public class Mision : MonoBehaviour
     {
         Estante[] estantes = FindObjectsOfType<Estante>();
         int mision_next = 0;
-
+        Debug.Log(objects_mision.Count);
         for(int i = 0;i < estantes.Length;i++)
         {
-            for(int j = 0; j < Cantidad_Nivel();j++)
+            for(int j = 0; j < Cantidad_Nivel() - 1; j++)
             {
+                
                 if(objects_mision[i] == objects_mision[mision_next])
                 {
+                    Debug.Log(mision_next + 1);
                     posicionesMision.Add(estantes[i].GetComponent<Transform>());
+                    mision_next++;
                 }
             }
         }
@@ -157,15 +159,16 @@ public class Mision : MonoBehaviour
             posicion_mas_cercana = posicionesMision[columna_act];
             columna_act++;
             mision_ant = objects_mision[position_Text];
+            Debug.Log(posicion_mas_cercana.position);
+            Debug.Log(mision_ant);
         }
     }
     void Direccion_Apuntar()
     {
-        Vector3 direccion = posicion_mas_cercana.position - transform.position;
-        float angulo = Mathf.Atan2(direccion.y, direccion.x) * Mathf.Rad2Deg;
-        Quaternion angulocorregido = Quaternion.AngleAxis(angulo, Vector3.forward);
-        Distancia.text = "Metros: " + Mathf.Round(direccion.magnitude).ToString();
-        Flecha.rotation = Quaternion.Slerp(Flecha.rotation,angulocorregido,Time.deltaTime * 10);
+        Vector3 direccion = transform.position - posicion_mas_cercana.position;
+        Quaternion rotacion = Quaternion.LookRotation(direccion);
+        Flecha.transform.rotation = Quaternion.Slerp(Flecha.transform.rotation, rotacion, 20 * Time.deltaTime);
+        Flecha.transform.position = new Vector3(transform.position.x, 0.6f, transform.position.z);
     }
 
     /*

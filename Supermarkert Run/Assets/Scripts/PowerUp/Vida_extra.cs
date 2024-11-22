@@ -4,16 +4,16 @@ using UnityEngine.SceneManagement;
 public class Vida_extra : Interfaz_PowerUp
 {
     private int vidas = 2;
-    public override void Efecto(params object[] parametros)
+    public override void Efecto()
     {
-        if(vidas != 0)
+        RP = FindObjectOfType<Repartir_power>();
+        if (vidas > 0)
         {
             vidas--;
         }
         else
         {
-
-            SceneManager.LoadScene(0);
+            RP.Set_Enum(Repartir_power.NULLENUM);
         }
 
     }
@@ -24,7 +24,10 @@ public class Vida_extra : Interfaz_PowerUp
         nombre = "Extra Lives";
     }
 
-    public override object Get_Efecto() => vidas;
+    public override T Get_Efecto<T>()
+    {
+        return (T)(object)vidas;
+    }
 
     public override void Animacion()
     {

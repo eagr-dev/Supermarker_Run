@@ -24,6 +24,13 @@ public class Estante : MonoBehaviour
         transform.GetChild(3).GetComponent<MeshRenderer>().material = ObjectCopy.transform.GetChild(0).GetComponent<MeshRenderer>().sharedMaterial;
 
         Tag = tag;
+
+        if(tag == Areas.Area_product.Articulos_Escolares)
+        {
+            transform.GetChild(1).localPosition = new Vector3(18.29f, -0.203f, -73.85f);
+            transform.GetChild(2).localPosition = new Vector3(18.29f, 1f, -73.85f);
+            transform.GetChild(3).localPosition = new Vector3(18.29f, 2f, -73.85f);
+        }
     }
 
     public string Get_Object() => objeto;

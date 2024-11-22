@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Manos_Rapidas : Interfaz_PowerUp
 {
+    float porcentaje_velocidad_dejar_objetos;
     public override void Animacion()
     {
         if (GetComponent<Transform>().position.magnitude < 2)
@@ -18,11 +19,15 @@ public class Manos_Rapidas : Interfaz_PowerUp
         }
     }
 
-    public override void Efecto(params object[] parametros){}
-
-    public override object Get_Efecto()
+    public override void Efecto()
     {
-        return "0.5";
+        RP = FindObjectOfType<Repartir_power>();
+        RP.Set_Enum(Repartir_power.NULLENUM);
+    }
+
+    public override T Get_Efecto<T>()
+    {
+        return (T)(object)porcentaje_velocidad_dejar_objetos;
     }
 
     public override void Set_Descripcion_Nombre()

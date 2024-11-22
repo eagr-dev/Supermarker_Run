@@ -20,8 +20,13 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject Muerte_canvas;
     [SerializeField] private GameObject Ganar_canvas;
     [SerializeField] private Animator animacion;
+    
+    private Repartir_power RP;
+    private Repartir_power.Power_Up PU;
+
     private bool resbalon = false;
 
+    private float Tiempo_Dejar_Objeto = 1;
 
     private void Awake()
     {
@@ -29,8 +34,11 @@ public class Player : MonoBehaviour
         rigidbody = GetComponent<Rigidbody>();
         if (FindObjectOfType<Repartir_power>() != null)
         {
-            Efecto = FindObjectOfType<Repartir_power>().Get_Power_Up();
+            RP = FindObjectOfType<Repartir_power>();
+            Efecto = RP.Get_Power_Up_Class();
+            PU = RP.Get_Power_Up();
         }
+        Power_Respective();
     }
 
     private void Start()
@@ -48,6 +56,32 @@ public class Player : MonoBehaviour
         {
             float vueltas = 3 * 360;
             transform.Rotate(0, vueltas * Time.deltaTime, 0);
+        }
+    }
+
+
+    //Power UP
+
+    private void  Power_Respective()
+    {
+        switch(PU)
+        {
+            case Repartir_power.Power_Up.VIDA: Debug.Log("Vida"); break;
+            case Repartir_power.Power_Up.VELOCIDAD:
+                speed *= Efecto.Get_Efecto<float>();
+                max_speed_H *= Efecto.Get_Efecto<float>();
+                max_speed_V *= Efecto.Get_Efecto<float>();
+                Efecto = null;
+                Debug.Log("Velocidad");
+                break;
+            case Repartir_power.Power_Up.PROTECCION: Debug.Log("Proteccion"); break;
+            case Repartir_power.Power_Up.MANOS_RAPIDAS:
+                float eliminar = Tiempo_Dejar_Objeto * Efecto.Get_Efecto<float>();
+                Tiempo_Dejar_Objeto -= eliminar;
+                Efecto = null;
+                Debug.Log("Manos rapidas");
+                break;
+            case Repartir_power.Power_Up.NINGUNO: Debug.Log("Ninguno"); break;
         }
     }
 
@@ -89,17 +123,6 @@ public class Player : MonoBehaviour
         max_speed_H += carrito.velocidad_adicional;
         max_speed_V += carrito.velocidad_adicional;
         resistencia_porcentual = ((float)carrito.resistencia_choque / 100) * speed;
-
-        if(Efecto != null)
-        {
-            if (Efecto.Get_Efecto() is float)
-            {
-                Efecto.Efecto(speed);
-                speed = (float)Efecto.Get_Efecto();
-                max_speed_H = (float)Efecto.Get_Efecto();
-                max_speed_V = (float)Efecto.Get_Efecto();
-            }
-        }
     }
 
     private void New_Init()
@@ -138,14 +161,8 @@ public class Player : MonoBehaviour
            mision.New_Text_In_TextMesh(estante.Get_Object());
         }else if(other.CompareTag("Caja"))
         {
-            float tiempo = 1;
             Caja caja = other.gameObject.GetComponent<Caja>();
-            if (Efecto.Get_Efecto() is string reduccion)
-            {
-                float eliminar = tiempo * float.Parse(reduccion);
-                tiempo -= eliminar;
-            }
-            caja.Visible_Objects(mision.Cantidad_Nivel(), mision.Get_Position(),carrito, tiempo);
+            caja.Visible_Objects(mision.Cantidad_Nivel(), mision.Get_Position(),carrito, Tiempo_Dejar_Objeto);
             Ganador(caja);
         }else if(other.CompareTag("Mojado"))
         {
@@ -162,31 +179,10 @@ public class Player : MonoBehaviour
                 Debug.Log($"{velocidad_porcentual}\n{resistencia_porcentual}");
                 if (Efecto != null)
                 {
-                    switch (Efecto.Get_Efecto())
-                    {
-                        case true:
-                            Efecto.Efecto();
-                            Retroceso(30, speed * 2, collision);
-                            StopAllCoroutines();
-                            break;
-                        case false:
-                            speed = 0;
-                            Muerte_canvas.SetActive(true);
-                            Retroceso(20, speed, collision);
-                            StopAllCoroutines();
-                            return;
-                        case 2:
-                        case 1:
-                        case 0:
-                            Efecto.Efecto(transform.position);
-                            break;
-                        default:
-                            speed = 0;
-                            Muerte_canvas.SetActive(true);
-                            Retroceso(20, speed, collision);
-                            StopAllCoroutines();
-                            return;
-                    }
+                    Debug.Log("Usar efecto");
+                    Efecto.Efecto();
+                    if (PU == Repartir_power.Power_Up.NINGUNO)
+                        Efecto = null;
                 }
                 else
                 {

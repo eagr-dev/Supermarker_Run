@@ -10,6 +10,7 @@ public class Sistema_Guardado : MonoBehaviour
     [SerializeField] private string URL_PATH_PERSONALIZADA;
     [SerializeField] private List<Material> Material_Personalizada;
     [SerializeField] private TMP_Text Nivel;
+    [SerializeField] private TMP_Text FileDir;
     private DINERO Dinero;
     private Nivel _Nivel;
     private Car carro;
@@ -24,6 +25,7 @@ public class Sistema_Guardado : MonoBehaviour
         Dinero = FindObjectOfType<DINERO>();
         _Nivel = FindObjectOfType<Nivel>();
         PCMG = FindObjectOfType<Pase_Conexion_Menu_Gameplay>();
+        FileDir.text = URL_PATH;
     }
 
     private void Start()

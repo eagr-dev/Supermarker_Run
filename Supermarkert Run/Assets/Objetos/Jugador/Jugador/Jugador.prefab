@@ -2576,12 +2576,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position_Text: 0
   Text: {fileID: 0}
+  Distancia: {fileID: 0}
   Misiones_echas: {fileID: 0}
   Espacio_Disponible: {fileID: 0}
   Sin_espacio: {fileID: 0}
   Muerte: {fileID: 0}
   Flecha: {fileID: 0}
-  camara: {fileID: 0}
 --- !u!114 &3748611634939655014
 MonoBehaviour:
   m_ObjectHideFlags: 0

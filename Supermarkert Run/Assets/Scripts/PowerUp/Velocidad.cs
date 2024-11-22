@@ -4,16 +4,12 @@ using UnityEngine;
 
 public class Velocidad : Interfaz_PowerUp
 {
-    private float velocidad = 0;
     private const float porcentaje_velocidad = 0.20f;
 
-    public override void Efecto(params object[] parametros)
+    public override void Efecto()
     {
-        if(parametros[0] is float)
-        {
-            float aux = (float)parametros[0] * porcentaje_velocidad;
-            velocidad = aux + (float)parametros[0];
-        }
+        RP = FindObjectOfType<Repartir_power>();
+        RP.Set_Enum(Repartir_power.NULLENUM);
     }
 
     public override void Set_Descripcion_Nombre()
@@ -36,5 +32,8 @@ public class Velocidad : Interfaz_PowerUp
         }
     }
 
-    public override object Get_Efecto() => velocidad;
+    public override T Get_Efecto<T>()
+    {
+        return (T)(object)porcentaje_velocidad;
+    }
 }

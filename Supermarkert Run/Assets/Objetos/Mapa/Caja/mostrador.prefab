@@ -728,6 +728,10 @@ PrefabInstance:
       value: mostrador
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 3ea0610771baa0d4da03fd1e578c1ffc, type: 3}
+      propertyPath: m_TagString
+      value: Caja
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 3ea0610771baa0d4da03fd1e578c1ffc, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -942,8 +946,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1.6248956, z: 3.6224232}
-  m_Center: {x: 0, y: -1.5847454, z: -0.07125187}
+  m_Size: {x: 1.2613072, y: 1.6248956, z: 4.0330505}
+  m_Center: {x: 0.13065362, y: -1.5847454, z: -0.27656555}
 --- !u!65 &8571950643697266663
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -963,8 +967,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.68633103, y: 1.6802528, z: 3.5321445}
-  m_Center: {x: -0.9996296, y: -1.5943471, z: -0.027533531}
+  m_Size: {x: 1.7923429, y: 1.6802528, z: 4.05476}
+  m_Center: {x: -1.5526356, y: -1.5943471, z: -0.28884125}
 --- !u!4 &8056853242170287154 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3ea0610771baa0d4da03fd1e578c1ffc, type: 3}

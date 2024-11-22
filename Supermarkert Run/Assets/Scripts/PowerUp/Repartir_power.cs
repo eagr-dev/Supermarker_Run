@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Repartir_power : MonoBehaviour
 {
-    [SerializeField]enum Power_Up { VIDA, VELOCIDAD, PROTECCION, MANOS_RAPIDAS, NINGUNO};
+    public enum Power_Up { VIDA, VELOCIDAD, PROTECCION, MANOS_RAPIDAS, NINGUNO};
     [SerializeField]Power_Up PU;
     private Interfaz_PowerUp clase;
     static Repartir_power RP;
@@ -23,7 +23,7 @@ public class Repartir_power : MonoBehaviour
         }
     }
 
-    public Interfaz_PowerUp Get_Power_Up()
+    public Interfaz_PowerUp Get_Power_Up_Class()
     {
         
         switch(PU)
@@ -48,5 +48,13 @@ public class Repartir_power : MonoBehaviour
 
     public int Get_Enum_Count() => (int)Power_Up.NINGUNO;
 
-    public void Set_Enum(int posicion) => PU = (Power_Up)posicion;
+    public void Set_Enum(int posicion)
+    {
+        PU = (Power_Up)posicion;
+        Debug.Log(PU);
+    }
+
+    public Power_Up Get_Power_Up() => PU;
+
+    public static int NULLENUM = 4;
 }
