@@ -80,7 +80,7 @@ public class Sistema_Guardado : MonoBehaviour
         else
         {
             _Nivel.nivel = 1;
-            Nivel.text = "1";
+            Nivel.text = "Level: 1";
             Dinero.Set_Agregar(5000);
             Dinero_Text.text = "Money: 5000";
             Reinicio.SetActive(true);
