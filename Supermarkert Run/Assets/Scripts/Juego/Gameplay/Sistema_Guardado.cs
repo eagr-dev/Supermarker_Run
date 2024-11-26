@@ -11,7 +11,7 @@ public class Sistema_Guardado : MonoBehaviour
     [SerializeField] private List<Material> Material_Personalizada;
     [SerializeField] private TMP_Text Nivel;
     [SerializeField] private TMP_Text Dinero_Text;
-    [SerializeField] private TMP_Text FileDir;
+    [SerializeField] private GameObject Reinicio;
     private DINERO Dinero;
     private Nivel _Nivel;
     private Car carro;
@@ -26,8 +26,8 @@ public class Sistema_Guardado : MonoBehaviour
         URL_PATH_PERSONALIZADA = Application.dataPath + "/personalizado.json";
         Debug.Log("En el editor");
 #else
-        URL_PATH = Application.persistentDataPath + "/datos.json";
-        URL_PATH_PERSONALIZADA = Application.persistentDataPath + "/personalizado.json";
+        URL_PATH = "/storage/emulated/0/Documents/datos.json";
+        URL_PATH_PERSONALIZADA = "/storage/emulated/0/Documents/personalizado.json";
 #endif
         
         Dinero = FindObjectOfType<DINERO>();
@@ -35,7 +35,6 @@ public class Sistema_Guardado : MonoBehaviour
         PCMG = FindObjectOfType<Pase_Conexion_Menu_Gameplay>();
         Cargar();
         Carga_Personalizada();
-        FileDir.text = URL_PATH;
     }
 
     private void Start()
@@ -81,8 +80,10 @@ public class Sistema_Guardado : MonoBehaviour
         else
         {
             _Nivel.nivel = 1;
-            Dinero.Set_Agregar(0);
-            Dinero_Text.text = "Money: 0";
+            Nivel.text = "1";
+            Dinero.Set_Agregar(5000);
+            Dinero_Text.text = "Money: 5000";
+            Reinicio.SetActive(true);
         }
     }
 
@@ -100,6 +101,7 @@ public class Sistema_Guardado : MonoBehaviour
         {
             foreach (Material material in Material_Personalizada)
                 material.color = new Color(0, 0, 0, 0);
+            Guardar_Personalizado(0, 0, 0, 0);
         }
     }
 

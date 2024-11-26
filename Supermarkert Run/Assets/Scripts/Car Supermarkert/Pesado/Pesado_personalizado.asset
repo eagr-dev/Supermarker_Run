@@ -20,7 +20,7 @@ MonoBehaviour:
   peso_maximo: 50
   velocidad_maxima: 5
   maximo_a_cargar: 30
-  maxima_resistencia: 90
+  maxima_resistencia: 100
   nombre: Heavy P
   descripcion: Custom Heavy Truck
   requisitos: 0

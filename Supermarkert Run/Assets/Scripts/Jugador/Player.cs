@@ -96,7 +96,6 @@ public class Player : MonoBehaviour
             Horizontal_Move = joystick.Horizontal * max_speed_H;
             Vector3 Movimiento = new Vector3(Horizontal_Move, 0, Vertical_Move).normalized;
             obtener_velocidad = new Vector3(Horizontal_Move, 0, Vertical_Move) * Time.deltaTime * speed;
-            velocidad_porcentual = (obtener_velocidad.magnitude * 100) / speed;
             transform.position += new Vector3(Horizontal_Move, 0, Vertical_Move) * Time.deltaTime * speed;
 
             animacion.SetFloat("VelX", Horizontal_Move);
@@ -124,7 +123,8 @@ public class Player : MonoBehaviour
         speed += carrito.velocidad_adicional;
         max_speed_H += carrito.velocidad_adicional;
         max_speed_V += carrito.velocidad_adicional;
-        resistencia_porcentual = ((float)carrito.resistencia_choque / 100) * speed;
+        resistencia_porcentual = (float)carrito.resistencia_choque / 100;
+
     }
 
     private void New_Init()
@@ -143,8 +143,8 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(1);
         max_speed_H = 0;
         max_speed_V = 0;
-        yield return new WaitForSeconds(0.5f);
         joystick.gameObject.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
         max_speed_H = x;
         max_speed_V = y;
         resbalon = false;
@@ -195,9 +195,10 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(!collision.gameObject.CompareTag("Piso") && !collision.gameObject.CompareTag("Caja"))
+        if (!collision.gameObject.CompareTag("Piso") && !collision.gameObject.CompareTag("Caja"))
         {
-            if (velocidad_porcentual >= resistencia_porcentual)
+            velocidad_porcentual = Mathf.Abs(Mathf.Max(joystick.Horizontal, joystick.Vertical));
+            if (velocidad_porcentual > resistencia_porcentual)
             {
                 StartCoroutine(Retroceder());
                 Debug.Log($"efecto: {Efecto}");

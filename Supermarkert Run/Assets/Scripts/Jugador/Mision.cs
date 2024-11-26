@@ -114,7 +114,6 @@ public class Mision : MonoBehaviour
             object_act = objects_mision[position_Text];
             position_Text++;
             Misiones_echas.text = "Mision complete: " + Get_Position().ToString() + "/" + Cantidad_Nivel().ToString();
-            Debug.Log($"Valor position text: {position_Text}");
         }
     }
 

@@ -34,6 +34,7 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
     [SerializeField] private TMP_Text Precio_personalizar;
     [SerializeField] private TMP_Text Requisitos;
 
+
     [SerializeField] private TMP_Text Dinero;
     [SerializeField] private bool Comprar;
 
@@ -190,6 +191,7 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
     public void Slider_Seleccion(float value)
     {
         eleccion = (int)(value != slider.maxValue ? value : value - 1);
+        Debug.Log($"eleccion skin: {value}");
         Set_Skin_Eleccion();
         FindObjectOfType<Pase_Conexion_Menu_Gameplay>().Set_Eleccion(eleccion);
     }
