@@ -8,6 +8,7 @@ public class Sistema_Guardado : MonoBehaviour
 {
     [SerializeField] private string URL_PATH;
     [SerializeField] private string URL_PATH_PERSONALIZADA;
+    [SerializeField] private string URL_PATH_MAPA;
     [SerializeField] private List<Material> Material_Personalizada;
     [SerializeField] private TMP_Text Nivel;
     [SerializeField] private TMP_Text Dinero_Text;
@@ -21,26 +22,28 @@ public class Sistema_Guardado : MonoBehaviour
 
     private void Awake()
     {
+        string ruta = "";
 #if UNITY_EDITOR
-        URL_PATH = Application.dataPath + "/datos.json";
-        URL_PATH_PERSONALIZADA = Application.dataPath + "/personalizado.json";
-        Debug.Log("En el editor");
+        ruta = Application.dataPath;
 #else
-        URL_PATH = "/storage/emulated/0/Documents/datos.json";
-        URL_PATH_PERSONALIZADA = "/storage/emulated/0/Documents/personalizado.json";
+        ruta = "/storage/emulated/0/Documents";
 #endif
-        
+        URL_PATH = $"{ruta}/datos.json";
+        URL_PATH_PERSONALIZADA = $"{ruta}/personalizado.json";
+        URL_PATH_MAPA = $"{ruta}/mapa.txt";
         Dinero = FindObjectOfType<DINERO>();
         _Nivel = FindObjectOfType<Nivel>();
         PCMG = FindObjectOfType<Pase_Conexion_Menu_Gameplay>();
         Cargar();
         Carga_Personalizada();
+        Carga_Mapa();
     }
 
     private void Start()
     {
         Cargar();
         Carga_Personalizada();
+        Carga_Mapa();
     }
 
     public void Cargar()
@@ -105,6 +108,24 @@ public class Sistema_Guardado : MonoBehaviour
         }
     }
 
+    public void Carga_Mapa()
+    {
+        if(File.Exists(URL_PATH_MAPA))
+        {
+            string[] lineas = File.ReadAllLines(URL_PATH_MAPA);
+            List<Mapa> mapas = FindObjectOfType<Dinero_Obtenido>().mapas;
+
+            foreach(Mapa mapa in mapas)
+            {
+                foreach (string linea in lineas)
+                {
+                    if(mapa.nombre == linea)
+                        mapa.precio = 0;
+                }
+            }
+        }
+    }
+
 
     public void Guardar()
     {
@@ -138,5 +159,10 @@ public class Sistema_Guardado : MonoBehaviour
 
         File.WriteAllText(URL_PATH_PERSONALIZADA, conte);
 
+    }
+
+    public void ADD_MAPA(string nombre_mapa)
+    {
+        File.AppendAllText(URL_PATH_MAPA, nombre_mapa);
     }
 }

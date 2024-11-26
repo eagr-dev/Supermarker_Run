@@ -43,6 +43,7 @@ public class Seleccion_Mapa : MonoBehaviour
             Precio.text = "Buy: " + DO.Get_Mapa(seleccion).precio.ToString();
             Comprar.SetActive(false);
             Aceptar.SetActive(true);
+            FindObjectOfType<Sistema_Guardado>().ADD_MAPA(DO.Get_Mapa(seleccion_actual).nombre);
 
         }
     }
