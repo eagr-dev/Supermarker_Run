@@ -7899,6 +7899,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: b2fa034672952f34295a0ad884662433, type: 2}
   - {fileID: 2100000, guid: d127c53b6e38b6f4fa2b90567e0a9283, type: 2}
   Nivel: {fileID: 1794212365}
+  Dinero_Text: {fileID: 243872175}
   FileDir: {fileID: 1396347864}
 --- !u!4 &873666814
 Transform:

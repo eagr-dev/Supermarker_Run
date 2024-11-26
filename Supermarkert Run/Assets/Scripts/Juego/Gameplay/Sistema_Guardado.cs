@@ -10,6 +10,7 @@ public class Sistema_Guardado : MonoBehaviour
     [SerializeField] private string URL_PATH_PERSONALIZADA;
     [SerializeField] private List<Material> Material_Personalizada;
     [SerializeField] private TMP_Text Nivel;
+    [SerializeField] private TMP_Text Dinero_Text;
     [SerializeField] private TMP_Text FileDir;
     private DINERO Dinero;
     private Nivel _Nivel;
@@ -20,11 +21,20 @@ public class Sistema_Guardado : MonoBehaviour
 
     private void Awake()
     {
+#if UNITY_EDITOR
         URL_PATH = Application.dataPath + "/datos.json";
         URL_PATH_PERSONALIZADA = Application.dataPath + "/personalizado.json";
+        Debug.Log("En el editor");
+#else
+        URL_PATH = Application.persistentDataPath + "/datos.json";
+        URL_PATH_PERSONALIZADA = Application.persistentDataPath + "/personalizado.json";
+#endif
+        
         Dinero = FindObjectOfType<DINERO>();
         _Nivel = FindObjectOfType<Nivel>();
         PCMG = FindObjectOfType<Pase_Conexion_Menu_Gameplay>();
+        Cargar();
+        Carga_Personalizada();
         FileDir.text = URL_PATH;
     }
 
@@ -38,18 +48,30 @@ public class Sistema_Guardado : MonoBehaviour
     {
         if(File.Exists(URL_PATH))
         {
+            /*Lectura de archivo*/
             string contenido = File.ReadAllText(URL_PATH);
             Contenido contenido1 = JsonUtility.FromJson<Contenido>(contenido);
             Contenido contenido_Leido = contenido1;
-            PCMG.Set_Seleccion(contenido_Leido.Tipo_Carro);
+
+            /*Posicion de calidad*/
             _posicion = contenido_Leido.posicion;
+
+            /*Dinero*/
             if(Dinero.Get_Dinero() <= 0)
                 Dinero.Set_Agregar(contenido_Leido.dinero);
+            Dinero_Text.text = "Money: " + contenido_Leido.dinero.ToString();
+
+            /*Nivel*/
             _Nivel.nivel = contenido_Leido.nivel;
-            Nivel.text = "Nivel: " + _Nivel.nivel.ToString();
+            Nivel.text = "Level: " + _Nivel.nivel.ToString();
+
+            /*Calidad*/
             QualitySettings.SetQualityLevel(contenido_Leido.nivel_calidad);
             QualitySettings.shadows = contenido_Leido.Sombras;
 
+
+            /*Carros*/
+            PCMG.Set_Seleccion(contenido_Leido.Tipo_Carro);
             Seleccion_Menu_Carrito selec = FindObjectOfType<Seleccion_Menu_Carrito>();
             selec.Set_Car_Menu(PCMG.Get_Seleccion(), _posicion);
             selec.Inicializador();
@@ -60,6 +82,7 @@ public class Sistema_Guardado : MonoBehaviour
         {
             _Nivel.nivel = 1;
             Dinero.Set_Agregar(0);
+            Dinero_Text.text = "Money: 0";
         }
     }
 

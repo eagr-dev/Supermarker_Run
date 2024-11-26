@@ -70,7 +70,7 @@ public class Seleccion : MonoBehaviour
     {
         FindObjectOfType<Sistema_Guardado>().Guardar();
         Debug.Log("Salida");
-        Application.Quit();
+        Application.Quit(0);
     }
 
     private void OnApplicationQuit()
