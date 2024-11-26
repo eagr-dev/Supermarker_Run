@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     [SerializeField]private GameObject player_object;
     [SerializeField]private new GameObject camera;
     Vector3 position_camera = new Vector3(0,7,-10);
+    public Vector3 position_Reset;
     private Mision mision;
     private Get_Content_Car carrito_contenido;
     private Car carrito;
@@ -57,6 +58,7 @@ public class Player : MonoBehaviour
             float vueltas = 3 * 360;
             transform.Rotate(0, vueltas * Time.deltaTime, 0);
         }
+        if (transform.position.y < 0) transform.position = position_Reset;
     }
 
 
@@ -132,24 +134,31 @@ public class Player : MonoBehaviour
         max_speed_V = 1 + carrito.velocidad_adicional;
     }
 
-    //Otros
-    private void Retroceso(float dis_retroceso, float velocidad, Collision collision)
-    {
-        Vector3 Retroceso = (transform.position - collision.transform.position).normalized;
-        Retroceso.y = 0;
-        Vector3 resultado_retroceso = transform.position + Retroceso * dis_retroceso;
-        transform.position = Vector3.Lerp(transform.position, resultado_retroceso, velocidad * Time.deltaTime);
-    }
-
     private IEnumerator Resbalon()
     {
+        float x = max_speed_H, y = max_speed_V;
         resbalon = true;
         joystick.gameObject.SetActive(false);
         rigidbody.AddForce(transform.forward * 5, ForceMode.VelocityChange);
         yield return new WaitForSeconds(1);
-        rigidbody.velocity = Vector3.zero;
+        max_speed_H = 0;
+        max_speed_V = 0;
+        yield return new WaitForSeconds(0.5f);
         joystick.gameObject.SetActive(true);
+        max_speed_H = x;
+        max_speed_V = y;
         resbalon = false;
+    }
+
+    private IEnumerator Tiempo_Rehabilitar(float tiempo_total)
+    {
+        float x = max_speed_H, y = max_speed_V;
+        max_speed_H = 0;
+        max_speed_V = 0;
+        yield return new WaitForSeconds(tiempo_total + 0.5f);
+        max_speed_H = x;
+        max_speed_V = y;
+        mision.Espacio_Disponible.text = "Available Space: " + carrito.objetos_actuales.ToString() + " / " + carrito.cant_limite_carga.ToString();
     }
 
     //Collisiones
@@ -162,9 +171,9 @@ public class Player : MonoBehaviour
         }else if(other.CompareTag("Caja"))
         {
             Caja caja = other.gameObject.GetComponent<Caja>();
+            StartCoroutine(Tiempo_Rehabilitar(carrito.objetos_actuales * Tiempo_Dejar_Objeto));
             caja.Visible_Objects(mision.Cantidad_Nivel(), mision.Get_Position(),carrito, Tiempo_Dejar_Objeto);
-            Ganador(caja);
-            mision.Espacio_Disponible.text = "Available Space: " + carrito.objetos_actuales.ToString() + " / " + carrito.cant_limite_carga.ToString();
+            Gano(caja);
         }
         else if(other.CompareTag("Mojado"))
         {
@@ -172,17 +181,31 @@ public class Player : MonoBehaviour
         }
     }
 
+    
+     IEnumerator Retroceder()
+    {
+        float x = max_speed_H, y = max_speed_V;
+        max_speed_H = 0;
+        max_speed_V = 0;
+        yield return new WaitForSeconds(1);
+        max_speed_H = x;
+        max_speed_V = y;
+    }
+     
+
     private void OnCollisionEnter(Collision collision)
     {
         if(!collision.gameObject.CompareTag("Piso") && !collision.gameObject.CompareTag("Caja"))
         {
             if (velocidad_porcentual >= resistencia_porcentual)
             {
-                Debug.Log($"{velocidad_porcentual}\n{resistencia_porcentual}");
+                StartCoroutine(Retroceder());
+                Debug.Log($"efecto: {Efecto}");
                 if (Efecto != null)
                 {
                     Debug.Log("Usar efecto");
                     Efecto.Efecto();
+                    PU = RP.Get_Power_Up();
                     if (PU == Repartir_power.Power_Up.NINGUNO)
                         Efecto = null;
                 }
@@ -190,7 +213,6 @@ public class Player : MonoBehaviour
                 {
                     speed = 0;
                     Muerte_canvas.SetActive(true);
-                    Retroceso(20, speed, collision);
                     StopAllCoroutines();
                     return;
                 }
@@ -218,11 +240,18 @@ public class Player : MonoBehaviour
 
     //Botones->Ganar
 
-    private void Ganador(Caja caja)
+    private void Gano(Caja caja) => Ganar_canvas.SetActive(caja.Get_Porcentaje() == 10);
+    public void BTN_Ganar()
     {
-        Ganar_canvas.SetActive(caja.Get_Porcentaje() == 10);
-        FindObjectOfType<Dinero_Obtenido>().Get_Mapa(SceneManager.GetActiveScene().name).cantidad_juegos++;
+        GameObject Boton_Presiono = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
+        Dinero_Obtenido DO = FindObjectOfType<Dinero_Obtenido>();
+        DO.Get_Mapa(SceneManager.GetActiveScene().name).cantidad_juegos++;
         FindObjectOfType<Nivel>().nivel++;
+
+        if (Boton_Presiono.name != "X2")
+            DO.Recompensa();
+        else
+            DO.Recompensa_X2();
     }
 
 }

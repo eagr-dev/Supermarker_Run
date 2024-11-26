@@ -43,7 +43,8 @@ public class Sistema_Guardado : MonoBehaviour
             Contenido contenido_Leido = contenido1;
             PCMG.Set_Seleccion(contenido_Leido.Tipo_Carro);
             _posicion = contenido_Leido.posicion;
-            Dinero.Set_Agregar(contenido_Leido.dinero);
+            if(Dinero.Get_Dinero() <= 0)
+                Dinero.Set_Agregar(contenido_Leido.dinero);
             _Nivel.nivel = contenido_Leido.nivel;
             Nivel.text = "Nivel: " + _Nivel.nivel.ToString();
             QualitySettings.SetQualityLevel(contenido_Leido.nivel_calidad);

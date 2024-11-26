@@ -6,18 +6,14 @@ using TMPro;
 public class Mision : MonoBehaviour
 {
     private List<string> objects_mision = new List<string>();
-    private int columna_act = 0;
     [SerializeField]private int position_Text = 0;
-    //List<List<Transform>> posicionesMision;
-    //List<Transform> posicion_mas_cercana = new List<Transform>();
-    List<Transform> posicionesMision = new List<Transform>();
-    Transform posicion_mas_cercana;
     public TMP_Text Text;
     public TMP_Text Misiones_echas;
     public TMP_Text Espacio_Disponible;
     public GameObject Sin_espacio;
     public GameObject Muerte;
-    private string object_act = "", mision_ant = "";
+    public Transform caja;
+    private string object_act = "";
     Car carro;
     [SerializeField] GameObject Flecha;
 
@@ -31,23 +27,13 @@ public class Mision : MonoBehaviour
             Set_Object(objects_mision);
             New_Text_In_TextMesh();
         }
-        Misiones_echas.text = "Mision complete: " + Get_Position().ToString() + "/" + Cantidad_Nivel().ToString();
     }
 
     private void Start()
     {
         carro = FindObjectOfType<Get_Content_Car>().Get_Car();
         Espacio_Disponible.text = "Available Space: " + carro.objetos_actuales.ToString() + "/" + carro.cant_limite_carga.ToString();
-        //posicionesMision = Positions_Misions();
-        Positions_Misions();
     }
-
-    private void Update()
-    {
-        Next_Position();
-        Direccion_Apuntar();
-    }
-
     public int Cantidad_Nivel()
     {
         int misiones = (int)(FindObjectOfType<Nivel>().nivel / 10);
@@ -91,6 +77,8 @@ public class Mision : MonoBehaviour
             carro.objetos_actuales++;
             Misiones_echas.text =  "Mision complete: "+ Get_Position().ToString() + "/" + Cantidad_Nivel().ToString();
             Espacio_Disponible.text = "Available Space: " + carro.objetos_actuales.ToString() + "/" + carro.cant_limite_carga.ToString();
+            Debug.Log($"Valor position text: {position_Text}");
+            Debug.Log($"Valor actual del carrito: {carro.objetos_actuales}");
         }
         else if (obj == object_act && Cantidad_Nivel() == position_Text)
         {
@@ -99,6 +87,7 @@ public class Mision : MonoBehaviour
             Text.text = "";
             Misiones_echas.text = "Go to the checkout";
             Espacio_Disponible.text = "Available Space: " + carro.objetos_actuales.ToString() + "/" + carro.cant_limite_carga.ToString();
+            Debug.Log($"Valor position text: {position_Text}");
         }
 
         else if (carro.objetos_actuales > carro.cant_limite_carga)
@@ -124,178 +113,11 @@ public class Mision : MonoBehaviour
             Text.text = objects_mision[position_Text];
             object_act = objects_mision[position_Text];
             position_Text++;
-            Misiones_echas.text = Get_Position().ToString() + "/" + Cantidad_Nivel().ToString();
+            Misiones_echas.text = "Mision complete: " + Get_Position().ToString() + "/" + Cantidad_Nivel().ToString();
+            Debug.Log($"Valor position text: {position_Text}");
         }
     }
 
     public int Get_Position() => position_Text - 1;
-
-    void Positions_Misions()
-    {
-        Estante[] estantes = FindObjectsOfType<Estante>();
-        int mision_next = 0;
-        Debug.Log(objects_mision.Count);
-        for(int i = 0;i < estantes.Length;i++)
-        {
-            for(int j = 0; j < Cantidad_Nivel() - 1; j++)
-            {
-                
-                if(objects_mision[i] == objects_mision[mision_next])
-                {
-                    Debug.Log(mision_next + 1);
-                    posicionesMision.Add(estantes[i].GetComponent<Transform>());
-                    mision_next++;
-                }
-            }
-        }
-
-        for (int i = 0; i < posicionesMision.Count; i++) Debug.Log(posicionesMision[i].position);
-    }
-
-    void Next_Position()
-    {
-        if(mision_ant != objects_mision[position_Text])
-        {
-            Debug.Log(columna_act);
-            posicion_mas_cercana = posicionesMision[columna_act];
-            columna_act++;
-            mision_ant = objects_mision[position_Text];
-            Debug.Log(posicion_mas_cercana.position);
-            Debug.Log(mision_ant);
-        }
-    }
-    void Direccion_Apuntar()
-    {
-        Vector3 direccion = transform.position - posicion_mas_cercana.position;
-        Quaternion rotacion = Quaternion.LookRotation(direccion);
-        Flecha.transform.rotation = Quaternion.Slerp(Flecha.transform.rotation, rotacion, 20 * Time.deltaTime);
-        Flecha.transform.position = new Vector3(transform.position.x, 0.6f, transform.position.z);
-    }
-
-    /*
-        private List<List<Transform>> Positions_Misions()
-        {
-            // Usamos una lista de listas para las posiciones de las misiones
-            List<List<Transform>> posicionesMision = new List<List<Transform>>();
-            Estante[] estantes = FindObjectsOfType<Estante>();
-            int mision_next = 0;
-
-            // Inicializa las listas para cada nivel
-            for (int i = 0; i < Cantidad_Nivel(); i++)
-            {
-                posicionesMision.Add(new List<Transform>());
-            }
-
-            // Recorremos los estantes
-            foreach (var estante in estantes)
-            {
-                if (mision_next >= objects_mision.Count) break; // Si no hay más misiones, salimos
-
-                // Si el objeto del estante coincide con el objeto de misión actual
-                if (estante.Get_Object() == objects_mision[mision_next])
-                {
-                    int nivelActual = mision_next / 7; // Determina el nivel basado en el índice
-                    if (nivelActual < Cantidad_Nivel())
-                    {
-                        posicionesMision[nivelActual].Add(estante.gameObject.GetComponent<Transform>());
-                        //Debug.Log($"Misión {mision_next} asignada a nivel {nivelActual}: {estante.gameObject.transform.position}");
-                        mision_next++;
-                    }
-                }
-            }
-
-            return posicionesMision;
-        }
-
-    */
-
-
-    /*private void Positions_Misions()
-    {
-        Estante[] estantes = FindObjectsOfType<Estante>();
-        int mision_next = 0;
-
-        for(int i = 0; i < estantes.Length;i++)
-        {
-            for(int j = 0; j < Cantidad_Nivel(); j++)
-            {
-                if(estantes[i].Get_Object() == objects_mision[mision_next])
-                {
-                    posicionesMision.Add(estantes[i].gameObject.GetComponent<Transform>());
-                }
-            }
-        }
-
-
-    }*/
-
-
-    /*private void Next_Position()
-    {
-        if (objects_mision[position_Text] != mision_ant)
-        {
-            if (posicion_mas_cercana.Count > 0)
-            {
-                posicion_mas_cercana.Clear();
-                columna_act++;
-                Debug.Log("Limpiar");
-            }
-            
-            Debug.Log(posicionesMision[columna_act].Count);
-            Debug.Log(columna_act);
-
-            for (int i = 0; i < posicionesMision[columna_act].Count; i++)
-            {
-                posicion_mas_cercana.Add(posicionesMision[columna_act][i]);
-            }
-
-            mision_ant = objects_mision[position_Text];
-            columna_act++;
-            Debug.Log("Nuevas asignaciones");
-        }
-        
-    }
-
-    private Vector3 Minima_Distancia()
-    {
-        Vector3 minimo = new Vector3(0,0,0);
-        float minimo_magnitude = 999;
-        for(int i = 0; i < posicion_mas_cercana.Count; i++)
-        {
-            if(posicion_mas_cercana[i].position != null)
-                if(posicion_mas_cercana[i].position.magnitude < minimo_magnitude)
-                {
-                    minimo_magnitude = posicion_mas_cercana[i].position.magnitude;
-                    minimo = posicion_mas_cercana[i].position;
-                }
-        }
-
-        if(minimo == null)
-        {
-            Debug.Log("es null");
-            posicionesMision = Positions_Misions();
-            Next_Position();
-            for (int i = 0; i < Positions_Misions().Count; i++)
-                for (int j = 0; j < Positions_Misions()[i].Count; j++)
-                    Debug.Log(Positions_Misions()[i][j].position);
-
-            if (minimo == null)
-                Debug.Log("Es null en posicion");
-                
-        }
-        /*if (minimo.position == null)
-            Flecha.gameObject.SetActive(false);*/
-
-    /*   return minimo;
-   }
-
-   private void Direccion_Apuntar()
-   {
-       Vector3 direccion = Minima_Distancia() - camara.transform.position;
-       Vector3 proyeccion = new Vector3(direccion.x, direccion.y, 0);
-       float angulo = Mathf.Atan2(proyeccion.y, proyeccion.x) * Mathf.Rad2Deg;
-       Flecha.rotation = Quaternion.Euler(0, 0, angulo);
-
-   }*/
 
 }

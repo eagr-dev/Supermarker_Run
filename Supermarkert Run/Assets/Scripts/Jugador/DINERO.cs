@@ -23,4 +23,8 @@ public class DINERO : MonoBehaviour
         Dinero += dinero;
     }
 
+
+    public void Set_Dinero(uint dinero) => Dinero = dinero;
+
+
 }

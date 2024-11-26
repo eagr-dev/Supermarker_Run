@@ -152,6 +152,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fila3 Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 4471740094761189734, guid: 0cd880771560d1143befd8e91d3bea78, type: 3}
+      propertyPath: m_Size.x
+      value: 20.667452
+      objectReference: {fileID: 0}
+    - target: {fileID: 4471740094761189734, guid: 0cd880771560d1143befd8e91d3bea78, type: 3}
+      propertyPath: m_Size.z
+      value: 4.896365
+      objectReference: {fileID: 0}
+    - target: {fileID: 4471740094761189734, guid: 0cd880771560d1143befd8e91d3bea78, type: 3}
+      propertyPath: m_Center.x
+      value: -20.908504
+      objectReference: {fileID: 0}
+    - target: {fileID: 4471740094761189734, guid: 0cd880771560d1143befd8e91d3bea78, type: 3}
+      propertyPath: m_Center.z
+      value: -21.229605
+      objectReference: {fileID: 0}
     - target: {fileID: 4549556437730060578, guid: 0cd880771560d1143befd8e91d3bea78, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.01

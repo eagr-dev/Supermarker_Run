@@ -84,6 +84,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fila2 Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 4471740094761189734, guid: 0cd880771560d1143befd8e91d3bea78, type: 3}
+      propertyPath: m_Size.x
+      value: 41.483208
+      objectReference: {fileID: 0}
+    - target: {fileID: 4471740094761189734, guid: 0cd880771560d1143befd8e91d3bea78, type: 3}
+      propertyPath: m_Center.x
+      value: -8.39561
+      objectReference: {fileID: 0}
     - target: {fileID: 4549556437730060578, guid: 0cd880771560d1143befd8e91d3bea78, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.009999275

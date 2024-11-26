@@ -924,7 +924,6 @@ GameObject:
   - component: {fileID: 6591895889863097164}
   - component: {fileID: 3054577109738454996}
   - component: {fileID: 1149658325043498318}
-  - component: {fileID: 5182065149461672634}
   m_Layer: 0
   m_Name: estanteria
   m_TagString: Estante
@@ -987,27 +986,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.2501602, y: 2.29874, z: 3}
   m_Center: {x: -0.03319931, y: 0.90327, z: -2.2649212}
---- !u!65 &5182065149461672634
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3214764335017426548}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 2.143711, y: 2.1570885, z: 1.9607506}
-  m_Center: {x: -0.011007309, y: 0.8891555, z: 0.04467964}
 --- !u!1 &3223088464639051206
 GameObject:
   m_ObjectHideFlags: 0
@@ -1101,6 +1079,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6147704254327094511}
   - component: {fileID: 9047324126621435556}
+  - component: {fileID: 4471740094761189734}
   m_Layer: 0
   m_Name: Fila
   m_TagString: Untagged
@@ -1147,6 +1126,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Tag: 0
   Lista_Objetos: []
+--- !u!65 &4471740094761189734
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3447835715259564792}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 43.58823, y: 4.534912, z: 2.9383698}
+  m_Center: {x: -9.448111, y: -20.571423, z: -22.208605}
 --- !u!1 &3558700052878207798
 GameObject:
   m_ObjectHideFlags: 0
@@ -1407,7 +1407,6 @@ GameObject:
   - component: {fileID: 8729274542288225289}
   - component: {fileID: 8656687244609925452}
   - component: {fileID: 5710560919889193476}
-  - component: {fileID: 8624113666538562887}
   m_Layer: 0
   m_Name: estanteria
   m_TagString: Estante
@@ -1470,27 +1469,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.2501602, y: 2.29874, z: 3}
   m_Center: {x: -0.03319931, y: 0.90327, z: -2.2649212}
---- !u!65 &8624113666538562887
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3846162902290084875}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 2.143711, y: 2.1570885, z: 1.9607506}
-  m_Center: {x: -0.011007309, y: 0.8891555, z: 0.04467964}
 --- !u!1 &3979136765930059551
 GameObject:
   m_ObjectHideFlags: 0
@@ -1834,7 +1812,6 @@ GameObject:
   - component: {fileID: 1179634354029355466}
   - component: {fileID: 3006795675446421711}
   - component: {fileID: 1489054253844514714}
-  - component: {fileID: 2354146734766404465}
   m_Layer: 0
   m_Name: estanteria
   m_TagString: Estante
@@ -1897,27 +1874,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.2501602, y: 2.29874, z: 3}
   m_Center: {x: -0.03319931, y: 0.90327, z: -2.2649212}
---- !u!65 &2354146734766404465
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4719921264284006379}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 2.143711, y: 2.1570885, z: 1.9607506}
-  m_Center: {x: -0.011007309, y: 0.8891555, z: 0.04467964}
 --- !u!1 &4744616024579571919
 GameObject:
   m_ObjectHideFlags: 0
@@ -1929,7 +1885,6 @@ GameObject:
   - component: {fileID: 2083075423462546016}
   - component: {fileID: 2059934946328156110}
   - component: {fileID: 2912996774926078869}
-  - component: {fileID: 4590464720902527112}
   m_Layer: 0
   m_Name: estanteria
   m_TagString: Estante
@@ -1992,27 +1947,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.2501602, y: 2.29874, z: 3}
   m_Center: {x: -0.03319931, y: 0.90327, z: -2.2649212}
---- !u!65 &4590464720902527112
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4744616024579571919}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 2.143711, y: 2.1570885, z: 1.9607506}
-  m_Center: {x: -0.011007309, y: 0.8891555, z: 0.04467964}
 --- !u!1 &4821119075347694141
 GameObject:
   m_ObjectHideFlags: 0
@@ -2107,7 +2041,6 @@ GameObject:
   - component: {fileID: 8391004822327181917}
   - component: {fileID: 7744560308382584402}
   - component: {fileID: 619452576365409202}
-  - component: {fileID: 3103424007180653023}
   m_Layer: 0
   m_Name: estanteria
   m_TagString: Estante
@@ -2170,27 +2103,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.2501602, y: 2.29874, z: 3}
   m_Center: {x: -0.03319931, y: 0.90327, z: -2.2649212}
---- !u!65 &3103424007180653023
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4882151705044381595}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 2.143711, y: 2.1570885, z: 1.9607506}
-  m_Center: {x: -0.011007309, y: 0.8891555, z: 0.04467964}
 --- !u!1 &4967109162937612307
 GameObject:
   m_ObjectHideFlags: 0
@@ -2202,7 +2114,6 @@ GameObject:
   - component: {fileID: 2194689006696747587}
   - component: {fileID: 4465611124336547172}
   - component: {fileID: 6165241160586893715}
-  - component: {fileID: 5055275320682592331}
   m_Layer: 0
   m_Name: estanteria
   m_TagString: Estante
@@ -2265,27 +2176,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.2501602, y: 2.29874, z: 3}
   m_Center: {x: -0.03319931, y: 0.90327, z: -2.2649212}
---- !u!65 &5055275320682592331
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4967109162937612307}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 2.143711, y: 2.1570885, z: 1.9607506}
-  m_Center: {x: -0.011007309, y: 0.8891555, z: 0.04467964}
 --- !u!1 &5127684065263916266
 GameObject:
   m_ObjectHideFlags: 0
@@ -2629,7 +2519,6 @@ GameObject:
   - component: {fileID: 7958925178224558901}
   - component: {fileID: 7124241949876838597}
   - component: {fileID: 5483641131169438035}
-  - component: {fileID: 3638545023573669289}
   m_Layer: 0
   m_Name: estanteria
   m_TagString: Estante
@@ -2692,27 +2581,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.2501602, y: 2.29874, z: 3}
   m_Center: {x: -0.03319931, y: 0.90327, z: -2.2649212}
---- !u!65 &3638545023573669289
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5689374175364141184}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 2.143711, y: 2.1570885, z: 1.9607506}
-  m_Center: {x: -0.011007309, y: 0.8891555, z: 0.04467964}
 --- !u!1 &5706200582588497478
 GameObject:
   m_ObjectHideFlags: 0
@@ -2890,7 +2758,6 @@ GameObject:
   - component: {fileID: 6203260295472956446}
   - component: {fileID: 4874962505957960285}
   - component: {fileID: 7622675580065432990}
-  - component: {fileID: 5963605654779414968}
   m_Layer: 0
   m_Name: estanteria
   m_TagString: Estante
@@ -2953,27 +2820,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.2501602, y: 2.29874, z: 3}
   m_Center: {x: -0.03319931, y: 0.90327, z: -2.2649212}
---- !u!65 &5963605654779414968
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5983323244923462161}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 2.143711, y: 2.1570885, z: 1.9607506}
-  m_Center: {x: -0.011007309, y: 0.8891555, z: 0.04467964}
 --- !u!1 &6519621515049462019
 GameObject:
   m_ObjectHideFlags: 0
@@ -3233,8 +3079,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7778804383559901514}
   - component: {fileID: 7320616495941908346}
-  - component: {fileID: 4942521574789462086}
-  - component: {fileID: 3266521439557083526}
   m_Layer: 0
   m_Name: estanteria
   m_TagString: Estante
@@ -3276,48 +3120,6 @@ MonoBehaviour:
   objeto: 
   Tag: 0
   count_obj: 0
---- !u!65 &4942521574789462086
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 4588894153293558394, guid: 6837630c3f2d65940bcc00071b08a7e2, type: 3}
-  m_PrefabInstance: {fileID: 1669547026556472197}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6994085794113409378}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 2.2501602, y: 2.29874, z: 3}
-  m_Center: {x: -0.03319931, y: 0.90327, z: -2.2649212}
---- !u!65 &3266521439557083526
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 1800268614410458319, guid: 6837630c3f2d65940bcc00071b08a7e2, type: 3}
-  m_PrefabInstance: {fileID: 1669547026556472197}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6994085794113409378}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 2.143711, y: 2.1570885, z: 1.9607506}
-  m_Center: {x: -0.011007309, y: 0.8891555, z: 0.04467964}
 --- !u!1 &7008133152349906785
 GameObject:
   m_ObjectHideFlags: 0
@@ -4242,7 +4044,6 @@ GameObject:
   - component: {fileID: 5855367954048800685}
   - component: {fileID: 5740472309802745426}
   - component: {fileID: 491894640785671513}
-  - component: {fileID: 5713956664922180165}
   m_Layer: 0
   m_Name: estanteria
   m_TagString: Estante
@@ -4305,27 +4106,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.2501602, y: 2.29874, z: 3}
   m_Center: {x: -0.03319931, y: 0.90327, z: -2.2649212}
---- !u!65 &5713956664922180165
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9125545712015848724}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 2.143711, y: 2.1570885, z: 1.9607506}
-  m_Center: {x: -0.011007309, y: 0.8891555, z: 0.04467964}
 --- !u!1001 &1669547026556472197
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4406,7 +4186,8 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 0}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 1709946888416572125, guid: 6837630c3f2d65940bcc00071b08a7e2, type: 3}

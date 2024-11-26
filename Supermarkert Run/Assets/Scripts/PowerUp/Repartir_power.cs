@@ -51,8 +51,11 @@ public class Repartir_power : MonoBehaviour
     public void Set_Enum(int posicion)
     {
         PU = (Power_Up)posicion;
-        Debug.Log(PU);
     }
+
+    public void Set_Enum(Power_Up pu) => PU = pu; 
+
+
 
     public Power_Up Get_Power_Up() => PU;
 
