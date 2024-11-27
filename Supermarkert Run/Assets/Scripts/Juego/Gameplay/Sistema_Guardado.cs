@@ -145,7 +145,7 @@ public class Sistema_Guardado : MonoBehaviour
         };
         string contenido = JsonUtility.ToJson(conte);
 
-        File.WriteAllText(URL_PATH,contenido);
+        File.WriteAllText(URL_PATH,contenido + "\n");
     }
 
     public void Guardar_Personalizado(float r, float g, float b, float a)

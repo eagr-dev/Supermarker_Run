@@ -11,6 +11,7 @@ public class Camara_Objetos_Desaparecer : MonoBehaviour
     private Collider objeto;
     private Vector3 centro;
     private Transform Padre;
+    private bool Is_Fila = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,23 +29,65 @@ public class Camara_Objetos_Desaparecer : MonoBehaviour
             if (objeto != null && !IsID(laser.collider, objeto))
             {
                 Padre = objeto.GetComponent<Transform>();
-                Padre.GetChild(0).GetComponent<MeshRenderer>().material = materia_Convertido;
-                Padre.GetChild(3).gameObject.SetActive(true);
-                Padre.GetChild(2).gameObject.SetActive(true);
-                Padre.GetChild(1).gameObject.SetActive(true);
+                if (!Is_Fila)
+                {
+                    Padre.GetChild(0).GetComponent<MeshRenderer>().material = materia_Convertido;
+                    Padre.GetChild(3).gameObject.SetActive(true);
+                    Padre.GetChild(2).gameObject.SetActive(true);
+                    Padre.GetChild(1).gameObject.SetActive(true);
+                }
+                else
+                {
+                    VisibleFilas(Padre.parent);
+                }
                 objeto = null;
             }
             else
             {
                 objeto = laser.collider;
-                Padre = objeto.GetComponent<Transform>();
-                Padre.GetChild(0).GetComponent<MeshRenderer>().material = materia_Convertir;
-                Padre.GetChild(3).gameObject.SetActive(false);
-                Padre.GetChild(2).gameObject.SetActive(false);
-                Padre.GetChild(1).gameObject.SetActive(false);
+                if (!Is_Not_Fila_0(Padre.parent.rotation))
+                {
+                    Padre.GetChild(0).GetComponent<MeshRenderer>().material = materia_Convertir;
+                    Padre.GetChild(3).gameObject.SetActive(false);
+                    Padre.GetChild(2).gameObject.SetActive(false);
+                    Padre.GetChild(1).gameObject.SetActive(false);
+                }
+                else
+                {
+                    OcultarFilas(Padre.parent);
+                }
             }
 
         }
+    }
+
+    private void OcultarFilas(Transform Padre)
+    {
+        Is_Fila = true;
+        foreach(Transform hijo in Padre)
+        {
+            hijo.GetChild(0).GetComponent<MeshRenderer>().material = materia_Convertir;
+            hijo.GetChild(3).gameObject.SetActive(false);
+            hijo.GetChild(2).gameObject.SetActive(false);
+            hijo.GetChild(1).gameObject.SetActive(false);
+        }
+    }
+
+    private void VisibleFilas(Transform Padre)
+    {
+        Is_Fila = false;
+        foreach (Transform hijo in Padre)
+        {
+            hijo.GetChild(0).GetComponent<MeshRenderer>().material = materia_Convertido;
+            hijo.GetChild(3).gameObject.SetActive(true);
+            hijo.GetChild(2).gameObject.SetActive(true);
+            hijo.GetChild(1).gameObject.SetActive(true);
+        }
+    }
+
+    private bool Is_Not_Fila_0(Quaternion rotacion_fila)
+    {
+        return (rotacion_fila == new Quaternion(0, 1, 0, 0) || rotacion_fila == new Quaternion(0, 0, 0, 1));
     }
 
     private bool IsID(Collider hit1, Collider hit2)
