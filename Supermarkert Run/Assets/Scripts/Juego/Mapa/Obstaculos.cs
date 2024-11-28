@@ -36,7 +36,7 @@ public class Obstaculos : MonoBehaviour
         for(int i = 0; i < N_crear_OBJ; i++)
         {
             Instantiate(Obstaculo);
-            Obstaculo.transform.position = Posicion(0.2f);
+            Obstaculo.transform.position = Posicion(0.5f);
         }
     }
 
