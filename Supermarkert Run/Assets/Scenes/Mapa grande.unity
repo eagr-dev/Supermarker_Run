@@ -12170,7 +12170,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!108 &705507994
 Light:
   m_ObjectHideFlags: 0
@@ -12183,7 +12183,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 2
+  m_Intensity: 0.5
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -22690,7 +22690,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05e73be68441ffe4d912950f60c9075f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Obstaculo: {fileID: 4337457}
+  Obstaculo: {fileID: 301623391555861180, guid: 87166cc02bb9dc647adcd8b00db0cb18, type: 3}
   Enemigo: {fileID: 4263544900681987134, guid: ef4457fac51f7f448ae20abd9783d89d, type: 3}
   Luz_Estatica: {fileID: 705507993}
   Luz_Dinamica: {fileID: 604417980}

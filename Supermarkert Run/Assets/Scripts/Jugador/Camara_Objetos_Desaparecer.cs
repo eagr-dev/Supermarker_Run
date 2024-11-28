@@ -45,6 +45,7 @@ public class Camara_Objetos_Desaparecer : MonoBehaviour
             else
             {
                 objeto = laser.collider;
+                Padre = objeto.GetComponent<Transform>();
                 if (!Is_Not_Fila_0(Padre.parent.rotation))
                 {
                     Padre.GetChild(0).GetComponent<MeshRenderer>().material = materia_Convertir;

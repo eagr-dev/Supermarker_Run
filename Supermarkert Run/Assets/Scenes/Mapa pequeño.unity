@@ -4508,7 +4508,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05e73be68441ffe4d912950f60c9075f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Obstaculo: {fileID: 4337457}
+  Obstaculo: {fileID: 301623391555861180, guid: 87166cc02bb9dc647adcd8b00db0cb18, type: 3}
   Enemigo: {fileID: 4263544900681987134, guid: ef4457fac51f7f448ae20abd9783d89d, type: 3}
   Luz_Estatica: {fileID: 1065723970}
   Luz_Dinamica: {fileID: 1082694451}
@@ -7033,6 +7033,14 @@ PrefabInstance:
     - target: {fileID: 3656935235019366576, guid: f47d18ebd7f38b64ab1a1587ffa6f55b, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 3890116198008052509, guid: f47d18ebd7f38b64ab1a1587ffa6f55b, type: 3}
+      propertyPath: m_Size.x
+      value: 41.760796
+      objectReference: {fileID: 0}
+    - target: {fileID: 3890116198008052509, guid: f47d18ebd7f38b64ab1a1587ffa6f55b, type: 3}
+      propertyPath: m_Center.x
+      value: -8.534407
       objectReference: {fileID: 0}
     - target: {fileID: 4061186766484287468, guid: f47d18ebd7f38b64ab1a1587ffa6f55b, type: 3}
       propertyPath: m_StaticEditorFlags

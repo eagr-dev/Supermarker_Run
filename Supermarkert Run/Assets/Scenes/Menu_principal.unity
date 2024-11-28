@@ -8029,6 +8029,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   URL_PATH: 
   URL_PATH_PERSONALIZADA: 
+  URL_PATH_MAPA: 
   Material_Personalizada:
   - {fileID: 2100000, guid: 42578976ffb3d504898a611cc134e78a, type: 2}
   - {fileID: 2100000, guid: b2fa034672952f34295a0ad884662433, type: 2}

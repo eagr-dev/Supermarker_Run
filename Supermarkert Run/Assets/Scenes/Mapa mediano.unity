@@ -8830,7 +8830,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05e73be68441ffe4d912950f60c9075f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Obstaculo: {fileID: 4337457}
+  Obstaculo: {fileID: 301623391555861180, guid: 87166cc02bb9dc647adcd8b00db0cb18, type: 3}
   Enemigo: {fileID: 4263544900681987134, guid: ef4457fac51f7f448ae20abd9783d89d, type: 3}
   Luz_Estatica: {fileID: 705507993}
   Luz_Dinamica: {fileID: 441395820}
