@@ -22,15 +22,15 @@ public class Mision : MonoBehaviour
         GameObject TMP = GameObject.Find("Mision_Actual");
         if (TMP != null)
             Text = TMP.GetComponent<TMP_Text>();
+    }
+
+    private void Start()
+    {
         if (objects_mision != null)
         {
             Set_Object(objects_mision);
             New_Text_In_TextMesh();
         }
-    }
-
-    private void Start()
-    {
         carro = FindObjectOfType<Get_Content_Car>().Get_Car();
         Espacio_Disponible.text = "Available Space: " + carro.objetos_actuales.ToString() + "/" + carro.cant_limite_carga.ToString();
     }

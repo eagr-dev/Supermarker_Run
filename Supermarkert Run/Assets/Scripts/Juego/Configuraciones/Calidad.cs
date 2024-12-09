@@ -9,6 +9,7 @@ public class Calidad : MonoBehaviour
     [SerializeField] Toggle Sombras;
     [SerializeField] Toggle Luces;
     [SerializeField] TMP_Dropdown calidad;
+    [SerializeField] TMP_Dropdown Idioma;
     [SerializeField] GameObject Sombra_Falsa;
     [SerializeField] GameObject Sol;
     [SerializeField] GameObject Luz_Dinamica;
@@ -18,6 +19,7 @@ public class Calidad : MonoBehaviour
     private void Start()
     {
         calidad.value = PlayerPrefs.GetInt("Calidad",QualitySettings.GetQualityLevel());
+        Idioma.value = PlayerPrefs.GetInt("idioma", 1);
         Sombras.isOn = bool.Parse(PlayerPrefs.GetString("Sombras", "false"));
         QualitySettings.shadows = !Sombras.isOn ? ShadowQuality.Disable : ShadowQuality.All;
         Sombra_Falsa.SetActive(QualitySettings.shadows.Equals(ShadowQuality.Disable));
@@ -71,6 +73,11 @@ public class Calidad : MonoBehaviour
             Sol.SetActive(false);
             Luz_Dinamica.SetActive(true);
         }
+    }
+
+    public void Eleccion_Idioma()
+    {
+        PlayerPrefs.SetInt("idioma", Idioma.value);
     }
 
 }
