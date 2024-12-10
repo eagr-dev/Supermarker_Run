@@ -14,7 +14,6 @@ public class Seleccion_Mapa : MonoBehaviour
     [SerializeField] private TMP_Text Descripcion;
     [SerializeField] private TMP_Text Precio;
     [SerializeField] private TMP_Text Cantidad_Dar;
-    [SerializeField] private TMP_Text Dinero;
     [SerializeField] private GameObject Sin_Dinero;
     [SerializeField] private Image Muestra;
 
@@ -39,8 +38,9 @@ public class Seleccion_Mapa : MonoBehaviour
         {
             DO.Get_Mapa(seleccion_actual).precio = 0;
             Mostrar(DO.Get_Mapa(seleccion_actual));
-            Dinero.text = "Money: " + FindObjectOfType<DINERO>().Get_Dinero();
-            Precio.text = "Buy: " + DO.Get_Mapa(seleccion).precio.ToString();
+            Calidad calidad = FindObjectOfType<Calidad>();
+            //calidad.Modificacion_Idioma();
+            Precio.text = "$ " + DO.Get_Mapa(seleccion).precio.ToString();
             Comprar.SetActive(false);
             Aceptar.SetActive(true);
             FindObjectOfType<Sistema_Guardado>().ADD_MAPA(DO.Get_Mapa(seleccion_actual).nombre);
@@ -83,8 +83,8 @@ public class Seleccion_Mapa : MonoBehaviour
     {
         Nombre.text = mapa.nombre;
         Descripcion.text = mapa.descripcion;
-        Precio.text = "Price: " + mapa.precio.ToString();
-        Cantidad_Dar.text = "Extra: " + mapa.Valor_mapa.ToString();
+        Precio.text = "$ " + mapa.precio.ToString();
+        Cantidad_Dar.text = "$->: " + mapa.Valor_mapa.ToString();
         if(mapa.screen_map != null)
         Muestra.sprite = mapa.screen_map;
     }

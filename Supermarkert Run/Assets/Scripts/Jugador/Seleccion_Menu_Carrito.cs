@@ -35,7 +35,6 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
     [SerializeField] private TMP_Text Requisitos;
 
 
-    [SerializeField] private TMP_Text Dinero;
     [SerializeField] private bool Comprar;
 
 
@@ -140,8 +139,8 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
         {
             carrito_comprar.Get_Requisito();
             carrito_comprar.precio = 0;
-            Precio.text = "Price: " + carrito_comprar.precio.ToString() + ".";
-            Precio_personalizar.text = "Price: " + carrito_comprar.precio.ToString() + ".";
+            Precio.text = "$ " + carrito_comprar.precio.ToString() + ".";
+            Precio_personalizar.text = "$ " + carrito_comprar.precio.ToString() + ".";
             BTN_comprar.SetActive(false);
             BTN_comprar_personalizar.SetActive(false);
 
@@ -191,7 +190,6 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
     public void Slider_Seleccion(float value)
     {
         eleccion = (int)(value != slider.maxValue ? value : value - 1);
-        Debug.Log($"eleccion skin: {value}");
         Set_Skin_Eleccion();
         FindObjectOfType<Pase_Conexion_Menu_Gameplay>().Set_Eleccion(eleccion);
     }
@@ -224,7 +222,7 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
         Velocidad.text = "Speed: " + Info_Car.velocidad_adicional.ToString() + ".";
         Limite_Carga.text = "Burden: " + Info_Car.cant_limite_carga.ToString() + "Kg.";
         Resistencia_choque.text = "Maximum shock: " + Info_Car.resistencia_choque.ToString() + "%.";
-        Precio.text = "Price: " + Info_Car.precio.ToString() + ".";
+        Precio.text = "$ " + Info_Car.precio.ToString() + ".";
         Requisitos.text = "Requirements: " + Info_Car.requisitos + ":" + Info_Car.Get_Juegos() + "/" + Info_Car.cantidad;
     }
     public GameObject Get_Active()
@@ -265,7 +263,12 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
 
     }
 
-    private void Mostrar_Dinero() => Dinero.text = "Money: " + FindObjectOfType<DINERO>().Get_Dinero();
+    private void Mostrar_Dinero()
+    {
+        Calidad calidad = FindObjectOfType<Calidad>();
+        calidad.Modificacion_Idioma();
+        
+    }
 
     private void OnApplicationQuit()
     {

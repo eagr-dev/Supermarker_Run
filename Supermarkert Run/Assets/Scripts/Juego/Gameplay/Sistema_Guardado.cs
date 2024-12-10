@@ -10,8 +10,6 @@ public class Sistema_Guardado : MonoBehaviour
     [SerializeField] private string URL_PATH_PERSONALIZADA;
     [SerializeField] private string URL_PATH_MAPA;
     [SerializeField] private List<Material> Material_Personalizada;
-    [SerializeField] private TMP_Text Nivel;
-    [SerializeField] private TMP_Text Dinero_Text;
     [SerializeField] private GameObject Reinicio;
     private DINERO Dinero;
     private Nivel _Nivel;
@@ -61,11 +59,9 @@ public class Sistema_Guardado : MonoBehaviour
             /*Dinero*/
             if(Dinero.Get_Dinero() <= 0)
                 Dinero.Set_Agregar(contenido_Leido.dinero);
-            Dinero_Text.text = "Money: " + contenido_Leido.dinero.ToString();
 
             /*Nivel*/
             _Nivel.nivel = contenido_Leido.nivel;
-            Nivel.text = "Level: " + _Nivel.nivel.ToString();
 
             /*Calidad*/
             QualitySettings.SetQualityLevel(contenido_Leido.nivel_calidad);
@@ -83,9 +79,7 @@ public class Sistema_Guardado : MonoBehaviour
         else
         {
             _Nivel.nivel = 1;
-            Nivel.text = "Level: 1";
             Dinero.Set_Agregar(5000);
-            Dinero_Text.text = "Money: 5000";
             Reinicio.SetActive(true);
         }
     }

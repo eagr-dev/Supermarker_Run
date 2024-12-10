@@ -32,7 +32,7 @@ public class Mision : MonoBehaviour
             New_Text_In_TextMesh();
         }
         carro = FindObjectOfType<Get_Content_Car>().Get_Car();
-        Espacio_Disponible.text = "Available Space: " + carro.objetos_actuales.ToString() + "/" + carro.cant_limite_carga.ToString();
+        Espacio_Disponible.text = Idioma.Espacio_Idioma() + ": " + carro.objetos_actuales.ToString() + "/" + carro.cant_limite_carga.ToString();
     }
     public int Cantidad_Nivel()
     {

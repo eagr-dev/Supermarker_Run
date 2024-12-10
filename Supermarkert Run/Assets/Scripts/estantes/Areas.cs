@@ -100,7 +100,6 @@ public class Areas : MonoBehaviour
     private void Leer_Archivo()
     {
         int eleccion = PlayerPrefs.GetInt("idioma", 0);
-        Debug.Log($"Eleccion: {eleccion}");
         string ruta = "";
 
 
@@ -121,7 +120,6 @@ public class Areas : MonoBehaviour
         {
             string leer = File.ReadAllText(ruta);
             Contenido_misiones CM = JsonUtility.FromJson<Contenido_misiones>(leer);
-            Debug.Log(ruta);
             Asignar(CM);
         }
         else
@@ -189,10 +187,6 @@ public class Areas : MonoBehaviour
         Objetos[5] = CM.linea6;
         Objetos[6] = CM.linea7;
         Objetos[7] = CM.linea8;
-        foreach(var i in Objetos[0])
-        {
-            Debug.Log(i);
-        }
     }
 
 

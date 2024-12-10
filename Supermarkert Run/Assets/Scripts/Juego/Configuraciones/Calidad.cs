@@ -13,13 +13,17 @@ public class Calidad : MonoBehaviour
     [SerializeField] GameObject Sombra_Falsa;
     [SerializeField] GameObject Sol;
     [SerializeField] GameObject Luz_Dinamica;
+
+    [SerializeField] Idioma idioma;
+    
     Pase_Conexion_Menu_Gameplay PCMG;
 
 
     private void Start()
     {
         calidad.value = PlayerPrefs.GetInt("Calidad",QualitySettings.GetQualityLevel());
-        Idioma.value = PlayerPrefs.GetInt("idioma", 1);
+        Idioma.value = PlayerPrefs.GetInt("idioma", 0);
+        Modificacion_Idioma();
         Sombras.isOn = bool.Parse(PlayerPrefs.GetString("Sombras", "false"));
         QualitySettings.shadows = !Sombras.isOn ? ShadowQuality.Disable : ShadowQuality.All;
         Sombra_Falsa.SetActive(QualitySettings.shadows.Equals(ShadowQuality.Disable));
@@ -78,6 +82,17 @@ public class Calidad : MonoBehaviour
     public void Eleccion_Idioma()
     {
         PlayerPrefs.SetInt("idioma", Idioma.value);
+        Modificacion_Idioma();
+    }
+
+    public void Modificacion_Idioma()
+    {
+        List<string> Parametro = new List<string>();
+        Parametro.Add(idioma.Get_Idioma()[0] + ":" + FindObjectOfType<Nivel>().nivel.ToString());
+        Parametro.Add(idioma.Get_Idioma()[1] + ":" + FindObjectOfType<DINERO>().Get_Dinero().ToString());
+        Parametro.Add(idioma.Get_Idioma()[2]);
+        Parametro.Add(idioma.Get_Idioma()[3]);
+        idioma.Modificacion_Idioma(Parametro, false);
     }
 
 }

@@ -2229,7 +2229,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 75.215, y: 194}
+  m_AnchoredPosition: {x: 75.215, y: 239}
   m_SizeDelta: {x: 1166.4, y: 101.6196}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &213209723
@@ -2252,8 +2252,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "!Restart is required for a better experience.\xA1\n\n!Es necesario reiniciar
-    para una mejor experiencia.\xA1"
+  m_text: "!Restart is required for a better experience.\xA1\n!Es necesario reiniciar
+    para una mejor experiencia.\xA1\n!\xC9 necess\xE1rio reiniciar para uma melhor
+    experi\xEAncia."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a6225f5234224ce408c7abf5036fc7b2, type: 2}
   m_sharedMaterial: {fileID: 3026057449471004903, guid: a6225f5234224ce408c7abf5036fc7b2, type: 2}
@@ -2368,7 +2369,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Money:'
+  m_text: a
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a6225f5234224ce408c7abf5036fc7b2, type: 2}
   m_sharedMaterial: {fileID: 3026057449471004903, guid: a6225f5234224ce408c7abf5036fc7b2, type: 2}
@@ -3950,6 +3951,7 @@ GameObject:
   - component: {fileID: 431994177}
   - component: {fileID: 431994178}
   - component: {fileID: 431994179}
+  - component: {fileID: 431994180}
   m_Layer: 0
   m_Name: Suelo
   m_TagString: Untagged
@@ -4099,7 +4101,6 @@ MonoBehaviour:
   Descripcion: {fileID: 1513111115}
   Precio: {fileID: 680908278}
   Cantidad_Dar: {fileID: 383558353}
-  Dinero: {fileID: 243872175}
   Sin_Dinero: {fileID: 684406139}
   Muestra: {fileID: 1949015011}
 --- !u!114 &431994179
@@ -4121,6 +4122,39 @@ MonoBehaviour:
   Sombra_Falsa: {fileID: 1033023345}
   Sol: {fileID: 1026219072}
   Luz_Dinamica: {fileID: 1512403043}
+  idioma: {fileID: 431994180}
+--- !u!114 &431994180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 431994171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e1c59e4849fb264a9580193d6f43573, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Textos_UI:
+  - {fileID: 1794212365}
+  - {fileID: 243872175}
+  - {fileID: 742117842}
+  - {fileID: 1190758678}
+  Ingles:
+  - Level
+  - Money
+  - Quality
+  - language
+  Espaniol:
+  - Nivel
+  - Dinero
+  - Calidad
+  - Lenguaje
+  Portugues:
+  - "N\xEDvel"
+  - Dinheiro
+  - qualidade
+  - linguagem
 --- !u!1 &437563738
 GameObject:
   m_ObjectHideFlags: 0
@@ -8398,8 +8432,6 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 42578976ffb3d504898a611cc134e78a, type: 2}
   - {fileID: 2100000, guid: b2fa034672952f34295a0ad884662433, type: 2}
   - {fileID: 2100000, guid: d127c53b6e38b6f4fa2b90567e0a9283, type: 2}
-  Nivel: {fileID: 1794212365}
-  Dinero_Text: {fileID: 243872175}
   Reinicio: {fileID: 213209721}
 --- !u!4 &873666814
 Transform:
@@ -19961,7 +19993,6 @@ MonoBehaviour:
   Precio: {fileID: 1877892991}
   Precio_personalizar: {fileID: 819590496}
   Requisitos: {fileID: 1784611855}
-  Dinero: {fileID: 243872175}
   Comprar: 0
 --- !u!4 &2125438122
 Transform:
