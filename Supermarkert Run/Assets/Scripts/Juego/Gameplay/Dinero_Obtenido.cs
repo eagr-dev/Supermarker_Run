@@ -15,7 +15,7 @@ public class Dinero_Obtenido : MonoBehaviour
         Dinero = GetComponent<DINERO>();
     }
 
-    private int Get_Dinero()
+    public int Get_Dinero()
     {
         Mision mision = FindObjectOfType<Mision>();
         return mapas[Pos].Valor_mapa + mision.Cantidad_Nivel();

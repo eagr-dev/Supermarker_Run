@@ -12,7 +12,7 @@ public class Tiempo : MonoBehaviour
     public GameObject Muerte;
     void Start()
     {
-        if(FindObjectOfType<Nivel>().nivel < 1000)
+        if(Nivel.nivel < 1000)
         {
             minutos = (int)(tiempo - Resta());
             string minutoss = minutos < 10 ? "0" + minutos.ToString() : minutos.ToString();
@@ -28,13 +28,13 @@ public class Tiempo : MonoBehaviour
 
     private uint Resta()
     {
-        uint nivel = FindObjectOfType<Nivel>().nivel;
+        uint nivel = Nivel.nivel;
         uint resultado = (nivel / 100);
         return resultado;
     }
     private void Actualizacion()
     {
-        if (FindObjectOfType<Nivel>().nivel < 1000)
+        if (Nivel.nivel < 1000)
         {
             contador += Time.deltaTime;
             if (contador > 1)

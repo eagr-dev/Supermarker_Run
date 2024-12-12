@@ -88,10 +88,13 @@ public class Calidad : MonoBehaviour
     public void Modificacion_Idioma()
     {
         List<string> Parametro = new List<string>();
-        Parametro.Add(idioma.Get_Idioma()[0] + ":" + FindObjectOfType<Nivel>().nivel.ToString());
+        Parametro.Add(idioma.Get_Idioma()[0] + ":" + Nivel.nivel.ToString());
         Parametro.Add(idioma.Get_Idioma()[1] + ":" + FindObjectOfType<DINERO>().Get_Dinero().ToString());
         Parametro.Add(idioma.Get_Idioma()[2]);
         Parametro.Add(idioma.Get_Idioma()[3]);
+        Parametro.Add(idioma.Get_Idioma()[4]);
+        Parametro.Add(idioma.Get_Idioma()[5]);
+
         idioma.Modificacion_Idioma(Parametro, false);
     }
 

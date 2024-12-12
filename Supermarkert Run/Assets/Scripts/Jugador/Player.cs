@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class Player : MonoBehaviour
 {
@@ -21,6 +22,8 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject Muerte_canvas;
     [SerializeField] private GameObject Ganar_canvas;
     [SerializeField] private Animator animacion;
+    [SerializeField] private TMP_Text Dinero_Text;
+    [SerializeField] private GameObject Imagen_DejarObjetos;
     
     private Repartir_power RP;
     private Repartir_power.Power_Up PU;
@@ -68,22 +71,20 @@ public class Player : MonoBehaviour
     {
         switch(PU)
         {
-            case Repartir_power.Power_Up.VIDA: Debug.Log("Vida"); break;
+            case Repartir_power.Power_Up.VIDA: break;
             case Repartir_power.Power_Up.VELOCIDAD:
                 speed *= Efecto.Get_Efecto<float>();
                 max_speed_H *= Efecto.Get_Efecto<float>();
                 max_speed_V *= Efecto.Get_Efecto<float>();
                 Efecto = null;
-                Debug.Log("Velocidad");
                 break;
-            case Repartir_power.Power_Up.PROTECCION: Debug.Log("Proteccion"); break;
+            case Repartir_power.Power_Up.PROTECCION: break;
             case Repartir_power.Power_Up.MANOS_RAPIDAS:
                 float eliminar = Tiempo_Dejar_Objeto * Efecto.Get_Efecto<float>();
                 Tiempo_Dejar_Objeto -= eliminar;
                 Efecto = null;
-                Debug.Log("Manos rapidas");
                 break;
-            case Repartir_power.Power_Up.NINGUNO: Debug.Log("Ninguno"); break;
+            case Repartir_power.Power_Up.NINGUNO: break;
         }
     }
 
@@ -172,7 +173,7 @@ public class Player : MonoBehaviour
         {
             Caja caja = other.gameObject.GetComponent<Caja>();
             StartCoroutine(Tiempo_Rehabilitar(carrito.objetos_actuales * Tiempo_Dejar_Objeto));
-            caja.Visible_Objects(mision.Cantidad_Nivel(), mision.Get_Position(),carrito, Tiempo_Dejar_Objeto);
+            caja.Visible_Objects(mision.Cantidad_Nivel(), mision.Get_Position(),carrito, Tiempo_Dejar_Objeto,Imagen_DejarObjetos);
             Gano(caja);
         }
         else if(other.CompareTag("Mojado"))
@@ -192,7 +193,7 @@ public class Player : MonoBehaviour
         max_speed_V = y;
     }
      
-
+    
     private void OnCollisionEnter(Collision collision)
     {
         if (!collision.gameObject.CompareTag("Piso") && !collision.gameObject.CompareTag("Caja"))
@@ -241,13 +242,22 @@ public class Player : MonoBehaviour
 
     //Botones->Ganar
 
-    private void Gano(Caja caja) => Ganar_canvas.SetActive(caja.Get_Porcentaje() == 10);
+    private void Gano(Caja caja)
+    {
+        if (caja.Get_Porcentaje() == 10)
+        { 
+            Ganar_canvas.SetActive(true);
+            Dinero_Obtenido DO = FindObjectOfType<Dinero_Obtenido>();
+            Dinero_Text.text = $"$ {DO.Get_Dinero()}"; 
+        }
+        
+    }
     public void BTN_Ganar()
     {
         GameObject Boton_Presiono = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
         Dinero_Obtenido DO = FindObjectOfType<Dinero_Obtenido>();
         DO.Get_Mapa(SceneManager.GetActiveScene().name).cantidad_juegos++;
-        FindObjectOfType<Nivel>().nivel++;
+        Nivel.Set_Nivel(Nivel.nivel + 1);
 
         if (Boton_Presiono.name != "X2")
             DO.Recompensa();

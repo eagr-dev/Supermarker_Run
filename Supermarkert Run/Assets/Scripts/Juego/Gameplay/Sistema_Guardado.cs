@@ -61,7 +61,8 @@ public class Sistema_Guardado : MonoBehaviour
                 Dinero.Set_Agregar(contenido_Leido.dinero);
 
             /*Nivel*/
-            _Nivel.nivel = contenido_Leido.nivel;
+            if(Nivel.nivel <= 1)
+                Nivel.Set_Nivel(contenido_Leido.nivel);
 
             /*Calidad*/
             QualitySettings.SetQualityLevel(contenido_Leido.nivel_calidad);
@@ -78,7 +79,7 @@ public class Sistema_Guardado : MonoBehaviour
         }
         else
         {
-            _Nivel.nivel = 1;
+            Nivel.Set_Nivel(1);
             Dinero.Set_Agregar(5000);
             Reinicio.SetActive(true);
         }
@@ -129,7 +130,7 @@ public class Sistema_Guardado : MonoBehaviour
         Contenido conte = new Contenido()
         {
             dinero = Dinero.Get_Dinero(),
-            nivel = _Nivel.nivel,
+            nivel = Nivel.nivel,
             materia = carro.skin_car,
             posicion = _posicion,
             Tipo_Carro = PCMG.Get_Seleccion(),

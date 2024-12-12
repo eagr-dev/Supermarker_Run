@@ -15,7 +15,6 @@ public class Mision : MonoBehaviour
     public Transform caja;
     private string object_act = "";
     Car carro;
-    [SerializeField] GameObject Flecha;
 
     void Awake()
     {
@@ -36,7 +35,7 @@ public class Mision : MonoBehaviour
     }
     public int Cantidad_Nivel()
     {
-        int misiones = (int)(FindObjectOfType<Nivel>().nivel / 10);
+        int misiones = (int)(Nivel.nivel / 10);
         misiones = misiones != 0 ? misiones : 10;
         return misiones;
     }
@@ -77,8 +76,6 @@ public class Mision : MonoBehaviour
             carro.objetos_actuales++;
             Misiones_echas.text =  "Mision complete: "+ Get_Position().ToString() + "/" + Cantidad_Nivel().ToString();
             Espacio_Disponible.text = "Available Space: " + carro.objetos_actuales.ToString() + "/" + carro.cant_limite_carga.ToString();
-            Debug.Log($"Valor position text: {position_Text}");
-            Debug.Log($"Valor actual del carrito: {carro.objetos_actuales}");
         }
         else if (obj == object_act && Cantidad_Nivel() == position_Text)
         {
@@ -87,7 +84,6 @@ public class Mision : MonoBehaviour
             Text.text = "";
             Misiones_echas.text = "Go to the checkout";
             Espacio_Disponible.text = "Available Space: " + carro.objetos_actuales.ToString() + "/" + carro.cant_limite_carga.ToString();
-            Debug.Log($"Valor position text: {position_Text}");
         }
 
         else if (carro.objetos_actuales > carro.cant_limite_carga)
