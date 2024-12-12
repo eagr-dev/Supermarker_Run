@@ -17,7 +17,7 @@ public class Tiempo : MonoBehaviour
             minutos = (int)(tiempo - Resta());
             string minutoss = minutos < 10 ? "0" + minutos.ToString() : minutos.ToString();
             string segundoss = segundos < 10 ? "0" + segundos.ToString() : segundos.ToString();
-            Texto.text = "Tiempo : " + minutoss + " : " + segundoss;
+            Texto.text = minutoss + " : " + segundoss;
         }
     }
 
@@ -56,7 +56,7 @@ public class Tiempo : MonoBehaviour
         segundos--;
         minutoss = minutos < 10 ? "0" + minutos.ToString() : minutos.ToString();
         segundoss = segundos < 10 ? "0" + segundos.ToString() : segundos.ToString();
-        Texto.text = "Tiempo : " + minutoss + " : " + segundoss;
+        Texto.text = minutoss + " : " + segundoss;
         if (minutos <= 0 && segundos <= 0) Muerte.SetActive(true);
     }
 

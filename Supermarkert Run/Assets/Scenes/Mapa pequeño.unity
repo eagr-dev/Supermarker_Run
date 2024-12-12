@@ -6000,6 +6000,14 @@ PrefabInstance:
       propertyPath: Imagen_DejarObjetos
       value: 
       objectReference: {fileID: 3705911046001335275}
+    - target: {fileID: 3863072306458358961, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
+      propertyPath: TC
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3992344228648305021, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
+      propertyPath: TC
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7395996999866375472, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
       propertyPath: Text
       value: 

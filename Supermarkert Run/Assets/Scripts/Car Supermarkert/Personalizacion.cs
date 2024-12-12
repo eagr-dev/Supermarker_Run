@@ -53,11 +53,11 @@ public class Personalizacion : MonoBehaviour
         carro.precio = (uint)((rojo + verde + azul + alfa) * Max);
 
 
-        Precio.text = "Price: " + carro.precio.ToString() + ".";
-        Peso.text = "Weight: " + carro.peso.ToString() + "Kg.";
-        Velocidad.text = "Speed: " + carro.velocidad_adicional.ToString() + ".";
-        Carga.text = "Burden: " + carro.cant_limite_carga.ToString() + "Kg.";
-        Choque.text = "Maximum shock: " + carro.resistencia_choque.ToString() + "%";
+        Precio.text = carro.precio.ToString() + ".";
+        Peso.text = carro.peso.ToString() + "Kg.";
+        Velocidad.text = carro.velocidad_adicional.ToString() + ".";
+        Carga.text = carro.cant_limite_carga.ToString() + "Kg.";
+        Choque.text = carro.resistencia_choque.ToString() + "%";
     }
 
     public void Guardado()

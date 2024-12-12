@@ -16,7 +16,7 @@ MonoBehaviour:
   velocidad_adicional: 1.7
   cant_limite_carga: 100
   objetos_actuales: 0
-  resistencia_choque: 100
+  resistencia_choque: 70
   peso_maximo: 0
   velocidad_maxima: 0
   maximo_a_cargar: 0

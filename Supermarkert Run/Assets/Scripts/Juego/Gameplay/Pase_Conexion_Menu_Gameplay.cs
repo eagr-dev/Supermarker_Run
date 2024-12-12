@@ -31,6 +31,7 @@ public class Pase_Conexion_Menu_Gameplay : MonoBehaviour
             cars_Med[i].objetos_actuales = 0;
             cars_Gra[i].objetos_actuales = 0;
         }
+
     }
 
     public Tipo_Carro Get_Seleccion() => sel;

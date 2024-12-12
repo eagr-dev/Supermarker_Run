@@ -66,13 +66,13 @@ public class Idioma : MonoBehaviour
                 Textos_UI[i].text = Idioma[i];
             }
         }
-        else
+        /*else
         {
             for (int i = 0; i < Textos_UI.Count; i++)
             {
                 Textos_UI[i].text = Idioma[i] + ":\n" + "0/" + Contenido_Carro.Get_Car().cant_limite_carga.ToString();
             }
-        }
+        }*/
     }
 
     public static string Espacio_Idioma()

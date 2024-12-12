@@ -28,6 +28,12 @@ public class Seleccion_Mapa : MonoBehaviour
         DO = FindObjectOfType<Dinero_Obtenido>();
     }
 
+    private void Start()
+    {
+        Mostrar(DO.Get_Mapa(0));
+
+    }
+
     public void BTN_Comprar()
     {
         if (!FindObjectOfType<DINERO>().Set_Compra((uint)DO.Get_Mapa(seleccion_actual).precio))

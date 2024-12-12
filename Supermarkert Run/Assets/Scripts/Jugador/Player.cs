@@ -47,7 +47,24 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        carrito_contenido = FindObjectOfType<Get_Content_Car>();
+        foreach (Transform hijo in transform)
+        {
+            switch (hijo.name)
+            {
+                case "carrito_peq":
+                    if (hijo.gameObject.activeInHierarchy)
+                        carrito_contenido = hijo.GetComponent<Get_Content_Car>();
+                    break;
+                case "carrito_med":
+                    if (hijo.gameObject.activeInHierarchy)
+                        carrito_contenido = hijo.GetComponent<Get_Content_Car>();
+                    break;
+                case "carrito_gran":
+                    if (hijo.gameObject.activeInHierarchy)
+                        carrito_contenido = hijo.GetComponent<Get_Content_Car>();
+                    break;
+            }
+        }        
         carrito = carrito_contenido.GetComponent<Get_Content_Car>().Get_Car();
         Init();
     }
@@ -159,7 +176,7 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(tiempo_total + 0.5f);
         max_speed_H = x;
         max_speed_V = y;
-        mision.Espacio_Disponible.text = "Available Space: " + carrito.objetos_actuales.ToString() + " / " + carrito.cant_limite_carga.ToString();
+        mision.Espacio_Disponible.text = carrito.objetos_actuales.ToString() + " / " + carrito.cant_limite_carga.ToString();
     }
 
     //Collisiones
@@ -202,7 +219,6 @@ public class Player : MonoBehaviour
             if (velocidad_porcentual > resistencia_porcentual)
             {
                 StartCoroutine(Retroceder());
-                Debug.Log($"efecto: {Efecto}");
                 if (Efecto != null)
                 {
                     Debug.Log("Usar efecto");

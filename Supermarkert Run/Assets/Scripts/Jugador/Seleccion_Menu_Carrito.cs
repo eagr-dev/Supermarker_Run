@@ -218,12 +218,12 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
 
         Nombre.text = Info_Car.nombre;
         Descripcion.text = Info_Car.descripcion;
-        Peso.text = "Weight: " + Info_Car.peso.ToString() + "Kg.";
-        Velocidad.text = "Speed: " + Info_Car.velocidad_adicional.ToString() + ".";
-        Limite_Carga.text = "Burden: " + Info_Car.cant_limite_carga.ToString() + "Kg.";
-        Resistencia_choque.text = "Maximum shock: " + Info_Car.resistencia_choque.ToString() + "%.";
+        Peso.text = Info_Car.peso.ToString() + "Kg.";
+        Velocidad.text = Info_Car.velocidad_adicional.ToString() + ".";
+        Limite_Carga.text = Info_Car.cant_limite_carga.ToString() + "Kg.";
+        Resistencia_choque.text = Info_Car.resistencia_choque.ToString() + "%.";
         Precio.text = "$ " + Info_Car.precio.ToString() + ".";
-        Requisitos.text = "Requirements: " + Info_Car.requisitos + ":" + Info_Car.Get_Juegos() + "/" + Info_Car.cantidad;
+        Requisitos.text = Info_Car.requisitos + ":" + Info_Car.Get_Juegos() + "/" + Info_Car.cantidad;
     }
     public GameObject Get_Active()
     {

@@ -70,7 +70,9 @@ public class Sistema_Guardado : MonoBehaviour
 
 
             /*Carros*/
-            PCMG.Set_Seleccion(contenido_Leido.Tipo_Carro);
+            if(PCMG.Get_Seleccion() == Pase_Conexion_Menu_Gameplay.Tipo_Carro.PEQUEÑO)
+                PCMG.Set_Seleccion(contenido_Leido.Tipo_Carro);
+            
             Seleccion_Menu_Carrito selec = FindObjectOfType<Seleccion_Menu_Carrito>();
             selec.Set_Car_Menu(PCMG.Get_Seleccion(), _posicion);
             selec.Inicializador();

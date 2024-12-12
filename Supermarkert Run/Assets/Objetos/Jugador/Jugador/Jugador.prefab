@@ -1725,7 +1725,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   r: {fileID: 4508645311408174972}
-  TC: 0
+  TC: 1
   posicion: 0
 --- !u!23 &1126565264330523227
 MeshRenderer:
@@ -1903,7 +1903,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   r: {fileID: 3012281556304907902}
-  TC: 0
+  TC: 2
   posicion: 0
 --- !u!23 &780777965701281619
 MeshRenderer:
@@ -2559,9 +2559,12 @@ MonoBehaviour:
   joystick: {fileID: 0}
   player_object: {fileID: 8592851397395496535}
   camera: {fileID: 0}
+  position_Reset: {x: 0, y: 0, z: 0}
   Muerte_canvas: {fileID: 0}
   Ganar_canvas: {fileID: 0}
   animacion: {fileID: 3068091169133543063}
+  Dinero_Text: {fileID: 0}
+  Imagen_DejarObjetos: {fileID: 0}
 --- !u!114 &7395996999866375472
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2576,12 +2579,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position_Text: 0
   Text: {fileID: 0}
-  Distancia: {fileID: 0}
   Misiones_echas: {fileID: 0}
   Espacio_Disponible: {fileID: 0}
   Sin_espacio: {fileID: 0}
   Muerte: {fileID: 0}
-  Flecha: {fileID: 0}
+  caja: {fileID: 0}
 --- !u!114 &3748611634939655014
 MonoBehaviour:
   m_ObjectHideFlags: 0

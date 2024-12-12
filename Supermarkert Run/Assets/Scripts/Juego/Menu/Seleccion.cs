@@ -69,7 +69,6 @@ public class Seleccion : MonoBehaviour
     public void BTN_Salida()
     {
         FindObjectOfType<Sistema_Guardado>().Guardar();
-        Debug.Log("Salida");
         Application.Quit(0);
     }
 
