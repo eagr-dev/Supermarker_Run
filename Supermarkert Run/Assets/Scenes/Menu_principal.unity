@@ -403,12 +403,12 @@ GameObject:
   - component: {fileID: 16402625}
   - component: {fileID: 16402624}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: SalirT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &16402623
 RectTransform:
   m_ObjectHideFlags: 0
@@ -600,7 +600,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 99, y: 0}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &32857856
@@ -640,81 +640,6 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 32857854}
-  m_CullTransparentMesh: 1
---- !u!1 &34358930
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 34358931}
-  - component: {fileID: 34358933}
-  - component: {fileID: 34358932}
-  m_Layer: 5
-  m_Name: Image
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &34358931
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 34358930}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 752849415}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.5021, y: -1.25}
-  m_SizeDelta: {x: 75, y: 60}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &34358932
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 34358930}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.9496855, g: 0.9496855, b: 0.9496855, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8068c4e7ef3666f4197671be8f88af06, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &34358933
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 34358930}
   m_CullTransparentMesh: 1
 --- !u!1 &39696820
 GameObject:
@@ -1555,7 +1480,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 109, y: 0}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &120679052
@@ -4213,7 +4138,6 @@ RectTransform:
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1287136062}
   - {fileID: 2106989356}
   m_Father: {fileID: 19061391}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4425,7 +4349,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -91, y: 0}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &420047530
@@ -4673,6 +4597,25 @@ MonoBehaviour:
   - {fileID: 1190758678}
   - {fileID: 2062224136}
   - {fileID: 1860019717}
+  - {fileID: 911970496}
+  - {fileID: 93828110}
+  - {fileID: 1070410988}
+  - {fileID: 1366009600}
+  - {fileID: 138958768}
+  - {fileID: 1281965817}
+  - {fileID: 2106989357}
+  - {fileID: 593436332}
+  - {fileID: 1596451718}
+  - {fileID: 1233518748}
+  - {fileID: 2121540505}
+  - {fileID: 884299197}
+  - {fileID: 1523549954}
+  - {fileID: 439401835}
+  - {fileID: 16402624}
+  - {fileID: 2124108202}
+  - {fileID: 1343357462}
+  - {fileID: 1923969554}
+  - {fileID: 1527573809}
   Ingles:
   - Level
   - Money
@@ -4680,6 +4623,25 @@ MonoBehaviour:
   - language
   - shadows
   - dynamic light
+  - '!Play!'
+  - cars
+  - maps
+  - configuration
+  - powerup
+  - little
+  - medium
+  - big
+  - personalization
+  - buy
+  - buy
+  - buy
+  - exit
+  - exit
+  - exit
+  - accept
+  - accept
+  - accept
+  - accept
   Espaniol:
   - Nivel
   - Dinero
@@ -4687,6 +4649,25 @@ MonoBehaviour:
   - Lenguaje
   - sombras
   - luces dinamica
+  - '!jugar!'
+  - carros
+  - mapas
+  - configuracion
+  - powerup
+  - "peque\xF1o"
+  - mediano
+  - grande
+  - personalizar
+  - comprar
+  - comprar
+  - comprar
+  - salir
+  - salir
+  - salir
+  - Aceptar
+  - Aceptar
+  - Aceptar
+  - Aceptar
   Portugues:
   - "N\xEDvel"
   - Dinheiro
@@ -4694,6 +4675,25 @@ MonoBehaviour:
   - linguagem
   - tons
   - "luces din\xE2mica"
+  - '!jogar!'
+  - carros
+  - mapas
+  - "configura\xE7\xE3o"
+  - powerup
+  - pequeno
+  - "m\xE9dio"
+  - grande
+  - personalizar
+  - comprar
+  - comprar
+  - comprar
+  - sair
+  - sair
+  - sair
+  - Aceitar
+  - Aceitar
+  - Aceitar
+  - Aceitar
 --- !u!1 &437563738
 GameObject:
   m_ObjectHideFlags: 0
@@ -4800,12 +4800,12 @@ GameObject:
   - component: {fileID: 439401836}
   - component: {fileID: 439401835}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Salir
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &439401834
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5548,7 +5548,6 @@ RectTransform:
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1769717391}
   - {fileID: 1281965816}
   m_Father: {fileID: 19061391}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5819,7 +5818,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 100, y: 0}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &488226860
@@ -6415,12 +6414,12 @@ GameObject:
   - component: {fileID: 593436333}
   - component: {fileID: 593436332}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: GranT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &593436331
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8587,7 +8586,6 @@ RectTransform:
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 34358931}
   - {fileID: 593436331}
   m_Father: {fileID: 19061391}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8858,7 +8856,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 112, y: 0}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &766296726
@@ -9282,7 +9280,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 5, y: -3}
+  m_AnchoredPosition: {x: -44, y: -3}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &838174305
@@ -9732,7 +9730,7 @@ GameObject:
   - component: {fileID: 884299198}
   - component: {fileID: 884299197}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: ComprarT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10251,7 +10249,7 @@ GameObject:
   - component: {fileID: 983356779}
   - component: {fileID: 983356778}
   m_Layer: 5
-  m_Name: Aceptar
+  m_Name: Salir
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12537,7 +12535,7 @@ GameObject:
   - component: {fileID: 1233518749}
   - component: {fileID: 1233518748}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: ComprarT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13067,12 +13065,12 @@ GameObject:
   - component: {fileID: 1281965818}
   - component: {fileID: 1281965817}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: peqT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1281965816
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13188,81 +13186,6 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1281965815}
-  m_CullTransparentMesh: 1
---- !u!1 &1287136061
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1287136062}
-  - component: {fileID: 1287136064}
-  - component: {fileID: 1287136063}
-  m_Layer: 5
-  m_Name: Image
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1287136062
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1287136061}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 387504369}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 4.6421, y: 0}
-  m_SizeDelta: {x: 50, y: 50}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1287136063
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1287136061}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.9496855, g: 0.9496855, b: 0.9496855, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8068c4e7ef3666f4197671be8f88af06, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &1287136064
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1287136061}
   m_CullTransparentMesh: 1
 --- !u!1 &1290487407
 GameObject:
@@ -13874,12 +13797,12 @@ GameObject:
   - component: {fileID: 1343357463}
   - component: {fileID: 1343357462}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: AceptarT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1343357461
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14749,7 +14672,7 @@ GameObject:
   - component: {fileID: 1443228224}
   - component: {fileID: 1443228223}
   m_Layer: 5
-  m_Name: Principal
+  m_Name: Salir
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16446,12 +16369,12 @@ GameObject:
   - component: {fileID: 1523549955}
   - component: {fileID: 1523549954}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Salir
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1523549953
 RectTransform:
   m_ObjectHideFlags: 0
@@ -16580,12 +16503,12 @@ GameObject:
   - component: {fileID: 1527573810}
   - component: {fileID: 1527573809}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: AceptarT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1527573808
 RectTransform:
   m_ObjectHideFlags: 0
@@ -17305,7 +17228,7 @@ GameObject:
   - component: {fileID: 1596451719}
   - component: {fileID: 1596451718}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: PersonalizarT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18264,81 +18187,6 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1764115830}
-  m_CullTransparentMesh: 1
---- !u!1 &1769717390
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1769717391}
-  - component: {fileID: 1769717393}
-  - component: {fileID: 1769717392}
-  m_Layer: 5
-  m_Name: Image
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1769717391
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1769717390}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 485935839}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 40, y: 40}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1769717392
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1769717390}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.9496855, g: 0.9496855, b: 0.9496855, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8068c4e7ef3666f4197671be8f88af06, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &1769717393
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1769717390}
   m_CullTransparentMesh: 1
 --- !u!1 &1784611853
 GameObject:
@@ -20110,12 +19958,12 @@ GameObject:
   - component: {fileID: 1923969555}
   - component: {fileID: 1923969554}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: AceptarT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1923969553
 RectTransform:
   m_ObjectHideFlags: 0
@@ -21092,7 +20940,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 10, y: 0}
+  m_AnchoredPosition: {x: -76, y: 0}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2075563100
@@ -21360,12 +21208,12 @@ GameObject:
   - component: {fileID: 2106989358}
   - component: {fileID: 2106989357}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: medianoT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2106989356
 RectTransform:
   m_ObjectHideFlags: 0
@@ -21762,7 +21610,7 @@ GameObject:
   - component: {fileID: 2121540506}
   - component: {fileID: 2121540505}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: comprarT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21990,12 +21838,12 @@ GameObject:
   - component: {fileID: 2124108203}
   - component: {fileID: 2124108202}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Aceptar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2124108201
 RectTransform:
   m_ObjectHideFlags: 0

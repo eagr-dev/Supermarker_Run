@@ -94,6 +94,25 @@ public class Calidad : MonoBehaviour
         Parametro.Add(idioma.Get_Idioma()[3]);
         Parametro.Add(idioma.Get_Idioma()[4]);
         Parametro.Add(idioma.Get_Idioma()[5]);
+        Parametro.Add(idioma.Get_Idioma()[6]);
+        Parametro.Add(idioma.Get_Idioma()[7]);
+        Parametro.Add(idioma.Get_Idioma()[8]);
+        Parametro.Add(idioma.Get_Idioma()[9]);
+        Parametro.Add(idioma.Get_Idioma()[10]);
+        Parametro.Add(idioma.Get_Idioma()[11]);
+        Parametro.Add(idioma.Get_Idioma()[12]);
+        Parametro.Add(idioma.Get_Idioma()[13]);
+        Parametro.Add(idioma.Get_Idioma()[14]);
+        Parametro.Add(idioma.Get_Idioma()[15]);
+        Parametro.Add(idioma.Get_Idioma()[16]);
+        Parametro.Add(idioma.Get_Idioma()[17]);
+        Parametro.Add(idioma.Get_Idioma()[18]);
+        Parametro.Add(idioma.Get_Idioma()[19]);
+        Parametro.Add(idioma.Get_Idioma()[20]);
+        Parametro.Add(idioma.Get_Idioma()[21]);
+        Parametro.Add(idioma.Get_Idioma()[22]);
+        Parametro.Add(idioma.Get_Idioma()[23]);
+        Parametro.Add(idioma.Get_Idioma()[24]);
 
         idioma.Modificacion_Idioma(Parametro, false);
     }
