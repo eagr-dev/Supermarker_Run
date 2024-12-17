@@ -16,7 +16,7 @@ MonoBehaviour:
   nombre: Mapa mediano
   descripcion: "Un mapa un poco mas largo que el peque\xF1o"
   screen_map: {fileID: 21300000, guid: dcb5e410ac02d294d87ce0ae8c50c84a, type: 3}
-  precio: 300
+  precio: 0
   Valor_mapa: 300
   cantidad_juegos: 0
   X_minimo: -45.9

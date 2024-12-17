@@ -48,7 +48,7 @@ public class Tiempo : MonoBehaviour
     private void Contador()
     {
         string minutoss, segundoss;
-        if(segundos <= 0)
+        if (segundos <= 0)
         {
             minutos--;
             segundos = 60;
@@ -57,7 +57,11 @@ public class Tiempo : MonoBehaviour
         minutoss = minutos < 10 ? "0" + minutos.ToString() : minutos.ToString();
         segundoss = segundos < 10 ? "0" + segundos.ToString() : segundos.ToString();
         Texto.text = minutoss + " : " + segundoss;
-        if (minutos <= 0 && segundos <= 0) Muerte.SetActive(true);
+        if (minutos <= 0 && segundos <= 0)
+        {
+            Muerte.GetComponent<Transform>().GetChild(2).gameObject.SetActive(true);
+            Muerte.SetActive(true);
+        }
     }
 
     public int Get_Minutos() => minutos;

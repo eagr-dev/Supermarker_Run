@@ -1,1 +1,2 @@
-Mapa medianoMapa grandeMapa grandeMapa mediano
+Mapa grande
+Mapa mediano

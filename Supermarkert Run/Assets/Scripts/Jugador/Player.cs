@@ -230,6 +230,7 @@ public class Player : MonoBehaviour
                 else
                 {
                     speed = 0;
+                    Muerte_canvas.GetComponent<Transform>().GetChild(3).gameObject.SetActive(true);
                     Muerte_canvas.SetActive(true);
                     StopAllCoroutines();
                     return;

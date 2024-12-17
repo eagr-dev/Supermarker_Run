@@ -160,6 +160,6 @@ public class Sistema_Guardado : MonoBehaviour
 
     public void ADD_MAPA(string nombre_mapa)
     {
-        File.AppendAllText(URL_PATH_MAPA, nombre_mapa);
+        File.AppendAllText(URL_PATH_MAPA, nombre_mapa + "\n");
     }
 }
