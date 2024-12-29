@@ -71,6 +71,7 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
         Carrito_grande.SetActive(false);
         Carrito_mediano.SetActive(false);
         Carrito_pequeno.SetActive(true);
+        Animacion(Carrito_pequeno);
         Seleccion = Pase_Conexion_Menu_Gameplay.Tipo_Carro.PEQUEÑO;
         FindObjectOfType<Pase_Conexion_Menu_Gameplay>().Set_Seleccion(Seleccion);
     }
@@ -84,6 +85,7 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
         Carrito_grande.SetActive(false);
         Carrito_mediano.SetActive(true);
         Carrito_pequeno.SetActive(false);
+        Animacion(Carrito_mediano);
         Seleccion = Pase_Conexion_Menu_Gameplay.Tipo_Carro.MEDIANO;
         FindObjectOfType<Pase_Conexion_Menu_Gameplay>().Set_Seleccion(Seleccion);
     }
@@ -97,8 +99,15 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
         Carrito_grande.SetActive(true);
         Carrito_mediano.SetActive(false);
         Carrito_pequeno.SetActive(false);
+        Animacion(Carrito_grande);
         Seleccion = Pase_Conexion_Menu_Gameplay.Tipo_Carro.GRANDE;
         FindObjectOfType<Pase_Conexion_Menu_Gameplay>().Set_Seleccion(Seleccion);
+    }
+
+    private void Animacion(GameObject objeto)
+    {
+        Transform padre = objeto.transform.parent;
+        padre.position = new Vector3(padre.position.x,-1,padre.position.z);
     }
 
     //BTN->Canvas

@@ -30,27 +30,8 @@ public class Mision : MonoBehaviour
             Set_Object(objects_mision);
             New_Text_In_TextMesh();
         }
-        foreach (Transform hijo in transform)
-        {
-            switch (hijo.name)
-            {
-                case "carrito_peq":
-                    if (hijo.gameObject.activeInHierarchy)
-                        carro = hijo.GetComponent<Get_Content_Car>().Get_Car();
-                    break;
-                case "carrito_med":
-                    if (hijo.gameObject.activeInHierarchy)
-                        carro = hijo.GetComponent<Get_Content_Car>().Get_Car();
-                    break;
-                case "carrito_gran":
-                    if (hijo.gameObject.activeInHierarchy)
-                        carro = hijo.GetComponent<Get_Content_Car>().Get_Car();
-                    break;
-            }
-        }
 
-        Debug.Log(carro.nombre);
-
+        carro = Player.Get_Carro(transform);
         Espacio_Disponible.text = carro.objetos_actuales.ToString() + "/" + carro.cant_limite_carga.ToString();
     }
     public int Cantidad_Nivel()

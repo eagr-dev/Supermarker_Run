@@ -47,25 +47,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        foreach (Transform hijo in transform)
-        {
-            switch (hijo.name)
-            {
-                case "carrito_peq":
-                    if (hijo.gameObject.activeInHierarchy)
-                        carrito_contenido = hijo.GetComponent<Get_Content_Car>();
-                    break;
-                case "carrito_med":
-                    if (hijo.gameObject.activeInHierarchy)
-                        carrito_contenido = hijo.GetComponent<Get_Content_Car>();
-                    break;
-                case "carrito_gran":
-                    if (hijo.gameObject.activeInHierarchy)
-                        carrito_contenido = hijo.GetComponent<Get_Content_Car>();
-                    break;
-            }
-        }        
-        carrito = carrito_contenido.GetComponent<Get_Content_Car>().Get_Car();
+        carrito = Get_Carro(transform);
         Init();
     }
 
@@ -177,6 +159,31 @@ public class Player : MonoBehaviour
         max_speed_H = x;
         max_speed_V = y;
         mision.Espacio_Disponible.text = carrito.objetos_actuales.ToString() + " / " + carrito.cant_limite_carga.ToString();
+    }
+
+    public static Car Get_Carro(Transform padre)
+    {
+        Car carrito_principal = null;
+
+        foreach (Transform hijo in padre)
+        {
+            switch (hijo.name)
+            {
+                case "Carrito_Peq":
+                    if (hijo.gameObject.activeInHierarchy)
+                        carrito_principal = hijo.GetComponent<Get_Content_Car>().Get_Car();
+                    break;
+                case "Carrito_med":
+                    if (hijo.gameObject.activeInHierarchy)
+                        carrito_principal = hijo.GetComponent<Get_Content_Car>().Get_Car();
+                    break;
+                case "Carrito_gra":
+                    if (hijo.gameObject.activeInHierarchy)
+                        carrito_principal = hijo.GetComponent<Get_Content_Car>().Get_Car();
+                    break;
+            }
+        }
+        return carrito_principal;
     }
 
     //Collisiones
