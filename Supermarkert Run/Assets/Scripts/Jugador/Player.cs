@@ -29,6 +29,7 @@ public class Player : MonoBehaviour
     private Repartir_power.Power_Up PU;
 
     private bool resbalon = false;
+    private bool choque = false;
 
     private float Tiempo_Dejar_Objeto = 1;
 
@@ -59,6 +60,10 @@ public class Player : MonoBehaviour
         {
             float vueltas = 3 * 360;
             transform.Rotate(0, vueltas * Time.deltaTime, 0);
+        }
+        if(choque)
+        {
+            transform.Rotate(0, 90 * Time.deltaTime * speed, 0);
         }
         if (transform.position.y < 0) transform.position = position_Reset;
     }
@@ -161,6 +166,15 @@ public class Player : MonoBehaviour
         mision.Espacio_Disponible.text = carrito.objetos_actuales.ToString() + " / " + carrito.cant_limite_carga.ToString();
     }
 
+    IEnumerator Retroceder()
+    {
+        choque = true;
+        joystick.DeadZone = 2;
+        yield return new WaitForSeconds(1);
+        joystick.DeadZone = 0;
+        choque = false;
+    }
+
     public static Car Get_Carro(Transform padre)
     {
         Car carrito_principal = null;
@@ -206,16 +220,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    
-     IEnumerator Retroceder()
-    {
-        float x = max_speed_H, y = max_speed_V;
-        max_speed_H = 0;
-        max_speed_V = 0;
-        yield return new WaitForSeconds(1);
-        max_speed_H = x;
-        max_speed_V = y;
-    }
      
     
     private void OnCollisionEnter(Collision collision)
@@ -223,12 +227,11 @@ public class Player : MonoBehaviour
         if (!collision.gameObject.CompareTag("Piso") && !collision.gameObject.CompareTag("Caja"))
         {
             velocidad_porcentual = Mathf.Abs(Mathf.Max(joystick.Horizontal, joystick.Vertical));
+            StartCoroutine(Retroceder());
             if (velocidad_porcentual > resistencia_porcentual)
             {
-                StartCoroutine(Retroceder());
                 if (Efecto != null)
                 {
-                    Debug.Log("Usar efecto");
                     Efecto.Efecto();
                     PU = RP.Get_Power_Up();
                     if (PU == Repartir_power.Power_Up.NINGUNO)

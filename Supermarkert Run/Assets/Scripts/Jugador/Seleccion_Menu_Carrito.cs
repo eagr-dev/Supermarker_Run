@@ -9,7 +9,8 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
 
     //static Seleccion_Menu_Carrito SMC;
     Pase_Conexion_Menu_Gameplay.Tipo_Carro Seleccion = Pase_Conexion_Menu_Gameplay.Tipo_Carro.PEQUEÑO;
-    int eleccion = 0;
+    Pase_Conexion_Menu_Gameplay PCMG;
+    int eleccion = 0, eleccion_secundario = 0;
     GameObject carrito_Actual;
     [SerializeField] private GameObject Carrito_pequeno;
     [SerializeField] private GameObject Carrito_mediano;
@@ -51,10 +52,11 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
 
     public void Inicializador()
     {
+        PCMG = FindObjectOfType<Pase_Conexion_Menu_Gameplay>();
         carrito_Actual = Get_Active();
-        slider.maxValue = Carrito_pequeno.GetComponent<Get_Content_Car>().Get_Counts_Car();
+        slider.maxValue = carrito_Actual.GetComponent<Get_Content_Car>().Get_Counts_Car();
         carrito_Actual.GetComponent<Get_Content_Car>().Set_Car(eleccion);
-        Set_Skin_Eleccion();
+        Set_Skin_Eleccion(eleccion);
         Mostrar_Dinero();
     }
 
@@ -66,42 +68,42 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
     {
         if (Seleccion != Pase_Conexion_Menu_Gameplay.Tipo_Carro.PEQUEÑO) slider.value = 0;
         else slider.value = eleccion;
-        Set_Skin_Eleccion();
-        slider.value = 0;
         Carrito_grande.SetActive(false);
         Carrito_mediano.SetActive(false);
         Carrito_pequeno.SetActive(true);
+        Set_Skin_Eleccion(eleccion);
+        slider.value = 0;
         Animacion(Carrito_pequeno);
         Seleccion = Pase_Conexion_Menu_Gameplay.Tipo_Carro.PEQUEÑO;
-        FindObjectOfType<Pase_Conexion_Menu_Gameplay>().Set_Seleccion(Seleccion);
+        PCMG.Set_Seleccion(Seleccion);
     }
 
     public void BTN_Mediante()
     {
         if (Seleccion != Pase_Conexion_Menu_Gameplay.Tipo_Carro.MEDIANO) slider.value = 0;
         else slider.value = eleccion;
-        Set_Skin_Eleccion();
-        slider.value = 0;
         Carrito_grande.SetActive(false);
         Carrito_mediano.SetActive(true);
         Carrito_pequeno.SetActive(false);
+        Set_Skin_Eleccion(eleccion);
+        slider.value = 0;
         Animacion(Carrito_mediano);
         Seleccion = Pase_Conexion_Menu_Gameplay.Tipo_Carro.MEDIANO;
-        FindObjectOfType<Pase_Conexion_Menu_Gameplay>().Set_Seleccion(Seleccion);
+        PCMG.Set_Seleccion(Seleccion);
     }
 
     public void BTN_Grande()
     {
         if (Seleccion != Pase_Conexion_Menu_Gameplay.Tipo_Carro.GRANDE) slider.value = 0;
         else slider.value = eleccion;
-        Set_Skin_Eleccion();
-        slider.value = 0;
         Carrito_grande.SetActive(true);
         Carrito_mediano.SetActive(false);
         Carrito_pequeno.SetActive(false);
+        Set_Skin_Eleccion(eleccion);
+        slider.value = 0;
         Animacion(Carrito_grande);
         Seleccion = Pase_Conexion_Menu_Gameplay.Tipo_Carro.GRANDE;
-        FindObjectOfType<Pase_Conexion_Menu_Gameplay>().Set_Seleccion(Seleccion);
+        PCMG.Set_Seleccion(Seleccion);
     }
 
     private void Animacion(GameObject objeto)
@@ -119,6 +121,9 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
     }
     public void BTN_Eleccion()
     {
+        Carrito_pequeno.GetComponent<Get_Content_Car>().Set_Car(eleccion);
+        Carrito_mediano.GetComponent<Get_Content_Car>().Set_Car(eleccion);
+        Carrito_grande.GetComponent<Get_Content_Car>().Set_Car(eleccion);
         Canvas_Eleccion.SetActive(true);
         Canvas_Skin.SetActive(false);
         if (Comprar) slider.value = 0;
@@ -128,10 +133,12 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
 
     public void BTN_Aceptar()
     {
-        Set_Skin_Eleccion();
+        eleccion = eleccion_secundario;
+        Set_Skin_Eleccion(eleccion);
         Carrito_pequeno.GetComponent<Get_Content_Car>().Set_Car(eleccion);
         Carrito_mediano.GetComponent<Get_Content_Car>().Set_Car(eleccion);
         Carrito_grande.GetComponent<Get_Content_Car>().Set_Car(eleccion);
+        PCMG.Set_Eleccion(eleccion);
     }
 
     //BTN->Compra
@@ -177,7 +184,7 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
         Canvas_Eleccion.SetActive(false);
         Canvas_Personalizar.SetActive(true);
         eleccion = Get_Active().GetComponent<Get_Content_Car>().Get_Counts_Car() - 1;
-        Set_Skin_Eleccion();
+        Set_Skin_Eleccion(eleccion);
         FindObjectOfType<Personalizacion>().Guardado();
     }
 
@@ -198,18 +205,18 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
     //Slider->Skin
     public void Slider_Seleccion(float value)
     {
-        eleccion = (int)(value != slider.maxValue ? value : value - 1);
-        Set_Skin_Eleccion();
-        FindObjectOfType<Pase_Conexion_Menu_Gameplay>().Set_Eleccion(eleccion);
+        eleccion_secundario = (int)(value != slider.maxValue ? value : value - 1);
+        Set_Skin_Eleccion(eleccion_secundario);
+        PCMG.Set_Eleccion(eleccion_secundario);
     }
 
     //Slider_Fin
 
-    public void Set_Skin_Eleccion()
+    public void Set_Skin_Eleccion(int eleccion)
     {
         carrito_Actual = Get_Active();
         carrito_Actual.GetComponent<Get_Content_Car>().Set_Car(eleccion);
-        FindObjectOfType<Pase_Conexion_Menu_Gameplay>().Set_Eleccion(eleccion);
+        PCMG.Set_Eleccion(eleccion);
         Car Info_Car = carrito_Actual.GetComponent<Get_Content_Car>().Get_Car();
 
         if (Info_Car.precio != 0)
