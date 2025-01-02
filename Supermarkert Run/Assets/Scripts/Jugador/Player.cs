@@ -4,18 +4,19 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.Animations.Rigging;
 
 public class Player : MonoBehaviour
 {
     [SerializeField]private float max_speed_H = 1, max_speed_V = 1, Vertical_Move = 0, Horizontal_Move = 0, speed = 1, resistencia_porcentual = 0,velocidad_porcentual = 0;
-    Vector3 obtener_velocidad;
+    //Vector3 obtener_velocidad;
     public Joystick joystick;
     [SerializeField]private GameObject player_object;
     [SerializeField]private new GameObject camera;
     Vector3 position_camera = new Vector3(0,7,-10);
     public Vector3 position_Reset;
     private Mision mision;
-    private Get_Content_Car carrito_contenido;
+    //private Get_Content_Car carrito_contenido;
     private Car carrito;
     private new Rigidbody rigidbody;
     private Interfaz_PowerUp Efecto;
@@ -24,6 +25,9 @@ public class Player : MonoBehaviour
     [SerializeField] private Animator animacion;
     [SerializeField] private TMP_Text Dinero_Text;
     [SerializeField] private GameObject Imagen_DejarObjetos;
+    private ContactPoint punto_choque;
+    [SerializeField] private Rig[] rigs = new Rig[3];
+    [SerializeField] private ParticleSystem particulas;
     
     private Repartir_power RP;
     private Repartir_power.Power_Up PU;
@@ -56,6 +60,7 @@ public class Player : MonoBehaviour
     {
         Move_Player();
         Camera_Move();
+        Velocidad_Particula();
         if(resbalon)
         {
             float vueltas = 3 * 360;
@@ -63,7 +68,10 @@ public class Player : MonoBehaviour
         }
         if(choque)
         {
-            transform.Rotate(0, 90 * Time.deltaTime * speed, 0);
+            Vector3 punto_retroceder = (transform.position - punto_choque.point).normalized;
+            rigidbody.AddForce(punto_retroceder * 100, ForceMode.Impulse);
+            //transform.Rotate(0, 90 * Time.deltaTime, 0);
+            //Hacer animacion de caida en la couritina
         }
         if (transform.position.y < 0) transform.position = position_Reset;
     }
@@ -95,30 +103,41 @@ public class Player : MonoBehaviour
     //Movimiento
     private void Move_Player()
     {
-        if(joystick != null)
+        Vertical_Move = joystick.Vertical * max_speed_V;
+        Horizontal_Move = joystick.Horizontal * max_speed_H;
+        Vector3 Movimiento = new Vector3(Horizontal_Move, 0, Vertical_Move).normalized;
+        //obtener_velocidad = new Vector3(Horizontal_Move, 0, Vertical_Move) * Time.deltaTime * speed;
+        transform.position += new Vector3(Horizontal_Move, 0, Vertical_Move) * Time.deltaTime * speed;
+
+        animacion.SetFloat("VelX", Horizontal_Move);
+        animacion.SetFloat("VelY", Vertical_Move);
+
+        if (Movimiento.magnitude >= 1)
         {
-            Vertical_Move = joystick.Vertical * max_speed_V;
-            Horizontal_Move = joystick.Horizontal * max_speed_H;
-            Vector3 Movimiento = new Vector3(Horizontal_Move, 0, Vertical_Move).normalized;
-            obtener_velocidad = new Vector3(Horizontal_Move, 0, Vertical_Move) * Time.deltaTime * speed;
-            transform.position += new Vector3(Horizontal_Move, 0, Vertical_Move) * Time.deltaTime * speed;
-
-            animacion.SetFloat("VelX", Horizontal_Move);
-            animacion.SetFloat("VelY", Vertical_Move);
-
-            if (Movimiento.magnitude >= 1)
-            {
-                float angle = Mathf.Atan2(Movimiento.x, Movimiento.z) * Mathf.Rad2Deg;
-                Quaternion rotate = Quaternion.Euler(0, angle, 0);
-                player_object.transform.rotation = Quaternion.Slerp(player_object.transform.rotation, rotate, speed * Time.deltaTime);
-            }
+            float angle = Mathf.Atan2(Movimiento.x, Movimiento.z) * Mathf.Rad2Deg;
+            Quaternion rotate = Quaternion.Euler(0, angle, 0);
+            player_object.transform.rotation = Quaternion.Slerp(player_object.transform.rotation, rotate, speed * Time.deltaTime);
         }
     }
 
     private void Camera_Move()
     {
-        if(camera != null)
         camera.transform.position = transform.position + position_camera;
+    }
+
+    private void Velocidad_Particula()
+    {
+        //Mañana iniciar particulas al tomar cosas pasar cosas y ganar cosas
+        float velocidad = MathF.Max(MathF.Abs(joystick.Vertical), MathF.Abs(joystick.Horizontal)) * speed;
+        var parmain = particulas.main;
+        if( velocidad != 0)
+        {
+            parmain.maxParticles = 10;
+        }
+        else
+        {
+            parmain.maxParticles = 0;
+        }
     }
 
     //Inicio
@@ -139,6 +158,14 @@ public class Player : MonoBehaviour
         max_speed_V = 1 + carrito.velocidad_adicional;
     }
 
+    private void Set_Rigs(float valor)
+    {
+        foreach(Rig rig in rigs)
+        {
+            rig.weight = valor;
+        }
+    }
+
     private IEnumerator Resbalon()
     {
         float x = max_speed_H, y = max_speed_V;
@@ -155,49 +182,62 @@ public class Player : MonoBehaviour
         resbalon = false;
     }
 
-    private IEnumerator Tiempo_Rehabilitar(float tiempo_total)
+    private IEnumerator Animacion_Tiempo_Caja(float tiempo_total)
     {
-        float x = max_speed_H, y = max_speed_V;
-        max_speed_H = 0;
-        max_speed_V = 0;
+        Set_Rigs(0);
+        //Animacion colocar objetos
+        //float x = max_speed_H, y = max_speed_V;
+        //max_speed_H = 0;
+        //max_speed_V = 0;
+        joystick.DeadZone = 1000;
         yield return new WaitForSeconds(tiempo_total + 0.5f);
-        max_speed_H = x;
-        max_speed_V = y;
+        //max_speed_H = x;
+        //max_speed_V = y;
+        Set_Rigs(1);
+        joystick.DeadZone = 0;
         mision.Espacio_Disponible.text = carrito.objetos_actuales.ToString() + " / " + carrito.cant_limite_carga.ToString();
     }
 
-    IEnumerator Retroceder()
+    IEnumerator Retroceder(Collision collision)
     {
+        Set_Rigs(0);
+        //Animacion caida
+        joystick.DeadZone = 1000;
+        punto_choque = collision.contacts[0];
         choque = true;
-        joystick.DeadZone = 2;
         yield return new WaitForSeconds(1);
+        //Animacion levantarse
+        Set_Rigs(1);
         joystick.DeadZone = 0;
         choque = false;
+    }
+    
+    private void Choque_Mortal()
+    {
+        joystick.DeadZone = 1000;
+        Set_Rigs(0);
+        //Animacion caida
     }
 
     public static Car Get_Carro(Transform padre)
     {
-        Car carrito_principal = null;
+        //Car carrito_principal = null;
 
         foreach (Transform hijo in padre)
         {
             switch (hijo.name)
             {
                 case "Carrito_Peq":
-                    if (hijo.gameObject.activeInHierarchy)
-                        carrito_principal = hijo.GetComponent<Get_Content_Car>().Get_Car();
-                    break;
                 case "Carrito_med":
-                    if (hijo.gameObject.activeInHierarchy)
-                        carrito_principal = hijo.GetComponent<Get_Content_Car>().Get_Car();
-                    break;
                 case "Carrito_gra":
                     if (hijo.gameObject.activeInHierarchy)
-                        carrito_principal = hijo.GetComponent<Get_Content_Car>().Get_Car();
+                    {
+                        return hijo.GetComponent<Get_Content_Car>().Get_Car();
+                    }
                     break;
             }
         }
-        return carrito_principal;
+        return null;
     }
 
     //Collisiones
@@ -210,7 +250,7 @@ public class Player : MonoBehaviour
         }else if(other.CompareTag("Caja"))
         {
             Caja caja = other.gameObject.GetComponent<Caja>();
-            StartCoroutine(Tiempo_Rehabilitar(carrito.objetos_actuales * Tiempo_Dejar_Objeto));
+            StartCoroutine(Animacion_Tiempo_Caja(carrito.objetos_actuales * Tiempo_Dejar_Objeto));
             caja.Visible_Objects(mision.Cantidad_Nivel(), mision.Get_Position(),carrito, Tiempo_Dejar_Objeto,Imagen_DejarObjetos);
             Gano(caja);
         }
@@ -227,11 +267,11 @@ public class Player : MonoBehaviour
         if (!collision.gameObject.CompareTag("Piso") && !collision.gameObject.CompareTag("Caja"))
         {
             velocidad_porcentual = Mathf.Abs(Mathf.Max(joystick.Horizontal, joystick.Vertical));
-            StartCoroutine(Retroceder());
             if (velocidad_porcentual > resistencia_porcentual)
             {
                 if (Efecto != null)
                 {
+                    StartCoroutine(Retroceder(collision));
                     Efecto.Efecto();
                     PU = RP.Get_Power_Up();
                     if (PU == Repartir_power.Power_Up.NINGUNO)
@@ -243,9 +283,14 @@ public class Player : MonoBehaviour
                     Muerte_canvas.GetComponent<Transform>().GetChild(3).gameObject.SetActive(true);
                     Muerte_canvas.SetActive(true);
                     StopAllCoroutines();
+                    Choque_Mortal();
                     return;
                 }
 
+            }
+            else if(velocidad_porcentual > (resistencia_porcentual * 0.20f))
+            {
+                StartCoroutine(Retroceder(collision));
             }
         }
     }
