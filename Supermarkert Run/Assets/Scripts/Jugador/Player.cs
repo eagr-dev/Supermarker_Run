@@ -27,7 +27,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject Imagen_DejarObjetos;
     private ContactPoint punto_choque;
     [SerializeField] private Rig[] rigs = new Rig[3];
-    [SerializeField] private ParticleSystem particulas;
+    [SerializeField] private List<ParticleSystem> particulas;
     
     private Repartir_power RP;
     private Repartir_power.Power_Up PU;
@@ -60,17 +60,19 @@ public class Player : MonoBehaviour
     {
         Move_Player();
         Camera_Move();
-        Velocidad_Particula();
         if(resbalon)
         {
             float vueltas = 3 * 360;
             transform.Rotate(0, vueltas * Time.deltaTime, 0);
         }
+        else
+        {
+            Velocidad_Particula();
+        }
         if(choque)
         {
             Vector3 punto_retroceder = (transform.position - punto_choque.point).normalized;
             rigidbody.AddForce(punto_retroceder * 100, ForceMode.Impulse);
-            //transform.Rotate(0, 90 * Time.deltaTime, 0);
             //Hacer animacion de caida en la couritina
         }
         if (transform.position.y < 0) transform.position = position_Reset;
@@ -127,15 +129,29 @@ public class Player : MonoBehaviour
 
     private void Velocidad_Particula()
     {
-        //Mañana iniciar particulas al tomar cosas pasar cosas y ganar cosas
+        //iniciar particulas al tomar cosas pasar cosas y ganar cosas
         float velocidad = MathF.Max(MathF.Abs(joystick.Vertical), MathF.Abs(joystick.Horizontal)) * speed;
-        var parmain = particulas.main;
-        if( velocidad != 0)
+        int cant_particulas = UnityEngine.Random.Range(2, 5);
+
+        foreach (ParticleSystem particula in particulas)
         {
-            parmain.maxParticles = 10;
+            ParticleSystem.MainModule parmain = particula.main;
+            if(velocidad != 0)
+            {
+                parmain.maxParticles = cant_particulas;
+            }
+            else
+            {
+                parmain.maxParticles = 0;
+            }
         }
-        else
+    }
+
+    private void Particula_Detener()
+    {
+        foreach (ParticleSystem particula in particulas)
         {
+            ParticleSystem.MainModule parmain = particula.main;
             parmain.maxParticles = 0;
         }
     }
@@ -171,7 +187,7 @@ public class Player : MonoBehaviour
         float x = max_speed_H, y = max_speed_V;
         resbalon = true;
         joystick.gameObject.SetActive(false);
-        rigidbody.AddForce(transform.forward * 5, ForceMode.VelocityChange);
+        //rigidbody.AddForce(transform.forward * 5, ForceMode.VelocityChange);
         yield return new WaitForSeconds(1);
         max_speed_H = 0;
         max_speed_V = 0;
@@ -256,6 +272,7 @@ public class Player : MonoBehaviour
         }
         else if(other.CompareTag("Mojado"))
         {
+            Particula_Detener();
             StartCoroutine(Resbalon());
         }
     }
@@ -266,6 +283,9 @@ public class Player : MonoBehaviour
     {
         if (!collision.gameObject.CompareTag("Piso") && !collision.gameObject.CompareTag("Caja"))
         {
+            StopAllCoroutines();
+            resbalon = false;
+            joystick.gameObject.SetActive(true);
             velocidad_porcentual = Mathf.Abs(Mathf.Max(joystick.Horizontal, joystick.Vertical));
             if (velocidad_porcentual > resistencia_porcentual)
             {
@@ -282,7 +302,6 @@ public class Player : MonoBehaviour
                     speed = 0;
                     Muerte_canvas.GetComponent<Transform>().GetChild(3).gameObject.SetActive(true);
                     Muerte_canvas.SetActive(true);
-                    StopAllCoroutines();
                     Choque_Mortal();
                     return;
                 }
