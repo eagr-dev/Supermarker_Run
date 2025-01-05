@@ -289,7 +289,7 @@ public class Player : MonoBehaviour
             Caja caja = other.gameObject.GetComponent<Caja>();
             StartCoroutine(Animacion_Tiempo_Caja(carrito.objetos_actuales * Tiempo_Dejar_Objeto));
             caja.Visible_Objects(mision.Cantidad_Nivel(), mision.Get_Position(),carrito, Tiempo_Dejar_Objeto,Imagen_DejarObjetos);
-            Gano(caja);
+            //Gano(caja);
         }
         else if(other.CompareTag("Mojado"))
         {
@@ -362,18 +362,14 @@ public class Player : MonoBehaviour
 
     //Botones->Ganar
 
-    private void Gano(Caja caja)
+    public void Gano()
     {
-        if (caja.Get_Porcentaje() == 10)
-        { 
             Ganar_canvas.SetActive(true);
             Ganar_canvas.transform.GetChild(4).GetComponent<ParticleSystem>().Play();
             Ganar_canvas.transform.GetChild(5).GetComponent<ParticleSystem>().Play();
             Ganar_canvas.transform.GetChild(6).GetComponent<ParticleSystem>().Play();
             Dinero_Obtenido DO = FindObjectOfType<Dinero_Obtenido>();
             Dinero_Text.text = $"$ {DO.Get_Dinero()}"; 
-        }
-        
     }
     public void BTN_Ganar()
     {

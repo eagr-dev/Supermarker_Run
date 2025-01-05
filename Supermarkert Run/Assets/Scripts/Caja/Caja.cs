@@ -3,10 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+
 public class Caja : MonoBehaviour
 {
     private int porcentaje;
     private bool Is_corutina;
+    private Player jugador;
+
+    private void Start()
+    {
+        jugador = FindObjectOfType<Player>();
+    }
     public void Visible_Objects(int cantidad, int cantidad_actual, Car carro, float tiempo, GameObject Imagen)
     {
         //Solucionar error de colliders y de este de tiempo
@@ -31,6 +38,8 @@ public class Caja : MonoBehaviour
             }
         }
         imagen.SetActive(false);
+        if (porcentaje == 10)
+            jugador.Gano();
     }
 
 

@@ -85,6 +85,8 @@ public class Mision : MonoBehaviour
         }
         else if (obj == object_act && Cantidad_Nivel() == position_Text)
         {
+            Obtener_objeto.Play();
+            Punto.Play();
             carro.objetos_actuales++;
             position_Text++;
             Text.text = "";
