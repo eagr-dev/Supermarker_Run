@@ -15,6 +15,8 @@ public class Mision : MonoBehaviour
     public Transform caja;
     private string object_act = "";
     Car carro;
+    [SerializeField] private AudioSource Obtener_objeto;
+    [SerializeField] private ParticleSystem Punto;
 
     void Awake()
     {
@@ -25,6 +27,7 @@ public class Mision : MonoBehaviour
 
     private void Start()
     {
+        Punto.Stop();
         if (objects_mision != null)
         {
             Set_Object(objects_mision);
@@ -71,6 +74,8 @@ public class Mision : MonoBehaviour
     {
         if ((position_Text < Cantidad_Nivel() && obj == object_act) && carro.objetos_actuales <= carro.cant_limite_carga)
         {
+            Obtener_objeto.Play();
+            Punto.Play();
             Text.text = objects_mision[position_Text];
             object_act = objects_mision[position_Text];
             position_Text++;

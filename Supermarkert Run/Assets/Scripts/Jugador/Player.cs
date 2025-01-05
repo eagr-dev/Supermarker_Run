@@ -8,34 +8,48 @@ using UnityEngine.Animations.Rigging;
 
 public class Player : MonoBehaviour
 {
+    [Header("Joystick_Velocidad")]
     [SerializeField]private float max_speed_H = 1, max_speed_V = 1, Vertical_Move = 0, Horizontal_Move = 0, speed = 1, resistencia_porcentual = 0,velocidad_porcentual = 0;
     //Vector3 obtener_velocidad;
     public Joystick joystick;
+
+    [Header("Camara")]
     [SerializeField]private GameObject player_object;
     [SerializeField]private new GameObject camera;
     Vector3 position_camera = new Vector3(0,7,-10);
+
+    [Header("Otros")]
     public Vector3 position_Reset;
-    private Mision mision;
     //private Get_Content_Car carrito_contenido;
-    private Car carrito;
     private new Rigidbody rigidbody;
-    private Interfaz_PowerUp Efecto;
+
+    [Header("Carro")]
+    private ContactPoint punto_choque;
+    [SerializeField] private Rig[] rigs = new Rig[3];
+    private bool resbalon = false;
+    private bool choque = false;
+    private Car carrito;
+
+    [Header("Mision_Caja")]
+    private Mision mision;
     [SerializeField] private GameObject Muerte_canvas;
     [SerializeField] private GameObject Ganar_canvas;
     [SerializeField] private Animator animacion;
     [SerializeField] private TMP_Text Dinero_Text;
     [SerializeField] private GameObject Imagen_DejarObjetos;
-    private ContactPoint punto_choque;
-    [SerializeField] private Rig[] rigs = new Rig[3];
+    private float Tiempo_Dejar_Objeto = 1;
+
+    [Header("Particulas")]
     [SerializeField] private List<ParticleSystem> particulas;
-    
+    [SerializeField] private ParticleSystem Choque_P, Exclamacion;
+
+    [Header("Power_UP")]
     private Repartir_power RP;
     private Repartir_power.Power_Up PU;
+    private Interfaz_PowerUp Efecto;
 
-    private bool resbalon = false;
-    private bool choque = false;
-
-    private float Tiempo_Dejar_Objeto = 1;
+    [Header("Sonido")]
+    [SerializeField] private AudioSource Choque_sound;
 
     private void Awake()
     {
@@ -52,6 +66,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        NO_INICIAR_PARTICULAS();
         carrito = Get_Carro(transform);
         Init();
     }
@@ -154,6 +169,12 @@ public class Player : MonoBehaviour
             ParticleSystem.MainModule parmain = particula.main;
             parmain.maxParticles = 0;
         }
+    }
+
+    private void NO_INICIAR_PARTICULAS()
+    {
+        Choque_P.Stop();
+        Exclamacion.Stop();
     }
 
     //Inicio
@@ -272,21 +293,29 @@ public class Player : MonoBehaviour
         }
         else if(other.CompareTag("Mojado"))
         {
+            Exclamacion.Play();
             Particula_Detener();
-            StartCoroutine(Resbalon());
+            //StartCoroutine(Resbalon());
         }
     }
 
      
     
-    private void OnCollisionEnter(Collision collision)
+    /*private void OnCollisionEnter(Collision collision)
     {
         if (!collision.gameObject.CompareTag("Piso") && !collision.gameObject.CompareTag("Caja"))
         {
-            StopAllCoroutines();
+            //StopAllCoroutines();
+            StopCoroutine(Resbalon());
+            Exclamacion.Play();
+
             resbalon = false;
             joystick.gameObject.SetActive(true);
             velocidad_porcentual = Mathf.Abs(Mathf.Max(joystick.Horizontal, joystick.Vertical));
+
+            Choque_P.Play();
+            Choque_sound.Play();
+
             if (velocidad_porcentual > resistencia_porcentual)
             {
                 if (Efecto != null)
@@ -312,7 +341,7 @@ public class Player : MonoBehaviour
                 StartCoroutine(Retroceder(collision));
             }
         }
-    }
+    }*/
 
     private void OnCollisionExit(Collision collision)
     {
@@ -338,6 +367,9 @@ public class Player : MonoBehaviour
         if (caja.Get_Porcentaje() == 10)
         { 
             Ganar_canvas.SetActive(true);
+            Ganar_canvas.transform.GetChild(4).GetComponent<ParticleSystem>().Play();
+            Ganar_canvas.transform.GetChild(5).GetComponent<ParticleSystem>().Play();
+            Ganar_canvas.transform.GetChild(6).GetComponent<ParticleSystem>().Play();
             Dinero_Obtenido DO = FindObjectOfType<Dinero_Obtenido>();
             Dinero_Text.text = $"$ {DO.Get_Dinero()}"; 
         }

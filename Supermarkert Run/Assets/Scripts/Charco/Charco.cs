@@ -5,6 +5,7 @@ using UnityEngine;
 public class Charco : MonoBehaviour
 {
     [SerializeField] ParticleSystem gotas;
+    [SerializeField] AudioSource sonido;
 
     void Start()
     {
@@ -16,6 +17,7 @@ public class Charco : MonoBehaviour
         if(other.CompareTag("Player") || other.CompareTag("Enemigo"))
         {
             gotas.Play();
+            sonido.Play();
         }
     }
 
