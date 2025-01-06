@@ -9,13 +9,16 @@ public class Charco : MonoBehaviour
 
     void Start()
     {
-        gotas.Stop();
+        var emision = gotas.emission;
+        emision.enabled = false;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Player") || other.CompareTag("Enemigo"))
+        if(other.CompareTag("Player"))
         {
+            var emision = gotas.emission;
+            emision.enabled = true;
             gotas.Play();
             sonido.Play();
         }

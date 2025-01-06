@@ -66,6 +66,11 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        for (int i = 4; i < 7; i++)
+        {
+            ParticleSystem.EmissionModule emission = Ganar_canvas.transform.GetChild(i).GetComponent<ParticleSystem>().emission;
+            emission.enabled = false;
+        }
         NO_INICIAR_PARTICULAS();
         carrito = Get_Carro(transform);
         Init();
@@ -146,7 +151,7 @@ public class Player : MonoBehaviour
     {
         //iniciar particulas al tomar cosas pasar cosas y ganar cosas
         float velocidad = MathF.Max(MathF.Abs(joystick.Vertical), MathF.Abs(joystick.Horizontal)) * speed;
-        int cant_particulas = UnityEngine.Random.Range(2, 5);
+        int cant_particulas = UnityEngine.Random.Range(2,4);
 
         foreach (ParticleSystem particula in particulas)
         {
@@ -295,13 +300,13 @@ public class Player : MonoBehaviour
         {
             Exclamacion.Play();
             Particula_Detener();
-            //StartCoroutine(Resbalon());
+            StartCoroutine(Resbalon());
         }
     }
 
      
     
-    /*private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter(Collision collision)
     {
         if (!collision.gameObject.CompareTag("Piso") && !collision.gameObject.CompareTag("Caja"))
         {
@@ -341,7 +346,7 @@ public class Player : MonoBehaviour
                 StartCoroutine(Retroceder(collision));
             }
         }
-    }*/
+    }
 
     private void OnCollisionExit(Collision collision)
     {
@@ -365,9 +370,17 @@ public class Player : MonoBehaviour
     public void Gano()
     {
             Ganar_canvas.SetActive(true);
-            Ganar_canvas.transform.GetChild(4).GetComponent<ParticleSystem>().Play();
-            Ganar_canvas.transform.GetChild(5).GetComponent<ParticleSystem>().Play();
-            Ganar_canvas.transform.GetChild(6).GetComponent<ParticleSystem>().Play();
+
+        for (int i = 4; i < 7; i++)
+        {
+            ParticleSystem.EmissionModule emission = Ganar_canvas.transform.GetChild(i).GetComponent<ParticleSystem>().emission;
+            emission.enabled = true;
+        }
+        for (int i = 4; i < 7; i++)
+        {
+            Ganar_canvas.transform.GetChild(i).GetComponent<ParticleSystem>().Play();
+        }
+
             Dinero_Obtenido DO = FindObjectOfType<Dinero_Obtenido>();
             Dinero_Text.text = $"$ {DO.Get_Dinero()}"; 
     }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Manos_Rapidas : Interfaz_PowerUp
 {
-    float porcentaje_velocidad_dejar_objetos;
+    private readonly float porcentaje_velocidad_dejar_objetos = 0.50f;
     public override void Animacion()
     {
         if (GetComponent<Transform>().position.magnitude < 2)

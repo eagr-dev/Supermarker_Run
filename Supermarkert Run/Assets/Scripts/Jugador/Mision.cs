@@ -27,7 +27,8 @@ public class Mision : MonoBehaviour
 
     private void Start()
     {
-        Punto.Stop();
+        ParticleSystem.EmissionModule emission = Punto.emission;
+        emission.enabled = false;
         if (objects_mision != null)
         {
             Set_Object(objects_mision);
@@ -74,6 +75,8 @@ public class Mision : MonoBehaviour
     {
         if ((position_Text < Cantidad_Nivel() && obj == object_act) && carro.objetos_actuales <= carro.cant_limite_carga)
         {
+            var emision = Punto.emission;
+            emision.enabled = true;
             Obtener_objeto.Play();
             Punto.Play();
             Text.text = objects_mision[position_Text];
@@ -85,6 +88,8 @@ public class Mision : MonoBehaviour
         }
         else if (obj == object_act && Cantidad_Nivel() == position_Text)
         {
+            var emision = Punto.emission;
+            emision.enabled = true;
             Obtener_objeto.Play();
             Punto.Play();
             carro.objetos_actuales++;
@@ -99,6 +104,9 @@ public class Mision : MonoBehaviour
 
 
     }
+
+
+
 
     private IEnumerator Tiempo_Aparicion()
     {
