@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement; 
 
 public class Seleccion : MonoBehaviour
 {
@@ -13,6 +12,8 @@ public class Seleccion : MonoBehaviour
     
     [SerializeField] private GameObject PU;
     [SerializeField] private GameObject Personaje;
+    [SerializeField] private GameObject Animacion;
+    [SerializeField] private Animacion_Carga AnimacionSP;
     private GameObject Carrito;
     public void BTN_Regreso()
     {
@@ -62,8 +63,16 @@ public class Seleccion : MonoBehaviour
 
     public void BTN_Jugar()
     {
+        StartCoroutine(Jugar());
+    }
+
+    IEnumerator Jugar()
+    {
+        yield return new WaitForSeconds(0.3f);
         string pos = FindObjectOfType<Seleccion_Mapa>().Get_Seleccion().nombre;
-        SceneManager.LoadScene(pos);
+        Animacion.SetActive(true);
+        AnimacionSP.Cambiar_Escena(pos);
+        Menu_Canvas.SetActive(false);
     }
 
     public void BTN_Salida()
