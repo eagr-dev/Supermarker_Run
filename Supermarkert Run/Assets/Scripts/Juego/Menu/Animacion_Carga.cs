@@ -2,28 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.AI;
 
 
 public class Animacion_Carga : MonoBehaviour
 {
     [SerializeField] Camera camara;
     [SerializeField] Transform objeto_Seguir;
+    [SerializeField] NavMeshAgent GPS;
     [SerializeField]private Vector3 distancia = new Vector3(0,7,-3);
     public float progreso;
-    [SerializeField] float velocidad, POV = 30;
-    float velocidad_real = 0;
+    [SerializeField] float POV = 30;
     [SerializeField] Animator animacion;
+    bool Contacto = false;
+
+    private void Start()
+    {
+        Iniciar();
+    }
 
     private void Update()
     {
-        velocidad_real = velocidad * Time.deltaTime;
-        transform.position = Vector3.MoveTowards(transform.position, objeto_Seguir.position, velocidad_real);
-        camara.transform.position = transform.position + distancia;
-        camara.fieldOfView = POV;
-        camara.farClipPlane = 100;
-        var rotacion = camara.transform.rotation;
-        rotacion.eulerAngles = new Vector3(45, 0, 0);
-        camara.transform.rotation = rotacion;
+        Actualizar();
     }
     public void Cambiar_Escena(string escena)
     {
@@ -40,7 +40,7 @@ public class Animacion_Carga : MonoBehaviour
         {
             yield return null;
 
-            if (transform.position == objeto_Seguir.position)
+            if ((transform.position - objeto_Seguir.position).magnitude <= 3)
             {
                 proceso.allowSceneActivation = true;
             }
@@ -52,6 +52,38 @@ public class Animacion_Carga : MonoBehaviour
             yield return new WaitForSeconds(tiempo + 1f);
         }
         proceso.allowSceneActivation = true;
+
+    }
+
+    private void Iniciar()
+    {
+        camara.fieldOfView = POV;
+        camara.farClipPlane = 100;
+        GPS.destination = objeto_Seguir.position;
+        Rotar_Camara();
+    }
+
+    private void Actualizar()
+    {
+        if(!Contacto)
+        camara.transform.position = transform.position + distancia;
+    }
+
+    private void Rotar_Camara()
+    {
+        var rotacion = camara.transform.rotation;
+        rotacion.eulerAngles = new Vector3(45, 0, 0);
+        camara.transform.rotation = rotacion;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log(other.name);
+        if(other.name == "Puerta")
+        {
+            Contacto = true;
+            Debug.Log("contacto");
+        }
 
     }
 }
