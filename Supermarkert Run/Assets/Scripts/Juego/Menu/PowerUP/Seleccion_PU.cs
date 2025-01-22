@@ -13,6 +13,7 @@ public class Seleccion_PU : MonoBehaviour
     List<Vector3> posiciones_iniciales = new List<Vector3>();
     Repartir_power RP;
     [SerializeField]TMP_Text Nombre,Descripcion;
+    [SerializeField] private AudioSource Click_Botones;
 
     private void Awake()
     {
@@ -51,6 +52,7 @@ public class Seleccion_PU : MonoBehaviour
 
     public void BTN_Power()
     {
+        Click_Botones.Play();
         Debug.Log(Mathf.Abs(valor_actual));
         RP.Set_Enum(Mathf.Abs(valor_actual));
     }

@@ -14,9 +14,12 @@ public class Seleccion : MonoBehaviour
     [SerializeField] private GameObject Personaje;
     [SerializeField] private GameObject Animacion;
     [SerializeField] private Animacion_Carga AnimacionSP;
+    [SerializeField] private AudioSource Menu;
+    [SerializeField] private AudioSource Click_Botones;
     private GameObject Carrito;
     public void BTN_Regreso()
     {
+        Click_Botones.Play();
         Pase_Conexion_Menu_Gameplay conector = FindObjectOfType<Pase_Conexion_Menu_Gameplay>();
         FindObjectOfType<Seleccion_Menu_Carrito>().Set_Car_Menu(conector.Get_Seleccion(),conector.Get_Eleccion());
         Personaje.SetActive(true);
@@ -30,6 +33,7 @@ public class Seleccion : MonoBehaviour
 
     public void BTN_Power_Up()
     {
+        Click_Botones.Play();
         Carrito = FindObjectOfType<Seleccion_Menu_Carrito>().Get_Active();
         Carrito.SetActive(false);
         Personaje.SetActive(false);
@@ -40,6 +44,7 @@ public class Seleccion : MonoBehaviour
 
     public void BTN_Mapa()
     {
+        Click_Botones.Play();
         Carrito = FindObjectOfType<Seleccion_Menu_Carrito>().Get_Active();
         Carrito.SetActive(false);
         Personaje.SetActive(false);
@@ -49,6 +54,7 @@ public class Seleccion : MonoBehaviour
 
     public void BTN_Carro()
     {
+        Click_Botones.Play();
         Menu_Canvas.SetActive(false);
         Carritos_Canvas.SetActive(true);
         Personaje.SetActive(false);
@@ -57,12 +63,15 @@ public class Seleccion : MonoBehaviour
 
     public void BTN_Configuraciones()
     {
+        Click_Botones.Play();
         Menu_Canvas.SetActive(false);
         Configuracion_Canvas.SetActive(true);
     }
 
     public void BTN_Jugar()
     {
+        Click_Botones.Play();
+        Menu.Pause();
         StartCoroutine(Jugar());
     }
 
@@ -77,6 +86,7 @@ public class Seleccion : MonoBehaviour
 
     public void BTN_Salida()
     {
+        Click_Botones.Play();
         FindObjectOfType<Sistema_Guardado>().Guardar();
         Application.Quit(0);
     }

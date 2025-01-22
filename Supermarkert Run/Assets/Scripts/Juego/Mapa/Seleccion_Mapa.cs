@@ -16,8 +16,9 @@ public class Seleccion_Mapa : MonoBehaviour
     [SerializeField] private TMP_Text Cantidad_Dar;
     [SerializeField] private GameObject Sin_Dinero;
     [SerializeField] private Image Muestra;
+    [SerializeField] private AudioSource Click_Botones;
 
-    
+
     private Dinero_Obtenido DO;
 
     
@@ -36,6 +37,7 @@ public class Seleccion_Mapa : MonoBehaviour
 
     public void BTN_Comprar()
     {
+        Click_Botones.Play();
         if (!FindObjectOfType<DINERO>().Set_Compra((uint)DO.Get_Mapa(seleccion_actual).precio))
         {
             StartCoroutine(Sin_Saldo());
@@ -63,6 +65,7 @@ public class Seleccion_Mapa : MonoBehaviour
 
     public void BTN_Aceptar()
     {
+        Click_Botones.Play();
         seleccion = seleccion_actual;
     }
 

@@ -18,6 +18,8 @@ public class Calidad : MonoBehaviour
     
     Pase_Conexion_Menu_Gameplay PCMG;
 
+    [SerializeField] private AudioSource Click_Botones;
+
 
     private void Start()
     {
@@ -51,6 +53,7 @@ public class Calidad : MonoBehaviour
 
     public void Activar_Sombras(bool isOn)
     {
+        Click_Botones.Play();
         Sombras.isOn =  QualitySettings.GetQualityLevel() > 1 ? isOn : false;
         QualitySettings.shadows = !Sombras.isOn ? ShadowQuality.Disable : ShadowQuality.All;
         Sombra_Falsa.SetActive(QualitySettings.shadows.Equals(ShadowQuality.Disable));
@@ -59,6 +62,7 @@ public class Calidad : MonoBehaviour
 
     public void Activar_Luz_Dinamica(bool isOn)
     {
+        Click_Botones.Play();
         Luces.isOn = isOn;
         PCMG.dinamica = Luces.isOn;
         PlayerPrefs.SetString("Dinamica", Luces.isOn.ToString());
@@ -81,6 +85,7 @@ public class Calidad : MonoBehaviour
 
     public void Eleccion_Idioma()
     {
+        Click_Botones.Play();
         PlayerPrefs.SetInt("idioma", Idioma.value);
         Modificacion_Idioma();
     }
