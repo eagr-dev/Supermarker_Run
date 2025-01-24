@@ -10,7 +10,8 @@ public class Calidad : MonoBehaviour
     [SerializeField] Toggle Luces;
     [SerializeField] TMP_Dropdown calidad;
     [SerializeField] TMP_Dropdown Idioma;
-    [SerializeField] GameObject Sombra_Falsa;
+    //[SerializeField] GameObject Sombra_Falsa;
+    [SerializeField] Sombras Sombra;
     [SerializeField] GameObject Sol;
     [SerializeField] GameObject Luz_Dinamica;
 
@@ -28,7 +29,7 @@ public class Calidad : MonoBehaviour
         Modificacion_Idioma();
         Sombras.isOn = bool.Parse(PlayerPrefs.GetString("Sombras", "false"));
         QualitySettings.shadows = !Sombras.isOn ? ShadowQuality.Disable : ShadowQuality.All;
-        Sombra_Falsa.SetActive(QualitySettings.shadows.Equals(ShadowQuality.Disable));
+        //Sombra_Falsa.SetActive(QualitySettings.shadows.Equals(ShadowQuality.Disable));
         PCMG = FindObjectOfType<Pase_Conexion_Menu_Gameplay>();
         Luces.isOn = bool.Parse(PlayerPrefs.GetString("Dinamica", "false"));
         PCMG.dinamica = Luces.isOn;
@@ -40,12 +41,14 @@ public class Calidad : MonoBehaviour
         QualitySettings.SetQualityLevel(calidad.value);
         if (calidad.value <= 1)
         {
-            Sombra_Falsa.SetActive(true);
+            //Sombra_Falsa.SetActive(true);
+            Sombra.Verificacion();
             QualitySettings.shadows = ShadowQuality.Disable;
         }
         else
         {
-            Sombra_Falsa.SetActive(false);
+            Sombra.Verificacion();
+            //Sombra_Falsa.SetActive(false);
             QualitySettings.shadows = ShadowQuality.All;
         }
         PlayerPrefs.SetInt("Calidad", QualitySettings.GetQualityLevel());
@@ -56,7 +59,8 @@ public class Calidad : MonoBehaviour
         Click_Botones.Play();
         Sombras.isOn =  QualitySettings.GetQualityLevel() > 1 ? isOn : false;
         QualitySettings.shadows = !Sombras.isOn ? ShadowQuality.Disable : ShadowQuality.All;
-        Sombra_Falsa.SetActive(QualitySettings.shadows.Equals(ShadowQuality.Disable));
+        //Sombra_Falsa.SetActive(QualitySettings.shadows.Equals(ShadowQuality.Disable));
+        Sombra.Verificacion();
         PlayerPrefs.SetString("Sombras", Sombras.isOn.ToString());
     }
 
