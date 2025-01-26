@@ -11,18 +11,23 @@ public class Seleccion : MonoBehaviour
     [SerializeField] private GameObject Configuracion_Canvas;
     
     [SerializeField] private GameObject PU;
-    [SerializeField] private GameObject Personaje;
     [SerializeField] private GameObject Animacion;
+    [SerializeField] private Transform Posicion_Original;
+    [SerializeField] private Transform Posicion_Ir;
+    [SerializeField] private float Tiempo_Animacion;
     [SerializeField] private Animacion_Carga AnimacionSP;
     [SerializeField] private AudioSource Menu;
     [SerializeField] private AudioSource Click_Botones;
+    [SerializeField] private Animacion_NPC Animacion_Npc;
+    [SerializeField] private Camera camara;
     private GameObject Carrito;
     public void BTN_Regreso()
     {
         Click_Botones.Play();
         Pase_Conexion_Menu_Gameplay conector = FindObjectOfType<Pase_Conexion_Menu_Gameplay>();
         FindObjectOfType<Seleccion_Menu_Carrito>().Set_Car_Menu(conector.Get_Seleccion(),conector.Get_Eleccion());
-        Personaje.SetActive(true);
+        if((Animacion_Npc.transform.position - Posicion_Original.position).magnitude >= 3)
+            Animacion_Npc.Caminar(Tiempo_Animacion, Posicion_Original);
         PowerUp_Canvas.SetActive(false);
         Mapas_Canvas.SetActive(false);
         Carritos_Canvas.SetActive(false);
@@ -36,7 +41,7 @@ public class Seleccion : MonoBehaviour
         Click_Botones.Play();
         Carrito = FindObjectOfType<Seleccion_Menu_Carrito>().Get_Active();
         Carrito.SetActive(false);
-        Personaje.SetActive(false);
+        Animacion_Npc.Caminar(Tiempo_Animacion, Posicion_Ir);
         Menu_Canvas.SetActive(false);
         PowerUp_Canvas.SetActive(true);
         PU.SetActive(true);
@@ -47,7 +52,7 @@ public class Seleccion : MonoBehaviour
         Click_Botones.Play();
         Carrito = FindObjectOfType<Seleccion_Menu_Carrito>().Get_Active();
         Carrito.SetActive(false);
-        Personaje.SetActive(false);
+        Animacion_Npc.Caminar(Tiempo_Animacion, Posicion_Ir);
         Menu_Canvas.SetActive(false);
         Mapas_Canvas.SetActive(true);
     }
@@ -57,7 +62,7 @@ public class Seleccion : MonoBehaviour
         Click_Botones.Play();
         Menu_Canvas.SetActive(false);
         Carritos_Canvas.SetActive(true);
-        Personaje.SetActive(false);
+        Animacion_Npc.Caminar(Tiempo_Animacion, Posicion_Ir);
         FindObjectOfType<Pase_Conexion_Menu_Gameplay>().Set_Seleccion(Pase_Conexion_Menu_Gameplay.Tipo_Carro.PEQUEÑO);
     }
 
@@ -91,6 +96,10 @@ public class Seleccion : MonoBehaviour
         Application.Quit(0);
     }
 
+    private void Animacion_Acercar()
+    {
+        camara.fieldOfView
+    }
     private void OnApplicationQuit()
     {
         if(Mapas_Canvas.activeInHierarchy || PowerUp_Canvas.activeInHierarchy || Configuracion_Canvas.activeInHierarchy)
