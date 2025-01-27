@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -43,9 +42,21 @@ public class Animacion_NPC : MonoBehaviour
     {
         animacion.Play("WALKING");
         yield return new WaitForSeconds(tiempo_animacion);
-        transform.Rotate(new Vector3(0, 180, 0));
+        StartCoroutine(Media_Vuelta());
+        yield return new WaitForSeconds(0.5f);
         animacion.Play("PARADO");
         yield return new WaitForSeconds(2);
         es_estatico = true;
+    }
+
+    private IEnumerator Media_Vuelta()
+    {
+        float tiempo = 1f, timer = 0;
+        while(timer < tiempo)
+        {
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(new Vector3(0, 180, 0)), timer / tiempo);
+            timer += Time.deltaTime;
+            yield return null;
+        }
     }
 }

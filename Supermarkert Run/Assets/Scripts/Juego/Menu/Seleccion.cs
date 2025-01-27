@@ -19,15 +19,26 @@ public class Seleccion : MonoBehaviour
     [SerializeField] private AudioSource Menu;
     [SerializeField] private AudioSource Click_Botones;
     [SerializeField] private Animacion_NPC Animacion_Npc;
+    [SerializeField] private List<Animacion_Carrito> animacion_carrito;
     [SerializeField] private Camera camara;
-    private GameObject Carrito;
+    const float FOV = 60, FOVAC = 50;
     public void BTN_Regreso()
     {
+        if((int)(camara.fieldOfView - FOV) != 0)
+            StartCoroutine(Animacion_Acercar(FOVAC, FOV));
         Click_Botones.Play();
         Pase_Conexion_Menu_Gameplay conector = FindObjectOfType<Pase_Conexion_Menu_Gameplay>();
         FindObjectOfType<Seleccion_Menu_Carrito>().Set_Car_Menu(conector.Get_Seleccion(),conector.Get_Eleccion());
         if((Animacion_Npc.transform.position - Posicion_Original.position).magnitude >= 3)
+        {
             Animacion_Npc.Caminar(Tiempo_Animacion, Posicion_Original);
+            foreach (var i in animacion_carrito)
+            {
+                if (i.gameObject.activeInHierarchy)
+                    i.Iniciar_Animacion();
+            }
+        }
+
         PowerUp_Canvas.SetActive(false);
         Mapas_Canvas.SetActive(false);
         Carritos_Canvas.SetActive(false);
@@ -38,10 +49,14 @@ public class Seleccion : MonoBehaviour
 
     public void BTN_Power_Up()
     {
+        StartCoroutine(Animacion_Acercar(FOV, FOVAC));
         Click_Botones.Play();
-        Carrito = FindObjectOfType<Seleccion_Menu_Carrito>().Get_Active();
-        Carrito.SetActive(false);
         Animacion_Npc.Caminar(Tiempo_Animacion, Posicion_Ir);
+        foreach (var i in animacion_carrito)
+        {
+            if (i.gameObject.activeInHierarchy)
+                i.Iniciar_Animacion();
+        } 
         Menu_Canvas.SetActive(false);
         PowerUp_Canvas.SetActive(true);
         PU.SetActive(true);
@@ -50,19 +65,17 @@ public class Seleccion : MonoBehaviour
     public void BTN_Mapa()
     {
         Click_Botones.Play();
-        Carrito = FindObjectOfType<Seleccion_Menu_Carrito>().Get_Active();
-        Carrito.SetActive(false);
-        Animacion_Npc.Caminar(Tiempo_Animacion, Posicion_Ir);
         Menu_Canvas.SetActive(false);
         Mapas_Canvas.SetActive(true);
     }
 
     public void BTN_Carro()
     {
+        StartCoroutine(Animacion_Acercar(FOV,FOVAC));
         Click_Botones.Play();
         Menu_Canvas.SetActive(false);
         Carritos_Canvas.SetActive(true);
-        Animacion_Npc.Caminar(Tiempo_Animacion, Posicion_Ir);
+        //Animacion_Npc.Caminar(Tiempo_Animacion, Posicion_Ir);
         FindObjectOfType<Pase_Conexion_Menu_Gameplay>().Set_Seleccion(Pase_Conexion_Menu_Gameplay.Tipo_Carro.PEQUEÑO);
     }
 
@@ -96,9 +109,16 @@ public class Seleccion : MonoBehaviour
         Application.Quit(0);
     }
 
-    private void Animacion_Acercar()
+    private IEnumerator Animacion_Acercar(float FOVA,float FOVB)
     {
-        camara.fieldOfView
+        float tiempo = 1, timer = 0;
+
+        while(timer < tiempo)
+        {
+            camara.fieldOfView = Mathf.Lerp(FOVA, FOVB, timer / tiempo);
+            timer += Time.deltaTime;
+            yield return null;
+        }
     }
     private void OnApplicationQuit()
     {
