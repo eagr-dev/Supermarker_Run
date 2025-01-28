@@ -21,6 +21,8 @@ public class Seleccion : MonoBehaviour
     [SerializeField] private Animacion_NPC Animacion_Npc;
     [SerializeField] private List<Animacion_Carrito> animacion_carrito;
     [SerializeField] private Camera camara;
+    [SerializeField] private Animator animcion_jugar;
+    [SerializeField] private AnimationClip tiempo_animacion_jugar;
     const float FOV = 60, FOVAC = 50;
     public void BTN_Regreso()
     {
@@ -32,11 +34,12 @@ public class Seleccion : MonoBehaviour
         if((Animacion_Npc.transform.position - Posicion_Original.position).magnitude >= 3)
         {
             Animacion_Npc.Caminar(Tiempo_Animacion, Posicion_Original);
-            foreach (var i in animacion_carrito)
-            {
-                if (i.gameObject.activeInHierarchy)
-                    i.Iniciar_Animacion();
-            }
+            if(!Carritos_Canvas.activeInHierarchy)
+                foreach (var i in animacion_carrito)
+                {
+                    if (i.gameObject.activeInHierarchy)
+                        i.Iniciar_Animacion();
+                }
         }
 
         PowerUp_Canvas.SetActive(false);
@@ -75,7 +78,7 @@ public class Seleccion : MonoBehaviour
         Click_Botones.Play();
         Menu_Canvas.SetActive(false);
         Carritos_Canvas.SetActive(true);
-        //Animacion_Npc.Caminar(Tiempo_Animacion, Posicion_Ir);
+        Animacion_Npc.Caminar(Tiempo_Animacion, Posicion_Ir);
         FindObjectOfType<Pase_Conexion_Menu_Gameplay>().Set_Seleccion(Pase_Conexion_Menu_Gameplay.Tipo_Carro.PEQUEÑO);
     }
 
@@ -91,13 +94,25 @@ public class Seleccion : MonoBehaviour
         Click_Botones.Play();
         Menu.Pause();
         StartCoroutine(Jugar());
+
     }
+
+
 
     IEnumerator Jugar()
     {
-        yield return new WaitForSeconds(0.3f);
-        string pos = FindObjectOfType<Seleccion_Mapa>().Get_Seleccion().nombre;
+        Animacion_Npc.Caminar(Tiempo_Animacion, Posicion_Ir);
+        foreach (var i in animacion_carrito)
+        {
+            if (i.gameObject.activeInHierarchy)
+                i.Iniciar_Animacion();
+        }
+
+        yield return new WaitForSeconds(0.5f);
+        animcion_jugar.Play("PANEL");
+        yield return new WaitForSeconds((tiempo_animacion_jugar.length / 2) + 0.10f);
         Animacion.SetActive(true);
+        string pos = FindObjectOfType<Seleccion_Mapa>().Get_Seleccion().nombre;
         AnimacionSP.Cambiar_Escena(pos);
         Menu_Canvas.SetActive(false);
     }

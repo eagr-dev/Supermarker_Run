@@ -78,11 +78,9 @@ public class Animacion_Carga : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.name);
         if(other.name == "Puerta")
         {
             Contacto = true;
-            Debug.Log("contacto");
         }
 
     }
