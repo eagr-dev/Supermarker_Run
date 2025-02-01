@@ -168,7 +168,7 @@ public class Areas : MonoBehaviour
                 linea8 = new string[] { "Maçã", "Banana", "Laranja", "Morango", "Uva", "Cenoura", "Tomate", "Alface", "Brócolis", "Pepino" } // Fruits and vegetables
         };
 
-        string conten_I = EditorJsonUtility.ToJson(contenido_Ingles);
+        string conten_I = JsonUtility.ToJson(contenido_Ingles);
         string conten_E = JsonUtility.ToJson(contenido_Español);
         string conten_P = JsonUtility.ToJson(contenido_Portugues);
 
