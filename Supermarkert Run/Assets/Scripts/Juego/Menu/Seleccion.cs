@@ -110,11 +110,11 @@ public class Seleccion : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
         animcion_jugar.Play("PANEL");
-        yield return new WaitForSeconds((tiempo_animacion_jugar.length / 2) + 0.10f);
+        Menu_Canvas.SetActive(false);
+        yield return new WaitForSeconds((tiempo_animacion_jugar.length / 2) - 0.10f);
         Animacion.SetActive(true);
         string pos = FindObjectOfType<Seleccion_Mapa>().Get_Seleccion().nombre;
         AnimacionSP.Cambiar_Escena(pos);
-        Menu_Canvas.SetActive(false);
     }
 
     public void BTN_Salida()

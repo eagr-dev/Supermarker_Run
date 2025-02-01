@@ -66,9 +66,9 @@ public class Areas : MonoBehaviour
     private void Awake()
     {
 #if UNITY_EDITOR
-        URL_IDIOMA = Application.dataPath;
+        URL_IDIOMA = Application.dataPath + "/SUPERMARKER";
 #else
-        URL_IDIOMA = "/storage/emulated/0/Documents";
+        URL_IDIOMA = "/storage/emulated/0/Documents/SUPERMARKER";
 #endif
         Leer_Archivo();
 

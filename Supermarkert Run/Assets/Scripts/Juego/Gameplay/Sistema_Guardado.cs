@@ -16,15 +16,15 @@ public class Sistema_Guardado : MonoBehaviour
     private Car carro;
     int _posicion;
     int _nivel_calidad = 0;
+    string ruta = "";
     Pase_Conexion_Menu_Gameplay PCMG;
 
     private void Awake()
     {
-        string ruta = "";
 #if UNITY_EDITOR
-        ruta = Application.dataPath;
+        ruta = Application.dataPath + "/SUPERMARKER";
 #else
-        ruta = "/storage/emulated/0/Documents";
+        ruta = "/storage/emulated/0/Documents/SUPERMARKER";
 #endif
         URL_PATH = $"{ruta}/datos.json";
         URL_PATH_PERSONALIZADA = $"{ruta}/personalizado.json";
@@ -81,6 +81,7 @@ public class Sistema_Guardado : MonoBehaviour
         }
         else
         {
+            Directory.CreateDirectory(ruta);
             Nivel.Set_Nivel(1);
             Dinero.Set_Agregar(5000);
             Reinicio.SetActive(true);
