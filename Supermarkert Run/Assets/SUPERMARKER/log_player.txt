@@ -1,3 +1,0 @@
-velocidad total: 4
-maxima velocidad: 4
-nombre carrito: light cart 2

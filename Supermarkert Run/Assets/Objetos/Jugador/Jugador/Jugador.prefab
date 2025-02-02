@@ -35991,6 +35991,7 @@ MonoBehaviour:
   Ganar_canvas: {fileID: 0}
   animacion: {fileID: 3068091169133543063}
   Dinero_Text: {fileID: 0}
+  nombre_carro: {fileID: 0}
   Imagen_DejarObjetos: {fileID: 0}
   particulas:
   - {fileID: 3123426594477238551}
@@ -36021,6 +36022,7 @@ MonoBehaviour:
   caja: {fileID: 0}
   Obtener_objeto: {fileID: 5052284613195728480}
   Punto: {fileID: 6397404951580922999}
+  player: {fileID: 1214457975653736139}
 --- !u!114 &3748611634939655014
 MonoBehaviour:
   m_ObjectHideFlags: 0

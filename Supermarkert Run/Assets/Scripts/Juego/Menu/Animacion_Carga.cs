@@ -34,7 +34,13 @@ public class Animacion_Carga : MonoBehaviour
 
     private IEnumerator Cambio(string escena)
     {
-        AsyncOperation proceso = SceneManager.LoadSceneAsync(escena);
+        while((transform.position - objeto_Seguir.position).magnitude >= 3)
+        {
+            yield return null;
+        }
+
+        SceneManager.LoadScene(escena);
+        /*AsyncOperation proceso = SceneManager.LoadSceneAsync(escena);
         proceso.allowSceneActivation = false;
         while(!proceso.isDone)
         {
@@ -51,7 +57,7 @@ public class Animacion_Carga : MonoBehaviour
             float tiempo = (transform.position - objeto_Seguir.position).magnitude;
             yield return new WaitForSeconds(tiempo + 1f);
         }
-        proceso.allowSceneActivation = true;
+        proceso.allowSceneActivation = true;*/
 
     }
 

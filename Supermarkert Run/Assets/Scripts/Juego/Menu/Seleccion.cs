@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
+using UnityEngine.SceneManagement;
 
 public class Seleccion : MonoBehaviour
 {
@@ -92,14 +94,26 @@ public class Seleccion : MonoBehaviour
     public void BTN_Jugar()
     {
         Click_Botones.Play();
+        string URL_IDIOMA = "";
+#if UNITY_EDITOR
+        URL_IDIOMA = Application.dataPath + "/SUPERMARKER/Ingles.json";
+#else
+        URL_IDIOMA = "/storage/emulated/0/Documents/SUPERMARKER/Ingles.json";
+#endif
+        string pos = FindObjectOfType<Seleccion_Mapa>().Get_Seleccion().nombre;
+        if (!File.Exists(URL_IDIOMA))
+        {
+            SceneManager.LoadScene(pos);
+            return;
+        }
         Menu.Pause();
-        StartCoroutine(Jugar());
+        StartCoroutine(Jugar(pos));
 
     }
 
 
 
-    IEnumerator Jugar()
+    IEnumerator Jugar(string escena)
     {
         Animacion_Npc.Caminar(Tiempo_Animacion, Posicion_Ir);
         foreach (var i in animacion_carrito)
@@ -113,8 +127,7 @@ public class Seleccion : MonoBehaviour
         Menu_Canvas.SetActive(false);
         yield return new WaitForSeconds((tiempo_animacion_jugar.length / 2) - 0.10f);
         Animacion.SetActive(true);
-        string pos = FindObjectOfType<Seleccion_Mapa>().Get_Seleccion().nombre;
-        AnimacionSP.Cambiar_Escena(pos);
+        AnimacionSP.Cambiar_Escena(escena);
     }
 
     public void BTN_Salida()

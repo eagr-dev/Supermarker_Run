@@ -75,15 +75,6 @@ public class Player : MonoBehaviour
         NO_INICIAR_PARTICULAS();
         carrito = Get_Carro(transform);
         Init();
-        string ruta = "";
-#if UNITY_EDITOR
-        ruta = Application.dataPath + "/SUPERMARKER/log_player.txt";
-#else
-        ruta = "/storage/emulated/0/Documents/SUPERMARKER/log_player.txt";
-#endif
-        string contenido = "velocidad total: " + speed.ToString() + "\nmaxima velocidad: " + max_speed_H.ToString() + "\nnombre carrito: " + carrito.nombre;
-        File.WriteAllText(ruta, contenido);
-
     }
 
     void Update()
@@ -271,7 +262,7 @@ public class Player : MonoBehaviour
         //Animacion caida
     }
 
-    public static Car Get_Carro(Transform padre)
+    public Car Get_Carro(Transform padre)
     {
         //Car carrito_principal = null;
 

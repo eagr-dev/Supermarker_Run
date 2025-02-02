@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using UnityEditor;
+using UnityEngine.SceneManagement;
 
 public class Areas : MonoBehaviour
 {
@@ -125,6 +126,8 @@ public class Areas : MonoBehaviour
         else
         {
             Create_Files();
+            SceneManager.LoadScene(0);
+
         }
     }
 
