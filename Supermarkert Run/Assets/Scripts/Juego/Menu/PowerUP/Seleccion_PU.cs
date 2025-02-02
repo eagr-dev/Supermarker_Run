@@ -39,7 +39,7 @@ public class Seleccion_PU : MonoBehaviour
             objetos.GetChild(i).position = targe;
             objetos.GetChild(i).GetComponent<Interfaz_PowerUp>().Animacion();
 
-            if(objetos.GetChild(i).position.magnitude < 2)
+            if(objetos.GetChild(i).position.magnitude < 5)
             {
                 objetos.GetChild(i).GetComponent<Interfaz_PowerUp>().Set_Descripcion_Nombre();
                 Nombre.text = objetos.GetChild(i).GetComponent<Interfaz_PowerUp>().nombre;
