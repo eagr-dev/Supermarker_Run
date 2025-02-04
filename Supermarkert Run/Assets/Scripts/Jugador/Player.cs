@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine.Animations.Rigging;
-using System.IO;
 
 public class Player : MonoBehaviour
 {
@@ -73,8 +72,9 @@ public class Player : MonoBehaviour
             emission.enabled = false;
         }
         NO_INICIAR_PARTICULAS();
-        carrito = Get_Carro(transform);
-        Init();
+        carrito = Get_Carro();
+        //Init();
+
     }
 
     void Update()
@@ -184,19 +184,19 @@ public class Player : MonoBehaviour
     }
 
     //Inicio
-    private void Init()
+    public void Init(Car carro)
     {
-        rigidbody.mass += carrito.peso;
-        speed += carrito.velocidad_adicional;
-        max_speed_H += carrito.velocidad_adicional;
-        max_speed_V += carrito.velocidad_adicional;
-        resistencia_porcentual = (float)carrito.resistencia_choque / 100;
-
+        rigidbody.mass +=               carro.peso;
+        speed +=                        carro.velocidad_adicional;
+        max_speed_H +=                  carro.velocidad_adicional;
+        max_speed_V +=                  carro.velocidad_adicional;
+        resistencia_porcentual = (float)carro.resistencia_choque / 100;
+        carrito = carro;
     }
 
     private void New_Init()
     {
-        speed = 1 + carrito.velocidad_adicional;
+        speed = 1 +       carrito.velocidad_adicional;
         max_speed_H = 1 + carrito.velocidad_adicional;
         max_speed_V = 1 + carrito.velocidad_adicional;
     }
@@ -238,7 +238,7 @@ public class Player : MonoBehaviour
         //max_speed_V = y;
         Set_Rigs(1);
         joystick.DeadZone = 0;
-        mision.Espacio_Disponible.text = carrito.objetos_actuales.ToString() + " / " + carrito.cant_limite_carga.ToString();
+        mision.Espacio_Disponible.text = carrito.objetos_actuales.ToString() + " / " +  carrito.cant_limite_carga.ToString();
     }
 
     IEnumerator Retroceder(Collision collision)
@@ -262,10 +262,10 @@ public class Player : MonoBehaviour
         //Animacion caida
     }
 
-    public Car Get_Carro(Transform padre)
+    /*public Car Get_Carro(Transform padre)
     {
-        //Car carrito_principal = null;
-
+        Car carrito_principal = null;
+        string URL_IDIOMA = "";
         foreach (Transform hijo in padre)
         {
             switch (hijo.name)
@@ -275,12 +275,41 @@ public class Player : MonoBehaviour
                 case "Carrito_gra":
                     if (hijo.gameObject.activeInHierarchy)
                     {
-                        return hijo.GetComponent<Get_Content_Car>().Get_Car();
+#if UNITY_EDITOR
+                        URL_IDIOMA = Application.dataPath + "/SUPERMARKER/player_log.txt";
+#else
+        URL_IDIOMA = "/storage/emulated/0/Documents/SUPERMARKER/player_log.txt";
+#endif
+                        Velocidad_Operacion_T.text = (speed + hijo.GetComponent<Get_Content_Car>().Get_Car().velocidad_adicional).ToString();
+                        string contenido = "nombre: " + hijo.GetComponent<Get_Content_Car>().Get_Car().nombre + "\nVelocidad total: " + (speed + hijo.GetComponent<Get_Content_Car>().Get_Car().velocidad_adicional).ToString() + "\ninstancia: " + hijo.GetComponent<Get_Content_Car>().Get_Car().GetInstanceID().ToString();
+                        File.WriteAllText(URL_IDIOMA,contenido);
+                        get_carrito = hijo.GetComponent<Get_Content_Car>();
+                        carrito_principal = hijo.GetComponent<Get_Content_Car>().Get_Car();
                     }
                     break;
             }
         }
-        return null;
+        return carrito_principal;
+    }*/
+
+    public Car Get_Carro()
+    {
+        Car carro = null;
+        foreach (Transform hijo in transform)
+        {
+            switch (hijo.name)
+            {
+                case "Carrito_Peq":
+                case "Carrito_med":
+                case "Carrito_gra":
+                    if (hijo.gameObject.activeInHierarchy)
+                    {
+                        carro = hijo.GetComponent<Get_Content_Car>().Get_Car();
+                    }
+                    break;
+            }
+        }
+        return carro;
     }
 
     //Collisiones

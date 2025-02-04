@@ -5974,6 +5974,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 58988699456325677}
     - target: {fileID: 1214457975653736139, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
+      propertyPath: Velocidad_T
+      value: 
+      objectReference: {fileID: 3705911046001335277}
+    - target: {fileID: 1214457975653736139, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
       propertyPath: joystick_UI
       value: 
       objectReference: {fileID: 3705911046001335273}
@@ -5984,7 +5988,7 @@ PrefabInstance:
     - target: {fileID: 1214457975653736139, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
       propertyPath: nombre_carro
       value: 
-      objectReference: {fileID: 3705911046001335276}
+      objectReference: {fileID: 0}
     - target: {fileID: 1214457975653736139, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
       propertyPath: Muerte_canvas
       value: 
@@ -6009,6 +6013,10 @@ PrefabInstance:
       propertyPath: Imagen_DejarObjetos
       value: 
       objectReference: {fileID: 3705911046001335275}
+    - target: {fileID: 1214457975653736139, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
+      propertyPath: Velocidad_Operacion_T
+      value: 
+      objectReference: {fileID: 3705911046001335276}
     - target: {fileID: 3863072306458358961, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
       propertyPath: TC
       value: 1
@@ -6965,7 +6973,18 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &3705911046001335276 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6288215998686981605, guid: 07a4c56f5b9e701468326be94edbb142, type: 3}
+  m_CorrespondingSourceObject: {fileID: 170791092520701873, guid: 07a4c56f5b9e701468326be94edbb142, type: 3}
+  m_PrefabInstance: {fileID: 3705911046001335272}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3705911046001335277 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9056670290874532016, guid: 07a4c56f5b9e701468326be94edbb142, type: 3}
   m_PrefabInstance: {fileID: 3705911046001335272}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}

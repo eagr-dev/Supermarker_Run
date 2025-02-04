@@ -1,0 +1,3 @@
+nombre: light cart 2
+Velocidad total: 7
+instancia: 24204

@@ -36,7 +36,9 @@ public class Mision : MonoBehaviour
             New_Text_In_TextMesh();
         }
 
-        carro = player.Get_Carro(transform);
+        //carro = player.Get_Carro(transform);
+        carro = player.Get_Carro();
+        player.Init(carro);
         Espacio_Disponible.text = carro.objetos_actuales.ToString() + "/" + carro.cant_limite_carga.ToString();
     }
     public int Cantidad_Nivel()

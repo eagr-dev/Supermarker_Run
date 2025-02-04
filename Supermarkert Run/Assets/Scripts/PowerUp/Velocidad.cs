@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Velocidad : Interfaz_PowerUp
 {
-    private const float porcentaje_velocidad = 0.20f;
+    private const float porcentaje_velocidad = 1.20f;
 
     public override void Efecto()
     {

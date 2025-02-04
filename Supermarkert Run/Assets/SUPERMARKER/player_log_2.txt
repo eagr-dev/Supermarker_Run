@@ -1,0 +1,4 @@
+Masa: 21
+velocidad: 4
+maximo_speed_HV4
+ resistencia: 0.3
