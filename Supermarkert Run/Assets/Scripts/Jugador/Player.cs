@@ -81,7 +81,12 @@ public class Player : MonoBehaviour
     {
         Move_Player();
         Camera_Move();
-        if(resbalon)
+        Condicionales();
+    }
+
+    private void Condicionales()
+    {
+        if (resbalon)
         {
             float vueltas = 3 * 360;
             transform.Rotate(0, vueltas * Time.deltaTime, 0);
@@ -90,7 +95,7 @@ public class Player : MonoBehaviour
         {
             Velocidad_Particula();
         }
-        if(choque)
+        if (choque)
         {
             Vector3 punto_retroceder = (transform.position - punto_choque.point).normalized;
             rigidbody.AddForce(punto_retroceder * 100, ForceMode.Impulse);
@@ -196,7 +201,7 @@ public class Player : MonoBehaviour
 
     private void New_Init()
     {
-        speed = 1 +       carrito.velocidad_adicional;
+        speed       = 1 + carrito.velocidad_adicional;
         max_speed_H = 1 + carrito.velocidad_adicional;
         max_speed_V = 1 + carrito.velocidad_adicional;
     }
@@ -375,6 +380,8 @@ public class Player : MonoBehaviour
             {
                 StartCoroutine(Retroceder(collision));
             }
+            if(max_speed_H <= 0)
+                New_Init();
         }
     }
 
