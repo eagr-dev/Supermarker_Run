@@ -10,7 +10,7 @@ public class Sistema_Guardado : MonoBehaviour
     [SerializeField] private string URL_PATH_PERSONALIZADA;
     [SerializeField] private string URL_PATH_MAPA;
     [SerializeField] private List<Material> Material_Personalizada;
-    [SerializeField] private GameObject Reinicio;
+    [SerializeField] private GameObject Reinicio, UI_Principal;
     private DINERO Dinero;
     private Nivel _Nivel;
     private Car carro;
@@ -162,5 +162,11 @@ public class Sistema_Guardado : MonoBehaviour
     public void ADD_MAPA(string nombre_mapa)
     {
         File.AppendAllText(URL_PATH_MAPA, nombre_mapa + "\n");
+    }
+
+    public void BTN_REINICIO()
+    {
+        FindObjectOfType<Sistema_Guardado>().Guardar();
+        Application.Quit(0);
     }
 }

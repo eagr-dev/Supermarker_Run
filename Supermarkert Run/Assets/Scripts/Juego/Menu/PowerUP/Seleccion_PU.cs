@@ -53,7 +53,6 @@ public class Seleccion_PU : MonoBehaviour
     public void BTN_Power()
     {
         Click_Botones.Play();
-        Debug.Log(Mathf.Abs(valor_actual));
         RP.Set_Enum(Mathf.Abs(valor_actual));
     }
 }
