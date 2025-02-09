@@ -10,6 +10,7 @@ public class Sistema_Guardado : MonoBehaviour
     [SerializeField] private string URL_PATH_PERSONALIZADA;
     [SerializeField] private string URL_PATH_MAPA;
     [SerializeField] private List<Material> Material_Personalizada;
+    [SerializeField] private List<Car> carritos_personalizados;
     [SerializeField] private GameObject Reinicio, UI_Principal;
     private DINERO Dinero;
     private Nivel _Nivel;
@@ -83,7 +84,7 @@ public class Sistema_Guardado : MonoBehaviour
         {
             Directory.CreateDirectory(ruta);
             Nivel.Set_Nivel(1);
-            Dinero.Set_Agregar(5000);
+            UI_Principal.SetActive(false);
             Reinicio.SetActive(true);
         }
     }
@@ -95,8 +96,18 @@ public class Sistema_Guardado : MonoBehaviour
             string leer = File.ReadAllText(URL_PATH_PERSONALIZADA);
             Contenido_Personalizado CP = JsonUtility.FromJson<Contenido_Personalizado>(leer);
 
-            foreach(Material material in Material_Personalizada)
-            material.color = CP.color;
+            foreach (Material material in Material_Personalizada)
+            {
+                material.color = CP.color;
+            }
+
+            foreach(Car carro in carritos_personalizados)
+            {
+                carro.peso                  = CP.color.r        * carro.peso_maximo;
+                carro.velocidad_adicional   = CP.color.g        * carro.velocidad_maxima;
+                carro.cant_limite_carga     = (int)CP.color.b   * carro.maximo_a_cargar;
+                carro.resistencia_choque    = (int)CP.color.a   * carro.maxima_resistencia;
+            }
         }
         else
         {

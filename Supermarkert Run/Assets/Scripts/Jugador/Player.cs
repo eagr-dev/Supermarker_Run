@@ -267,36 +267,6 @@ public class Player : MonoBehaviour
         //Animacion caida
     }
 
-    /*public Car Get_Carro(Transform padre)
-    {
-        Car carrito_principal = null;
-        string URL_IDIOMA = "";
-        foreach (Transform hijo in padre)
-        {
-            switch (hijo.name)
-            {
-                case "Carrito_Peq":
-                case "Carrito_med":
-                case "Carrito_gra":
-                    if (hijo.gameObject.activeInHierarchy)
-                    {
-#if UNITY_EDITOR
-                        URL_IDIOMA = Application.dataPath + "/SUPERMARKER/player_log.txt";
-#else
-        URL_IDIOMA = "/storage/emulated/0/Documents/SUPERMARKER/player_log.txt";
-#endif
-                        Velocidad_Operacion_T.text = (speed + hijo.GetComponent<Get_Content_Car>().Get_Car().velocidad_adicional).ToString();
-                        string contenido = "nombre: " + hijo.GetComponent<Get_Content_Car>().Get_Car().nombre + "\nVelocidad total: " + (speed + hijo.GetComponent<Get_Content_Car>().Get_Car().velocidad_adicional).ToString() + "\ninstancia: " + hijo.GetComponent<Get_Content_Car>().Get_Car().GetInstanceID().ToString();
-                        File.WriteAllText(URL_IDIOMA,contenido);
-                        get_carrito = hijo.GetComponent<Get_Content_Car>();
-                        carrito_principal = hijo.GetComponent<Get_Content_Car>().Get_Car();
-                    }
-                    break;
-            }
-        }
-        return carrito_principal;
-    }*/
-
     public Car Get_Carro()
     {
         Car carro = null;
@@ -363,6 +333,7 @@ public class Player : MonoBehaviour
                     StartCoroutine(Retroceder(collision));
                     Efecto.Efecto();
                     PU = RP.Get_Power_Up();
+                    Debug.Log($"Poder: {PU}");
                     if (PU == Repartir_power.Power_Up.NINGUNO)
                         Efecto = null;
                 }

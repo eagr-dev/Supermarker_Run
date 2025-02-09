@@ -40,7 +40,6 @@ public class Repartir_power : MonoBehaviour
             case Power_Up.MANOS_RAPIDAS:
                 clase = GetComponent<Manos_Rapidas>();
                 break;
-                
         }
 
         return clase;

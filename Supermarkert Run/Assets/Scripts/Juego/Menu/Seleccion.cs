@@ -6,26 +6,40 @@ using UnityEngine.SceneManagement;
 
 public class Seleccion : MonoBehaviour
 {
+    [Header("UI")]
     [SerializeField] private GameObject Menu_Canvas;
     [SerializeField] private GameObject PowerUp_Canvas;
     [SerializeField] private GameObject Mapas_Canvas;
     [SerializeField] private GameObject Carritos_Canvas;
     [SerializeField] private GameObject Configuracion_Canvas;
-    
     [SerializeField] private GameObject PU;
+    [SerializeField] private RectTransform PadreCoPoCa;
+    const float abierto = 0;
+    const float cerrado = -700;
+
+    [Header("Animaciones")]
+
+    [Header("Animaciones/Escena")]
     [SerializeField] private GameObject Animacion;
+    [SerializeField] private Animacion_Carga AnimacionSP;
+    [SerializeField] private Animator animcion_jugar;
+    [SerializeField] private AnimationClip tiempo_animacion_jugar;
+
+    [Header("Animaciones/Carrito|Jugador")]
     [SerializeField] private Transform Posicion_Original;
     [SerializeField] private Transform Posicion_Ir;
     [SerializeField] private float Tiempo_Animacion;
-    [SerializeField] private Animacion_Carga AnimacionSP;
-    [SerializeField] private AudioSource Menu;
-    [SerializeField] private AudioSource Click_Botones;
     [SerializeField] private Animacion_NPC Animacion_Npc;
     [SerializeField] private List<Animacion_Carrito> animacion_carrito;
+
+    [Header("Animaciones/Camara")]
     [SerializeField] private Camera camara;
-    [SerializeField] private Animator animcion_jugar;
-    [SerializeField] private AnimationClip tiempo_animacion_jugar;
     const float FOV = 60, FOVAC = 50;
+
+    [Header("Audio")]
+    [SerializeField] private AudioSource Click_Botones;
+    [SerializeField] private AudioSource Menu;
+
     public void BTN_Regreso()
     {
         if((int)(camara.fieldOfView - FOV) != 0)
@@ -50,6 +64,30 @@ public class Seleccion : MonoBehaviour
         Menu_Canvas.SetActive(true);
         PU.SetActive(false);
         Configuracion_Canvas.SetActive(false);
+    }
+
+    public void BTN_Despliegue_CoPoCa() 
+    {
+        Click_Botones.Play();
+        StartCoroutine(Animacion_Despliegue(abierto));
+    }
+    public void BTN_Salida_CoPoCa() 
+    {
+        Click_Botones.Play();
+        StartCoroutine(Animacion_Despliegue(cerrado));
+    }
+
+    private IEnumerator Animacion_Despliegue(float posicion)
+    {
+        float tiempo = 0, duracion = 1;
+        while(tiempo < duracion)
+        {
+            var posicion_P = PadreCoPoCa.position;
+            posicion_P.x = Mathf.Lerp(posicion_P.x, posicion, tiempo / duracion);
+            PadreCoPoCa.position = posicion_P;
+            tiempo += Time.deltaTime;
+            yield return null;
+        }
     }
 
     public void BTN_Power_Up()
@@ -110,8 +148,6 @@ public class Seleccion : MonoBehaviour
         StartCoroutine(Jugar(pos));
 
     }
-
-
 
     IEnumerator Jugar(string escena)
     {

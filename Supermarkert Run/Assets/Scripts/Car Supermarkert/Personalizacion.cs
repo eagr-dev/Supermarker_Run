@@ -15,11 +15,31 @@ public class Personalizacion : MonoBehaviour
     [SerializeField] TMP_Text Choque;
     private Seleccion_Menu_Carrito SMC;
     private Car carro;
+    [SerializeField] List<Car> carritos_personalizados;
 
     private void Awake()
     {
         SMC = FindObjectOfType<Seleccion_Menu_Carrito>();
     }
+
+    private void Start()
+    {
+        carro = SMC.Get_Active().GetComponent<Get_Content_Car>().Get_Car();
+        foreach (Car carro in carritos_personalizados)
+        {
+            carro.peso =                    carro.skin_car.color.r * carro.peso_maximo;
+            carro.velocidad_adicional =     carro.skin_car.color.g * carro.velocidad_maxima;
+            carro.cant_limite_carga =  (int)carro.skin_car.color.b * carro.maximo_a_cargar;
+            carro.resistencia_choque = (int)carro.skin_car.color.a * carro.maxima_resistencia;
+        }
+
+        Precio.text = carro.precio.ToString() + ".";
+        Peso.text = carro.peso.ToString() + "Kg.";
+        Velocidad.text = carro.velocidad_adicional.ToString() + ".";
+        Carga.text = carro.cant_limite_carga.ToString() + "Kg.";
+        Choque.text = carro.resistencia_choque.ToString() + "%";
+    }
+
     public void Rojo(float valor) 
     {
         rojo = valor;

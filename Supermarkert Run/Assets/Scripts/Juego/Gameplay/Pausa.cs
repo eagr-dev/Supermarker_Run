@@ -4,7 +4,12 @@ using UnityEngine.SceneManagement;
 public class Pausa : MonoBehaviour
 {
     [SerializeField] GameObject UI_PAUSA;
-    [SerializeField] AudioSource audio;
+    [SerializeField] new AudioSource audio;
+
+    private void Start()
+    {
+        audio = GetComponent<AudioSource>();
+    }
     public void BTN_PAUSA()
     {
         audio.Play();
