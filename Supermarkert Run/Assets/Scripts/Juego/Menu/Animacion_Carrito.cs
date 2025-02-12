@@ -7,16 +7,11 @@ public class Animacion_Carrito : MonoBehaviour
     [SerializeField] private float Tiempo;
 
 
-    public void Iniciar_Animacion()
+    public void Iniciar_Animacion(bool regreso)
     {
-        if((transform.position - Posicion_Original.position).magnitude <= 2)
-        {
-            StartCoroutine(Animacion(Posicion_Llegar));
-        }
-        else
-        {
-            StartCoroutine(Animacion(Posicion_Original));
-        }
+        Transform posicion = !regreso ? Posicion_Llegar : Posicion_Original;
+        StopCoroutine(Animacion(posicion));
+        StartCoroutine(Animacion(posicion));
     }
 
     private IEnumerator Animacion(Transform llegar)

@@ -15,13 +15,13 @@ public class Player : MonoBehaviour
 
     [Header("Camara")]
     [SerializeField]private GameObject player_object;
-    [SerializeField]private new GameObject camera;
+    [SerializeField]private GameObject camara;
     Vector3 position_camera = new Vector3(0,7,-10);
 
     [Header("Otros")]
     public Vector3 position_Reset;
     //private Get_Content_Car carrito_contenido;
-    private new Rigidbody rigidbody;
+    private Rigidbody rigid;
 
     [Header("Carro")]
     private ContactPoint punto_choque;
@@ -54,7 +54,7 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         mision = FindObjectOfType<Mision>();  
-        rigidbody = GetComponent<Rigidbody>();
+        rigid = GetComponent<Rigidbody>();
         if (FindObjectOfType<Repartir_power>() != null)
         {
             RP = FindObjectOfType<Repartir_power>();
@@ -98,7 +98,7 @@ public class Player : MonoBehaviour
         if (choque)
         {
             Vector3 punto_retroceder = (transform.position - punto_choque.point).normalized;
-            rigidbody.AddForce(punto_retroceder * 100, ForceMode.Impulse);
+            rigid.AddForce(punto_retroceder * 100, ForceMode.Impulse);
             //Hacer animacion de caida en la couritina
         }
         if (transform.position.y < 0) transform.position = position_Reset;
@@ -150,7 +150,7 @@ public class Player : MonoBehaviour
 
     private void Camera_Move()
     {
-        camera.transform.position = transform.position + position_camera;
+        camara.transform.position = transform.position + position_camera;
     }
 
     private void Velocidad_Particula()
@@ -191,7 +191,7 @@ public class Player : MonoBehaviour
     //Inicio
     public void Init(Car carro)
     {
-        rigidbody.mass +=               carro.peso;
+        rigid.mass +=               carro.peso;
         speed +=                        carro.velocidad_adicional;
         max_speed_H +=                  carro.velocidad_adicional;
         max_speed_V +=                  carro.velocidad_adicional;
@@ -340,7 +340,7 @@ public class Player : MonoBehaviour
                 else
                 {
                     speed = 0;
-                    Muerte_canvas.GetComponent<Transform>().GetChild(3).gameObject.SetActive(true);
+                    Muerte_canvas.GetComponent<Transform>().GetChild(4).gameObject.SetActive(true);
                     Muerte_canvas.SetActive(true);
                     Choque_Mortal();
                     return;
@@ -370,6 +370,15 @@ public class Player : MonoBehaviour
     public void Perder()
     {
         SceneManager.LoadScene(0);
+    }
+
+
+    //Botones->Reiniciar
+
+    public void Reinicio()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
 
