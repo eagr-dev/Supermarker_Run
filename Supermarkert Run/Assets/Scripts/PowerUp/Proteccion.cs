@@ -8,8 +8,7 @@ public class Proteccion : Interfaz_PowerUp
 
     public override void Set_Descripcion_Nombre()
     {
-        descripcion = "Protection throughout the game. If you crash, the level does not restart and you are allowed to play.";
-        nombre = "Protection";
+        SetTextIdioma();
     }
 
     public override void Efecto()
@@ -38,6 +37,25 @@ public class Proteccion : Interfaz_PowerUp
 
     public override T Get_Efecto<T>()
     {
-        return default;
+        return (T)(object)efecto;
+    }
+
+    protected override void SetTextIdioma()
+    {
+        switch (Idioma.GetLengua())
+        {
+            case Idioma.Lengua.INGLES:
+                nombre = "Protection";
+                descripcion = "Avoid losing an object when colliding, it can only be used once.";
+                break;
+            case Idioma.Lengua.ESPANIOL:
+                nombre = "Proteccion";
+                descripcion = "Evita perder un objeto al chocar, solo se puede usar una vez.";
+                break;
+            case Idioma.Lengua.PORTUGUES:
+                nombre = "Proteção";
+                descripcion = "Evite perder um objeto ao colidir, ele só pode ser usado uma vez.";
+                break;
+        }
     }
 }

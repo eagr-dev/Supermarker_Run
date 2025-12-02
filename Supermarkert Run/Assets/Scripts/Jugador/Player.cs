@@ -59,6 +59,7 @@ public class Player : MonoBehaviour
             RP = FindObjectOfType<Repartir_power>();
             Efecto = RP.Get_Power_Up_Class();
             PU = RP.Get_Power_Up();
+            Debug.Log(PU);
         }
         Power_Respective();
     }
@@ -108,24 +109,34 @@ public class Player : MonoBehaviour
     {
         switch(PU)
         {
-            case Repartir_power.Power_Up.VIDA: break;
             case Repartir_power.Power_Up.VELOCIDAD:
-                speed *= Efecto.Get_Efecto<float>();
-                max_speed_H *= Efecto.Get_Efecto<float>();
-                max_speed_V *= Efecto.Get_Efecto<float>();
-                Efecto = null;
+                Add_Velocidad();
                 break;
             case Repartir_power.Power_Up.PROTECCION: break;
             case Repartir_power.Power_Up.MANOS_RAPIDAS:
-                float eliminar = Tiempo_Dejar_Objeto * Efecto.Get_Efecto<float>();
-                Tiempo_Dejar_Objeto -= eliminar;
-                Efecto = null;
+                Eliminar_Tiempo_Dejar_Objetos();
                 break;
             case Repartir_power.Power_Up.NINGUNO: break;
         }
     }
 
     //Movimiento
+
+    private void Add_Velocidad()
+    {
+        speed *= Efecto.Get_Efecto<float>();
+        max_speed_H *= Efecto.Get_Efecto<float>();
+        max_speed_V *= Efecto.Get_Efecto<float>();
+        //Efecto = null;
+    }
+
+    private void Eliminar_Tiempo_Dejar_Objetos()
+    {
+        float eliminar = Tiempo_Dejar_Objeto * Efecto.Get_Efecto<float>();
+        Tiempo_Dejar_Objeto -= eliminar;
+        Efecto = null;
+    }
+
     private void Move_Player()
     {
         Vertical_Move = joystick.Vertical * max_speed_V;
@@ -198,9 +209,10 @@ public class Player : MonoBehaviour
 
     private void New_Init()
     {
-        speed       = 1 + carrito.velocidad_adicional;
-        max_speed_H = 1 + carrito.velocidad_adicional;
-        max_speed_V = 1 + carrito.velocidad_adicional;
+        float velocidad = PU == Repartir_power.Power_Up.VELOCIDAD ?  Efecto.Get_Efecto<float>() : 1;
+        speed       = velocidad + carrito.velocidad_adicional;
+        max_speed_H = velocidad + carrito.velocidad_adicional;
+        max_speed_V = velocidad + carrito.velocidad_adicional;
     }
 
     private void Set_Rigs(float valor)
@@ -213,6 +225,7 @@ public class Player : MonoBehaviour
 
     private IEnumerator Resbalon()
     {
+        joystick.DeadZone = 1000;
         float x = max_speed_H, y = max_speed_V;
         resbalon = true;
         joystick.gameObject.SetActive(false);
@@ -222,6 +235,7 @@ public class Player : MonoBehaviour
         max_speed_V = 0;
         joystick.gameObject.SetActive(true);
         yield return new WaitForSeconds(0.5f);
+        joystick.DeadZone = 0;
         max_speed_H = x;
         max_speed_V = y;
         resbalon = false;
@@ -255,13 +269,6 @@ public class Player : MonoBehaviour
         Set_Rigs(1);
         joystick.DeadZone = 0;
         choque = false;
-    }
-    
-    private void Choque_Mortal()
-    {
-        joystick.DeadZone = 1000;
-        Set_Rigs(0);
-        //Animacion caida
     }
 
     public Car Get_Carro()
@@ -376,6 +383,19 @@ public class Player : MonoBehaviour
             Choque_sound.Play();
             StartCoroutine(Retroceder(collision));
 
+
+            if(Efecto != null && carrito.objetos_actuales > 0)
+            {
+                if(RP.Get_Power_Up() == Repartir_power.Power_Up.PROTECCION)
+                {
+                    Efecto.Efecto();
+                    RP.Set_Enum(Repartir_power.Power_Up.NINGUNO);
+                    Efecto = null;
+                    Debug.Log($"Se protegio la caida de objetos");
+                    return;
+                }
+            }
+
             // Quitar un objeto del carrito si tiene objetos
             if (velocidad_porcentual > resistencia_porcentual && carrito.objetos_actuales > 0)
             {
@@ -398,7 +418,7 @@ public class Player : MonoBehaviour
                 }*/
             }
 
-            if (max_speed_H <= 0)
+            if (max_speed_H <= 0 || max_speed_V <= 0)
                 New_Init();
         }
     }
@@ -407,7 +427,7 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Estante"))
         {
-            New_Init();
+            //New_Init();
         }
     }
 

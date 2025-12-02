@@ -44,7 +44,9 @@ public class Obstaculos : MonoBehaviour
         foreach(var posicion in spawn.puntos)
         {
             Debug.Log($"colocando spawn en la posicion: {posicion.posicion}");
+            posicion.posicion.y = 0;
             punto.transform.position = posicion.posicion;
+            
             Instantiate(punto);
         }
     }

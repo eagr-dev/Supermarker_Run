@@ -14,8 +14,7 @@ public class Velocidad : Interfaz_PowerUp
 
     public override void Set_Descripcion_Nombre()
     {
-        descripcion = "Get 20% speed.";
-        nombre = "Speed";
+        SetTextIdioma();
     }
 
     public override void Animacion()
@@ -35,5 +34,24 @@ public class Velocidad : Interfaz_PowerUp
     public override T Get_Efecto<T>()
     {
         return (T)(object)porcentaje_velocidad;
+    }
+
+    protected override void SetTextIdioma()
+    {
+        switch (Idioma.GetLengua())
+        {
+            case Idioma.Lengua.INGLES:
+                nombre = "Speed";
+                descripcion = "Get 20% speed.";
+                break;
+            case Idioma.Lengua.ESPANIOL:
+                nombre = "Velocidad";
+                descripcion = "Obten un 20% mas de velocidad.";
+                break;
+            case Idioma.Lengua.PORTUGUES:
+                nombre = "Velocidade";
+                descripcion = "Obtenha 20% mais velocidade.";
+                break;
+        }
     }
 }

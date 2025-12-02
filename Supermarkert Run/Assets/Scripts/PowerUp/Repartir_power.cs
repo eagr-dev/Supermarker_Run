@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Repartir_power : MonoBehaviour
 {
-    public enum Power_Up { VIDA, VELOCIDAD, PROTECCION, MANOS_RAPIDAS, NINGUNO};
+    public enum Power_Up { VELOCIDAD, PROTECCION, MANOS_RAPIDAS, NINGUNO};
     [SerializeField]Power_Up PU;
     private Interfaz_PowerUp clase;
     static Repartir_power RP;
@@ -28,9 +28,6 @@ public class Repartir_power : MonoBehaviour
         
         switch(PU)
         {
-            case Power_Up.VIDA:
-                clase = GetComponent<Vida_extra>();
-                break;
             case Power_Up.VELOCIDAD:
                 clase = GetComponent<Velocidad>();
                 break;

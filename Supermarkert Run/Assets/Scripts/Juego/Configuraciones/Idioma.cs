@@ -10,7 +10,9 @@ public class Idioma : MonoBehaviour
     public List<string> Ingles;
     public List<string> Espaniol;
     public List<string> Portugues;
-    
+
+    public enum Lengua { INGLES, ESPANIOL, PORTUGUES};
+    static Lengua lengua = Lengua.INGLES;
     
     private void Start()
     {
@@ -21,12 +23,15 @@ public class Idioma : MonoBehaviour
             switch (eleccion)
             {
                 case 0:
+                    lengua = Lengua.INGLES;
                     Modificacion_Idioma(Ingles, true);
                     break;
                 case 1:
+                    lengua = Lengua.ESPANIOL;
                     Modificacion_Idioma(Espaniol, true);
                     break;
                 case 2:
+                    lengua = Lengua.PORTUGUES;
                     Modificacion_Idioma(Portugues, true);
                     break;
             }
@@ -40,12 +45,15 @@ public class Idioma : MonoBehaviour
         switch (PlayerPrefs.GetInt("idioma",0))
         {
             case 0:
+                lengua = Lengua.INGLES;
                 retorno = Ingles;
                 break;
             case 1:
+                lengua = Lengua.ESPANIOL;
                 retorno = Espaniol;
                 break;
             case 2:
+                lengua = Lengua.PORTUGUES;
                 retorno = Portugues;
                 break;
         }
@@ -91,5 +99,10 @@ public class Idioma : MonoBehaviour
         }
 
         return texto;
+    }
+
+    static public Lengua GetLengua()
+    {
+        return lengua;
     }
 }

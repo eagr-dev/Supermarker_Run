@@ -10,21 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5fdc222640aea6240990c32f14f08ede, type: 3}
-  m_Name: Liviano2
+  m_Name: Pesado3
   m_EditorClassIdentifier: 
-  peso: 20
-  velocidad_adicional: 2.5
-  cant_limite_carga: 10
+  peso: 50
+  velocidad_adicional: 2
+  cant_limite_carga: 100
   objetos_actuales: 0
-  resistencia_choque: 30
+  resistencia_choque: 70
   peso_maximo: 0
   velocidad_maxima: 0
   maximo_a_cargar: 0
   maxima_resistencia: 0
-  nombre: light cart 2
-  descripcion: Fast, agile light cart, but little shock and load resistance
+  nombre: Heavy plata
+  descripcion: Heavy tank ideal for long missions, great resistance but little speed
+    and agility
   requisitos: none
   cantidad: 0
   name_mapa: "Mapa peque\xF1o"
-  skin_car: {fileID: 2100000, guid: d3c2d5b9b1e0ec2499504e788602542f, type: 2}
+  skin_car: {fileID: 2100000, guid: 7cae8430c53b6c645b2d3a1977d43743, type: 2}
   precio: 0

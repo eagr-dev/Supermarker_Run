@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Liviano
   m_EditorClassIdentifier: 
   peso: 20
-  velocidad_adicional: 3
+  velocidad_adicional: 2.7
   cant_limite_carga: 10
   objetos_actuales: 0
   resistencia_choque: 30

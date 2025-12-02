@@ -18,4 +18,6 @@ public abstract class Interfaz_PowerUp : MonoBehaviour
     public string nombre;
     public Material sprite;
     public Repartir_power RP;
+
+    protected abstract void SetTextIdioma();
 }

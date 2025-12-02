@@ -32,7 +32,25 @@ public class Manos_Rapidas : Interfaz_PowerUp
 
     public override void Set_Descripcion_Nombre()
     {
-        nombre = "Quick Hands";
-        descripcion = "Place objects 50% faster.";
+        SetTextIdioma();
+    }
+
+    protected override void SetTextIdioma()
+    {
+        switch(Idioma.GetLengua())
+        {
+            case Idioma.Lengua.INGLES:
+                nombre = "Quick Hands";
+                descripcion = "Place objects 50% faster.";
+                break;
+            case Idioma.Lengua.ESPANIOL:
+                nombre = "Manos rapidas";
+                descripcion = "Coloca objetos un 50% más rápido.";
+                break;
+            case Idioma.Lengua.PORTUGUES:
+                nombre = "Manos está com pressa";
+                descripcion = "Coloca objetos un 50% mais rápido.";
+                break;
+        }
     }
 }
