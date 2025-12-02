@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Estante : MonoBehaviour
+public class Estante : MonoBehaviour, IGuardarObjeto
 {
     [SerializeField]private string objeto;
 
@@ -34,5 +34,5 @@ public class Estante : MonoBehaviour
         }
     }
 
-    public string Get_Object() => objeto;
+    string IGuardarObjeto.Get_Object() => objeto;
 }

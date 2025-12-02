@@ -35460,6 +35460,10 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1630794972795428178, guid: 31e5e4601c394f644b274ac998aed966, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 31e5e4601c394f644b274ac998aed966, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -35981,7 +35985,7 @@ MonoBehaviour:
   velocidad_porcentual: 0
   joystick: {fileID: 0}
   player_object: {fileID: 8592851397395496535}
-  camera: {fileID: 0}
+  camara: {fileID: 0}
   position_Reset: {x: 0, y: 0, z: 0}
   rigs:
   - {fileID: 3232013635402166312}
@@ -35991,8 +35995,6 @@ MonoBehaviour:
   Ganar_canvas: {fileID: 0}
   animacion: {fileID: 3068091169133543063}
   Dinero_Text: {fileID: 0}
-  nombre_carro: {fileID: 0}
-  Imagen_DejarObjetos: {fileID: 0}
   particulas:
   - {fileID: 3123426594477238551}
   - {fileID: 3280896444541754041}
@@ -36013,9 +36015,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abf6948faa106414ead4937c823d2337, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  position_Text: 0
-  Text: {fileID: 0}
-  Misiones_echas: {fileID: 0}
+  misiones_hechas: 0
   Espacio_Disponible: {fileID: 0}
   Sin_espacio: {fileID: 0}
   Muerte: {fileID: 0}
@@ -36023,6 +36023,17 @@ MonoBehaviour:
   Obtener_objeto: {fileID: 5052284613195728480}
   Punto: {fileID: 6397404951580922999}
   player: {fileID: 1214457975653736139}
+  text_misiones:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &3748611634939655014
 MonoBehaviour:
   m_ObjectHideFlags: 0

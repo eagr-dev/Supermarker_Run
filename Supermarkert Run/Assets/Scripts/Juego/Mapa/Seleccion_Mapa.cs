@@ -32,28 +32,27 @@ public class Seleccion_Mapa : MonoBehaviour
     private void Start()
     {
         Mostrar(DO.Get_Mapa(0));
-
     }
 
     public void BTN_Comprar()
     {
         Click_Botones.Play();
-        if (!FindObjectOfType<DINERO>().Set_Compra((uint)DO.Get_Mapa(seleccion_actual).precio))
+        DINERO di = FindObjectOfType<DINERO>();
+        bool compra = di.Set_Compra((uint)DO.Get_Mapa(seleccion_actual).precio);
+        if (!compra)
         {
             StartCoroutine(Sin_Saldo());
+            return;
         }
-        else
-        {
-            DO.Get_Mapa(seleccion_actual).precio = 0;
-            Mostrar(DO.Get_Mapa(seleccion_actual));
-            Calidad calidad = FindObjectOfType<Calidad>();
-            //calidad.Modificacion_Idioma();
-            Precio.text = "$ " + DO.Get_Mapa(seleccion).precio.ToString();
-            Comprar.SetActive(false);
-            Aceptar.SetActive(true);
-            FindObjectOfType<Sistema_Guardado>().ADD_MAPA(DO.Get_Mapa(seleccion_actual).nombre);
-
-        }
+            
+        DO.Get_Mapa(seleccion_actual).precio = 0;
+        Mostrar(DO.Get_Mapa(seleccion_actual));
+        Precio.text = "$ " + DO.Get_Mapa(seleccion).precio.ToString();
+        Comprar.SetActive(false);
+        Aceptar.SetActive(true);
+        Sistema_Guardado sg = FindObjectOfType<Sistema_Guardado>();
+        sg.ADD_MAPA(DO.Get_Mapa(seleccion_actual).nombre);
+        sg.Guardar();
     }
 
     private IEnumerator Sin_Saldo()

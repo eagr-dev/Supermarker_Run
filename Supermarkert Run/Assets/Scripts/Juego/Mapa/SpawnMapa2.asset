@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fccae54630314f34f86b256be3ef5559, type: 3}
+  m_Name: SpawnMapa2
+  m_EditorClassIdentifier: 
+  puntos:
+  - posicion: {x: -3.2064261, y: 0.5, z: 31.297674}
+    rotacion: {x: 0, y: 0, z: 0, w: 1}
+  - posicion: {x: -19.255785, y: 3.9640388, z: 33.556923}
+    rotacion: {x: 0, y: 0, z: 0, w: 1}
+  - posicion: {x: -23.758003, y: 1.2337112, z: 33.556923}
+    rotacion: {x: 0, y: 0, z: 0, w: 1}
+  - posicion: {x: -38.07502, y: 0.5, z: 22.508516}
+    rotacion: {x: 0, y: 0, z: 0, w: 1}
+  - posicion: {x: -5.9440436, y: 0.5, z: 21.499933}
+    rotacion: {x: 0, y: 0, z: 0, w: 1}
+  - posicion: {x: -18.623528, y: 0.5, z: 20.77949}
+    rotacion: {x: 0, y: 0, z: 0, w: 1}
+  - posicion: {x: 13.507442, y: 0.5, z: 21.06769}
+    rotacion: {x: 0, y: 0, z: 0, w: 1}
+  - posicion: {x: -3.3505154, y: 0.5, z: 9.973108}
+    rotacion: {x: 0, y: 0, z: 0, w: 1}
+  - posicion: {x: 35.552467, y: 0.5, z: 1.1839457}
+    rotacion: {x: 0, y: 0, z: 0, w: 1}
+  - posicion: {x: -39.227684, y: 0.5, z: -12.504139}
+    rotacion: {x: 0, y: 0, z: 0, w: 1}
+  - posicion: {x: -21.072975, y: 0.5, z: -1.8418579}
+    rotacion: {x: 0, y: 0, z: 0, w: 1}
+  - posicion: {x: 9.984417, y: 4.694631, z: 1.760417}
+    rotacion: {x: 0, y: 0, z: 0, w: 1}
+  - posicion: {x: -2.498926, y: 4.694631, z: -8.745352}
+    rotacion: {x: 0, y: 0, z: 0, w: 1}
+  - posicion: {x: 32.67076, y: 0.5, z: -32.755966}
+    rotacion: {x: 0, y: 0, z: 0, w: 1}
+  - posicion: {x: 0.3438084, y: 4.694631, z: -41.8866}
+    rotacion: {x: 0, y: 0, z: 0, w: 1}
+  - posicion: {x: -3.782767, y: 0.5, z: -44.426834}
+    rotacion: {x: 0, y: 0, z: 0, w: 1}
+  - posicion: {x: -29.573996, y: 0.5, z: -30.88285}
+    rotacion: {x: 0, y: 0, z: 0, w: 1}
+  - posicion: {x: -1.2236397, y: 1.9486885, z: -18.843075}
+    rotacion: {x: 0, y: 0, z: 0, w: 1}
+  - posicion: {x: -3.7163386, y: 4.796034, z: -7.1507416}
+    rotacion: {x: 0, y: 0, z: 0, w: 1}
+  - posicion: {x: 30.941746, y: 0.5, z: -25.986124}
+    rotacion: {x: 0, y: 0, z: 0, w: 1}
+  - posicion: {x: -40.09221, y: 0.5, z: -42.411766}
+    rotacion: {x: 0, y: 0, z: 0, w: 1}

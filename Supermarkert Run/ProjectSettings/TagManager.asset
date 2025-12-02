@@ -9,6 +9,7 @@ TagManager:
   - Caja
   - Mojado
   - Enemigo
+  - Carro
   layers:
   - Default
   - TransparentFX

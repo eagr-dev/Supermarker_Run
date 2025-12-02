@@ -14,4 +14,7 @@ public class Mapa : ScriptableObject
     public int Valor_mapa;
     public uint cantidad_juegos;
     public float X_minimo, X_maximo, Y_minimo, Y_maximo;
+    public int cantidad_enemigos, cantidad_minima_obstaculos, cantidad_maxima_obstaculos;
+    public int cantidad_minina_carritos, cantidad_maxima_carritos;
+    public SpawnPointsData spawn;
 }

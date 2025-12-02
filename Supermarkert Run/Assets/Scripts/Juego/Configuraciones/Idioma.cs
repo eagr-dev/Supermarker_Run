@@ -10,13 +10,11 @@ public class Idioma : MonoBehaviour
     public List<string> Ingles;
     public List<string> Espaniol;
     public List<string> Portugues;
-    private Get_Content_Car Contenido_Carro;
     
     
     private void Start()
     {
         int eleccion = PlayerPrefs.GetInt("idioma", 0);
-        Contenido_Carro = FindObjectOfType<Get_Content_Car>();
 
         if(SceneManager.GetActiveScene().name != "Menu_principal")
         {

@@ -73,7 +73,7 @@ public class Personalizacion : MonoBehaviour
         carro.precio = (uint)((rojo + verde + azul + alfa) * Max);
 
 
-        Precio.text = carro.precio.ToString() + ".";
+        Precio.text = carro.precio.ToString();
         Peso.text = carro.peso.ToString() + "Kg.";
         Velocidad.text = carro.velocidad_adicional.ToString() + ".";
         Carga.text = carro.cant_limite_carga.ToString() + "Kg.";

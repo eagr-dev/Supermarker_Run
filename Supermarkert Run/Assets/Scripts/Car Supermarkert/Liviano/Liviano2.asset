@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Liviano2
   m_EditorClassIdentifier: 
   peso: 20
-  velocidad_adicional: 3
+  velocidad_adicional: 2.5
   cant_limite_carga: 10
   objetos_actuales: 0
   resistencia_choque: 30
@@ -26,5 +26,5 @@ MonoBehaviour:
   requisitos: none
   cantidad: 0
   name_mapa: "Mapa peque\xF1o"
-  skin_car: {fileID: 2100000, guid: d3c2d5b9b1e0ec2499504e788602542f, type: 2}
+  skin_car: {fileID: 2100000, guid: a2e21bc4c8b43be4e88c26ac650fe474, type: 2}
   precio: 0

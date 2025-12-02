@@ -98,7 +98,8 @@ public class Calidad : MonoBehaviour
     {
         List<string> Parametro = new List<string>();
         Parametro.Add(idioma.Get_Idioma()[0] + ":" + Nivel.nivel.ToString());
-        Parametro.Add(idioma.Get_Idioma()[1] + ":" + FindObjectOfType<DINERO>().Get_Dinero().ToString());
+        //Parametro.Add(idioma.Get_Idioma()[1] + ":" + FindObjectOfType<DINERO>().Get_Dinero().ToString());
+        Parametro.Add("$" + FindObjectOfType<DINERO>().Get_Dinero().ToString());
         Parametro.Add(idioma.Get_Idioma()[2]);
         Parametro.Add(idioma.Get_Idioma()[3]);
         Parametro.Add(idioma.Get_Idioma()[4]);

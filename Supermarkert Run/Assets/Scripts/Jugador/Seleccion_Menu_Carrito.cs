@@ -38,6 +38,7 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
 
 
     [SerializeField] private bool Comprar;
+    [SerializeField] private bool Comprar_Skin;
 
 
 
@@ -189,6 +190,7 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
 
     public void BTN_Personalizar()
     {
+        Debug.Log("Personalizar");
         Click_Botones.Play();
         Canvas_Eleccion.SetActive(false);
         Canvas_Personalizar.SetActive(true);
@@ -200,8 +202,9 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
     public void BTN_Salida()
     {
         Click_Botones.Play();
-        if (Get_Active().GetComponent<Get_Content_Car>().Get_Car().precio != 0)
+        if (Get_Active().GetComponent<Get_Content_Car>().Get_Car().precio > 0)
         {
+            Debug.Log("Personalizado");
             FindObjectOfType<Personalizacion>().Restar();
         }
         Canvas_Eleccion.SetActive(true);

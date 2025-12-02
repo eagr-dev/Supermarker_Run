@@ -17,9 +17,15 @@ MonoBehaviour:
   descripcion: "Un mapa peque\xF1o donde todo es rapido y agil"
   screen_map: {fileID: 21300000, guid: 12bdced60a7ee61438a607a658f19277, type: 3}
   precio: 0
-  Valor_mapa: 200
+  Valor_mapa: 50
   cantidad_juegos: 0
   X_minimo: -46
   X_maximo: 0.6
   Y_minimo: -2
   Y_maximo: 36
+  cantidad_enemigos: 5
+  cantidad_minima_obstaculos: 0
+  cantidad_maxima_obstaculos: 5
+  cantidad_minina_carritos: 0
+  cantidad_maxima_carritos: 4
+  spawn: {fileID: 11400000, guid: 8790d50867c3bc349bb86e1913a9d8ed, type: 2}

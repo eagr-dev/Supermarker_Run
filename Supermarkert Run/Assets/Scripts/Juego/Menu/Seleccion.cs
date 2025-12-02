@@ -68,7 +68,7 @@ public class Seleccion : MonoBehaviour
         Configuracion_Canvas.SetActive(false);
     }
 
-    public void BTN_Despliegue_CoPoCa() 
+    /*public void BTN_Despliegue_CoPoCa() 
     {
         Click_Botones.Play();
         StartCoroutine(Animacion_Despliegue(abierto));
@@ -77,9 +77,9 @@ public class Seleccion : MonoBehaviour
     {
         Click_Botones.Play();
         StartCoroutine(Animacion_Despliegue(cerrado));
-    }
+    }*/
 
-    private IEnumerator Animacion_Despliegue(float posicion)
+    /*private IEnumerator Animacion_Despliegue(float posicion)
     {
         float tiempo = 0, duracion = 1;
         while(tiempo < duracion)
@@ -90,7 +90,7 @@ public class Seleccion : MonoBehaviour
             tiempo += Time.deltaTime;
             yield return null;
         }
-    }
+    }*/
 
     public void BTN_Power_Up()
     {
@@ -168,13 +168,14 @@ public class Seleccion : MonoBehaviour
         AnimacionSP.Cambiar_Escena(escena);
     }
 
+    /*
     public void BTN_Salida()
     {
         Click_Botones.Play();
         FindObjectOfType<Sistema_Guardado>().Guardar();
         Application.Quit(0);
     }
-
+    */
     private IEnumerator Animacion_Acercar(float FOVA,float FOVB, float rotaciona, float rotacionb,bool rotar_camara)
     {
         float tiempo = 1, timer = 0;
