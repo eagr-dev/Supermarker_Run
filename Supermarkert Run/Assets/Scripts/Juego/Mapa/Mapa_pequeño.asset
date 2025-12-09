@@ -24,8 +24,8 @@ MonoBehaviour:
   Y_minimo: -2
   Y_maximo: 36
   cantidad_enemigos: 5
-  cantidad_minima_obstaculos: 0
-  cantidad_maxima_obstaculos: 5
+  cantidad_minima_obstaculos: 1
+  cantidad_maxima_obstaculos: 4
   cantidad_minina_carritos: 0
   cantidad_maxima_carritos: 4
   spawn: {fileID: 11400000, guid: 8790d50867c3bc349bb86e1913a9d8ed, type: 2}

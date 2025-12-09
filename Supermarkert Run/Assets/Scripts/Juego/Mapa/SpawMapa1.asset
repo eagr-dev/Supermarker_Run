@@ -13,21 +13,19 @@ MonoBehaviour:
   m_Name: SpawMapa1
   m_EditorClassIdentifier: 
   puntos:
-  - posicion: {x: 1.62813, y: 0.5, z: 36.730217}
+  - posicion: {x: -14.347302, y: 0, z: 15.418867}
     rotacion: {x: 0, y: 0, z: 0, w: 1}
-  - posicion: {x: -14.347302, y: 0.5, z: 15.418867}
+  - posicion: {x: -4.234939, y: 0, z: 12.449628}
     rotacion: {x: 0, y: 0, z: 0, w: 1}
-  - posicion: {x: -4.234939, y: 4.6846313, z: 12.449628}
+  - posicion: {x: -39.542274, y: 0, z: 14.843349}
     rotacion: {x: 0, y: 0, z: 0, w: 1}
-  - posicion: {x: -39.542274, y: 4.6846313, z: 14.843349}
+  - posicion: {x: -29.395597, y: 0, z: 15.418868}
     rotacion: {x: 0, y: 0, z: 0, w: 1}
-  - posicion: {x: -29.395597, y: 0.5, z: 15.418868}
+  - posicion: {x: -29.205093, y: 0, z: 30.848135}
     rotacion: {x: 0, y: 0, z: 0, w: 1}
-  - posicion: {x: -29.205093, y: 0.5, z: 30.848135}
+  - posicion: {x: -12.156694, y: 0, z: 31.13385}
     rotacion: {x: 0, y: 0, z: 0, w: 1}
-  - posicion: {x: -12.156694, y: 0.5, z: 31.13385}
+  - posicion: {x: -13.680577, y: 0, z: 0.08485317}
     rotacion: {x: 0, y: 0, z: 0, w: 1}
-  - posicion: {x: -13.680577, y: 0.5, z: 0.08485317}
-    rotacion: {x: 0, y: 0, z: 0, w: 1}
-  - posicion: {x: -29.681316, y: 0.5, z: 0.08485031}
+  - posicion: {x: -29.681316, y: 0, z: 0.08485031}
     rotacion: {x: 0, y: 0, z: 0, w: 1}

@@ -356,7 +356,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 1530c01e893ec924faa7ef1cbcf294ae, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -58.950024
+      value: -39.542274
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1530c01e893ec924faa7ef1cbcf294ae, type: 3}
       propertyPath: m_LocalPosition.y
@@ -364,7 +364,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1530c01e893ec924faa7ef1cbcf294ae, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -106.17341
+      value: 14.843349
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1530c01e893ec924faa7ef1cbcf294ae, type: 3}
       propertyPath: m_LocalRotation.w
@@ -400,16 +400,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -42457365644445833, guid: 1530c01e893ec924faa7ef1cbcf294ae, type: 3}
       propertyPath: m_CastShadows
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -42457365644445833, guid: 1530c01e893ec924faa7ef1cbcf294ae, type: 3}
       propertyPath: m_ReceiveShadows
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -42457365644445833, guid: 1530c01e893ec924faa7ef1cbcf294ae, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -42457365644445833, guid: 1530c01e893ec924faa7ef1cbcf294ae, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: d3c2d5b9b1e0ec2499504e788602542f, type: 2}
+    - target: {fileID: -42457365644445833, guid: 1530c01e893ec924faa7ef1cbcf294ae, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 032e9d62f5453af47a151d17b4932e4c, type: 2}
     - target: {fileID: 919132149155446097, guid: 1530c01e893ec924faa7ef1cbcf294ae, type: 3}
       propertyPath: m_Name
       value: Carrito_aleatorio

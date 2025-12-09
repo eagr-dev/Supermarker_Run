@@ -10,6 +10,7 @@ TagManager:
   - Mojado
   - Enemigo
   - Carro
+  - Objeto
   layers:
   - Default
   - TransparentFX

@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine.Animations.Rigging;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -37,6 +38,8 @@ public class Player : MonoBehaviour
     [SerializeField] private Animator animacion;
     [SerializeField] private TMP_Text Dinero_Text;
     private float Tiempo_Dejar_Objeto = 1;
+    [SerializeField] private Button obtener_Objeto_suelo;
+    private Objeto_caido se_tomo_objeto;
 
     [Header("Particulas")]
     [SerializeField] private List<ParticleSystem> particulas;
@@ -62,6 +65,7 @@ public class Player : MonoBehaviour
             Debug.Log(PU);
         }
         Power_Respective();
+        obtener_Objeto_suelo.onClick.AddListener(BTN_Agarrar_Objeto);
     }
 
     private void Start()
@@ -225,33 +229,21 @@ public class Player : MonoBehaviour
 
     private IEnumerator Resbalon()
     {
-        joystick.DeadZone = 1000;
-        float x = max_speed_H, y = max_speed_V;
         resbalon = true;
         joystick.gameObject.SetActive(false);
-        //rigidbody.AddForce(transform.forward * 5, ForceMode.VelocityChange);
         yield return new WaitForSeconds(1);
-        max_speed_H = 0;
-        max_speed_V = 0;
         joystick.gameObject.SetActive(true);
         yield return new WaitForSeconds(0.5f);
-        joystick.DeadZone = 0;
-        max_speed_H = x;
-        max_speed_V = y;
         resbalon = false;
+
     }
 
     private IEnumerator Animacion_Tiempo_Caja(float tiempo_total)
     {
         Set_Rigs(0);
         //Animacion colocar objetos
-        //float x = max_speed_H, y = max_speed_V;
-        //max_speed_H = 0;
-        //max_speed_V = 0;
         joystick.DeadZone = 1000;
         yield return new WaitForSeconds(tiempo_total + 0.5f);
-        //max_speed_H = x;
-        //max_speed_V = y;
         Set_Rigs(1);
         joystick.DeadZone = 0;
         mision.Espacio_Disponible.text = carrito.objetos_actuales.ToString() + " / " +  carrito.cant_limite_carga.ToString();
@@ -294,19 +286,25 @@ public class Player : MonoBehaviour
     //Collisiones
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Estante") || other.CompareTag("Carro"))
+        if (other.CompareTag("Estante") || other.CompareTag("Carro"))
         {
-           var estante = other.gameObject.GetComponent<IGuardarObjeto>();
-           mision.Verificar_Objeto_este_mision(estante.Get_Object());
-        }else if(other.CompareTag("Caja"))
+            var estante = other.gameObject.GetComponent<IGuardarObjeto>();
+            mision.Verificar_Objeto_este_mision(estante.Get_Object());
+        }
+        else if (other.CompareTag("Objeto"))
+        {
+            obtener_Objeto_suelo.gameObject.SetActive(true);
+            se_tomo_objeto = other.gameObject.GetComponent<Objeto_caido>();
+        }
+        else if (other.CompareTag("Caja"))
         {
             Caja caja = other.gameObject.GetComponent<Caja>();
             StartCoroutine(Animacion_Tiempo_Caja(carrito.objetos_actuales * Tiempo_Dejar_Objeto));
-            caja.Visible_Objects(mision,carrito, Tiempo_Dejar_Objeto);
+            caja.Visible_Objects(mision, carrito, Tiempo_Dejar_Objeto);
             mision.Volver_Objetos_Caja();
             //Gano(caja);
         }
-        else if(other.CompareTag("Mojado"))
+        else if (other.CompareTag("Mojado"))
         {
             Exclamacion.Play();
             Particula_Detener();
@@ -381,24 +379,24 @@ public class Player : MonoBehaviour
 
             Choque_P.Play();
             Choque_sound.Play();
-            StartCoroutine(Retroceder(collision));
-
-
-            if(Efecto != null && carrito.objetos_actuales > 0)
-            {
-                if(RP.Get_Power_Up() == Repartir_power.Power_Up.PROTECCION)
-                {
-                    Efecto.Efecto();
-                    RP.Set_Enum(Repartir_power.Power_Up.NINGUNO);
-                    Efecto = null;
-                    Debug.Log($"Se protegio la caida de objetos");
-                    return;
-                }
-            }
+            if(velocidad_porcentual > 0.10f)
+                StartCoroutine(Retroceder(collision));
 
             // Quitar un objeto del carrito si tiene objetos
             if (velocidad_porcentual > resistencia_porcentual && carrito.objetos_actuales > 0)
             {
+
+                if (Efecto != null && carrito.objetos_actuales > 0)
+                {
+                    if (RP.Get_Power_Up() == Repartir_power.Power_Up.PROTECCION)
+                    {
+                        Efecto.Efecto();
+                        RP.Set_Enum(Repartir_power.Power_Up.NINGUNO);
+                        Efecto = null;
+                        Debug.Log($"Se protegio la caida de objetos");
+                        return;
+                    }
+                }
                 mision.Eliminar_Al_Chocar();
                 mision.Espacio_Disponible.text = carrito.objetos_actuales.ToString() + " / " + carrito.cant_limite_carga.ToString();
                 Debug.Log($"Choque fuerte! Velocidad: {velocidad_porcentual:F2} > Resistencia: {resistencia_porcentual:F2}");
@@ -428,6 +426,14 @@ public class Player : MonoBehaviour
         if (collision.gameObject.CompareTag("Estante"))
         {
             //New_Init();
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Objeto"))
+        {
+            obtener_Objeto_suelo.gameObject.SetActive(false);
         }
     }
 
@@ -479,6 +485,18 @@ public class Player : MonoBehaviour
             DO.Recompensa();
         else
             DO.Recompensa_X2();
+    }
+
+    private void BTN_Agarrar_Objeto()
+    {
+        if (se_tomo_objeto == null || !se_tomo_objeto.gameObject.activeSelf)
+        {
+            obtener_Objeto_suelo.gameObject.SetActive(false);
+            return;
+        }
+        mision.Verificar_Objeto_este_mision(se_tomo_objeto.name);
+        obtener_Objeto_suelo.gameObject.SetActive(false);
+        Destroy(se_tomo_objeto.gameObject);
     }
 
 }

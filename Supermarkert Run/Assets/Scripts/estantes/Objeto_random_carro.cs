@@ -13,6 +13,8 @@ public class Objeto_random_carro : MonoBehaviour, IGuardarObjeto
     void Start()
     {
         int producto = Random.Range(0, 9);
+        if (Areas.Objetos == null)
+            Debug.Log("Objetos de areas esta en nulo");
         objeto = Areas.Objetos[(int)area][producto];
     }
 

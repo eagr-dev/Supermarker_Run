@@ -13,7 +13,6 @@ public class Mision : MonoBehaviour
     public TMP_Text Espacio_Disponible;
     public GameObject Sin_espacio;
     public GameObject Muerte;
-    public Transform caja;
     Car carro;
     [SerializeField] private AudioSource Obtener_objeto;
     [SerializeField] private ParticleSystem Punto;
@@ -27,6 +26,9 @@ public class Mision : MonoBehaviour
     Color no_tomado = new Color(0, 0, 0);
     Color tomado = new Color(1, 0, 0);
     Color en_caja = new Color(0, 1, 0);
+
+    [Header("Material Para Objetos Caidos")]
+    [SerializeField] Material material_objeto;
 
     private void Start()
     {
@@ -105,11 +107,81 @@ public class Mision : MonoBehaviour
         tupla => tupla == tuple
         ));
         objetos[index] = new System.Tuple<string, bool, bool>(tuple.Item1, false, false);
+        LanzarObjetoChoco(tuple.Item1);
         Mostrar();
         misiones_hechas--;
         carro.objetos_actuales--;
         Debug.Log($"el objeto {tuple.Item1} se elimino de la lista de obtenidos");
         Debug.Log($"objetos actuales en el carro {carro.objetos_actuales}");
+    }
+
+    private void LanzarObjetoChoco(string name)
+    {
+        float size = 2;
+        GameObject objeto = Areas.Get_GameObject(name);
+        GameObject instancia = Instantiate(objeto);
+        List<Material> materials = new();
+        instancia.transform.GetChild(0).GetComponent<MeshRenderer>().GetMaterials(materials);
+        materials.Add(material_objeto);
+        instancia.transform.GetChild(0).GetComponent<MeshRenderer>().SetMaterials(materials);
+
+        instancia.tag = "Objeto";
+        instancia.name = name;
+        instancia.AddComponent<Objeto_caido>();
+        var rb = instancia.AddComponent<Rigidbody>();
+        rb.isKinematic = true;
+        var colider = instancia.AddComponent<BoxCollider>();
+        colider.isTrigger = true;
+        colider.size = new Vector3(size, size, size);
+
+        // Iniciar la animación de lanzamiento
+        StartCoroutine(AnimarLanzamiento(instancia));
+    }
+
+    private IEnumerator AnimarLanzamiento(GameObject objeto)
+    {
+        // Configuración del lanzamiento
+        Vector3 posicionInicial = transform.position; // Desde donde se lanza
+        Vector3 posicionFinal = posicionInicial + transform.forward * 5f; // 5 metros adelante
+
+        float altura = 3f; // Altura máxima del arco
+        float duracion = 1f; // Duración del lanzamiento en segundos
+        float tiempoTranscurrido = 0f;
+
+        // Rotación aleatoria para efecto visual
+        Vector3 rotacionPorSegundo = new Vector3(
+            Random.Range(0f, 360f),
+            Random.Range(0f, 360f),
+            Random.Range(0f, 360f)
+        );
+
+        while (tiempoTranscurrido < duracion)
+        {
+            tiempoTranscurrido += Time.deltaTime;
+            float progreso = tiempoTranscurrido / duracion; // 0 a 1
+
+            // Interpolación lineal horizontal (X y Z)
+            Vector3 posicionActual = Vector3.Lerp(posicionInicial, posicionFinal, progreso);
+
+            // Parábola para la altura (Y)
+            // Fórmula: y = -4h * (x - 0.5)^2 + h
+            // Esto crea un arco que sube y baja
+            float alturaParabola = -4f * altura * Mathf.Pow(progreso - 0.5f, 2f) + altura;
+            posicionActual.y = posicionInicial.y + alturaParabola;
+
+            objeto.transform.position = posicionActual;
+
+            // Rotación continua para efecto visual
+            objeto.transform.Rotate(rotacionPorSegundo * Time.deltaTime);
+
+            yield return null;
+        }
+
+        // Asegurar posición final
+        objeto.transform.position = posicionFinal;
+        Debug.Log($"El objeto {objeto.name} volo hasta {posicionFinal}");
+        // Opcional: Destruir después de un tiempo
+       // Destroy(objeto, 3f);
     }
 
     public void Verificar_Objeto_este_mision(string obj)
@@ -202,7 +274,7 @@ public class Mision : MonoBehaviour
         Mostrar();
     }
 
-    private float Porcentaje() => (misiones_hechas / misiones_hacer);
+    public float Porcentaje() => (misiones_hechas / misiones_hacer);
 
     public bool Jugador_gano() => Porcentaje() == 1;
 }

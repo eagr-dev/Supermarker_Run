@@ -11,7 +11,9 @@ public class Obstaculos : MonoBehaviour
     [SerializeField] private GameObject Luz_Estatica;
     [SerializeField] private GameObject Luz_Dinamica;
     [SerializeField] private GameObject punto;
-    /*[SerializeField]*/ int min_obj, max_obj, cant_enemigos, min_carros, max_carros;
+    [SerializeField] List<GameObject> posicion_cajas;
+    /*[SerializeField]*/
+    int min_obj, max_obj, cant_enemigos, min_carros, max_carros;
     private Mapa mapa_content;
     private SpawnPointsData spawn;
     private List<SpawnPointsData.SpawnPoint> usados = new(); 
@@ -32,6 +34,7 @@ public class Obstaculos : MonoBehaviour
 
         min_carros = mapa_content.cantidad_minina_carritos < mapa_content.cantidad_maxima_carritos ? mapa_content.cantidad_minina_carritos : 0;
         max_carros = mapa_content.cantidad_maxima_carritos < spawn.puntos.Count ? mapa_content.cantidad_maxima_carritos : spawn.puntos.Count - 1;
+
         Crear_Carros_Aleatorios();
         Create_OBJ();
         Create_Objetos_Seguir();
@@ -43,7 +46,6 @@ public class Obstaculos : MonoBehaviour
     {
         foreach(var posicion in spawn.puntos)
         {
-            Debug.Log($"colocando spawn en la posicion: {posicion.posicion}");
             posicion.posicion.y = 0;
             punto.transform.position = posicion.posicion;
             
@@ -126,13 +128,20 @@ public class Obstaculos : MonoBehaviour
 
     private void Create_Enemigos()
     {
-        for(int i = 0;i < cant_enemigos;i++)
+        for (int i = 0; i < cant_enemigos; i++)
         {
-            Instantiate(Enemigo);
-            Enemigo.transform.position = Posicion_Enemigo(1);
+            // 1. GUARDA la referencia de la nueva INSTANCIA
+            GameObject nuevaInstancia = Instantiate(Enemigo);
+
             GameObject gameObject1 = obj_Seguir[i];
-            Enemigo.GetComponent<IA>().objecto_seguir = gameObject1;
-            Enemigo.name = "Enemigo " + i.ToString();
+
+            // 2. Llama a Set() y configura la instancia *nueva*
+            IA scriptIA = nuevaInstancia.GetComponent<IA>();
+            scriptIA.Set(mapa_content, gameObject1, posicion_cajas);
+
+            // 3. Mueve y nombra la instancia *nueva*
+            nuevaInstancia.transform.position = Posicion_Enemigo(1);
+            nuevaInstancia.name = "Enemigo " + i.ToString();
         }
     }
 

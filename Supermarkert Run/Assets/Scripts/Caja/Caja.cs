@@ -6,7 +6,7 @@ using TMPro;
 
 public class Caja : MonoBehaviour
 {
-    private int misiones_hechas;
+    private readonly int objetos_caja_mostrar = 10;
     private Player jugador;
     [SerializeField] private GameObject imagen;
 
@@ -17,10 +17,10 @@ public class Caja : MonoBehaviour
     public void Visible_Objects(Mision mision, Car carro, float tiempo)
     {
         //Solucionar error de colliders y de este de tiempo
-        misiones_hechas = carro.objetos_actuales;
         if (tiempo > 0)
         {
             //tiempo *= misiones_hechas;
+            Debug.Log($"Tiempo Espera es {tiempo}");
             StartCoroutine(Colocar_Objetos(tiempo, carro, mision));
         }
     }
@@ -30,7 +30,7 @@ public class Caja : MonoBehaviour
         imagen.SetActive(true);
         yield return new WaitForSeconds(tiempo);
         carro.objetos_actuales = 0;
-        for (int i = 0; i < misiones_hechas; i++)
+        for (int i = 0; i < (objetos_caja_mostrar * mision.Porcentaje()); i++)
         {
             transform.GetChild(i).gameObject.SetActive(true);
         }
