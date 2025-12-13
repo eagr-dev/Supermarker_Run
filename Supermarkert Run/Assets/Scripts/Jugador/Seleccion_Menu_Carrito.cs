@@ -245,14 +245,41 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
             Comprar = false;
         }
 
-        Nombre.text = Info_Car.nombre;
-        Descripcion.text = Info_Car.descripcion;
+        string nombre = "", descripcion = "", requisitos = "";
+
+        LenguajeANombreDescripcionRequisitoCarrito(Info_Car, ref nombre, ref descripcion, ref requisitos);
+
+        Nombre.text = nombre;
+        Descripcion.text = descripcion;
         Peso.text = Info_Car.peso.ToString() + "Kg.";
         Velocidad.text = Info_Car.velocidad_adicional.ToString() + ".";
         Limite_Carga.text = Info_Car.cant_limite_carga.ToString() + "Kg.";
         Resistencia_choque.text = Info_Car.resistencia_choque.ToString() + "%.";
         Precio.text = "$ " + Info_Car.precio.ToString() + ".";
-        Requisitos.text = Info_Car.requisitos + ":" + Info_Car.Get_Juegos() + "/" + Info_Car.cantidad;
+        Requisitos.text = requisitos + ":" + Info_Car.Get_Juegos() + "/" + Info_Car.cantidad;
+    }
+
+    private void LenguajeANombreDescripcionRequisitoCarrito(Car car, ref string nombre, ref string descripcion, ref string requisitos)
+    {
+        Idioma.Lengua lengua =Idioma.GetLengua();
+        switch(lengua)
+        {
+            case Idioma.Lengua.INGLES:
+                nombre = car.nombre_ingles;
+                descripcion = car.descripcioningles;
+                requisitos = car.requisitos_ingles;
+                break;
+            case Idioma.Lengua.ESPANIOL:
+                nombre = car.nombre_espaniol;
+                descripcion = car.descripcion_espaniol;
+                requisitos = car.requisitos_espaniol;
+                break;
+            case Idioma.Lengua.PORTUGUES:
+                nombre = car.nombre_portugues;
+                descripcion = car.descripcionportugues;
+                requisitos = car.requisitos_portugues;
+                break;
+        }
     }
     public GameObject Get_Active()
     {

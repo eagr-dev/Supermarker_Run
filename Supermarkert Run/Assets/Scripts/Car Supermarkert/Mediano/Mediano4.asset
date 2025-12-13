@@ -21,9 +21,15 @@ MonoBehaviour:
   velocidad_maxima: 0
   maximo_a_cargar: 0
   maxima_resistencia: 0
-  nombre: Medium Cart oro
-  descripcion: Medium cart ideal for maps between large and small
-  requisitos: none
+  nombre_espaniol: Carrito Mediano Oro
+  descripcion_espanio: "Carrito mediano ideal para mapas entre grandes y peque\xF1os"
+  requisitos_espaniol: Ninguno
+  nombre_ingles: Medium Cart Gold
+  descripcioningles: Medium cart ideal for maps between large and small
+  requisitos_ingles: None
+  nombre_portugues: "Carrinho M\xE9dio Ouro"
+  descripcionportugues: "Carrinho m\xE9dio ideal para mapas entre grandes e pequenos"
+  requisitos_portugues: Nenhum
   cantidad: 0
   name_mapa: "Mapa peque\xF1o"
   skin_car: {fileID: 2100000, guid: 2cf533f20ba8259429d47d5663fd0375, type: 2}

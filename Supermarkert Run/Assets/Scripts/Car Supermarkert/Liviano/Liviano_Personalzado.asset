@@ -21,9 +21,15 @@ MonoBehaviour:
   velocidad_maxima: 10
   maximo_a_cargar: 10
   maxima_resistencia: 30
-  nombre: light cart P
-  descripcion: personalized car
-  requisitos: 0
+  nombre_espaniol: 
+  descripcion_espanio: 
+  requisitos_espaniol: Ninguno
+  nombre_ingles: 
+  descripcioningles: 
+  requisitos_ingles: None
+  nombre_portugues: 
+  descripcionportugues: 
+  requisitos_portugues: Nenhum
   cantidad: 0
   name_mapa: "Mapa peque\xF1o"
   skin_car: {fileID: 2100000, guid: 42578976ffb3d504898a611cc134e78a, type: 2}

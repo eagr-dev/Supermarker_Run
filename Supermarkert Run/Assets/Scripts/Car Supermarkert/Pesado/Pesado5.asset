@@ -21,10 +21,18 @@ MonoBehaviour:
   velocidad_maxima: 0
   maximo_a_cargar: 0
   maxima_resistencia: 0
-  nombre: Heavy diamon
-  descripcion: Heavy tank ideal for long missions, great resistance but little speed
-    and agility
-  requisitos: none
+  nombre_espaniol: Pesado Diamante
+  descripcion_espanio: Tanque pesado ideal para misiones largas, gran resistencia
+    pero poca velocidad y agilidad
+  requisitos_espaniol: Ninguno
+  nombre_ingles: Heavy Diamond
+  descripcioningles: Heavy tank ideal for long missions, great resistance but little
+    speed and agility
+  requisitos_ingles: None
+  nombre_portugues: Pesado Diamante
+  descripcionportugues: "Tanque pesado ideal para miss\xF5es longas, grande resist\xEAncia,
+    por\xE9m pouca velocidade e agilidade"
+  requisitos_portugues: Nenhum
   cantidad: 0
   name_mapa: "Mapa peque\xF1o"
   skin_car: {fileID: 2100000, guid: c0686d4744289964a9b554f4868b388f, type: 2}

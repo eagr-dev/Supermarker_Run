@@ -17,11 +17,25 @@ public class Car : ScriptableObject
     public int maximo_a_cargar;
     public int maxima_resistencia;
 
-    public string nombre;
+    [Header("Español")]
+    public string nombre_espaniol;
     [TextArea(2,3)]
-    public string descripcion;
+    public string descripcion_espanio;
     [TextArea(2, 3)]
-    public string requisitos;
+    public string requisitos_espaniol;
+    [Header("Ingles")]
+    public string nombre_ingles;
+    [TextArea(2, 3)]
+    public string descripcioningles;
+    [TextArea(2, 3)]
+    public string requisitos_ingles;
+    [Header("Portugues")]
+    public string nombre_portugues;
+    [TextArea(2, 3)]
+    public string descripcionportugues;
+    [TextArea(2, 3)]
+    public string requisitos_portugues;
+
     public string cantidad;
     public string name_mapa;
     public string Get_Juegos()
@@ -36,4 +50,5 @@ public class Car : ScriptableObject
     }
     public Material skin_car;
     public uint precio;
+    internal string descripcion_espaniol;
 }

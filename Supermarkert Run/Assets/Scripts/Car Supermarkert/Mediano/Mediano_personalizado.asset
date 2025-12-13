@@ -21,9 +21,15 @@ MonoBehaviour:
   velocidad_maxima: 7
   maximo_a_cargar: 20
   maxima_resistencia: 60
-  nombre: Medium Cart P
-  descripcion: Custom Medium Car
-  requisitos: 0
+  nombre_espaniol: 
+  descripcion_espanio: 
+  requisitos_espaniol: Ninguno
+  nombre_ingles: 
+  descripcioningles: 
+  requisitos_ingles: None
+  nombre_portugues: 
+  descripcionportugues: 
+  requisitos_portugues: Nenhum
   cantidad: 0
   name_mapa: "Mapa peque\xF1o"
   skin_car: {fileID: 2100000, guid: b2fa034672952f34295a0ad884662433, type: 2}
