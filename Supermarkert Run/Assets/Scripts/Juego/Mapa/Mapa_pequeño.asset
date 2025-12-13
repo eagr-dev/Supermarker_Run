@@ -13,8 +13,12 @@ MonoBehaviour:
   m_Name: "Mapa_peque\xF1o"
   m_EditorClassIdentifier: 
   posicion_mapa: 1
-  nombre: "Mapa peque\xF1o"
-  descripcion: "Un mapa peque\xF1o donde todo es rapido y agil"
+  nombre_espaniol: "Mapa peque\xF1o"
+  descripcion_espaniol: "Un mapa peque\xF1o donde todo es rapido y agil"
+  nombre_ingles: Small map
+  descripcion_ingles: A small map where everything is fast and agile
+  nombre_portugues: Mapa pequeno
+  descripcion_portugues: "Um pequeno mapa onde tudo \xE9 r\xE1pido e \xE1gil"
   screen_map: {fileID: 21300000, guid: 12bdced60a7ee61438a607a658f19277, type: 3}
   precio: 0
   Valor_mapa: 50
@@ -24,6 +28,7 @@ MonoBehaviour:
   Y_minimo: -2
   Y_maximo: 36
   cantidad_enemigos: 5
+  cantidad_rateros: 2
   cantidad_minima_obstaculos: 1
   cantidad_maxima_obstaculos: 4
   cantidad_minina_carritos: 0

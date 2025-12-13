@@ -1611,13 +1611,8 @@ MonoBehaviour:
   Seguir: {fileID: 493990530}
   carrito: {fileID: 1337948641}
   GPS: {fileID: 68281837}
-  animacion: {fileID: 68281841}
-  Spawn: {fileID: 1350371745}
---- !u!95 &68281841 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 3068091169133543063, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
-  m_PrefabInstance: {fileID: 1193533107}
-  m_PrefabAsset: {fileID: 0}
+  animacion: {fileID: 68281848}
+  Spawn: {fileID: 1368846812}
 --- !u!65 &68281844
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1666,6 +1661,11 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!95 &68281848 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 3068091169133543063, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
+  m_PrefabInstance: {fileID: 1193533107}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &76770723
 GameObject:
   m_ObjectHideFlags: 0
@@ -3779,13 +3779,8 @@ MonoBehaviour:
   Seguir: {fileID: 1368846811}
   carrito: {fileID: 1317505530}
   GPS: {fileID: 86132886}
-  animacion: {fileID: 86132885}
-  Spawn: {fileID: 828632736}
---- !u!95 &86132885 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 3068091169133543063, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
-  m_PrefabInstance: {fileID: 86132880}
-  m_PrefabAsset: {fileID: 0}
+  animacion: {fileID: 86132893}
+  Spawn: {fileID: 493990531}
 --- !u!195 &86132886
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -3856,6 +3851,11 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!95 &86132893 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 3068091169133543063, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
+  m_PrefabInstance: {fileID: 86132880}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &93828108
 GameObject:
   m_ObjectHideFlags: 0
@@ -10284,6 +10284,10 @@ PrefabInstance:
       value: Carro2 (3)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 4def9272cdd058940bb69cd8db621d66, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 4def9272cdd058940bb69cd8db621d66, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -11514,6 +11518,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 4def9272cdd058940bb69cd8db621d66, type: 3}
       propertyPath: m_Name
       value: Carro2
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 4def9272cdd058940bb69cd8db621d66, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 4def9272cdd058940bb69cd8db621d66, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -14535,6 +14543,10 @@ PrefabInstance:
       value: Carro1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f77b7017fb8e40f43843f909e487b246, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f77b7017fb8e40f43843f909e487b246, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -15397,11 +15409,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8592851397395496535, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
   m_PrefabInstance: {fileID: 823486280}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &823486286 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 3068091169133543063, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
-  m_PrefabInstance: {fileID: 823486280}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &823486287
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15454,8 +15461,8 @@ MonoBehaviour:
   Seguir: {fileID: 493990530}
   carrito: {fileID: 823486283}
   GPS: {fileID: 823486288}
-  animacion: {fileID: 823486286}
-  Spawn: {fileID: 1350371745}
+  animacion: {fileID: 823486298}
+  Spawn: {fileID: 1368846812}
 --- !u!65 &823486294
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15504,6 +15511,11 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!95 &823486298 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 3068091169133543063, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
+  m_PrefabInstance: {fileID: 823486280}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &828632735
 GameObject:
   m_ObjectHideFlags: 0
@@ -25097,6 +25109,10 @@ PrefabInstance:
       value: Carro1 (1)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f77b7017fb8e40f43843f909e487b246, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f77b7017fb8e40f43843f909e487b246, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -30706,13 +30722,8 @@ MonoBehaviour:
   Seguir: {fileID: 493990530}
   carrito: {fileID: 1666100145}
   GPS: {fileID: 1632144928}
-  animacion: {fileID: 1632144932}
-  Spawn: {fileID: 1470392633}
---- !u!95 &1632144932 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 3068091169133543063, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
-  m_PrefabInstance: {fileID: 1934111044}
-  m_PrefabAsset: {fileID: 0}
+  animacion: {fileID: 1632144939}
+  Spawn: {fileID: 1368846812}
 --- !u!65 &1632144935
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -30761,6 +30772,11 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!95 &1632144939 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 3068091169133543063, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
+  m_PrefabInstance: {fileID: 1934111044}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1646708896
 GameObject:
   m_ObjectHideFlags: 0
@@ -32484,16 +32500,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a545eb3495de49b4c9954de8107bd129, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Seguir: {fileID: 1604828675}
+  Seguir: {fileID: 493990530}
   carrito: {fileID: 1684252723}
   GPS: {fileID: 1787161000}
-  animacion: {fileID: 1787161004}
-  Spawn: {fileID: 828632736}
---- !u!95 &1787161004 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 3068091169133543063, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
-  m_PrefabInstance: {fileID: 1098464569}
-  m_PrefabAsset: {fileID: 0}
+  animacion: {fileID: 1787161011}
+  Spawn: {fileID: 1350371745}
 --- !u!65 &1787161007
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -32542,6 +32553,11 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!95 &1787161011 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 3068091169133543063, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
+  m_PrefabInstance: {fileID: 1098464569}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1789877775
 GameObject:
   m_ObjectHideFlags: 0
@@ -33369,11 +33385,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8592851397395496535, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
   m_PrefabInstance: {fileID: 1813497677}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &1813497683 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 3068091169133543063, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
-  m_PrefabInstance: {fileID: 1813497677}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1813497684
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33426,8 +33437,8 @@ MonoBehaviour:
   Seguir: {fileID: 493990530}
   carrito: {fileID: 1813497680}
   GPS: {fileID: 1813497685}
-  animacion: {fileID: 1813497683}
-  Spawn: {fileID: 1470392633}
+  animacion: {fileID: 1813497695}
+  Spawn: {fileID: 1604828676}
 --- !u!65 &1813497691
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -33476,6 +33487,11 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!95 &1813497695 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 3068091169133543063, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
+  m_PrefabInstance: {fileID: 1813497677}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1822568064
 GameObject:
   m_ObjectHideFlags: 0
@@ -35794,6 +35810,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: f77b7017fb8e40f43843f909e487b246, type: 3}
       propertyPath: m_Name
       value: Carro1 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f77b7017fb8e40f43843f909e487b246, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f77b7017fb8e40f43843f909e487b246, type: 3}
       propertyPath: m_StaticEditorFlags

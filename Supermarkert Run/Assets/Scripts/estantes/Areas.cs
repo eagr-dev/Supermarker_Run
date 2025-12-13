@@ -41,14 +41,57 @@ public class Areas : MonoBehaviour
     public List<GameObject> Limpieza_PersonalG;
     public List<GameObject> Frutas_verdurasG;
 
-    public static readonly List<List<GameObject>> Objetos_Visibles = new List<List<GameObject>>();
+    public static readonly List<List<GameObject>> Objetos_Visibles = new();
 
-    private string URL_IDIOMA = "";
+    //private string URL_IDIOMA = "";
+#if UNITY_EDITOR
+    readonly string URL_IDIOMA = (Application.dataPath + "/SUPERMARKER");
+    //URL_IDIOMA = Application.dataPath + "/SUPERMARKER";
+#else
+        readonly string URL_IDIOMA = "/storage/emulated/0/Documents/SUPERMARKER";
+#endif
+
+    readonly Contenido_misiones contenido_Ingles = new()
+    {
+        Limpieza_Casa = new string[] { "Detergent", "Bleach", "Broom", "Mop", "Glass cleaner", "Sponge", "Cleaning gloves", "Cloth", "Disinfectant", "Toilet paper" }, // House cleaning
+        Comida = new string[] { "Eggs", "Sausage", "Ham", "Bread", "Milk", "Pasta", "Rice", "Meat", "Yogurt", "Cereal" }, // Food
+        Appliances = new string[] { "Microwave", "Stove", "Television", "Radio", "Refrigerator", "Washing machine", "Blender", "Electric oven", "Vacuum cleaner", "Coffee maker" }, // Appliances
+        Bebidas = new string[] { "Water", "Juice", "Fruit juice", "Soda", "Sprite", "Energy drink", "Flavored water", "Pepsi", "Mineral water", "Oral rehydration solution" }, // Drinks and juices
+        Partes_carros = new string[] { "Tires", "Upholstery", "Engine oil", "Coolant", "Brake fluid", "Battery", "Hydraulic jack", "Mirrors", "Tools", "Decorations" }, // Car parts
+        Escuela = new string[] { "Pencil", "Notebook", "Book", "Pencil sharpener", "Eraser", "Pens", "Ballpoint pen", "Crayons", "Ruler", "Markers" }, // School supplies
+        Higiene_Personal = new string[] { "Soap", "Shampoo", "Toothpaste", "Toothbrush", "Dental floss", "Towels", "Razors", "Deodorant", "Gel", "Shaving foam" }, // Personal hygiene
+        Frutas_y_verduras = new string[] { "Apple", "Banana", "Orange", "Strawberry", "Grape", "Carrot", "Tomato", "Lettuce", "Broccoli", "Cucumber" } // Fruits and vegetables
+
+    };
+
+    readonly Contenido_misiones contenido_Español = new()
+    {
+        Limpieza_Casa = new string[] { "Detergente", "Blanqueador", "Escoba", "Mopa", "Limpiador de vidrios", "Esponja", "Guantes de limpieza", "Trapo", "Desinfectante", "Papel higiénico" }, // Limpieza Casa
+        Comida = new string[] { "Huevos", "Salchicha", "Jamón", "Pan", "Leche", "Pasta", "Arroz", "Carne", "Yogur", "Cereal" }, // Comida
+        Appliances = new string[] { "Microondas", "Estufa", "Televisión", "Radio", "Refrigerador", "Lavadora", "Licuadora", "Horno eléctrico", "Aspiradora", "Cafetera" },
+        Bebidas = new string[] { "Agua", "Jugo", "Zumo de fruta", "Refresco", "Sprite", "Bebida energética", "Agua saborizada", "Pepsi", "Agua mineral", "Suero oral" }, // Bebidas
+        Partes_carros = new string[] { "Llantas", "Tapicería", "Aceite de motor", "Refrigerante", "Líquido de frenos", "Batería", "Gato hidráulico", "Espejos", "Herramientas", "Decoraciones" }, // Partes carros
+        Escuela = new string[] { "Lápiz", "Cuaderno", "Libro", "Sacapuntas", "Borrador", "Plumas", "Bolígrafo", "Crayones", "Regla", "Marcadores" }, // Escuela
+        Higiene_Personal = new string[] { "Jabón", "Champú", "Pasta dental", "Cepillo de dientes", "Hilo dental", "Toallas", "Rastrillos", "Desodorante", "Gel", "Espuma de afeitar" }, // Higiene Personal
+        Frutas_y_verduras = new string[] { "Manzana", "Banana", "Naranja", "Fresa", "Uva", "Zanahoria", "Tomate", "Lechuga", "Brócoli", "Pepino" } // Frutas y verduras
+    };
+
+    readonly Contenido_misiones contenido_Portugues = new()
+    {
+        Limpieza_Casa = new string[] { "Detergente", "Alvejante", "Vassoura", "Esfregão", "Limpador de vidros", "Esponja", "Luvas de limpeza", "Pano", "Desinfetante", "Papel higiênico" }, // House cleaning
+        Comida = new string[] { "Ovos", "Linguiça", "Presunto", "Pão", "Leite", "Massa", "Arroz", "Carne", "Iogurte", "Cereal" }, // Food
+        Appliances = new string[] { "Micro-ondas", "Fogão", "Televisão", "Rádio", "Geladeira", "Máquina de lavar", "Liquidificador", "Forno elétrico", "Aspirador de pó", "Cafeteira" }, // Appliances
+        Bebidas = new string[] { "Água", "Suco", "Suco de frutas", "Refrigerante", "Sprite", "Bebida energética", "Água saborizada", "Pepsi", "Água mineral", "Soro oral" }, // Drinks and juices
+        Partes_carros = new string[] { "Pneus", "Estofamento", "Óleo de motor", "Refrigerante", "Fluido de freio", "Bateria", "Macaco hidráulico", "Espelhos", "Ferramentas", "Decorações" }, // Car parts
+        Escuela = new string[] { "Lápis", "Caderno", "Livro", "Apontador", "Borracha", "Canetas", "Caneta esferográfica", "Giz de cera", "Régua", "Marcadores" }, // School supplies
+        Higiene_Personal = new string[] { "Sabão", "Shampoo", "Pasta de dente", "Escova de dentes", "Fio dental", "Toalhas", "Lâminas de barbear", "Desodorante", "Gel", "Espuma de barbear" }, // Personal hygiene
+        Frutas_y_verduras = new string[] { "Maçã", "Banana", "Laranja", "Morango", "Uva", "Cenoura", "Tomate", "Alface", "Brócolis", "Pepino" } // Fruits and vegetables
+    };
 
 
     private List<int> Get_List_Rand()
     {
-        List<int> list_return = new List<int>();
+        List<int> list_return = new();
         int count = 0;
 
         while(count < 7)
@@ -76,16 +119,12 @@ public class Areas : MonoBehaviour
 
     private void Awake()
     {
-#if UNITY_EDITOR
-        URL_IDIOMA = Application.dataPath + "/SUPERMARKER";
-#else
-        URL_IDIOMA = "/storage/emulated/0/Documents/SUPERMARKER";
-#endif
-        Leer_Archivo();
+        //Leer_Archivo();
+        AsignarMedianteIdioma();
 
         if(!VerificarDatos())
         {
-            Create_Files();
+            //Create_Files();
             Debug.LogError("No se cargaron bien los datos");
             SceneManager.LoadScene(0);
         }
@@ -115,6 +154,7 @@ public class Areas : MonoBehaviour
 
     }
 
+    [System.Obsolete("ya no se usan archivos.", true)]
     private void Leer_Archivo()
     {
         int eleccion = PlayerPrefs.GetInt("idioma", 0);
@@ -148,6 +188,25 @@ public class Areas : MonoBehaviour
         }
     }
 
+    private void AsignarMedianteIdioma()
+    {
+        int eleccion = PlayerPrefs.GetInt("idioma", 0);
+
+        switch (eleccion)
+        {
+            case 0:
+                Asignar(contenido_Ingles);
+                break;
+            case 1:
+                Asignar(contenido_Español);
+                break;
+            case 2:
+                Asignar(contenido_Portugues);
+                break;
+        }
+    }
+
+    [System.Obsolete("Ya no se crearan archivos.", true)]
     private void Create_Files()
     {
 

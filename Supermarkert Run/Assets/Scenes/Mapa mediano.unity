@@ -1266,11 +1266,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &114491366 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6178742536800037330, guid: 07a4c56f5b9e701468326be94edbb142, type: 3}
+--- !u!114 &114491366 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5502266786909631561, guid: 07a4c56f5b9e701468326be94edbb142, type: 3}
   m_PrefabInstance: {fileID: 114491361}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114491367 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 973240908638878711, guid: 07a4c56f5b9e701468326be94edbb142, type: 3}
@@ -2093,7 +2099,7 @@ PrefabInstance:
     - target: {fileID: 1214457975653736139, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
       propertyPath: Imagen_DejarObjetos
       value: 
-      objectReference: {fileID: 114491366}
+      objectReference: {fileID: 0}
     - target: {fileID: 1214457975653736139, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
       propertyPath: obtener_Objeto_suelo
       value: 
@@ -3078,19 +3084,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 709312791370230256, guid: 65409d330eca3fd44908fc7697640309, type: 3}
       propertyPath: m_Size.x
-      value: 2.430519
+      value: 1.4637133
       objectReference: {fileID: 0}
     - target: {fileID: 709312791370230256, guid: 65409d330eca3fd44908fc7697640309, type: 3}
       propertyPath: m_Size.z
-      value: 16.302631
+      value: 3.7127066
       objectReference: {fileID: 0}
     - target: {fileID: 709312791370230256, guid: 65409d330eca3fd44908fc7697640309, type: 3}
       propertyPath: m_Center.x
-      value: 0.71525955
+      value: 0.23185647
+      objectReference: {fileID: 0}
+    - target: {fileID: 709312791370230256, guid: 65409d330eca3fd44908fc7697640309, type: 3}
+      propertyPath: m_Center.y
+      value: 0.07944405
       objectReference: {fileID: 0}
     - target: {fileID: 709312791370230256, guid: 65409d330eca3fd44908fc7697640309, type: 3}
       propertyPath: m_Center.z
-      value: -6.411358
+      value: -0.116395295
       objectReference: {fileID: 0}
     - target: {fileID: 1804160158147839569, guid: 65409d330eca3fd44908fc7697640309, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -3154,7 +3164,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8056853242170287154, guid: 65409d330eca3fd44908fc7697640309, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.52
+      value: 1.3
       objectReference: {fileID: 0}
     - target: {fileID: 8056853242170287154, guid: 65409d330eca3fd44908fc7697640309, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3190,6 +3200,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8928131717016862014, guid: 65409d330eca3fd44908fc7697640309, type: 3}
       propertyPath: imagen
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8928131717016862014, guid: 65409d330eca3fd44908fc7697640309, type: 3}
+      propertyPath: slider
       value: 
       objectReference: {fileID: 114491366}
     - target: {fileID: 8974189646579587252, guid: 65409d330eca3fd44908fc7697640309, type: 3}
@@ -8179,7 +8193,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Obstaculo: {fileID: 301623391555861180, guid: 87166cc02bb9dc647adcd8b00db0cb18, type: 3}
   Carro: {fileID: 6951232058636387200, guid: 15dfe396c0086694a8cdfff58ce257da, type: 3}
-  Enemigo: {fileID: 4263544900681987134, guid: ef4457fac51f7f448ae20abd9783d89d, type: 3}
+  EnemigoComun: {fileID: 4263544900681987134, guid: ef4457fac51f7f448ae20abd9783d89d, type: 3}
+  EnemigoRatero: {fileID: 4263544900681987134, guid: 4171e4a2496ea05448c6f7ce6e4c4a22, type: 3}
+  player: {fileID: 207002739}
   Luz_Estatica: {fileID: 705507993}
   Luz_Dinamica: {fileID: 441395820}
   punto: {fileID: 363595670}

@@ -128,7 +128,7 @@ public class Sistema_Guardado : MonoBehaviour
             {
                 foreach (string linea in lineas)
                 {
-                    if(mapa.nombre == linea)
+                    if(mapa.nombre_espaniol == linea)
                         mapa.precio = 0;
                 }
             }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Area : MonoBehaviour
+public class Area : BehaviorEnemy
 {
     public Areas.Area_product Tag;
     public List<GameObject> Lista_Objetos;
@@ -41,5 +41,11 @@ public class Area : MonoBehaviour
     private void Start()
     {
         Acomodar_Estantes();
+    }
+
+    protected override void OnColisionConJugador(Collision collision)
+    {
+        Mision mision = collision.gameObject.GetComponent<Mision>();
+        mision.Eliminar_Al_Chocar();
     }
 }

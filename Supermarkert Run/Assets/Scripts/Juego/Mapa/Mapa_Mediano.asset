@@ -13,8 +13,12 @@ MonoBehaviour:
   m_Name: Mapa_Mediano
   m_EditorClassIdentifier: 
   posicion_mapa: 2
-  nombre: Mapa mediano
-  descripcion: "Un mapa un poco mas largo que el peque\xF1o"
+  nombre_espaniol: Mapa mediano
+  descripcion_espaniol: "Un mapa un poco mas largo que peque\xF1o"
+  nombre_ingles: Medium map
+  descripcion_ingles: A map a little longer than small
+  nombre_portugues: "Mapa m\xE9dio"
+  descripcion_portugues: Um mapa um pouco mais longo que pequeno
   screen_map: {fileID: 21300000, guid: dcb5e410ac02d294d87ce0ae8c50c84a, type: 3}
   precio: 500
   Valor_mapa: 100
@@ -24,6 +28,7 @@ MonoBehaviour:
   Y_minimo: -48
   Y_maximo: 35
   cantidad_enemigos: 20
+  cantidad_rateros: 0
   cantidad_minima_obstaculos: 5
   cantidad_maxima_obstaculos: 11
   cantidad_minina_carritos: 5

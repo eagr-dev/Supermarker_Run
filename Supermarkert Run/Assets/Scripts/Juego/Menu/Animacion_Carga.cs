@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,7 +10,7 @@ public class Animacion_Carga : MonoBehaviour
     [SerializeField] Camera camara;
     [SerializeField] Transform objeto_Seguir;
     [SerializeField] NavMeshAgent GPS;
-    [SerializeField]private Vector3 distancia = new Vector3(0,7,-3);
+    [SerializeField] private Vector3 distancia = new Vector3(0, 7, -3);
     public float progreso;
     [SerializeField] float POV = 30;
     [SerializeField] Animator animacion;
@@ -18,7 +18,7 @@ public class Animacion_Carga : MonoBehaviour
 
     private void Start()
     {
-        Iniciar();
+        StartCoroutine(InicializarNavMesh());
     }
 
     private void Update()
@@ -34,7 +34,7 @@ public class Animacion_Carga : MonoBehaviour
 
     private IEnumerator Cambio(string escena)
     {
-        while((transform.position - objeto_Seguir.position).magnitude >= 3)
+        while ((transform.position - objeto_Seguir.position).magnitude >= 3)
         {
             yield return null;
         }
@@ -61,6 +61,30 @@ public class Animacion_Carga : MonoBehaviour
 
     }
 
+    private IEnumerator InicializarNavMesh()
+    {
+        // Si ya está en NavMesh, no esperar
+        if (GPS.isOnNavMesh)
+        {
+            Iniciar();
+            yield break;
+        }
+        Debug.Log("no hay navmesh");
+        // No está listo, reintentar con espera
+        GPS.enabled = false;
+        yield return new WaitForSeconds(1f);
+        GPS.enabled = true;
+
+        if (GPS.isOnNavMesh)
+        {
+            Iniciar();
+        }
+        else
+        {
+            Debug.LogError($"[{name}] NavMesh no disponible");
+            gameObject.SetActive(false);
+        }
+    }
     private void Iniciar()
     {
         camara.fieldOfView = POV;
@@ -71,8 +95,8 @@ public class Animacion_Carga : MonoBehaviour
 
     private void Actualizar()
     {
-        if(!Contacto)
-        camara.transform.position = transform.position + distancia;
+        if (!Contacto)
+            camara.transform.position = transform.position + distancia;
     }
 
     private void Rotar_Camara()
@@ -84,7 +108,7 @@ public class Animacion_Carga : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.name == "Puerta")
+        if (other.name == "Puerta")
         {
             Contacto = true;
         }

@@ -7,13 +7,15 @@ public class Obstaculos : MonoBehaviour
 {
     [SerializeField] private GameObject Obstaculo;
     [SerializeField] private GameObject Carro;
-    [SerializeField] private GameObject Enemigo;
+    [SerializeField] private GameObject EnemigoComun;
+    [SerializeField] private GameObject EnemigoRatero;
+    [SerializeField] private Transform player;
     [SerializeField] private GameObject Luz_Estatica;
     [SerializeField] private GameObject Luz_Dinamica;
     [SerializeField] private GameObject punto;
     [SerializeField] List<GameObject> posicion_cajas;
     /*[SerializeField]*/
-    int min_obj, max_obj, cant_enemigos, min_carros, max_carros;
+    int min_obj, max_obj, cant_enemigos, cant_rateros, min_carros, max_carros;
     private Mapa mapa_content;
     private SpawnPointsData spawn;
     private List<SpawnPointsData.SpawnPoint> usados = new(); 
@@ -31,6 +33,7 @@ public class Obstaculos : MonoBehaviour
         max_obj = mapa_content.cantidad_maxima_obstaculos < spawn.puntos.Count ? mapa_content.cantidad_maxima_obstaculos : spawn.puntos.Count - 1;
 
         cant_enemigos = mapa_content.cantidad_enemigos;
+        cant_rateros = mapa_content.cantidad_rateros;
 
         min_carros = mapa_content.cantidad_minina_carritos < mapa_content.cantidad_maxima_carritos ? mapa_content.cantidad_minina_carritos : 0;
         max_carros = mapa_content.cantidad_maxima_carritos < spawn.puntos.Count ? mapa_content.cantidad_maxima_carritos : spawn.puntos.Count - 1;
@@ -128,28 +131,40 @@ public class Obstaculos : MonoBehaviour
 
     private void Create_Enemigos()
     {
+        int index = 0;
+        Debug.Log($"cantidad rateros {cant_rateros}");
+        for (int i = 0; i < cant_rateros; i++)
+        {
+            GameObject nuevaInstancia = Instantiate(EnemigoRatero);
+            Agregar_Informacion_Necesaria_Enemigo(ref nuevaInstancia, index);
+            index++;
+        }
         for (int i = 0; i < cant_enemigos; i++)
         {
             // 1. GUARDA la referencia de la nueva INSTANCIA
-            GameObject nuevaInstancia = Instantiate(Enemigo);
-
-            GameObject gameObject1 = obj_Seguir[i];
-
-            // 2. Llama a Set() y configura la instancia *nueva*
-            IA scriptIA = nuevaInstancia.GetComponent<IA>();
-            scriptIA.Set(mapa_content, gameObject1, posicion_cajas);
-
-            // 3. Mueve y nombra la instancia *nueva*
-            nuevaInstancia.transform.position = Posicion_Enemigo(1);
-            nuevaInstancia.name = "Enemigo " + i.ToString();
+            GameObject nuevaInstancia = Instantiate(EnemigoComun);
+            Agregar_Informacion_Necesaria_Enemigo(ref nuevaInstancia, index);
+            index++;
         }
+    }
+
+    private void Agregar_Informacion_Necesaria_Enemigo(ref GameObject enemigo, int index)
+    {
+        GameObject gameObject1 = obj_Seguir[index];
+        IA scriptIA = enemigo.GetComponent<IA>();
+        scriptIA.Set(mapa_content, gameObject1, posicion_cajas, player);
+
+        // 3. Mueve y nombra la instancia *nueva*
+        enemigo.transform.position = Posicion_Enemigo(1);
+        enemigo.name = "Enemigo " + index.ToString();
     }
 
     private void Create_Objetos_Seguir()
     {
-        for (int i = 0; i < cant_enemigos; i++)
+        for (int i = 0; i < cant_enemigos + cant_rateros; i++)
         {
             GameObject plane = GameObject.CreatePrimitive(PrimitiveType.Plane);
+            plane.transform.localScale = new(0.5f, 0.5f, 0.5f);
             plane.transform.position = Posicion_Enemigo(-2);
             obj_Seguir.Add(plane);
         }

@@ -5,7 +5,7 @@ using TMPro;
 
 public class Tiempo : MonoBehaviour
 {
-    private const uint tiempo = 10;
+    private const uint tiempo = 5;
     private int minutos, segundos = 0;
     private float contador;
     [SerializeField] private TMP_Text Texto;

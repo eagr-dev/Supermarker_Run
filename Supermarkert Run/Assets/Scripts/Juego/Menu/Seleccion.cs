@@ -140,7 +140,7 @@ public class Seleccion : MonoBehaviour
 #else
         URL_IDIOMA = "/storage/emulated/0/Documents/SUPERMARKER/Ingles.json";
 #endif
-        string pos = FindObjectOfType<Seleccion_Mapa>().Get_Seleccion().nombre;
+        string pos = FindObjectOfType<Seleccion_Mapa>().Get_Seleccion().nombre_espaniol;
         if (!File.Exists(URL_IDIOMA))
         {
             SceneManager.LoadScene(pos);

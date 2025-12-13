@@ -10,14 +10,14 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     [Header("Joystick_Velocidad")]
-    [SerializeField]private float max_speed_H = 1, max_speed_V = 1, Vertical_Move = 0, Horizontal_Move = 0, speed = 1, resistencia_porcentual = 0,velocidad_porcentual = 0;
+    [SerializeField] private float max_speed_H = 1, max_speed_V = 1, Vertical_Move = 0, Horizontal_Move = 0, speed = 1, resistencia_porcentual = 0, velocidad_porcentual = 0;
     //Vector3 obtener_velocidad;
-    public Joystick joystick;
+    [SerializeField] private Joystick joystick;
 
     [Header("Camara")]
-    [SerializeField]private GameObject player_object;
-    [SerializeField]private GameObject camara;
-    Vector3 position_camera = new Vector3(0,7,-10);
+    [SerializeField] private GameObject player_object;
+    [SerializeField] private GameObject camara;
+    Vector3 position_camera = new(0, 7, -10);
 
     [Header("Otros")]
     public Vector3 position_Reset;
@@ -29,6 +29,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Rig[] rigs = new Rig[3];
     private bool resbalon = false;
     private bool choque = false;
+    private bool choque_mayor = false;
     private Car carrito;
 
     [Header("Mision_Caja")]
@@ -55,7 +56,7 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        mision = FindObjectOfType<Mision>();  
+        mision = FindObjectOfType<Mision>();
         rigid = GetComponent<Rigidbody>();
         if (FindObjectOfType<Repartir_power>() != null)
         {
@@ -84,8 +85,13 @@ public class Player : MonoBehaviour
         Move_Player();
         Camera_Move();
         Condicionales();
+        mision.posicion_carro = Get_transform_carro().position;
     }
 
+    public void SetDeadZoneJoystick(float deadzone)
+    {
+        joystick.DeadZone = deadzone;
+    }
     private void Condicionales()
     {
         if (resbalon)
@@ -109,9 +115,9 @@ public class Player : MonoBehaviour
 
     //Power UP
 
-    private void  Power_Respective()
+    private void Power_Respective()
     {
-        switch(PU)
+        switch (PU)
         {
             case Repartir_power.Power_Up.VELOCIDAD:
                 Add_Velocidad();
@@ -122,6 +128,39 @@ public class Player : MonoBehaviour
                 break;
             case Repartir_power.Power_Up.NINGUNO: break;
         }
+    }
+
+    public bool Esta_Protegido()
+    {
+        float velocidad = Velocidad_joystick();
+
+        choque_mayor = velocidad > resistencia_porcentual;
+
+        if (!choque_mayor)
+        {
+            Debug.Log($"El jugador no a chocado {velocidad}");
+            return true;
+        }
+        bool retorno = PU == Repartir_power.Power_Up.PROTECCION;
+        if(retorno)
+            ConsumirProteccion();
+        return retorno;
+    }
+
+    private void ConsumirProteccion()
+    {
+        if (!choque_mayor)
+            return;
+        if (Efecto == null || carrito.objetos_actuales == 0)
+            return;
+        if (RP.Get_Power_Up() != Repartir_power.Power_Up.PROTECCION)
+            return;
+        
+        Efecto.Efecto();
+        RP.Set_Enum(Repartir_power.Power_Up.NINGUNO);
+        Efecto = null;
+        Debug.Log($"Se protegio la caida de objetos");
+        
     }
 
     //Movimiento
@@ -238,12 +277,13 @@ public class Player : MonoBehaviour
 
     }
 
-    private IEnumerator Animacion_Tiempo_Caja(float tiempo_total)
+    private IEnumerator Animacion_Tiempo_Caja(Caja caja)
     {
         Set_Rigs(0);
         //Animacion colocar objetos
         joystick.DeadZone = 1000;
-        yield return new WaitForSeconds(tiempo_total + 0.5f);
+        yield return StartCoroutine(caja.HacerObjetosCajaVisible(Tiempo_Dejar_Objeto, mision));
+        //yield return new WaitForSeconds(tiempo_total + 0.5f);
         Set_Rigs(1);
         joystick.DeadZone = 0;
         mision.Espacio_Disponible.text = carrito.objetos_actuales.ToString() + " / " +  carrito.cant_limite_carga.ToString();
@@ -261,11 +301,19 @@ public class Player : MonoBehaviour
         Set_Rigs(1);
         joystick.DeadZone = 0;
         choque = false;
+        choque_mayor = false;
     }
 
     public Car Get_Carro()
     {
         Car carro = null;
+        Transform hijo = Get_transform_carro();
+        carro = hijo.GetComponent<Get_Content_Car>().Get_Car();
+        return carro;
+    }
+
+    public Transform Get_transform_carro()
+    {
         foreach (Transform hijo in transform)
         {
             switch (hijo.name)
@@ -275,12 +323,22 @@ public class Player : MonoBehaviour
                 case "Carrito_gra":
                     if (hijo.gameObject.activeInHierarchy)
                     {
-                        carro = hijo.GetComponent<Get_Content_Car>().Get_Car();
+                        return hijo;
                     }
                     break;
             }
         }
-        return carro;
+        return null;
+    }
+
+    private float Velocidad_joystick()
+    {
+        Vector2 velocidad_joystick = new(joystick.Horizontal, joystick.Vertical);
+        float velocidad_porcentual = velocidad_joystick.magnitude; // Va de 0 a ~1.41 (diagonal máxima)
+
+        // Normalizar para que vaya de 0 a 1
+        velocidad_porcentual = Mathf.Clamp01(velocidad_porcentual);
+        return velocidad_porcentual;
     }
 
     //Collisiones
@@ -299,9 +357,8 @@ public class Player : MonoBehaviour
         else if (other.CompareTag("Caja"))
         {
             Caja caja = other.gameObject.GetComponent<Caja>();
-            StartCoroutine(Animacion_Tiempo_Caja(carrito.objetos_actuales * Tiempo_Dejar_Objeto));
-            caja.Visible_Objects(mision, carrito, Tiempo_Dejar_Objeto);
-            mision.Volver_Objetos_Caja();
+            StartCoroutine(Animacion_Tiempo_Caja(caja));
+            //mision.Volver_Objetos_Caja();
             //Gano(caja);
         }
         else if (other.CompareTag("Mojado"))
@@ -311,53 +368,6 @@ public class Player : MonoBehaviour
             StartCoroutine(Resbalon());
         }
     }
-
-
-
-    /*private void OnCollisionEnter(Collision collision)
-    {
-        if (!collision.gameObject.CompareTag("Piso") && !collision.gameObject.CompareTag("Caja"))
-        {
-            //StopAllCoroutines();
-            StopCoroutine(Resbalon());
-            Exclamacion.Play();
-
-            resbalon = false;
-            joystick.gameObject.SetActive(true);
-            velocidad_porcentual = Mathf.Abs(Mathf.Max(joystick.Horizontal, joystick.Vertical));
-
-            Choque_P.Play();
-            Choque_sound.Play();
-
-            if (velocidad_porcentual > resistencia_porcentual)
-            {
-                if (Efecto != null)
-                {
-                    StartCoroutine(Retroceder(collision));
-                    Efecto.Efecto();
-                    PU = RP.Get_Power_Up();
-                    Debug.Log($"Poder: {PU}");
-                    if (PU == Repartir_power.Power_Up.NINGUNO)
-                        Efecto = null;
-                }
-                else
-                {
-                    speed = 0;
-                    Muerte_canvas.GetComponent<Transform>().GetChild(4).gameObject.SetActive(true);
-                    Muerte_canvas.SetActive(true);
-                    Choque_Mortal();
-                    return;
-                }
-
-            }
-            else if(velocidad_porcentual > (resistencia_porcentual * 0.20f))
-            {
-                StartCoroutine(Retroceder(collision));
-            }
-            if(max_speed_H <= 0)
-                New_Init();
-        }
-    }*/
 
 
     private void OnCollisionEnter(Collision collision)
@@ -370,50 +380,13 @@ public class Player : MonoBehaviour
             resbalon = false;
             joystick.gameObject.SetActive(true);
 
-            // CORRECTO: Obtener la magnitud del vector de velocidad
-            Vector2 velocidad_joystick = new Vector2(joystick.Horizontal, joystick.Vertical);
-            velocidad_porcentual = velocidad_joystick.magnitude; // Va de 0 a ~1.41 (diagonal máxima)
+            velocidad_porcentual = Velocidad_joystick();
 
-            // Normalizar para que vaya de 0 a 1
-            velocidad_porcentual = Mathf.Clamp01(velocidad_porcentual);
-
-            Choque_P.Play();
-            Choque_sound.Play();
-            if(velocidad_porcentual > 0.10f)
-                StartCoroutine(Retroceder(collision));
-
-            // Quitar un objeto del carrito si tiene objetos
-            if (velocidad_porcentual > resistencia_porcentual && carrito.objetos_actuales > 0)
+            if (velocidad_porcentual > 0.10f)
             {
-
-                if (Efecto != null && carrito.objetos_actuales > 0)
-                {
-                    if (RP.Get_Power_Up() == Repartir_power.Power_Up.PROTECCION)
-                    {
-                        Efecto.Efecto();
-                        RP.Set_Enum(Repartir_power.Power_Up.NINGUNO);
-                        Efecto = null;
-                        Debug.Log($"Se protegio la caida de objetos");
-                        return;
-                    }
-                }
-                mision.Eliminar_Al_Chocar();
-                mision.Espacio_Disponible.text = carrito.objetos_actuales.ToString() + " / " + carrito.cant_limite_carga.ToString();
-                Debug.Log($"Choque fuerte! Velocidad: {velocidad_porcentual:F2} > Resistencia: {resistencia_porcentual:F2}");
-
-                /*if (Efecto != null)
-                {
-                    StartCoroutine(Retroceder(collision));
-                    Efecto.Efecto();
-                    PU = RP.Get_Power_Up();
-                    Debug.Log($"Poder: {PU}");
-                    if (PU == Repartir_power.Power_Up.NINGUNO)
-                        Efecto = null;
-                }
-                else
-                {
-                    StartCoroutine(Retroceder(collision));
-                }*/
+                Choque_P.Play();
+                Choque_sound.Play();
+                StartCoroutine(Retroceder(collision));
             }
 
             if (max_speed_H <= 0 || max_speed_V <= 0)

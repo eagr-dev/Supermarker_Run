@@ -41,7 +41,7 @@ public class Dinero_Obtenido : MonoBehaviour
     {
         foreach(Mapa map in mapas)
         {
-            if (map.nombre == name) return map;
+            if (map.nombre_espaniol == name) return map;
         }
         return null;
     }

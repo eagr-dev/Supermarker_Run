@@ -51,7 +51,7 @@ public class Seleccion_Mapa : MonoBehaviour
         Comprar.SetActive(false);
         Aceptar.SetActive(true);
         Sistema_Guardado sg = FindObjectOfType<Sistema_Guardado>();
-        sg.ADD_MAPA(DO.Get_Mapa(seleccion_actual).nombre);
+        sg.ADD_MAPA(DO.Get_Mapa(seleccion_actual).nombre_espaniol);
         sg.Guardar();
     }
 
@@ -89,12 +89,35 @@ public class Seleccion_Mapa : MonoBehaviour
 
     private void Mostrar(Mapa mapa)
     {
-        Nombre.text = mapa.nombre;
-        Descripcion.text = mapa.descripcion;
+        string nombre = "";
+        string descripcion = "";
+        NombreTraducido(mapa, ref nombre, ref descripcion);
+        Nombre.text = nombre;
+        Descripcion.text = descripcion;
         Precio.text = "$ " + mapa.precio.ToString();
         Cantidad_Dar.text = "$->: " + mapa.Valor_mapa.ToString();
         if(mapa.screen_map != null)
         Muestra.sprite = mapa.screen_map;
     }
 
+    private void NombreTraducido(Mapa mapa, ref string nombre, ref string descripcion)
+    {
+        var lengua = Idioma.GetLengua();
+
+        switch(lengua)
+        {
+            case Idioma.Lengua.ESPANIOL:
+                nombre = mapa.nombre_espaniol;
+                descripcion = mapa.descripcion_espaniol;
+                break;
+            case Idioma.Lengua.INGLES:
+                nombre = mapa.nombre_ingles;
+                descripcion = mapa.descripcion_ingles;
+                break;
+            case Idioma.Lengua.PORTUGUES:
+                nombre = mapa.nombre_portugues;
+                descripcion = mapa.descripcion_portugues;
+                break;
+        }
+    }
 }
