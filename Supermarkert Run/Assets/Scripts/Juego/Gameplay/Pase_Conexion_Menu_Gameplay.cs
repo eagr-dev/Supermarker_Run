@@ -5,6 +5,7 @@ using UnityEngine;
 public class Pase_Conexion_Menu_Gameplay : MonoBehaviour
 {
     static Pase_Conexion_Menu_Gameplay conector;
+    [System.Obsolete("Las luces dinamicas no van con los nuevos graficos.", true)]
     public bool dinamica;
     public enum Tipo_Carro { PEQUEÑO, MEDIANO, GRANDE }
     Tipo_Carro sel;
@@ -41,7 +42,7 @@ public class Pase_Conexion_Menu_Gameplay : MonoBehaviour
     public void Set_Seleccion(Tipo_Carro new_value) => sel = new_value;
     public void Set_Eleccion(int new_value) => ele = new_value;
 
-    public void Set_List_All(List<Car> list_Car, Tipo_Carro TC)
+    public void Set_List_All(ref List<Car> list_Car, Tipo_Carro TC)
     {
         switch(TC)
         {

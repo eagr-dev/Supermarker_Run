@@ -42,7 +42,7 @@ public class Obstaculos : MonoBehaviour
         Create_OBJ();
         Create_Objetos_Seguir();
         Create_Enemigos();
-        Get_Dinamica();
+        //Get_Dinamica();
     }
 
     private void Crear_Spawns()
@@ -170,6 +170,7 @@ public class Obstaculos : MonoBehaviour
         }
     }
 
+    [System.Obsolete("Las luces dinamicas no van con los nuevos graficos.", true)]
     private void Get_Dinamica()
     {
         if (!FindObjectOfType<Pase_Conexion_Menu_Gameplay>().dinamica)

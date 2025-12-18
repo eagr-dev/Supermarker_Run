@@ -148,7 +148,11 @@ public abstract class IA : BehaviorEnemy
 
     protected void New_Color()
     {
-        transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().material.color = Random.ColorHSV();
+        Material material = transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().material;
+        Color nuevo_color = Random.ColorHSV();
+        material.SetColor("_Color", nuevo_color);
+        material.SetColor("_RimColor", nuevo_color);
+        material.SetColor("_SpecularColor", nuevo_color);
     }
 
     protected IEnumerator EsperarYMoverse(float tiempoMin, float tiempoMax, bool incluirCajas)

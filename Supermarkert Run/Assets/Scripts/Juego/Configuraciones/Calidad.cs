@@ -7,6 +7,7 @@ using TMPro;
 public class Calidad : MonoBehaviour
 {
     [SerializeField] Toggle Sombras;
+    [System.Obsolete("Las luces dinamicas no van con los nuevos graficos.", true)]
     [SerializeField] Toggle Luces;
     [SerializeField] TMP_Dropdown calidad;
     [SerializeField] TMP_Dropdown Idioma;
@@ -31,9 +32,9 @@ public class Calidad : MonoBehaviour
         QualitySettings.shadows = !Sombras.isOn ? ShadowQuality.Disable : ShadowQuality.All;
         //Sombra_Falsa.SetActive(QualitySettings.shadows.Equals(ShadowQuality.Disable));
         PCMG = FindObjectOfType<Pase_Conexion_Menu_Gameplay>();
-        Luces.isOn = bool.Parse(PlayerPrefs.GetString("Dinamica", "false"));
-        PCMG.dinamica = Luces.isOn;
-        Luz_Encender();
+        //Luces.isOn = bool.Parse(PlayerPrefs.GetString("Dinamica", "false"));
+        //PCMG.dinamica = Luces.isOn;
+        //Luz_Encender();
     }
 
     public  void Ajustar_Calidad()
@@ -64,15 +65,17 @@ public class Calidad : MonoBehaviour
         PlayerPrefs.SetString("Sombras", Sombras.isOn.ToString());
     }
 
+    //[System.Obsolete("Las luces dinamicas no van con los nuevos graficos.", true)]
     public void Activar_Luz_Dinamica(bool isOn)
     {
         Click_Botones.Play();
-        Luces.isOn = isOn;
-        PCMG.dinamica = Luces.isOn;
-        PlayerPrefs.SetString("Dinamica", Luces.isOn.ToString());
-        Luz_Encender();
+        //Luces.isOn = isOn;
+        //PCMG.dinamica = Luces.isOn;
+        //PlayerPrefs.SetString("Dinamica", Luces.isOn.ToString());
+        //Luz_Encender();
     }
 
+    [System.Obsolete("Las luces dinamicas no van con los nuevos graficos.", true)]
     private void Luz_Encender()
     {
         if (!Luces.isOn)

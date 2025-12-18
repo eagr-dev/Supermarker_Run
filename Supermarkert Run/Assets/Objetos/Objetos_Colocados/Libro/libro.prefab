@@ -48,6 +48,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7635826562936255635, guid: a6cc43c8ecf74eb469e86581c34fafbe, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: aa44d38e16562cd44920c1b6f4516db8, type: 2}
+    - target: {fileID: -7635826562936255635, guid: a6cc43c8ecf74eb469e86581c34fafbe, type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: b2303f66179e4a14b8a3ea801e5a3c44, type: 2}
+    - target: {fileID: -7635826562936255635, guid: a6cc43c8ecf74eb469e86581c34fafbe, type: 3}
+      propertyPath: m_Materials.Array.data[3]
+      value: 
+      objectReference: {fileID: 2100000, guid: 11bc2b1bbc1d1d8469d65cb5b227786e, type: 2}
     - target: {fileID: 919132149155446097, guid: a6cc43c8ecf74eb469e86581c34fafbe, type: 3}
       propertyPath: m_Name
       value: libro

@@ -200,7 +200,7 @@ public class Seleccion : MonoBehaviour
             Pase_Conexion_Menu_Gameplay conector = FindObjectOfType<Pase_Conexion_Menu_Gameplay>();
             FindObjectOfType<Seleccion_Menu_Carrito>().Set_Car_Menu(conector.Get_Seleccion(), conector.Get_Eleccion());
         }
-        FindObjectOfType<Sistema_Guardado>().Guardar();
+        FindObjectOfType<Sistema_Guardado>().NewSaved();
     }
 
 }

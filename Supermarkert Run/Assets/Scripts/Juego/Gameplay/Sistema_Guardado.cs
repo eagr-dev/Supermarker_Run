@@ -15,10 +15,12 @@ public class Sistema_Guardado : MonoBehaviour
     private DINERO Dinero;
     private Nivel _Nivel;
     private Car carro;
+    private Seleccion_Menu_Carrito seleccion_carro;
     int _posicion;
     int _nivel_calidad = 0;
     string ruta = "";
     Pase_Conexion_Menu_Gameplay PCMG;
+    const string CDINERO = "Dinero", CNIVEL = "Nivel", CCALIDAD = "Calidad", CPOSICION_MATERIAL = "Material", CTIPO_CARRO = "Carro", CCALIDAD_SOMBRAS = "Sombras";
 
     private void Awake()
     {
@@ -33,21 +35,25 @@ public class Sistema_Guardado : MonoBehaviour
         Dinero = FindObjectOfType<DINERO>();
         _Nivel = FindObjectOfType<Nivel>();
         PCMG = FindObjectOfType<Pase_Conexion_Menu_Gameplay>();
-        Cargar();
-        Carga_Personalizada();
-        Carga_Mapa();
+        seleccion_carro = FindObjectOfType<Seleccion_Menu_Carrito>();
+        //Cargar();
+        //Carga_Personalizada();
+        //Carga_Mapa();
     }
 
     private void Start()
     {
-        Cargar();
-        Carga_Personalizada();
-        Carga_Mapa();
+        NewLoad();
+        NewLoadMaps();
+        //Cargar();
+        //Carga_Personalizada();
+        //Carga_Mapa();
     }
 
-    public void Cargar()
+    [System.Obsolete("ya no se usan archivos.", true)]
+    private void Cargar()
     {
-        if(File.Exists(URL_PATH))
+        if (File.Exists(URL_PATH))
         {
             /*Lectura de archivo*/
             string contenido = File.ReadAllText(URL_PATH);
@@ -58,12 +64,12 @@ public class Sistema_Guardado : MonoBehaviour
             _posicion = contenido_Leido.posicion;
 
             /*Dinero*/
-            if(Dinero.Get_Dinero() <= 0)
+            if (Dinero.Get_Dinero() <= 0)
                 Dinero.Set_Agregar(contenido_Leido.dinero);
 
             /*Nivel*/
-            if(Nivel.nivel <= 1)
-                Nivel.Set_Nivel(contenido_Leido.nivel);
+            //if(Nivel.nivel <= 1)
+            Nivel.Set_Nivel(contenido_Leido.nivel);
 
             /*Calidad*/
             QualitySettings.SetQualityLevel(contenido_Leido.nivel_calidad);
@@ -71,9 +77,9 @@ public class Sistema_Guardado : MonoBehaviour
 
 
             /*Carros*/
-            if(PCMG.Get_Seleccion() == Pase_Conexion_Menu_Gameplay.Tipo_Carro.PEQUEÑO)
+            if (PCMG.Get_Seleccion() == Pase_Conexion_Menu_Gameplay.Tipo_Carro.PEQUEÑO)
                 PCMG.Set_Seleccion(contenido_Leido.Tipo_Carro);
-            
+
             Seleccion_Menu_Carrito selec = FindObjectOfType<Seleccion_Menu_Carrito>();
             selec.Set_Car_Menu(PCMG.Get_Seleccion(), _posicion);
             selec.Inicializador();
@@ -89,9 +95,38 @@ public class Sistema_Guardado : MonoBehaviour
         }
     }
 
+    private void NewLoad()
+    {
+        int calidad_graficos = PlayerPrefs.GetInt(CCALIDAD, 2);
+        QualitySettings.SetQualityLevel(calidad_graficos);
+        QualitySettings.shadows = (ShadowQuality)PlayerPrefs.GetInt(CCALIDAD_SOMBRAS, 0);
+        uint dinero = uint.Parse(PlayerPrefs.GetString(CDINERO, "0"));
+        Dinero.Set_Dinero(dinero);
+        int nivel = PlayerPrefs.GetInt(CNIVEL, 1);
+        Nivel.Set_Nivel((uint)nivel);
+        Pase_Conexion_Menu_Gameplay.Tipo_Carro tipo_Carro = (Pase_Conexion_Menu_Gameplay.Tipo_Carro)PlayerPrefs.GetInt(CTIPO_CARRO, 0);
+        PCMG.Set_Seleccion(tipo_Carro);
+        int posicion_skin = PlayerPrefs.GetInt(CPOSICION_MATERIAL, 0);
+        seleccion_carro.Set_Car_Menu(tipo_Carro, posicion_skin);
+        seleccion_carro.Inicializador();
+    }
+
+    private void NewLoadMaps()
+    {
+        List<Mapa> mapas = FindObjectOfType<Dinero_Obtenido>().mapas;
+        foreach (Mapa mapa in mapas)
+        {
+            if(PlayerPrefs.GetString(mapa.nombre_espaniol) == "true")
+            {
+                mapa.precio = 0;
+            }
+        }
+    }
+
+    [System.Obsolete("Sistema Bugueado Revisar Proximamente.")]
     public void Carga_Personalizada()
     {
-        if(File.Exists(URL_PATH_PERSONALIZADA))
+        if (File.Exists(URL_PATH_PERSONALIZADA))
         {
             string leer = File.ReadAllText(URL_PATH_PERSONALIZADA);
             Contenido_Personalizado CP = JsonUtility.FromJson<Contenido_Personalizado>(leer);
@@ -101,12 +136,12 @@ public class Sistema_Guardado : MonoBehaviour
                 material.color = CP.color;
             }
 
-            foreach(Car carro in carritos_personalizados)
+            foreach (Car carro in carritos_personalizados)
             {
-                carro.peso                  = CP.color.r        * carro.peso_maximo;
-                carro.velocidad_adicional   = CP.color.g        * carro.velocidad_maxima;
-                carro.cant_limite_carga     = (int)CP.color.b   * carro.maximo_a_cargar;
-                carro.resistencia_choque    = (int)CP.color.a   * carro.maxima_resistencia;
+                carro.peso = CP.color.r * carro.peso_maximo;
+                carro.velocidad_adicional = CP.color.g * carro.velocidad_maxima;
+                carro.cant_limite_carga = (int)CP.color.b * carro.maximo_a_cargar;
+                carro.resistencia_choque = (int)CP.color.a * carro.maxima_resistencia;
             }
         }
         else
@@ -117,6 +152,7 @@ public class Sistema_Guardado : MonoBehaviour
         }
     }
 
+    [System.Obsolete("ya no se usan archivos.", true)]
     public void Carga_Mapa()
     {
         if(File.Exists(URL_PATH_MAPA))
@@ -135,7 +171,7 @@ public class Sistema_Guardado : MonoBehaviour
         }
     }
 
-
+    [System.Obsolete("ya no se usan archivos.", true)]
     public void Guardar()
     {
         carro = FindObjectOfType<Get_Content_Car>().Get_Car();
@@ -157,6 +193,17 @@ public class Sistema_Guardado : MonoBehaviour
         File.WriteAllText(URL_PATH,contenido + "\n");
     }
 
+    public void NewSaved()
+    {
+        PlayerPrefs.SetString(CDINERO, Dinero.Get_Dinero().ToString());
+        PlayerPrefs.SetInt(CNIVEL, (int)Nivel.nivel);
+        PlayerPrefs.SetInt(CCALIDAD, QualitySettings.GetQualityLevel());
+        PlayerPrefs.SetInt(CPOSICION_MATERIAL, PCMG.Get_Eleccion());
+        PlayerPrefs.SetInt(CTIPO_CARRO, (int)PCMG.Get_Seleccion());
+        PlayerPrefs.SetInt(CCALIDAD_SOMBRAS, (int)QualitySettings.shadows);
+    }
+
+    [System.Obsolete("Sistema Bugueado Revisar Proximamente.")]
     public void Guardar_Personalizado(float r, float g, float b, float a)
     {
         Contenido_Personalizado contenido = new Contenido_Personalizado()
@@ -170,14 +217,21 @@ public class Sistema_Guardado : MonoBehaviour
 
     }
 
+    [System.Obsolete("ya no se usan archivos.", true)]
     public void ADD_MAPA(string nombre_mapa)
     {
         File.AppendAllText(URL_PATH_MAPA, nombre_mapa + "\n");
     }
 
+    public void NEW_ADD_MAPA(string name_map)
+    {
+        PlayerPrefs.SetString(name_map, "true");
+    }
+
     public void BTN_REINICIO()
     {
-        FindObjectOfType<Sistema_Guardado>().Guardar();
+        //FindObjectOfType<Sistema_Guardado>().Guardar();
+        FindObjectOfType<Sistema_Guardado>().NewSaved();
         Application.Quit(0);
     }
 }

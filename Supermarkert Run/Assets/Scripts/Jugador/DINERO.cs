@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DINERO : MonoBehaviour
 {
-    [SerializeField]private uint Dinero;
+    [SerializeField]private uint Dinero = 0;
 
     public uint Get_Dinero() => Dinero;
 
@@ -21,6 +21,7 @@ public class DINERO : MonoBehaviour
     public void Set_Agregar(uint dinero)
     {
         Dinero += dinero;
+        PlayerPrefs.SetString("Dinero", Dinero.ToString());
     }
 
 

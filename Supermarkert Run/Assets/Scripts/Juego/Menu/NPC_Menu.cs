@@ -68,7 +68,11 @@ public class NPC_Menu : MonoBehaviour
     {
         if (!GPS.isOnNavMesh) return;
 
-        transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().material.color = Random.ColorHSV();
+        Material material = transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().material;
+        Color nuevo_color = Random.ColorHSV();
+        material.SetColor("_Color", nuevo_color);
+        material.SetColor("_RimColor", nuevo_color);
+        material.SetColor("_SpecularColor", nuevo_color);
         GPS.SetDestination(seguir.position);
 
         int posmat = Random.Range(0, carrito.GetComponent<Get_Content_Car>().Get_Counts_Car());

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
@@ -9,16 +7,14 @@ public class Tiempo : MonoBehaviour
     private int minutos, segundos = 0;
     private float contador;
     [SerializeField] private TMP_Text Texto;
-    public GameObject Muerte;
+    [SerializeField] private GameObject Perdiste;
+    private bool perdio = false;
+    public bool gano = false;
+    [SerializeField] private Player jugador;
     void Start()
     {
-        if(Nivel.nivel < 1000)
-        {
-            minutos = (int)(tiempo - Resta());
-            string minutoss = minutos < 10 ? "0" + minutos.ToString() : minutos.ToString();
-            string segundoss = segundos < 10 ? "0" + segundos.ToString() : segundos.ToString();
-            Texto.text = minutoss + " : " + segundoss;
-        }
+        minutos = (int)tiempo;//(int)(tiempo - Resta());
+        AsignarTiempoUI();
     }
 
     void Update()
@@ -26,41 +22,47 @@ public class Tiempo : MonoBehaviour
         Actualizacion();
     }
 
-    private uint Resta()
+    /*private uint Resta()
     {
         uint nivel = Nivel.nivel;
         uint resultado = (nivel / 100);
         return resultado;
+    }*/
+
+    void AsignarTiempoUI()
+    {
+        string minutoss = minutos < 10 ? "0" + minutos.ToString() : minutos.ToString();
+        string segundoss = segundos < 10 ? "0" + segundos.ToString() : segundos.ToString();
+        Texto.text = minutoss + " : " + segundoss;
     }
+
     private void Actualizacion()
     {
-        if (Nivel.nivel < 1000)
+        contador += Time.deltaTime;
+        if (contador > 1)
         {
-            contador += Time.deltaTime;
-            if (contador > 1)
-            {
-                Contador();
-                contador = 0.0f;
-            }
+            Contador();
+            contador = 0.0f;
         }
     }
 
     private void Contador()
     {
-        string minutoss, segundoss;
+        if (perdio || gano) return;
+
         if (segundos <= 0)
         {
             minutos--;
             segundos = 60;
         }
         segundos--;
-        minutoss = minutos < 10 ? "0" + minutos.ToString() : minutos.ToString();
-        segundoss = segundos < 10 ? "0" + segundos.ToString() : segundos.ToString();
-        Texto.text = minutoss + " : " + segundoss;
+        AsignarTiempoUI();
         if (minutos <= 0 && segundos <= 0)
         {
-            Muerte.GetComponent<Transform>().GetChild(2).gameObject.SetActive(true);
-            Muerte.SetActive(true);
+            jugador.SetDeadZoneJoystick(1000);
+            perdio = true;
+            Perdiste.GetComponent<Transform>().GetChild(2).gameObject.SetActive(true);
+            Perdiste.SetActive(true);
         }
     }
 

@@ -21,7 +21,7 @@ public class Proteccion : Interfaz_PowerUp
         }
     }
 
-    public override void Animacion()
+    /*public override void Animacion()
     {
         if (GetComponent<Transform>().position.magnitude < 2)
         {
@@ -33,7 +33,7 @@ public class Proteccion : Interfaz_PowerUp
             GetComponent<Transform>().localScale = new Vector3(0.4f, 1, 0.4f);
             GetComponent<Transform>().localPosition = new Vector3(GetComponent<Transform>().localPosition.x, -0.72f, GetComponent<Transform>().localPosition.z);
         }
-    }
+    }*/
 
     public override T Get_Efecto<T>()
     {

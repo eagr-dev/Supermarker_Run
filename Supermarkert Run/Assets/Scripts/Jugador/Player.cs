@@ -71,7 +71,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        for (int i = 4; i < 7; i++)
+        for (int i = 5; i < 8; i++)
         {
             ParticleSystem.EmissionModule emission = Ganar_canvas.transform.GetChild(i).GetComponent<ParticleSystem>().emission;
             emission.enabled = false;
@@ -286,7 +286,7 @@ public class Player : MonoBehaviour
         //yield return new WaitForSeconds(tiempo_total + 0.5f);
         Set_Rigs(1);
         joystick.DeadZone = 0;
-        mision.Espacio_Disponible.text = carrito.objetos_actuales.ToString() + " / " +  carrito.cant_limite_carga.ToString();
+        mision.Espacio_Disponible.text = carrito.objetos_actuales.ToString() + "/" +  carrito.cant_limite_carga.ToString();
     }
 
     IEnumerator Retroceder(Collision collision)
@@ -347,7 +347,9 @@ public class Player : MonoBehaviour
         if (other.CompareTag("Estante") || other.CompareTag("Carro"))
         {
             var estante = other.gameObject.GetComponent<IGuardarObjeto>();
-            mision.Verificar_Objeto_este_mision(estante.Get_Object());
+            if (!mision.Verificar_Objeto_este_mision(estante.Get_Object()))
+                return;
+            StartCoroutine(mision.AnimacionTomarObjeto(estante.Get_Object(), other.transform.position));
         }
         else if (other.CompareTag("Objeto"))
         {
@@ -432,14 +434,16 @@ public class Player : MonoBehaviour
 
     public void Gano()
     {
-            Ganar_canvas.SetActive(true);
+        joystick.DeadZone = 1000;
+        Ganar_canvas.SetActive(true);
+        FindObjectOfType<Tiempo>().gano = true;
 
-        for (int i = 4; i < 7; i++)
+        for (int i = 5; i < 8; i++)
         {
             ParticleSystem.EmissionModule emission = Ganar_canvas.transform.GetChild(i).GetComponent<ParticleSystem>().emission;
             emission.enabled = true;
         }
-        for (int i = 4; i < 7; i++)
+        for (int i = 5; i < 7; i++)
         {
             Ganar_canvas.transform.GetChild(i).GetComponent<ParticleSystem>().Play();
         }
@@ -467,9 +471,12 @@ public class Player : MonoBehaviour
             obtener_Objeto_suelo.gameObject.SetActive(false);
             return;
         }
-        mision.Verificar_Objeto_este_mision(se_tomo_objeto.name);
+
+        if(mision.Verificar_Objeto_este_mision(se_tomo_objeto.name))
+            StartCoroutine(mision.AnimacionTomarObjeto(se_tomo_objeto.name, se_tomo_objeto.transform.position));
+
         obtener_Objeto_suelo.gameObject.SetActive(false);
-        Destroy(se_tomo_objeto.gameObject);
+        Destroy(se_tomo_objeto.gameObject, 1);
     }
 
 }

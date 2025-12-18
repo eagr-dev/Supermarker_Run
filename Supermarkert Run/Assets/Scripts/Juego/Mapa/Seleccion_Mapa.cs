@@ -8,7 +8,6 @@ public class Seleccion_Mapa : MonoBehaviour
 {
     [SerializeField] private GameObject Comprar;
     [SerializeField] private GameObject Aceptar;
-    [SerializeField] private Slider slider;
     
     [SerializeField] private TMP_Text Nombre;
     [SerializeField] private TMP_Text Descripcion;
@@ -51,8 +50,26 @@ public class Seleccion_Mapa : MonoBehaviour
         Comprar.SetActive(false);
         Aceptar.SetActive(true);
         Sistema_Guardado sg = FindObjectOfType<Sistema_Guardado>();
-        sg.ADD_MAPA(DO.Get_Mapa(seleccion_actual).nombre_espaniol);
-        sg.Guardar();
+        sg.NEW_ADD_MAPA(DO.Get_Mapa(seleccion_actual).nombre_espaniol);
+        sg.NewSaved();
+    }
+
+    public void BTN_SIG()
+    {
+        Click_Botones.Play();
+        Mapa mapa = DO.Get_Mapa(seleccion_actual + 1);
+        if (mapa == null) return;
+        seleccion_actual++;
+        MostrarSiSeVendio(mapa);
+    }
+
+    public void BTN_ANT()
+    {
+        Click_Botones.Play();
+        Mapa mapa = DO.Get_Mapa(seleccion_actual - 1);
+        if (mapa == null) return;
+        seleccion_actual--;
+        MostrarSiSeVendio(mapa);
     }
 
     private IEnumerator Sin_Saldo()
@@ -68,21 +85,12 @@ public class Seleccion_Mapa : MonoBehaviour
         seleccion = seleccion_actual;
     }
 
-    public void Slider(float value)
+    void MostrarSiSeVendio(Mapa mapa)
     {
-        seleccion_actual = value != slider.maxValue ? (int)value : (int)value - 1;
-
-        if(DO.Get_Mapa(seleccion_actual).precio != 0)
-        {
-            Comprar.SetActive(true);
-            Aceptar.SetActive(false);
-        }
-        else
-        {
-            Comprar.SetActive(false);
-            Aceptar.SetActive(true);
-        }
-        Mostrar(DO.Get_Mapa(seleccion_actual));
+        bool seVendio = mapa.precio != 0;
+        Comprar.SetActive(seVendio);
+        Aceptar.SetActive(!seVendio);
+        Mostrar(mapa);
     }
 
     public Mapa Get_Seleccion() => DO.Get_Mapa(seleccion);
@@ -94,8 +102,8 @@ public class Seleccion_Mapa : MonoBehaviour
         NombreTraducido(mapa, ref nombre, ref descripcion);
         Nombre.text = nombre;
         Descripcion.text = descripcion;
-        Precio.text = "$ " + mapa.precio.ToString();
-        Cantidad_Dar.text = "$->: " + mapa.Valor_mapa.ToString();
+        Precio.text = mapa.precio.ToString();
+        Cantidad_Dar.text = "$" + mapa.Valor_mapa.ToString();
         if(mapa.screen_map != null)
         Muestra.sprite = mapa.screen_map;
     }

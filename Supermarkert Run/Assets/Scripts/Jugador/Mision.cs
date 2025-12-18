@@ -12,7 +12,6 @@ public class Mision : MonoBehaviour
     int misiones_hacer = 0;
     public TMP_Text Espacio_Disponible;
     public GameObject Sin_espacio;
-    public GameObject Muerte;
     Car carro;
     [SerializeField] private AudioSource Obtener_objeto;
     [SerializeField] private ParticleSystem Punto;
@@ -56,7 +55,7 @@ public class Mision : MonoBehaviour
         bool defecto = false;
         int iterador = 0;
         int intentos = 0;
-        const int maximo_intentos = 1000;
+        const int maximo_intentos = 100;
 
 
         while (objetos.Count < misiones_hacer && iterador < maximo_intentos)
@@ -160,6 +159,9 @@ public class Mision : MonoBehaviour
                 // a Verificar_Objeto_este_mision() que hará el resto.
 
                 // Lanzar del ENEMIGO → JUGADOR
+                Debug.Log($"objeto recuperado {nombreObjeto}");
+                if (!Verificar_Objeto_este_mision(nombreObjeto))
+                    continue;
                 posicion_carro = new(posicion_carro.x, 0.5f, posicion_carro.z);
                 LanzarObjetoConTrayectoria(nombreObjeto, posicionEnemigo, posicion_carro);
 
@@ -172,23 +174,25 @@ public class Mision : MonoBehaviour
                 // *Nota: La implementación original de Recuperar_Todos_Los_Objetos de la segunda versión 
                 // no estaba actualizando el estado aquí, solo llamaba a RegresarObjetoRobado y 
                 // Verificar_Objeto_este_mision. Mantendremos esa lógica.
-                Debug.Log($"objeto recuperado {nombreObjeto}");
-                Verificar_Objeto_este_mision(nombreObjeto);
+                
             }
         }
         Mostrar();
-        Espacio_Disponible.text = carro.objetos_actuales.ToString() + " / " + carro.cant_limite_carga.ToString();
+        Espacio_Disponible.text = carro.objetos_actuales.ToString() + "/" + carro.cant_limite_carga.ToString();
     }
 
-    public void Verificar_Objeto_este_mision(string obj)
+    public bool Verificar_Objeto_este_mision(string obj)
     {
         if (carro.objetos_actuales > carro.cant_limite_carga)
+        {
             StartCoroutine(Tiempo_Aparicion());
+            return false;
+        }
 
         var obj_tomo = Se_repite_objeto_tomado(obj);
         if (obj_tomo.Item2 || obj_tomo.Item1 < 0)
-            return;
-        if (objetos[obj_tomo.Item1].Item3) return;
+            return false;
+        if (objetos[obj_tomo.Item1].Item3) return false;
 
         var emision = Punto.emission;
         emision.enabled = true;
@@ -203,6 +207,29 @@ public class Mision : MonoBehaviour
         Espacio_Disponible.text = carro.objetos_actuales.ToString() + "/" + carro.cant_limite_carga.ToString();
         misiones_hechas++;
         Mostrar();
+
+        return true;
+    }
+
+
+    public IEnumerator AnimacionTomarObjeto(string obj, Vector3 posicion_estante)
+    {
+        player.SetDeadZoneJoystick(1000);
+        //Esperar a que el jugador se detenga para iniciar
+        yield return new WaitForSeconds(1);
+
+        GameObject gameObject = Areas.Get_GameObject(obj);
+
+        GameObject instancia = Instantiate(gameObject);
+
+        Vector3 posicion_carro = player.Get_transform_carro().position;
+
+        Vector3 direccion = posicion_carro - posicion_estante;
+
+        yield return StartCoroutine(AnimarLanzamiento(instancia, posicion_estante, direccion));
+
+        Destroy(instancia);
+        player.SetDeadZoneJoystick(0);
     }
 
     public List<string> Volver_Objetos_Caja()
@@ -252,8 +279,6 @@ public class Mision : MonoBehaviour
         yield return new WaitForSeconds(1);
         carro.objetos_actuales = 0;
         Sin_espacio.SetActive(false);
-        Muerte.SetActive(true);
-
     }
 
     public void Mostrar()

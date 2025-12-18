@@ -376,8 +376,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: acdac12134f026b4d9b1573f82f6e6c3, type: 2}
-  - {fileID: 2100000, guid: ec811330b50ce424db378a9e9358c439, type: 2}
+  - {fileID: 2100000, guid: 4796c9fd51d68b647b5621c817706512, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -631,8 +630,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7635826562936255635, guid: aeae4e93ad1ab7549be71dcc41ad50fe, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7635826562936255635, guid: aeae4e93ad1ab7549be71dcc41ad50fe, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7635826562936255635, guid: aeae4e93ad1ab7549be71dcc41ad50fe, type: 3}
       propertyPath: m_Materials.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -7635826562936255635, guid: aeae4e93ad1ab7549be71dcc41ad50fe, type: 3}
       propertyPath: m_Materials.Array.data[1]
@@ -979,7 +986,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7635826562936255635, guid: aeae4e93ad1ab7549be71dcc41ad50fe, type: 3}
       propertyPath: m_Materials.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -7635826562936255635, guid: aeae4e93ad1ab7549be71dcc41ad50fe, type: 3}
       propertyPath: m_Materials.Array.data[1]
@@ -1651,7 +1658,7 @@ PrefabInstance:
     - target: {fileID: -7635826562936255635, guid: 3ea0610771baa0d4da03fd1e578c1ffc, type: 3}
       propertyPath: m_Materials.Array.data[2]
       value: 
-      objectReference: {fileID: 2100000, guid: 29cce450d5acb5d46b1775fa4374a671, type: 2}
+      objectReference: {fileID: 2100000, guid: e63ebb6f98714324eac366ab4b9815d2, type: 2}
     - target: {fileID: -7635826562936255635, guid: 3ea0610771baa0d4da03fd1e578c1ffc, type: 3}
       propertyPath: m_Materials.Array.data[3]
       value: 
@@ -2087,7 +2094,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7635826562936255635, guid: 099749b618d34d340a203d5f43ed5283, type: 3}
       propertyPath: m_Materials.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -7635826562936255635, guid: 099749b618d34d340a203d5f43ed5283, type: 3}
       propertyPath: m_Materials.Array.data[1]

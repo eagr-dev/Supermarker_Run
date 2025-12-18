@@ -330,6 +330,6 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
     {
         if (Canvas_Personalizar.activeInHierarchy && BTN_comprar_personalizar.activeInHierarchy) 
             FindObjectOfType<Personalizacion>().Restar();
-        FindObjectOfType<Sistema_Guardado>().Guardar();
+        FindObjectOfType<Sistema_Guardado>().NewSaved();
     }
 }

@@ -6,48 +6,99 @@ using TMPro;
 
 public class Seleccion_PU : MonoBehaviour
 {
-    [SerializeField] Slider slider;
     [SerializeField] float limite, valor_ant;
     int valor_actual;
     [SerializeField] Transform objetos;
-    List<Vector3> posiciones_iniciales = new List<Vector3>();
+    readonly List<Vector3> posiciones_iniciales = new();
     Repartir_power RP;
     [SerializeField]TMP_Text Nombre,Descripcion;
     [SerializeField] private AudioSource Click_Botones;
+    Vector3 posicion_presentacion = new(7, -0.72f, 14.48f);
+    Vector3 suma_nueva_posicion = new(7, 0, 0), resta_nueva_posicion = new(-7, 0, 0);
+    [SerializeField]float distancia_minina = 3;
+    [SerializeField]float duracionAnimacion = 0.5f;
 
     private void Awake()
     {
         RP = FindObjectOfType<Repartir_power>();
-        slider.maxValue = RP.Get_Enum_Count();
         foreach (Transform obj in objetos)
         {
-            posiciones_iniciales.Add(obj.position);
+            //posiciones_iniciales.Add(obj.position);
+            posiciones_iniciales.Add(obj.localPosition);
             obj.GetComponent<Interfaz_PowerUp>().Set_Descripcion_Nombre();
         }
-        Nombre.text = objetos.GetChild(0).GetComponent<Interfaz_PowerUp>().nombre;
-        Descripcion.text = objetos.GetChild(0).GetComponent<Interfaz_PowerUp>().descripcion;
+        var powerUp = objetos.GetChild(0).GetComponent<Interfaz_PowerUp>();
+
+        SetText(powerUp);
     }
 
-    public void Slider_Value(float value)
+    public void BTN_SIG()
     {
-        if (valor_ant > value) value = Mathf.Abs(value);
-        else value *= -1;
+        Click_Botones.Play();
+        if (objetos.GetChild(0).localPosition == posicion_presentacion)
+            return;
+        ValidarCercano(suma_nueva_posicion);
+    }
 
-        for(int i = 0; i < objetos.childCount; i++)
+    public void BTN_ANT()
+    {
+        Click_Botones.Play();
+        if (objetos.GetChild(objetos.childCount - 1).localPosition == posicion_presentacion)
+            return;
+        ValidarCercano(resta_nueva_posicion);
+    }
+
+
+    private void ValidarCercano(Vector3 posicion_sumar)
+    {
+        Vector3 nueva_posicion;
+        for (int i = 0; i < objetos.childCount; i++)
         {
-            Vector3 targe = posiciones_iniciales[i] + new Vector3(value, 0, 0) * limite;
-            objetos.GetChild(i).position = targe;
-            objetos.GetChild(i).GetComponent<Interfaz_PowerUp>().Animacion();
-
-            if(objetos.GetChild(i).position.magnitude < 5)
+            GameObject hijo = objetos.GetChild(i).gameObject;
+            Interfaz_PowerUp interfaz_PowerUp = hijo.GetComponent<Interfaz_PowerUp>();
+            interfaz_PowerUp.Animacion();
+            posiciones_iniciales[i] += posicion_sumar;
+            nueva_posicion = posiciones_iniciales[i];
+            StartCoroutine(AnimacionPU(hijo, nueva_posicion));
+            float magnitud = (posiciones_iniciales[i] - posicion_presentacion).magnitude;
+            if(magnitud < distancia_minina)
             {
-                objetos.GetChild(i).GetComponent<Interfaz_PowerUp>().Set_Descripcion_Nombre();
-                Nombre.text = objetos.GetChild(i).GetComponent<Interfaz_PowerUp>().nombre;
-                Descripcion.text = objetos.GetChild(i).GetComponent<Interfaz_PowerUp>().descripcion;
+                SetText(interfaz_PowerUp);
             }
         }
-        valor_actual = (int)(value != slider.maxValue ? value : value -1);
-        valor_ant = value;
+    }
+
+    IEnumerator AnimacionPU(GameObject objeto, Vector3 nueva_posicion)
+    {
+        Transform transform = objeto.transform;
+        Vector3 posicionInicial = transform.localPosition;
+        Vector3 posicionFinal = nueva_posicion;
+
+        float tiempoTranscurrido = 0f;
+
+        while (tiempoTranscurrido < duracionAnimacion)
+        {
+            tiempoTranscurrido += Time.deltaTime;
+            float t = tiempoTranscurrido / duracionAnimacion;
+
+            // Ease-out para movimiento suave
+            float tSuave = 1f - Mathf.Pow(1f - t, 2f);
+
+            // Interpolar posición LOCAL
+            transform.localPosition = Vector3.Lerp(posicionInicial, posicionFinal, tSuave);
+
+            yield return null;
+        }
+
+        // Asegurar posición final exacta
+        transform.localPosition = posicionFinal;
+    }
+
+    void SetText(Interfaz_PowerUp interfaz_PowerUp)
+    {
+        interfaz_PowerUp.Set_Descripcion_Nombre();
+        Nombre.text = interfaz_PowerUp.name;
+        Descripcion.text = interfaz_PowerUp.descripcion;
     }
 
     public void BTN_Power()

@@ -35682,7 +35682,7 @@ PrefabInstance:
     - target: {fileID: 1630794972795428178, guid: 31e5e4601c394f644b274ac998aed966, type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
-      objectReference: {fileID: -252876452513934151, guid: 31e5e4601c394f644b274ac998aed966, type: 3}
+      objectReference: {fileID: 2100000, guid: ac319f2469c542c49814b1c1eb025505, type: 2}
     - target: {fileID: 5866666021909216657, guid: 31e5e4601c394f644b274ac998aed966, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -36241,10 +36241,10 @@ MonoBehaviour:
   misiones_hechas: 0
   Espacio_Disponible: {fileID: 0}
   Sin_espacio: {fileID: 0}
-  Muerte: {fileID: 0}
   Obtener_objeto: {fileID: 5052284613195728480}
   Punto: {fileID: 6397404951580922999}
   player: {fileID: 1214457975653736139}
+  posicion_carro: {x: 0, y: 0, z: 0}
   text_misiones:
   - {fileID: 0}
   - {fileID: 0}

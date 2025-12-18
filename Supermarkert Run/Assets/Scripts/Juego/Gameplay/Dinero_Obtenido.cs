@@ -35,7 +35,11 @@ public class Dinero_Obtenido : MonoBehaviour
 
     public void Set_Posicion(int pos) => Pos = pos;
 
-    public Mapa Get_Mapa(int pos) => mapas[pos];
+    public Mapa Get_Mapa(int pos)
+    {
+        if (mapas.Count <= pos || pos < 0) return null;
+        return mapas[pos];
+    }
     
     public Mapa Get_Mapa(string name)
     {
