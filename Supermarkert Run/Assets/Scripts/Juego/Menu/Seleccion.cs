@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.IO;
-using UnityEngine.SceneManagement;
 
 public class Seleccion : MonoBehaviour
 {
@@ -14,8 +12,6 @@ public class Seleccion : MonoBehaviour
     [SerializeField] private GameObject Configuracion_Canvas;
     [SerializeField] private GameObject PU;
     [SerializeField] private RectTransform PadreCoPoCa;
-    const float abierto = 0;
-    const float cerrado = -1500;
 
     [Header("Animaciones")]
 
@@ -134,18 +130,9 @@ public class Seleccion : MonoBehaviour
     public void BTN_Jugar()
     {
         Click_Botones.Play();
-        string URL_IDIOMA = "";
-#if UNITY_EDITOR
-        URL_IDIOMA = Application.dataPath + "/SUPERMARKER/Ingles.json";
-#else
-        URL_IDIOMA = "/storage/emulated/0/Documents/SUPERMARKER/Ingles.json";
-#endif
         string pos = FindObjectOfType<Seleccion_Mapa>().Get_Seleccion().nombre_espaniol;
-        if (!File.Exists(URL_IDIOMA))
-        {
-            SceneManager.LoadScene(pos);
-            return;
-        }
+            //SceneManager.LoadScene(pos);
+            //return;
         Menu.Pause();
         StartCoroutine(Jugar(pos));
 

@@ -7,7 +7,7 @@ public class Estante : MonoBehaviour, IGuardarObjeto
     public Areas.Area_product Tag;
 
     public int count_obj = 0;
-    readonly int primer_hijo = 1, ultimo_hijo = 3;
+    readonly int primer_hijo = 0, ultimo_hijo = 2;
 
     public void Set_Product(Areas.Area_product tag, int producto, GameObject ObjectCopy)
     {
@@ -78,9 +78,9 @@ public class Estante : MonoBehaviour, IGuardarObjeto
         if(tag == Areas.Area_product.Articulos_Escolares)
         {
             //6.35x -24.77
-            transform.GetChild(1).localPosition = new Vector3(18.29f, -0.203f, -73.85f);
-            transform.GetChild(2).localPosition = new Vector3(18.29f, 1f, -73.85f);
-            transform.GetChild(3).localPosition = new Vector3(18.29f, 2f, -73.85f);
+            transform.GetChild(0).localPosition = new Vector3(18.29f, -0.203f, -73.85f);
+            transform.GetChild(1).localPosition = new Vector3(18.29f, 1f, -73.85f);
+            transform.GetChild(2).localPosition = new Vector3(18.29f, 2f, -73.85f);
         }
     }
 

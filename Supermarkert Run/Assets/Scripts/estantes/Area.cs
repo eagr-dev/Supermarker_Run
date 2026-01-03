@@ -25,7 +25,15 @@ public class Area : BehaviorEnemy
     public void Acomodar_Estantes()
     {
         int count = 0;
-        foreach (Transform child in transform)
+        Estante[] hijosEstantes = transform.GetComponentsInChildren<Estante>();
+
+        foreach(Estante estante in hijosEstantes)
+        {
+            estante.transform.SetSiblingIndex(Get_List_Rand()[count]);
+            estante.Set_Product(Tag, count, Lista_Objetos[count++]);
+        }
+
+        /*foreach (Transform child in transform)
         {
             child.SetSiblingIndex(Get_List_Rand()[count++]);
         }
@@ -35,7 +43,7 @@ public class Area : BehaviorEnemy
         foreach (Transform child in transform)
         {
             child.GetComponent<Estante>().Set_Product(Tag, count, Lista_Objetos[count++]);
-        }
+        }*/
     }
 
     private void Start()

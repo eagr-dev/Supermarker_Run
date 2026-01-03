@@ -114,8 +114,8 @@ public class Obstaculos : MonoBehaviour
 
         for(int i = 0; i < N_crear_OBJ; i++)
         {
-            Instantiate(Carro);
-            Carro.transform.position = Posicion_Objetos(0.5f);
+            Instantiate(Obstaculo);
+            Obstaculo.transform.position = Posicion_Objetos(0.5f);
         }
     }
 
@@ -124,8 +124,8 @@ public class Obstaculos : MonoBehaviour
         int N_crear_Carros = Random.Range(min_carros, max_carros);
         for (int i = 0; i < N_crear_Carros; i++)
         {
-            Instantiate(Obstaculo);
-            Obstaculo.transform.position = Posicion_Objetos(0.5f);
+            Instantiate(Carro);
+            Carro.transform.position = Posicion_Objetos(0.5f);
         }
     }
 
@@ -168,15 +168,6 @@ public class Obstaculos : MonoBehaviour
             plane.transform.position = Posicion_Enemigo(-2);
             obj_Seguir.Add(plane);
         }
-    }
-
-    [System.Obsolete("Las luces dinamicas no van con los nuevos graficos.", true)]
-    private void Get_Dinamica()
-    {
-        if (!FindObjectOfType<Pase_Conexion_Menu_Gameplay>().dinamica)
-            Luz_Estatica.SetActive(true);
-        else
-            Luz_Dinamica.SetActive(true);
     }
 
 }
