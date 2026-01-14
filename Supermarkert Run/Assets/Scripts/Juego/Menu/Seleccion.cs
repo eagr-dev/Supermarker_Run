@@ -43,8 +43,8 @@ public class Seleccion : MonoBehaviour
         if ((int)(camara.fieldOfView - FOV) != 0)
             StartCoroutine(Animacion_Acercar(FOVAC, FOV,rotacionOriginal,rotacion_carro, rotar_camara));
         Click_Botones.Play();
-        Pase_Conexion_Menu_Gameplay conector = FindObjectOfType<Pase_Conexion_Menu_Gameplay>();
-        FindObjectOfType<Seleccion_Menu_Carrito>().Set_Car_Menu(conector.Get_Seleccion(),conector.Get_Eleccion());
+        Pase_Conexion_Menu_Gameplay conector = FindFirstObjectByType<Pase_Conexion_Menu_Gameplay>();
+        FindFirstObjectByType<Seleccion_Menu_Carrito>().Set_Car_Menu(conector.Get_Seleccion(),conector.Get_Eleccion());
         if((Animacion_Npc.transform.position - Posicion_Original.position).magnitude >= 3)
         {
             Animacion_Npc.Caminar(Tiempo_Animacion, Posicion_Original);
@@ -117,7 +117,7 @@ public class Seleccion : MonoBehaviour
         Menu_Canvas.SetActive(false);
         Carritos_Canvas.SetActive(true);
         Animacion_Npc.Caminar(Tiempo_Animacion, Posicion_Ir);
-        FindObjectOfType<Pase_Conexion_Menu_Gameplay>().Set_Seleccion(Pase_Conexion_Menu_Gameplay.Tipo_Carro.PEQUEÑO);
+        FindFirstObjectByType<Pase_Conexion_Menu_Gameplay>().Set_Seleccion(Pase_Conexion_Menu_Gameplay.Tipo_Carro.PEQUEÑO);
     }
 
     public void BTN_Configuraciones()
@@ -130,7 +130,7 @@ public class Seleccion : MonoBehaviour
     public void BTN_Jugar()
     {
         Click_Botones.Play();
-        string pos = FindObjectOfType<Seleccion_Mapa>().Get_Seleccion().nombre_espaniol;
+        string pos = FindFirstObjectByType<Seleccion_Mapa>().Get_Seleccion().nombre_espaniol;
             //SceneManager.LoadScene(pos);
             //return;
         Menu.Pause();
@@ -184,10 +184,10 @@ public class Seleccion : MonoBehaviour
     {
         if(Mapas_Canvas.activeInHierarchy || PowerUp_Canvas.activeInHierarchy || Configuracion_Canvas.activeInHierarchy)
         {
-            Pase_Conexion_Menu_Gameplay conector = FindObjectOfType<Pase_Conexion_Menu_Gameplay>();
-            FindObjectOfType<Seleccion_Menu_Carrito>().Set_Car_Menu(conector.Get_Seleccion(), conector.Get_Eleccion());
+            Pase_Conexion_Menu_Gameplay conector = FindFirstObjectByType<Pase_Conexion_Menu_Gameplay>();
+            FindFirstObjectByType<Seleccion_Menu_Carrito>().Set_Car_Menu(conector.Get_Seleccion(), conector.Get_Eleccion());
         }
-        FindObjectOfType<Sistema_Guardado>().NewSaved();
+        FindFirstObjectByType<Sistema_Guardado>().NewSaved();
     }
 
 }

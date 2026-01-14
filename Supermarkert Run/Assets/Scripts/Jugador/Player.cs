@@ -56,11 +56,11 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        mision = FindObjectOfType<Mision>();
+        mision = FindFirstObjectByType<Mision>();
         rigid = GetComponent<Rigidbody>();
-        if (FindObjectOfType<Repartir_power>() != null)
+        if (FindFirstObjectByType<Repartir_power>() != null)
         {
-            RP = FindObjectOfType<Repartir_power>();
+            RP = FindFirstObjectByType<Repartir_power>();
             Efecto = RP.Get_Power_Up_Class();
             PU = RP.Get_Power_Up();
             Debug.Log(PU);
@@ -436,7 +436,7 @@ public class Player : MonoBehaviour
     {
         joystick.DeadZone = 1000;
         Ganar_canvas.SetActive(true);
-        FindObjectOfType<Tiempo>().gano = true;
+        FindFirstObjectByType<Tiempo>().gano = true;
 
         for (int i = 5; i < 8; i++)
         {
@@ -448,13 +448,13 @@ public class Player : MonoBehaviour
             Ganar_canvas.transform.GetChild(i).GetComponent<ParticleSystem>().Play();
         }
 
-            Dinero_Obtenido DO = FindObjectOfType<Dinero_Obtenido>();
+            Dinero_Obtenido DO = FindFirstObjectByType<Dinero_Obtenido>();
             Dinero_Text.text = $"$ {DO.Get_Dinero()}"; 
     }
     public void BTN_Ganar()
     {
         GameObject Boton_Presiono = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
-        Dinero_Obtenido DO = FindObjectOfType<Dinero_Obtenido>();
+        Dinero_Obtenido DO = FindFirstObjectByType<Dinero_Obtenido>();
         DO.Get_Mapa(SceneManager.GetActiveScene().name).cantidad_juegos++;
         Nivel.Set_Nivel(Nivel.nivel + 1);
 

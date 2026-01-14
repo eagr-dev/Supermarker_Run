@@ -13,7 +13,7 @@ public class Proteccion : Interfaz_PowerUp
 
     public override void Efecto()
     {
-        RP = FindObjectOfType<Repartir_power>();
+        RP = FindFirstObjectByType<Repartir_power>();
         if (efecto == true)
         {
             efecto = false;

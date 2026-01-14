@@ -73,7 +73,7 @@ Material:
     - _Metallic: 0
     - _Mode: 3
     - _OcclusionStrength: 1
-    - _OutlineWidth: 0.1
+    - _OutlineWidth: 0.031
     - _Parallax: 0.02
     - _RimAmount: 1
     - _RimThreshold: 0.1
@@ -93,3 +93,4 @@ Material:
     - _ShadowColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
     - _SpecularColor: {r: 0.4339623, g: 0.4339623, b: 0.4339623, a: 0.99607843}
   m_BuildTextureStacks: []
+  m_AllowLocking: 1

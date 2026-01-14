@@ -31,7 +31,7 @@ public class Calidad : MonoBehaviour
         Sombras.isOn = bool.Parse(PlayerPrefs.GetString("Sombras", "false"));
         QualitySettings.shadows = !Sombras.isOn ? ShadowQuality.Disable : ShadowQuality.All;
         //Sombra_Falsa.SetActive(QualitySettings.shadows.Equals(ShadowQuality.Disable));
-        PCMG = FindObjectOfType<Pase_Conexion_Menu_Gameplay>();
+        PCMG = FindFirstObjectByType<Pase_Conexion_Menu_Gameplay>();
         //Luces.isOn = bool.Parse(PlayerPrefs.GetString("Dinamica", "false"));
         //PCMG.dinamica = Luces.isOn;
         //Luz_Encender();
@@ -102,7 +102,7 @@ public class Calidad : MonoBehaviour
         List<string> Parametro = new List<string>();
         Parametro.Add(idioma.Get_Idioma()[0] + ":" + Nivel.nivel.ToString());
         //Parametro.Add(idioma.Get_Idioma()[1] + ":" + FindObjectOfType<DINERO>().Get_Dinero().ToString());
-        Parametro.Add("$" + FindObjectOfType<DINERO>().Get_Dinero().ToString());
+        Parametro.Add("$" + FindFirstObjectByType<DINERO>().Get_Dinero().ToString());
         Parametro.Add(idioma.Get_Idioma()[2]);
         Parametro.Add(idioma.Get_Idioma()[3]);
         Parametro.Add(idioma.Get_Idioma()[4]);

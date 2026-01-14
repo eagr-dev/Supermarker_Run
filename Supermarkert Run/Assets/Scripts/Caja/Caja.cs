@@ -13,7 +13,7 @@ public class Caja : MonoBehaviour
 
     private void Start()
     {
-        jugador = FindObjectOfType<Player>();
+        jugador = FindFirstObjectByType<Player>();
     }
 
     public IEnumerator HacerObjetosCajaVisible(float tiempo, Mision mision)

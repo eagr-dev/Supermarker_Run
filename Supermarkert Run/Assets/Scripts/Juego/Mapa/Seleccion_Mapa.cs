@@ -25,7 +25,7 @@ public class Seleccion_Mapa : MonoBehaviour
 
     private void Awake()
     {
-        DO = FindObjectOfType<Dinero_Obtenido>();
+        DO = FindFirstObjectByType<Dinero_Obtenido>();
     }
 
     private void Start()
@@ -36,7 +36,7 @@ public class Seleccion_Mapa : MonoBehaviour
     public void BTN_Comprar()
     {
         Click_Botones.Play();
-        DINERO di = FindObjectOfType<DINERO>();
+        DINERO di = FindFirstObjectByType<DINERO>();
         bool compra = di.Set_Compra((uint)DO.Get_Mapa(seleccion_actual).precio);
         if (!compra)
         {
@@ -49,7 +49,7 @@ public class Seleccion_Mapa : MonoBehaviour
         Precio.text = "$ " + DO.Get_Mapa(seleccion).precio.ToString();
         Comprar.SetActive(false);
         Aceptar.SetActive(true);
-        Sistema_Guardado sg = FindObjectOfType<Sistema_Guardado>();
+        Sistema_Guardado sg = FindFirstObjectByType<Sistema_Guardado>();
         sg.NEW_ADD_MAPA(DO.Get_Mapa(seleccion_actual).nombre_espaniol);
         sg.NewSaved();
     }

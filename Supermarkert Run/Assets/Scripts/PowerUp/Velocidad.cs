@@ -8,7 +8,7 @@ public class Velocidad : Interfaz_PowerUp
 
     public override void Efecto()
     {
-        RP = FindObjectOfType<Repartir_power>();
+        RP = FindFirstObjectByType<Repartir_power>();
         RP.Set_Enum(Repartir_power.NULLENUM);
     }
 

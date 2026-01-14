@@ -22,7 +22,7 @@ public class Get_Content_Car : MonoBehaviour
 
     private void Awake()
     {
-        Pase_Conexion_Menu_Gameplay PCMG = FindObjectOfType<Pase_Conexion_Menu_Gameplay>();
+        Pase_Conexion_Menu_Gameplay PCMG = FindFirstObjectByType<Pase_Conexion_Menu_Gameplay>();
         posicion = PCMG.Get_Eleccion();
         PCMG.Set_List_All(ref car, TC);
         r.material = car[posicion].skin_car;

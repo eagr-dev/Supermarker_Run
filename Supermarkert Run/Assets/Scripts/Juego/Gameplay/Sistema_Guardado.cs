@@ -32,10 +32,10 @@ public class Sistema_Guardado : MonoBehaviour
         URL_PATH = $"{ruta}/datos.json";
         URL_PATH_PERSONALIZADA = $"{ruta}/personalizado.json";
         URL_PATH_MAPA = $"{ruta}/mapa.txt";
-        Dinero = FindObjectOfType<DINERO>();
-        _Nivel = FindObjectOfType<Nivel>();
-        PCMG = FindObjectOfType<Pase_Conexion_Menu_Gameplay>();
-        seleccion_carro = FindObjectOfType<Seleccion_Menu_Carrito>();
+        Dinero = FindFirstObjectByType<DINERO>();
+        _Nivel = FindFirstObjectByType<Nivel>();
+        PCMG = FindFirstObjectByType<Pase_Conexion_Menu_Gameplay>();
+        seleccion_carro = FindFirstObjectByType<Seleccion_Menu_Carrito>();
         //Cargar();
         //Carga_Personalizada();
         //Carga_Mapa();
@@ -113,7 +113,7 @@ public class Sistema_Guardado : MonoBehaviour
 
     private void NewLoadMaps()
     {
-        List<Mapa> mapas = FindObjectOfType<Dinero_Obtenido>().mapas;
+        List<Mapa> mapas = FindFirstObjectByType<Dinero_Obtenido>().mapas;
         foreach (Mapa mapa in mapas)
         {
             if(PlayerPrefs.GetString(mapa.nombre_espaniol) == "true")
@@ -231,7 +231,7 @@ public class Sistema_Guardado : MonoBehaviour
     public void BTN_REINICIO()
     {
         //FindObjectOfType<Sistema_Guardado>().Guardar();
-        FindObjectOfType<Sistema_Guardado>().NewSaved();
+        FindFirstObjectByType<Sistema_Guardado>().NewSaved();
         Application.Quit(0);
     }
 }

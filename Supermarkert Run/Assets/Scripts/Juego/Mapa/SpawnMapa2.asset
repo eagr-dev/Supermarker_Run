@@ -13,45 +13,39 @@ MonoBehaviour:
   m_Name: SpawnMapa2
   m_EditorClassIdentifier: 
   puntos:
-  - posicion: {x: -3.2064261, y: 0.5, z: 31.297674}
+  - posicion: {x: 33.990585, y: 0, z: 16.149378}
     rotacion: {x: 0, y: 0, z: 0, w: 1}
-  - posicion: {x: -19.255785, y: 3.9640388, z: 33.556923}
+  - posicion: {x: 30.271008, y: 0, z: -6.8150716}
     rotacion: {x: 0, y: 0, z: 0, w: 1}
-  - posicion: {x: -23.758003, y: 1.2337112, z: 33.556923}
+  - posicion: {x: -7.213435, y: 0, z: -23.1249}
     rotacion: {x: 0, y: 0, z: 0, w: 1}
-  - posicion: {x: -38.07502, y: 0.5, z: 22.508516}
+  - posicion: {x: -42.176476, y: 0, z: -23.1249}
     rotacion: {x: 0, y: 0, z: 0, w: 1}
-  - posicion: {x: -5.9440436, y: 0.5, z: 21.499933}
+  - posicion: {x: -23.906553, y: 0, z: -48.39183}
     rotacion: {x: 0, y: 0, z: 0, w: 1}
-  - posicion: {x: -18.623528, y: 0.5, z: 20.77949}
+  - posicion: {x: 25.689009, y: 0, z: -48.21261}
     rotacion: {x: 0, y: 0, z: 0, w: 1}
-  - posicion: {x: 13.507442, y: 0.5, z: 21.06769}
+  - posicion: {x: 18.155584, y: 0, z: -3.6151848}
     rotacion: {x: 0, y: 0, z: 0, w: 1}
-  - posicion: {x: -3.3505154, y: 0.5, z: 9.973108}
+  - posicion: {x: 18.155584, y: 0, z: 6.574217}
     rotacion: {x: 0, y: 0, z: 0, w: 1}
-  - posicion: {x: 35.552467, y: 0.5, z: 1.1839457}
+  - posicion: {x: -22.783817, y: 0, z: 17.752754}
     rotacion: {x: 0, y: 0, z: 0, w: 1}
-  - posicion: {x: -39.227684, y: 0.5, z: -12.504139}
+  - posicion: {x: -33.593906, y: 0, z: 29.288958}
     rotacion: {x: 0, y: 0, z: 0, w: 1}
-  - posicion: {x: -21.072975, y: 0.5, z: -1.8418579}
+  - posicion: {x: 28.276947, y: 0, z: 29.288958}
     rotacion: {x: 0, y: 0, z: 0, w: 1}
-  - posicion: {x: 9.984417, y: 4.694631, z: 1.760417}
+  - posicion: {x: -34.98477, y: 0, z: 9.055338}
     rotacion: {x: 0, y: 0, z: 0, w: 1}
-  - posicion: {x: -2.498926, y: 4.694631, z: -8.745352}
+  - posicion: {x: -33.040524, y: 0, z: -11.805896}
     rotacion: {x: 0, y: 0, z: 0, w: 1}
-  - posicion: {x: 32.67076, y: 0.5, z: -32.755966}
+  - posicion: {x: -35.237335, y: 0, z: -37.441948}
     rotacion: {x: 0, y: 0, z: 0, w: 1}
-  - posicion: {x: 0.3438084, y: 4.694631, z: -41.8866}
+  - posicion: {x: 30.564678, y: 0, z: -19.307648}
     rotacion: {x: 0, y: 0, z: 0, w: 1}
-  - posicion: {x: -3.782767, y: 0.5, z: -44.426834}
+  - posicion: {x: 30.36495, y: 0, z: -33.74247}
     rotacion: {x: 0, y: 0, z: 0, w: 1}
-  - posicion: {x: -29.573996, y: 0.5, z: -30.88285}
+  - posicion: {x: -34.229958, y: 0, z: -6.9143305}
     rotacion: {x: 0, y: 0, z: 0, w: 1}
-  - posicion: {x: -1.2236397, y: 1.9486885, z: -18.843075}
-    rotacion: {x: 0, y: 0, z: 0, w: 1}
-  - posicion: {x: -3.7163386, y: 4.796034, z: -7.1507416}
-    rotacion: {x: 0, y: 0, z: 0, w: 1}
-  - posicion: {x: 30.941746, y: 0.5, z: -25.986124}
-    rotacion: {x: 0, y: 0, z: 0, w: 1}
-  - posicion: {x: -40.09221, y: 0.5, z: -42.411766}
+  - posicion: {x: -33.21738, y: 0.5, z: 12.843445}
     rotacion: {x: 0, y: 0, z: 0, w: 1}

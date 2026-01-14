@@ -20,7 +20,7 @@ public class Seleccion_PU : MonoBehaviour
 
     private void Awake()
     {
-        RP = FindObjectOfType<Repartir_power>();
+        RP = FindFirstObjectByType<Repartir_power>();
         foreach (Transform obj in objetos)
         {
             //posiciones_iniciales.Add(obj.position);

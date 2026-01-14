@@ -25,12 +25,22 @@ public class SpawnPointLaser : MonoBehaviour
     void Start()
     {
         cam = Camera.main;
+        cam.transform.Rotate(new(90,0,0));
         ConfigurarLineRenderer();
     }
 
     void Update()
     {
         DibujarLaser();
+
+        if (Input.GetKey(KeyCode.W))
+            cam.transform.position += new Vector3(0f, 0f, 10f) * Time.deltaTime;
+        if (Input.GetKey(KeyCode.S))
+            cam.transform.position += new Vector3(0f, 0f, -10f) * Time.deltaTime;
+        if (Input.GetKey(KeyCode.D))
+            cam.transform.position += new Vector3(10f, 0f, 0f) * Time.deltaTime;
+        if (Input.GetKey(KeyCode.A))
+            cam.transform.position += new Vector3(-10f, 0f, 0f) * Time.deltaTime;
 
 #if UNITY_EDITOR
         if (Input.GetKeyDown(teclaSpawnear))

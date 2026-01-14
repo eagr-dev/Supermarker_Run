@@ -54,7 +54,7 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
 
     public void Inicializador()
     {
-        PCMG = FindObjectOfType<Pase_Conexion_Menu_Gameplay>();
+        PCMG = FindFirstObjectByType<Pase_Conexion_Menu_Gameplay>();
         carrito_Actual = Get_Active();
         slider.maxValue = carrito_Actual.GetComponent<Get_Content_Car>().Get_Counts_Car();
         carrito_Actual.GetComponent<Get_Content_Car>().Set_Car(eleccion);
@@ -154,7 +154,7 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
     public void BTN_Comprar()
     {
         Click_Botones.Play();
-        DINERO dinero = FindObjectOfType<DINERO>();
+        DINERO dinero = FindFirstObjectByType<DINERO>();
         carrito_Actual = Get_Active();
         Car carrito_comprar = carrito_Actual.GetComponent<Get_Content_Car>().Get_Car();
 
@@ -171,8 +171,8 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
 
             if (Canvas_Personalizar.activeInHierarchy)
             {
-                float[] retorno = FindObjectOfType<Personalizacion>().Get_RGB();
-                FindObjectOfType<Sistema_Guardado>().Guardar_Personalizado(retorno[0], retorno[1], retorno[2], retorno[3]);
+                float[] retorno = FindFirstObjectByType<Personalizacion>().Get_RGB();
+                FindFirstObjectByType<Sistema_Guardado>().Guardar_Personalizado(retorno[0], retorno[1], retorno[2], retorno[3]);
             }
             BTN_aceptar.SetActive(true);
         }
@@ -196,7 +196,7 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
         Canvas_Personalizar.SetActive(true);
         eleccion = Get_Active().GetComponent<Get_Content_Car>().Get_Counts_Car() - 1;
         Set_Skin_Eleccion(eleccion);
-        FindObjectOfType<Personalizacion>().Guardado();
+        FindFirstObjectByType<Personalizacion>().Guardado();
     }
 
     public void BTN_Salida()
@@ -205,7 +205,7 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
         if (Get_Active().GetComponent<Get_Content_Car>().Get_Car().precio > 0)
         {
             Debug.Log("Personalizado");
-            FindObjectOfType<Personalizacion>().Restar();
+            FindFirstObjectByType<Personalizacion>().Restar();
         }
         Canvas_Eleccion.SetActive(true);
         Canvas_Personalizar.SetActive(false);
@@ -321,7 +321,7 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
 
     private void Mostrar_Dinero()
     {
-        Calidad calidad = FindObjectOfType<Calidad>();
+        Calidad calidad = FindFirstObjectByType<Calidad>();
         calidad.Modificacion_Idioma();
         
     }
@@ -329,7 +329,7 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
     private void OnApplicationQuit()
     {
         if (Canvas_Personalizar.activeInHierarchy && BTN_comprar_personalizar.activeInHierarchy) 
-            FindObjectOfType<Personalizacion>().Restar();
-        FindObjectOfType<Sistema_Guardado>().NewSaved();
+            FindFirstObjectByType<Personalizacion>().Restar();
+        FindFirstObjectByType<Sistema_Guardado>().NewSaved();
     }
 }

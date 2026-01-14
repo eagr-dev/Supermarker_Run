@@ -19,7 +19,7 @@ public class Personalizacion : MonoBehaviour
 
     private void Awake()
     {
-        SMC = FindObjectOfType<Seleccion_Menu_Carrito>();
+        SMC = FindFirstObjectByType<Seleccion_Menu_Carrito>();
     }
 
     private void Start()

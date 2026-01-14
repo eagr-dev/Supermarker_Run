@@ -9,22 +9,19 @@ public class Animacion_Puerta : MonoBehaviour
     [System.Serializable]
     public struct Puerta
     {
-        [SerializeField]GameObject Marco, Cristal;
-        [Header("Marco")]
+        [SerializeField]GameObject puerta;
+        [Header("Posicion del marco")]
         [SerializeField] Transform TMA, TMD;
-        [Header("Cristal")]
-        [SerializeField]Transform TCA, TCD;
+        [SerializeField] float interpolacion;//0.5
 
         public void Animacion_Abrir()
         {
-            Marco.transform.position = Vector3.Slerp(Marco.transform.position, TMD.position, 0.5f);
-            Cristal.transform.position = Vector3.Slerp(Cristal.transform.position, TCD.position, 0.5f);
+            puerta.transform.position = Vector3.Slerp(puerta.transform.position, TMD.position, interpolacion);
         }
 
         public void Animacion_Cerrar()
         {
-            Marco.transform.position = Vector3.Slerp(Marco.transform.position, TMA.position, 0.5f);
-            Cristal.transform.position = Vector3.Slerp(Cristal.transform.position, TCA.position, 0.5f);
+            puerta.transform.position = Vector3.Slerp(puerta.transform.position, TMA.position, interpolacion);
         }
     }
 
@@ -58,7 +55,6 @@ public class Animacion_Puerta : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         contador++;
-
     }
 
     private void OnTriggerExit(Collider other)

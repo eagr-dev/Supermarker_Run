@@ -10,7 +10,7 @@ public class Animacion_Carga : MonoBehaviour
     [SerializeField] Camera camara;
     [SerializeField] Transform objeto_Seguir;
     [SerializeField] NavMeshAgent GPS;
-    [SerializeField] private Vector3 distancia = new Vector3(0, 7, -3);
+    [SerializeField] private Vector3 distancia = new(0, 7, -3);
     public float progreso;
     [SerializeField] float POV = 30;
     [SerializeField] Animator animacion;
@@ -108,7 +108,7 @@ public class Animacion_Carga : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.name == "Puerta")
+        if (other.name == "PuertaAnimacion")
         {
             Contacto = true;
         }
