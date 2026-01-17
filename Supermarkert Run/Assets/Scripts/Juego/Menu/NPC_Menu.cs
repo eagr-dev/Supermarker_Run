@@ -47,7 +47,6 @@ public class NPC_Menu : MonoBehaviour
         seguir = Seguir.transform;
         inicializado = true;
         StartCoroutine(Espera());
-        Debug.Log($"[{name}] Inicializado correctamente");
     }
 
     void Update()

@@ -220,6 +220,8 @@ public class Mision : MonoBehaviour
 
         GameObject gameObject = Areas.Get_GameObject(obj);
 
+        if (gameObject == null) yield break;
+
         GameObject instancia = Instantiate(gameObject);
 
         Vector3 posicion_carro = player.Get_transform_carro().position;
@@ -257,6 +259,9 @@ public class Mision : MonoBehaviour
         float scale = 0.5f;
 
         GameObject objeto = Areas.Get_GameObject(nombreObjeto);
+
+        if (gameObject == null) yield break;
+
         GameObject instancia = Instantiate(objeto);
 
         //Modificar la escala
@@ -334,6 +339,9 @@ public class Mision : MonoBehaviour
     private GameObject ObjetoLanzado(string name)
     {
         GameObject objeto = Areas.Get_GameObject(name);
+
+        if (gameObject == null) return null;
+
         GameObject instancia = Instantiate(objeto);
         List<Material> materials = new();
         instancia.transform.GetChild(0).GetComponent<MeshRenderer>().GetMaterials(materials);
@@ -373,6 +381,9 @@ public class Mision : MonoBehaviour
 
         // Crear y lanzar el objeto
         GameObject instancia = ObjetoLanzado(name);
+
+        if (gameObject == null) return;
+
         InformacionObjeto(ref instancia, name);
         StartCoroutine(AnimarLanzamiento(instancia, positionA, direccionAjustada));
     }
@@ -447,6 +458,8 @@ public class Mision : MonoBehaviour
     private void LanzarObjetoConTrayectoria(string name, Vector3 posicionOrigen, Vector3 posicionDestino)
     {
         GameObject instancia = ObjetoLanzado(name);
+
+        if (gameObject == null) return;
 
         // Ajustamos la posición inicial para que parezca que sale de ese punto
         instancia.transform.position = posicionOrigen;

@@ -31,6 +31,6 @@ MonoBehaviour:
   cantidad_rateros: 0
   cantidad_minima_obstaculos: 10
   cantidad_maxima_obstaculos: 27
-  cantidad_minina_carritos: 10
+  cantidad_minina_carritos: 5
   cantidad_maxima_carritos: 20
   spawn: {fileID: 11400000, guid: 2165a66f4b88f5844a2ef15ccfe62192, type: 2}

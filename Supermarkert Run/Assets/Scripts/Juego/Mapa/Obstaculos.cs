@@ -10,8 +10,6 @@ public class Obstaculos : MonoBehaviour
     [SerializeField] private GameObject EnemigoComun;
     [SerializeField] private GameObject EnemigoRatero;
     [SerializeField] private Transform player;
-    [SerializeField] private GameObject Luz_Estatica;
-    [SerializeField] private GameObject Luz_Dinamica;
     [SerializeField] private GameObject punto;
     [SerializeField] List<GameObject> posicion_cajas;
     /*[SerializeField]*/
@@ -22,12 +20,9 @@ public class Obstaculos : MonoBehaviour
 
     private List<GameObject> obj_Seguir = new();
 
-    [SerializeField] Mapa mapa;
-
     private void Awake()
     {
-        //mapa_content = FindFirstObjectByType<Dinero_Obtenido>().Get_Mapa(SceneManager.GetActiveScene().name);
-        mapa_content = mapa;
+        mapa_content = FindFirstObjectByType<Dinero_Obtenido>().Get_Mapa(SceneManager.GetActiveScene().name);
         spawn = mapa_content.spawn;
 
         Crear_Spawns();
@@ -43,9 +38,8 @@ public class Obstaculos : MonoBehaviour
 
         Crear_Carros_Aleatorios();
         Create_OBJ();
-        //Create_Objetos_Seguir();
-        //Create_Enemigos();
-        //Get_Dinamica();
+        Create_Objetos_Seguir();
+        Create_Enemigos();
     }
 
     private void Crear_Spawns()
@@ -113,9 +107,7 @@ public class Obstaculos : MonoBehaviour
 
     private void Create_OBJ()
     {
-        //int N_crear_OBJ = Random.Range(min_obj, max_obj);
-        int N_crear_OBJ = max_obj;
-        Debug.Log($"Crear {N_crear_OBJ} obstaculos");
+        int N_crear_OBJ = Random.Range(min_obj, max_obj);
 
         for(int i = 0; i < N_crear_OBJ; i++)
         {
