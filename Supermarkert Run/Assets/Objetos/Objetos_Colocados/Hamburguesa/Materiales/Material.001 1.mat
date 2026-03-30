@@ -44,7 +44,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 01d40f37de6f71f41835ddb064d28d9e, type: 3}
+        m_Texture: {fileID: 2800000, guid: 39fe36267b4e4e04baa03e67e02da368, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -84,11 +84,11 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0.49685526, g: 0.49685526, b: 0.49685526, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
-    - _RimColor: {r: 0.15723258, g: 0.15723258, b: 0.15723258, a: 1}
-    - _ShadowColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
-    - _SpecularColor: {r: 0.3207547, g: 0.3207547, b: 0.3207547, a: 1}
+    - _RimColor: {r: 0.16981131, g: 0.16981131, b: 0.16981131, a: 1}
+    - _ShadowColor: {r: 0.29559743, g: 0.29559743, b: 0.29559743, a: 1}
+    - _SpecularColor: {r: 0.3018868, g: 0.3018868, b: 0.3018868, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
