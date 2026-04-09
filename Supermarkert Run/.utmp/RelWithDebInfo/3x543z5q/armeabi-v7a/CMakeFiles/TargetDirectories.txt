@@ -1,0 +1,5 @@
+C:/Users/gatob/OneDrive/Documentos/Supermarker_Run/Supermarkert Run/.utmp/RelWithDebInfo/3x543z5q/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/Users/gatob/OneDrive/Documentos/Supermarker_Run/Supermarkert Run/.utmp/RelWithDebInfo/3x543z5q/armeabi-v7a/CMakeFiles/rebuild_cache.dir
+C:/Users/gatob/OneDrive/Documentos/Supermarker_Run/Supermarkert Run/.utmp/RelWithDebInfo/3x543z5q/armeabi-v7a/FramePacing/CMakeFiles/swappywrapper.dir
+C:/Users/gatob/OneDrive/Documentos/Supermarker_Run/Supermarkert Run/.utmp/RelWithDebInfo/3x543z5q/armeabi-v7a/FramePacing/CMakeFiles/edit_cache.dir
+C:/Users/gatob/OneDrive/Documentos/Supermarker_Run/Supermarkert Run/.utmp/RelWithDebInfo/3x543z5q/armeabi-v7a/FramePacing/CMakeFiles/rebuild_cache.dir

@@ -5,8 +5,8 @@ OcclusionCullingSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_OcclusionBakeSettings:
-    smallestOccluder: 3
-    smallestHole: 0.25
+    smallestOccluder: 4
+    smallestHole: 1
     backfaceThreshold: 100
   m_SceneGUID: 351f20eeed7b42e4a94b14faa87415f7
   m_OcclusionCullingData: {fileID: 36300000, guid: cf4f854a17cf0074bad1c31c910fc822, type: 2}
@@ -267,94 +267,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2531b5913c316f43a4750a6d4f214e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Limpieza_HogarG:
-  - {fileID: 919132149155446097, guid: 3df0e1d1b73518c419196d5de1e143d2, type: 3}
-  - {fileID: 919132149155446097, guid: 3df0e1d1b73518c419196d5de1e143d2, type: 3}
-  - {fileID: 919132149155446097, guid: 3df0e1d1b73518c419196d5de1e143d2, type: 3}
-  - {fileID: 919132149155446097, guid: 3df0e1d1b73518c419196d5de1e143d2, type: 3}
-  - {fileID: 919132149155446097, guid: 3df0e1d1b73518c419196d5de1e143d2, type: 3}
-  - {fileID: 919132149155446097, guid: 3df0e1d1b73518c419196d5de1e143d2, type: 3}
-  - {fileID: 919132149155446097, guid: 3df0e1d1b73518c419196d5de1e143d2, type: 3}
-  - {fileID: 919132149155446097, guid: 3df0e1d1b73518c419196d5de1e143d2, type: 3}
-  - {fileID: 919132149155446097, guid: 3df0e1d1b73518c419196d5de1e143d2, type: 3}
-  - {fileID: 919132149155446097, guid: 3df0e1d1b73518c419196d5de1e143d2, type: 3}
-  ComidaG:
-  - {fileID: 919132149155446097, guid: 11bfae99c1a4e9647ba34c59e474c3bc, type: 3}
-  - {fileID: 919132149155446097, guid: 11bfae99c1a4e9647ba34c59e474c3bc, type: 3}
-  - {fileID: 919132149155446097, guid: 11bfae99c1a4e9647ba34c59e474c3bc, type: 3}
-  - {fileID: 919132149155446097, guid: 11bfae99c1a4e9647ba34c59e474c3bc, type: 3}
-  - {fileID: 919132149155446097, guid: 11bfae99c1a4e9647ba34c59e474c3bc, type: 3}
-  - {fileID: 919132149155446097, guid: 11bfae99c1a4e9647ba34c59e474c3bc, type: 3}
-  - {fileID: 919132149155446097, guid: 11bfae99c1a4e9647ba34c59e474c3bc, type: 3}
-  - {fileID: 919132149155446097, guid: 11bfae99c1a4e9647ba34c59e474c3bc, type: 3}
-  - {fileID: 919132149155446097, guid: 11bfae99c1a4e9647ba34c59e474c3bc, type: 3}
-  - {fileID: 919132149155446097, guid: 11bfae99c1a4e9647ba34c59e474c3bc, type: 3}
-  ElectrodomesticosG:
-  - {fileID: 919132149155446097, guid: 2f9e15f7d93a6d74d9ce5724d017e1ef, type: 3}
-  - {fileID: 919132149155446097, guid: 2f9e15f7d93a6d74d9ce5724d017e1ef, type: 3}
-  - {fileID: 919132149155446097, guid: 2f9e15f7d93a6d74d9ce5724d017e1ef, type: 3}
-  - {fileID: 919132149155446097, guid: 2f9e15f7d93a6d74d9ce5724d017e1ef, type: 3}
-  - {fileID: 919132149155446097, guid: 2f9e15f7d93a6d74d9ce5724d017e1ef, type: 3}
-  - {fileID: 919132149155446097, guid: 2f9e15f7d93a6d74d9ce5724d017e1ef, type: 3}
-  - {fileID: 919132149155446097, guid: 2f9e15f7d93a6d74d9ce5724d017e1ef, type: 3}
-  - {fileID: 919132149155446097, guid: 2f9e15f7d93a6d74d9ce5724d017e1ef, type: 3}
-  - {fileID: 919132149155446097, guid: 2f9e15f7d93a6d74d9ce5724d017e1ef, type: 3}
-  - {fileID: 919132149155446097, guid: 2f9e15f7d93a6d74d9ce5724d017e1ef, type: 3}
-  Bebidas_JugosG:
-  - {fileID: 919132149155446097, guid: aeae4e93ad1ab7549be71dcc41ad50fe, type: 3}
-  - {fileID: 919132149155446097, guid: aeae4e93ad1ab7549be71dcc41ad50fe, type: 3}
-  - {fileID: 919132149155446097, guid: aeae4e93ad1ab7549be71dcc41ad50fe, type: 3}
-  - {fileID: 919132149155446097, guid: aeae4e93ad1ab7549be71dcc41ad50fe, type: 3}
-  - {fileID: 919132149155446097, guid: aeae4e93ad1ab7549be71dcc41ad50fe, type: 3}
-  - {fileID: 919132149155446097, guid: aeae4e93ad1ab7549be71dcc41ad50fe, type: 3}
-  - {fileID: 919132149155446097, guid: aeae4e93ad1ab7549be71dcc41ad50fe, type: 3}
-  - {fileID: 919132149155446097, guid: aeae4e93ad1ab7549be71dcc41ad50fe, type: 3}
-  - {fileID: 919132149155446097, guid: aeae4e93ad1ab7549be71dcc41ad50fe, type: 3}
-  - {fileID: 919132149155446097, guid: aeae4e93ad1ab7549be71dcc41ad50fe, type: 3}
-  CarrosG:
-  - {fileID: 919132149155446097, guid: 099749b618d34d340a203d5f43ed5283, type: 3}
-  - {fileID: 919132149155446097, guid: 099749b618d34d340a203d5f43ed5283, type: 3}
-  - {fileID: 919132149155446097, guid: 099749b618d34d340a203d5f43ed5283, type: 3}
-  - {fileID: 919132149155446097, guid: 099749b618d34d340a203d5f43ed5283, type: 3}
-  - {fileID: 919132149155446097, guid: 099749b618d34d340a203d5f43ed5283, type: 3}
-  - {fileID: 919132149155446097, guid: 099749b618d34d340a203d5f43ed5283, type: 3}
-  - {fileID: 919132149155446097, guid: 099749b618d34d340a203d5f43ed5283, type: 3}
-  - {fileID: 919132149155446097, guid: 099749b618d34d340a203d5f43ed5283, type: 3}
-  - {fileID: 919132149155446097, guid: 099749b618d34d340a203d5f43ed5283, type: 3}
-  - {fileID: 919132149155446097, guid: 099749b618d34d340a203d5f43ed5283, type: 3}
-  Articulos_EscolaresG:
-  - {fileID: 3963544721437308470, guid: 090bf3be7d9da5d4698291b28038b759, type: 3}
-  - {fileID: 3963544721437308470, guid: 090bf3be7d9da5d4698291b28038b759, type: 3}
-  - {fileID: 3963544721437308470, guid: 090bf3be7d9da5d4698291b28038b759, type: 3}
-  - {fileID: 3963544721437308470, guid: 090bf3be7d9da5d4698291b28038b759, type: 3}
-  - {fileID: 3963544721437308470, guid: 090bf3be7d9da5d4698291b28038b759, type: 3}
-  - {fileID: 3963544721437308470, guid: 090bf3be7d9da5d4698291b28038b759, type: 3}
-  - {fileID: 3963544721437308470, guid: 090bf3be7d9da5d4698291b28038b759, type: 3}
-  - {fileID: 3963544721437308470, guid: 090bf3be7d9da5d4698291b28038b759, type: 3}
-  - {fileID: 3963544721437308470, guid: 090bf3be7d9da5d4698291b28038b759, type: 3}
-  - {fileID: 3963544721437308470, guid: 090bf3be7d9da5d4698291b28038b759, type: 3}
-  Limpieza_PersonalG:
-  - {fileID: 919132149155446097, guid: 4bbef0c31f8fe8a42a4ea59e118495df, type: 3}
-  - {fileID: 919132149155446097, guid: 4bbef0c31f8fe8a42a4ea59e118495df, type: 3}
-  - {fileID: 919132149155446097, guid: 4bbef0c31f8fe8a42a4ea59e118495df, type: 3}
-  - {fileID: 919132149155446097, guid: 4bbef0c31f8fe8a42a4ea59e118495df, type: 3}
-  - {fileID: 919132149155446097, guid: 4bbef0c31f8fe8a42a4ea59e118495df, type: 3}
-  - {fileID: 919132149155446097, guid: 4bbef0c31f8fe8a42a4ea59e118495df, type: 3}
-  - {fileID: 919132149155446097, guid: 4bbef0c31f8fe8a42a4ea59e118495df, type: 3}
-  - {fileID: 919132149155446097, guid: 4bbef0c31f8fe8a42a4ea59e118495df, type: 3}
-  - {fileID: 919132149155446097, guid: 4bbef0c31f8fe8a42a4ea59e118495df, type: 3}
-  - {fileID: 919132149155446097, guid: 4bbef0c31f8fe8a42a4ea59e118495df, type: 3}
-  Frutas_verdurasG:
-  - {fileID: 919132149155446097, guid: 30054b2f20830af4786a340b97dc2301, type: 3}
-  - {fileID: 919132149155446097, guid: 30054b2f20830af4786a340b97dc2301, type: 3}
-  - {fileID: 919132149155446097, guid: 30054b2f20830af4786a340b97dc2301, type: 3}
-  - {fileID: 919132149155446097, guid: 30054b2f20830af4786a340b97dc2301, type: 3}
-  - {fileID: 919132149155446097, guid: 30054b2f20830af4786a340b97dc2301, type: 3}
-  - {fileID: 919132149155446097, guid: 30054b2f20830af4786a340b97dc2301, type: 3}
-  - {fileID: 919132149155446097, guid: 30054b2f20830af4786a340b97dc2301, type: 3}
-  - {fileID: 919132149155446097, guid: 30054b2f20830af4786a340b97dc2301, type: 3}
-  - {fileID: 919132149155446097, guid: 30054b2f20830af4786a340b97dc2301, type: 3}
-  - {fileID: 919132149155446097, guid: 30054b2f20830af4786a340b97dc2301, type: 3}
 --- !u!4 &105186761
 Transform:
   m_ObjectHideFlags: 0
@@ -676,6 +588,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &488345007
 MeshFilter:
@@ -958,6 +871,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &751470225
 MeshFilter:
@@ -1099,7 +1013,7 @@ MonoBehaviour:
   anchoLaser: 0.05
 --- !u!120 &963194231
 LineRenderer:
-  serializedVersion: 2
+  serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1145,6 +1059,7 @@ LineRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_Positions:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 1}
@@ -1203,7 +1118,6 @@ LineRenderer:
     textureScale: {x: 1, y: 1}
     shadowBias: 0.5
     generateLightingData: 0
-  m_MaskInteraction: 0
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
@@ -1314,14 +1228,14 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1065723970}
   m_Enabled: 1
-  serializedVersion: 11
+  serializedVersion: 12
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 2
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
-  m_CookieSize: 10
+  m_CookieSize2D: {x: 10, y: 10}
   m_Shadows:
     m_Type: 2
     m_Resolution: -1
@@ -1602,6 +1516,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1318087040
 MeshFilter:
@@ -1786,6 +1701,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1452680639
 MeshFilter:
@@ -1924,13 +1840,10 @@ MonoBehaviour:
   EnemigoComun: {fileID: 4263544900681987134, guid: ef4457fac51f7f448ae20abd9783d89d, type: 3}
   EnemigoRatero: {fileID: 4263544900681987134, guid: 4171e4a2496ea05448c6f7ce6e4c4a22, type: 3}
   player: {fileID: 2122040461}
-  Luz_Estatica: {fileID: 1065723970}
-  Luz_Dinamica: {fileID: 0}
   punto: {fileID: 596105419}
   posicion_cajas:
   - {fileID: 1204397150}
   - {fileID: 626331919}
-  mapa: {fileID: 11400000, guid: aa1221adca85cbd459819c5bb54af51e, type: 2}
 --- !u!114 &1452680643
 MonoBehaviour:
   m_ObjectHideFlags: 0
