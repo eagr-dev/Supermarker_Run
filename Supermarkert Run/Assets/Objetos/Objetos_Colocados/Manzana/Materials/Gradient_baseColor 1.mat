@@ -11,10 +11,10 @@ Material:
   m_Shader: {fileID: 4800000, guid: 1a59b0c553fe56048b7a5fe3674206c1, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
-  m_InvalidKeywords:
+  m_ValidKeywords:
   - _ALPHAPREMULTIPLY_ON
   - _EMISSION
+  m_InvalidKeywords: []
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -73,7 +73,7 @@ Material:
     - _Metallic: 0
     - _Mode: 3
     - _OcclusionStrength: 1
-    - _OutlineWidth: 0.031
+    - _OutlineWidth: 0.06
     - _Parallax: 0.02
     - _RimAmount: 1
     - _RimThreshold: 0.1

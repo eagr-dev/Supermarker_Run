@@ -1,4 +1,4 @@
-﻿Shader "Custom/CelShading"
+﻿Shader "Custom/CelShading_URP"
 {
     Properties
     {
@@ -27,53 +27,69 @@
 
         SubShader
         {
-            Tags { "RenderType" = "Opaque" "LightMode" = "ForwardBase" }
-            LOD 200
+            Tags
+            {
+                "RenderType" = "Opaque"
+                "RenderPipeline" = "UniversalPipeline"
+                "Queue" = "Geometry"
+            }
 
             // ============================================
-            // PASS 1: Outline (se dibuja primero)
+            // PASS 1: Outline
             // ============================================
             Pass
             {
                 Name "Outline"
+                Tags { "LightMode" = "SRPDefaultUnlit" }
                 Cull Front
 
-                CGPROGRAM
-                #pragma vertex vert
-                #pragma fragment frag
-                #include "UnityCG.cginc"
+                HLSLPROGRAM
+                #pragma vertex OutlineVert
+                #pragma fragment OutlineFrag
 
-                struct appdata
+                #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+
+                struct Attributes
                 {
-                    float4 vertex : POSITION;
-                    float3 normal : NORMAL;
+                    float4 positionOS : POSITION;
+                    float3 normalOS   : NORMAL;
                 };
 
-                struct v2f
+                struct Varyings
                 {
-                    float4 pos : SV_POSITION;
+                    float4 positionHCS : SV_POSITION;
                 };
 
-                float _OutlineWidth;
-                float4 _OutlineColor;
+                CBUFFER_START(UnityPerMaterial)
+                    float4 _MainTex_ST;
+                    float4 _Color;
+                    float4 _ShadowColor;
+                    float  _ShadowThreshold;
+                    float  _ShadowSmoothness;
+                    float4 _RimColor;
+                    float  _RimAmount;
+                    float  _RimThreshold;
+                    float4 _SpecularColor;
+                    float  _Glossiness;
+                    float  _SpecularStrength;
+                    float  _OutlineWidth;
+                    float4 _OutlineColor;
+                CBUFFER_END
 
-                v2f vert(appdata v)
+                Varyings OutlineVert(Attributes IN)
                 {
-                    v2f o;
-
-                    // Expandir vértices en dirección de la normal
-                    float3 normal = normalize(v.normal);
-                    float3 outlinePos = v.vertex.xyz + normal * _OutlineWidth;
-
-                    o.pos = UnityObjectToClipPos(float4(outlinePos, 1.0));
-                    return o;
+                    Varyings OUT;
+                    float3 normal = normalize(IN.normalOS);
+                    float3 outlinePosOS = IN.positionOS.xyz + normal * _OutlineWidth;
+                    OUT.positionHCS = TransformObjectToHClip(float4(outlinePosOS, 1.0));
+                    return OUT;
                 }
 
-                fixed4 frag(v2f i) : SV_Target
+                half4 OutlineFrag(Varyings IN) : SV_Target
                 {
                     return _OutlineColor;
                 }
-                ENDCG
+                ENDHLSL
             }
 
             // ============================================
@@ -82,109 +98,165 @@
             Pass
             {
                 Name "CelShading"
+                Tags { "LightMode" = "UniversalForward" }
                 Cull Back
 
-                CGPROGRAM
-                #pragma vertex vert
-                #pragma fragment frag
-                #pragma multi_compile_fwdbase
-                #include "UnityCG.cginc"
-                #include "Lighting.cginc"
-                #include "AutoLight.cginc"
+                HLSLPROGRAM
+                #pragma vertex CelVert
+                #pragma fragment CelFrag
 
-                struct appdata
+                #pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE
+                #pragma multi_compile _ _SHADOWS_SOFT
+                #pragma multi_compile_fog
+
+                #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+                #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+
+                struct Attributes
                 {
-                    float4 vertex : POSITION;
-                    float3 normal : NORMAL;
-                    float2 uv : TEXCOORD0;
+                    float4 positionOS : POSITION;
+                    float3 normalOS   : NORMAL;
+                    float2 uv         : TEXCOORD0;
                 };
 
-                struct v2f
+                struct Varyings
                 {
-                    float4 pos : SV_POSITION;
-                    float2 uv : TEXCOORD0;
-                    float3 worldNormal : TEXCOORD1;
-                    float3 worldPos : TEXCOORD2;
-                    SHADOW_COORDS(3)
+                    float4 positionHCS : SV_POSITION;
+                    float2 uv          : TEXCOORD0;
+                    float3 normalWS    : TEXCOORD1;
+                    float3 positionWS  : TEXCOORD2;
+                    float4 shadowCoord : TEXCOORD3;
                 };
 
-                sampler2D _MainTex;
-                float4 _MainTex_ST;
-                float4 _Color;
-                float4 _ShadowColor;
-                float _ShadowThreshold;
-                float _ShadowSmoothness;
-                float4 _RimColor;
-                float _RimAmount;
-                float _RimThreshold;
-                float4 _SpecularColor;
-                float _Glossiness;
-                float _SpecularStrength;
+                TEXTURE2D(_MainTex);
+                SAMPLER(sampler_MainTex);
 
-                v2f vert(appdata v)
+                CBUFFER_START(UnityPerMaterial)
+                    float4 _MainTex_ST;
+                    float4 _Color;
+                    float4 _ShadowColor;
+                    float  _ShadowThreshold;
+                    float  _ShadowSmoothness;
+                    float4 _RimColor;
+                    float  _RimAmount;
+                    float  _RimThreshold;
+                    float4 _SpecularColor;
+                    float  _Glossiness;
+                    float  _SpecularStrength;
+                    float  _OutlineWidth;
+                    float4 _OutlineColor;
+                CBUFFER_END
+
+                Varyings CelVert(Attributes IN)
                 {
-                    v2f o;
-                    o.pos = UnityObjectToClipPos(v.vertex);
-                    o.uv = TRANSFORM_TEX(v.uv, _MainTex);
-                    o.worldNormal = UnityObjectToWorldNormal(v.normal);
-                    o.worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
-                    TRANSFER_SHADOW(o);
-                    return o;
+                    Varyings OUT;
+
+                    VertexPositionInputs posInputs = GetVertexPositionInputs(IN.positionOS.xyz);
+                    VertexNormalInputs   normInputs = GetVertexNormalInputs(IN.normalOS);
+
+                    OUT.positionHCS = posInputs.positionCS;
+                    OUT.positionWS = posInputs.positionWS;
+                    OUT.normalWS = normInputs.normalWS;
+                    OUT.uv = TRANSFORM_TEX(IN.uv, _MainTex);
+                    OUT.shadowCoord = GetShadowCoord(posInputs);
+
+                    return OUT;
                 }
 
-                fixed4 frag(v2f i) : SV_Target
+                half4 CelFrag(Varyings IN) : SV_Target
                 {
                     // Textura base
-                    float4 texColor = tex2D(_MainTex, i.uv) * _Color;
+                    half4 texColor = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, IN.uv) * _Color;
 
-                    // Normalizar vectores
-                    float3 normal = normalize(i.worldNormal);
-                    float3 viewDir = normalize(_WorldSpaceCameraPos - i.worldPos);
-                    float3 lightDir = normalize(_WorldSpaceLightPos0.xyz);
+                    // Vectores
+                    float3 normalWS = normalize(IN.normalWS);
+                    float3 viewDirWS = normalize(GetWorldSpaceViewDir(IN.positionWS));
 
-                    // ===== CEL SHADING: Iluminación por bandas =====
-                    float NdotL = dot(normal, lightDir);
+                    // Luz principal URP
+                    Light mainLight = GetMainLight(IN.shadowCoord);
+                    float3 lightDir = normalize(mainLight.direction);
+                    float  shadow = mainLight.shadowAttenuation;
 
-                    // Crear bandas de iluminación
-                    float lightIntensity = smoothstep(_ShadowThreshold - _ShadowSmoothness,
-                                                      _ShadowThreshold + _ShadowSmoothness,
-                                                      NdotL);
-
-                    // Sombras de Unity
-                    float shadow = SHADOW_ATTENUATION(i);
+                    // CEL SHADING
+                    float NdotL = dot(normalWS, lightDir);
+                    float lightIntensity = smoothstep(
+                        _ShadowThreshold - _ShadowSmoothness,
+                        _ShadowThreshold + _ShadowSmoothness,
+                        NdotL
+                    );
                     lightIntensity *= shadow;
+                    half4 lightColor = lerp(_ShadowColor, half4(1,1,1,1), lightIntensity);
 
-                    // Color final con sombras
-                    float4 lightColor = lerp(_ShadowColor, float4(1,1,1,1), lightIntensity);
-
-                    // ===== RIM LIGHTING (luz de borde) =====
-                    float rimDot = 1 - dot(viewDir, normal);
+                    // RIM LIGHT
+                    float rimDot = 1.0 - dot(viewDirWS, normalWS);
                     float rimIntensity = smoothstep(_RimAmount - 0.01, _RimAmount + 0.01, rimDot);
-                    rimIntensity *= pow(NdotL, _RimThreshold);
-                    float4 rim = rimIntensity * _RimColor;
+                    rimIntensity *= pow(max(NdotL, 0.0), _RimThreshold);
+                    half4 rim = rimIntensity * _RimColor;
 
-                    // ===== SPECULAR (brillo) =====
-                    float3 halfVector = normalize(lightDir + viewDir);
-                    float NdotH = dot(normal, halfVector);
-                    float specularIntensity = pow(max(NdotH, 0.0), _Glossiness * _Glossiness);
+                    // SPECULAR
+                    float3 halfVector = normalize(lightDir + viewDirWS);
+                    float  NdotH = dot(normalWS, halfVector);
+                    float  specularIntensity = pow(max(NdotH, 0.0), _Glossiness * _Glossiness);
+                    float  specularBand = smoothstep(0.005, 0.01, specularIntensity);
+                    half4  specular = specularBand * _SpecularColor * _SpecularStrength;
 
-                    // Convertir specular a bandas
-                    float specularIntensitySmooth = smoothstep(0.005, 0.01, specularIntensity);
-                    float4 specular = specularIntensitySmooth * _SpecularColor * _SpecularStrength;
+                    // Color de la luz
+                    half4 mainLightColor = half4(mainLight.color, 1.0);
 
-                    // ===== COMBINAR TODO =====
-                    float4 finalColor = texColor * lightColor * _LightColor0;
+                    // Combinar
+                    half4 finalColor = texColor * lightColor * mainLightColor;
                     finalColor += rim;
                     finalColor += specular;
+                    finalColor.a = texColor.a;
 
                     return finalColor;
                 }
-                ENDCG
+                ENDHLSL
             }
 
-                    // Sombras
-                    UsePass "Legacy Shaders/VertexLit/SHADOWCASTER"
+                    // ============================================
+                    // PASS 3: Shadow Caster
+                    // ============================================
+                    Pass
+                    {
+                        Name "ShadowCaster"
+                        Tags { "LightMode" = "ShadowCaster" }
+                        ZWrite On
+                        ZTest LEqual
+                        ColorMask 0
+                        Cull Back
+
+                        HLSLPROGRAM
+                        #pragma vertex ShadowPassVertex
+                        #pragma fragment ShadowPassFragment
+                        #pragma multi_compile_shadowcaster
+
+                        #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+                        #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SurfaceInput.hlsl"
+                        #include "Packages/com.unity.render-pipelines.universal/Shaders/ShadowCasterPass.hlsl"
+                        ENDHLSL
+                    }
+
+                    // ============================================
+                    // PASS 4: Depth Only
+                    // ============================================
+                    Pass
+                    {
+                        Name "DepthOnly"
+                        Tags { "LightMode" = "DepthOnly" }
+                        ZWrite On
+                        ColorMask R
+                        Cull Back
+
+                        HLSLPROGRAM
+                        #pragma vertex DepthOnlyVertex
+                        #pragma fragment DepthOnlyFragment
+
+                        #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+                        #include "Packages/com.unity.render-pipelines.universal/Shaders/DepthOnlyPass.hlsl"
+                        ENDHLSL
+                    }
         }
 
-            FallBack "Diffuse"
+            FallBack "Universal Render Pipeline/Lit"
 }
