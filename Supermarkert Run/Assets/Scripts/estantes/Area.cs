@@ -5,7 +5,7 @@ using UnityEngine;
 public class Area : BehaviorEnemy
 {
     public Areas.Area_product Tag;
-    enum EstanteVisible { CAJA = 11, JUGO, ESCOBA, COMIDA, LIBRO, MANZANA, TECNOLOGIA, ROLLO};
+    enum EstanteVisible { CAJA = 10, JUGO, ESCOBA, COMIDA, LIBRO, MANZANA, TECNOLOGIA, ROLLO};
     EstanteVisible estanteVisible;
 
     private List<int> Get_List_Rand()

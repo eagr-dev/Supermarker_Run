@@ -5,7 +5,7 @@ using System;
 
 public class Get_Content_Car : MonoBehaviour
 {
-    private List<Car> car = new List<Car>();
+    private List<Car> car = new();
     [SerializeField]MeshRenderer r;
     public Pase_Conexion_Menu_Gameplay.Tipo_Carro TC;
     public int posicion;

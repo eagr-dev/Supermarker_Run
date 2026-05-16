@@ -122,7 +122,7 @@ public class Obstaculos : MonoBehaviour
         for (int i = 0; i < N_crear_Carros; i++)
         {
             Instantiate(Carro);
-            Carro.transform.position = Posicion_Objetos(0.5f);
+            Carro.transform.position = Posicion_Objetos(1.3f);
         }
     }
 
