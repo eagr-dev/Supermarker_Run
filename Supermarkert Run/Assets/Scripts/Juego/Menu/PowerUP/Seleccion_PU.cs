@@ -35,17 +35,19 @@ public class Seleccion_PU : MonoBehaviour
     public void BTN_SIG()
     {
         Click_Botones.Play();
-        if (objetos.GetChild(0).localPosition == posicion_presentacion)
+        if (objetos.GetChild(objetos.childCount - 1).localPosition == posicion_presentacion)
             return;
-        ValidarCercano(suma_nueva_posicion);
+        valor_actual++;
+        ValidarCercano(resta_nueva_posicion);
     }
 
     public void BTN_ANT()
     {
         Click_Botones.Play();
-        if (objetos.GetChild(objetos.childCount - 1).localPosition == posicion_presentacion)
+        if (objetos.GetChild(0).localPosition == posicion_presentacion)
             return;
-        ValidarCercano(resta_nueva_posicion);
+        valor_actual--;
+        ValidarCercano(suma_nueva_posicion);
     }
 
 
@@ -104,6 +106,8 @@ public class Seleccion_PU : MonoBehaviour
     public void BTN_Power()
     {
         Click_Botones.Play();
+        Debug.Log($"Se envio la posicion {valor_actual}");
         RP.Set_Enum(Mathf.Abs(valor_actual));
+        Debug.Log($"se dio {RP.Get_Power_Up()}");
     }
 }

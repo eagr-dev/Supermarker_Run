@@ -132,6 +132,7 @@ public class Player : MonoBehaviour
 
     public bool Esta_Protegido()
     {
+
         float velocidad = Velocidad_joystick();
 
         choque_mayor = velocidad > resistencia_porcentual;
@@ -141,6 +142,10 @@ public class Player : MonoBehaviour
             Debug.Log($"El jugador no a chocado {velocidad}");
             return true;
         }
+
+        if (Efecto == null)
+            return false;
+
         bool retorno = PU == Repartir_power.Power_Up.PROTECCION;
         if(retorno)
             ConsumirProteccion();
@@ -456,7 +461,8 @@ public class Player : MonoBehaviour
         GameObject Boton_Presiono = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
         Dinero_Obtenido DO = FindFirstObjectByType<Dinero_Obtenido>();
         DO.Get_Mapa(SceneManager.GetActiveScene().name).cantidad_juegos++;
-        Nivel.Set_Nivel(Nivel.nivel + 1);
+        Nivel.Set_Nivel(Nivel.nivel + 1); // primero actualiza
+        Debug.Log($"Nuevo nivel {Nivel.nivel}");
 
         if (Boton_Presiono.name != "X2")
             DO.Recompensa();

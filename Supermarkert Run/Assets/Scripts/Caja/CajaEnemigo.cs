@@ -5,6 +5,7 @@ using UnityEngine;
 public class CajaEnemigo : MonoBehaviour
 {
     bool cajaOcupada = false;
+    [SerializeField]Transform posicionLlegar;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -18,4 +19,5 @@ public class CajaEnemigo : MonoBehaviour
     }
 
     public bool GetOcupado() => cajaOcupada;
+    public Vector3 GetPos() => posicionLlegar.position;
 }

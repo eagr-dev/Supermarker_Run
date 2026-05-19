@@ -171,4 +171,32 @@ public class Areas : MonoBehaviour
         return null;
     }
 
+    public static Area_product Get_Tag_Area_Product(string name)
+    {
+
+        for (int i = 0; i < areas; i++)
+        {
+            for (int j = 0; j < objetos_contiene; j++)
+            {
+                if (name != Objetos[i][j]) continue;
+                var tag = (Area_product)i;
+                return tag;
+            }
+        }
+        return Area_product.Carros;
+    }
+
+    public Area GetAreaByObjectName(string name)
+    {
+        for (int i = 0; i < areas; i++)
+        {
+            for (int j = 0; j < objetos_contiene; j++)
+            {
+                if (name != Objetos[i][j]) continue;
+                return transform.GetChild(i).GetComponent<Area>();
+            }
+        }
+        return null;
+    }
+
 }

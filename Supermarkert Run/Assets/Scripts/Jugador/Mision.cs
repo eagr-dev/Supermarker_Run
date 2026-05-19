@@ -21,6 +21,9 @@ public class Mision : MonoBehaviour
 
     [Header("UI Misiones")]
     [SerializeField] private TMP_Text[] text_misiones = new TMP_Text[10];
+    [SerializeField] private Image[] images = new Image[10];
+    [SerializeField] private Sprite[] icons = new Sprite[7];
+    [SerializeField] private Sprite iconObjectInCash, iconClean;
     [SerializeField] private TMP_Text posicion_texto;
     int inicio_lista = 0, final_lista = 10;
     Color no_tomado = new(0, 0, 0);
@@ -29,6 +32,10 @@ public class Mision : MonoBehaviour
 
     [Header("Material Para Objetos Caidos")]
     [SerializeField] Material material_objeto;
+
+    //Areas para hacer que el area tenga un resplandor
+    Areas[] areas;
+    Area actual, anterior;
 
     private void Start()
     {
@@ -42,10 +49,14 @@ public class Mision : MonoBehaviour
         Espacio_Disponible.text = carro.objetos_actuales.ToString() + "/" + carro.cant_limite_carga.ToString();
         Limpiar_Textos();
         Mostrar();
+        SetAreas();
+        IluminarEstanteConPrimerObjetoBuscar(objetos[0].Item1);
     }
     public static int Cantidad_Nivel()
     {
-        int misiones_obtenibles = (misiones_default + (int)(Nivel.nivel - 1));
+        int misiones_obtenibles;
+        int misions = (misiones_default + (int)(Nivel.nivel - 1));
+        misiones_obtenibles = misions > misiones_default ? (int)Nivel.nivel : misions;
         int misiones = misiones_obtenibles <= maximo_misiones ? misiones_obtenibles : maximo_misiones;
         return misiones;
     }
@@ -113,6 +124,9 @@ public class Mision : MonoBehaviour
         ));
         Debug.Log($"el indice es {index}");
         if (index == -1) return;
+
+        IluminarEstanteConPrimerObjetoBuscar(tuple.Item1);
+
         objetos[index] = new System.Tuple<string, bool, bool>(tuple.Item1, false, false);
         LanzarObjetoChoco(tuple.Item1, transform.position, transform.forward * 5f);// 5 metros adelante
         misiones_hechas--;
@@ -140,6 +154,7 @@ public class Mision : MonoBehaviour
                 LanzarObjetoConTrayectoria(objetos[i].Item1, posicion_carro, posicionEnemigo);
             }
         }
+        IluminarEstanteConPrimerObjetoBuscar(objetos[0].Item1);
         carro.objetos_actuales = 0;
         Mostrar();
     }
@@ -164,19 +179,13 @@ public class Mision : MonoBehaviour
                     continue;
                 posicion_carro = new(posicion_carro.x, 0.5f, posicion_carro.z);
                 LanzarObjetoConTrayectoria(nombreObjeto, posicionEnemigo, posicion_carro);
-
-                // La lógica de actualizar estado, contador y UI se movió a 
-                // el método Verificar_Objeto_este_mision(), que será llamado al final de la corrutina 
-                // de lanzamiento o si se usa el método de la segunda versión que actualiza directamente.
-                // Por ahora, usando el método de la segunda versión para actualizar el estado:
-
-                // Usamos la lógica de la segunda versión para actualizar el estado del objeto
-                // *Nota: La implementación original de Recuperar_Todos_Los_Objetos de la segunda versión 
-                // no estaba actualizando el estado aquí, solo llamaba a RegresarObjetoRobado y 
-                // Verificar_Objeto_este_mision. Mantendremos esa lógica.
                 
             }
         }
+
+        if (misiones_hechas < objetos.Count)
+            IluminarEstanteConPrimerObjetoBuscar(objetos[misiones_hechas].Item1);
+
         Mostrar();
         Espacio_Disponible.text = carro.objetos_actuales.ToString() + "/" + carro.cant_limite_carga.ToString();
     }
@@ -229,6 +238,11 @@ public class Mision : MonoBehaviour
         Vector3 direccion = posicion_carro - posicion_estante;
 
         yield return StartCoroutine(AnimarLanzamiento(instancia, posicion_estante, direccion));
+
+        if (anterior != null)
+            anterior.transform.GetChild(0).gameObject.SetActive(false);
+
+        IluminarSiguienteEstante();
 
         Destroy(instancia);
         player.SetDeadZoneJoystick(0);
@@ -286,19 +300,50 @@ public class Mision : MonoBehaviour
         Sin_espacio.SetActive(false);
     }
 
+    private void ModifyIcon(string name, int indiceImg)
+    {
+        var tag = Areas.Get_Tag_Area_Product(name);
+        int indiceSprite = (int)tag;
+        images[indiceImg].sprite = icons[indiceSprite];
+    }
+
+    private void ModifyIconInCash(int indiceImg)
+    {
+        images[indiceImg].sprite = iconObjectInCash;
+    }
+
+    private void CleanIcons()
+    {
+        foreach(var icon in images)
+        {
+            icon.sprite = iconClean;
+        }
+    }
+
     public void Mostrar()
     {
         Espacio_Disponible.text = carro.objetos_actuales.ToString() + "/" + carro.cant_limite_carga.ToString();
         posicion_texto.text = inicio_lista.ToString() + " : " + final_lista.ToString();
+        CleanIcons();
+
         for (int iterador = inicio_lista; iterador < final_lista; iterador++)
         {
-            text_misiones[iterador % misiones_default].text = objetos[iterador].Item1;
+            int posicionTextMision = iterador % misiones_default;
+            text_misiones[posicionTextMision].text = objetos[iterador].Item1;
+
+            ModifyIcon(objetos[iterador].Item1, posicionTextMision);
+
             if (objetos[iterador].Item2 && !objetos[iterador].Item3)
-                text_misiones[iterador % misiones_default].color = tomado;
+                text_misiones[posicionTextMision].color = tomado;
+
             else if (!objetos[iterador].Item2 && objetos[iterador].Item3)
-                text_misiones[iterador % misiones_default].color = en_caja;
+            {
+                text_misiones[posicionTextMision].color = en_caja;
+                ModifyIconInCash(posicionTextMision);
+            }
+
             else
-                text_misiones[iterador % misiones_default].color = no_tomado;
+                text_misiones[posicionTextMision].color = no_tomado;
         }
     }
 
@@ -526,5 +571,38 @@ public class Mision : MonoBehaviour
 
         // Asegurar posición final
         objeto.transform.position = posicionFinal;
+    }
+
+
+    private void SetAreas()
+    {
+        areas = FindObjectsByType<Areas>(FindObjectsSortMode.None);
+    }
+    private void IluminarEstanteConPrimerObjetoBuscar(string name)
+    {
+        foreach(Areas area in areas)
+        {
+            actual = area.GetAreaByObjectName(name);
+            if(actual != null)
+                actual.transform.GetChild(0).gameObject.SetActive(true);
+        }
+
+        anterior = actual;
+    }
+
+
+    private string FirstObjectMisionNotComplete()
+    {
+        foreach(var item in objetos)
+        {
+            if (item.Item2 || item.Item3) continue;
+            return item.Item1;
+        }
+        return string.Empty;
+    }
+
+    public void IluminarSiguienteEstante()
+    {
+        IluminarEstanteConPrimerObjetoBuscar(FirstObjectMisionNotComplete());
     }
 }

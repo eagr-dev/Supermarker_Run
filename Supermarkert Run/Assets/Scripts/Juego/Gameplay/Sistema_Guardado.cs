@@ -13,7 +13,6 @@ public class Sistema_Guardado : MonoBehaviour
     [SerializeField] private List<Car> carritos_personalizados;
     [SerializeField] private GameObject Reinicio, UI_Principal;
     private DINERO Dinero;
-    private Nivel _Nivel;
     private Car carro;
     private Seleccion_Menu_Carrito seleccion_carro;
     int _posicion;
@@ -33,7 +32,6 @@ public class Sistema_Guardado : MonoBehaviour
         URL_PATH_PERSONALIZADA = $"{ruta}/personalizado.json";
         URL_PATH_MAPA = $"{ruta}/mapa.txt";
         Dinero = FindFirstObjectByType<DINERO>();
-        _Nivel = FindFirstObjectByType<Nivel>();
         PCMG = FindFirstObjectByType<Pase_Conexion_Menu_Gameplay>();
         seleccion_carro = FindFirstObjectByType<Seleccion_Menu_Carrito>();
         //Cargar();
@@ -99,11 +97,16 @@ public class Sistema_Guardado : MonoBehaviour
     {
         int calidad_graficos = PlayerPrefs.GetInt(CCALIDAD, 2);
         QualitySettings.SetQualityLevel(calidad_graficos);
-        QualitySettings.shadows = (ShadowQuality)PlayerPrefs.GetInt(CCALIDAD_SOMBRAS, 0);
+
+        int nivel = PlayerPrefs.GetInt(CNIVEL, 15);
+        if (nivel >= Nivel.nivel)
+        {
+            Debug.Log($"Nivel guardado {nivel} -Nivel actual {Nivel.nivel}");
+            Nivel.Set_Nivel(15);
+        }
+
         uint dinero = uint.Parse(PlayerPrefs.GetString(CDINERO, "0"));
         Dinero.Set_Dinero(dinero);
-        int nivel = PlayerPrefs.GetInt(CNIVEL, 1);
-        Nivel.Set_Nivel((uint)nivel);
         Pase_Conexion_Menu_Gameplay.Tipo_Carro tipo_Carro = (Pase_Conexion_Menu_Gameplay.Tipo_Carro)PlayerPrefs.GetInt(CTIPO_CARRO, 0);
         PCMG.Set_Seleccion(tipo_Carro);
         int posicion_skin = PlayerPrefs.GetInt(CPOSICION_MATERIAL, 0);
@@ -195,8 +198,8 @@ public class Sistema_Guardado : MonoBehaviour
 
     public void NewSaved()
     {
-        PlayerPrefs.SetString(CDINERO, Dinero.Get_Dinero().ToString());
         PlayerPrefs.SetInt(CNIVEL, (int)Nivel.nivel);
+        PlayerPrefs.SetString(CDINERO, Dinero.Get_Dinero().ToString());
         PlayerPrefs.SetInt(CCALIDAD, QualitySettings.GetQualityLevel());
         PlayerPrefs.SetInt(CPOSICION_MATERIAL, PCMG.Get_Eleccion());
         PlayerPrefs.SetInt(CTIPO_CARRO, (int)PCMG.Get_Seleccion());

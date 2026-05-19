@@ -5,12 +5,21 @@ using UnityEngine;
 public class Area : BehaviorEnemy
 {
     public Areas.Area_product Tag;
-    enum EstanteVisible { CAJA = 10, JUGO, ESCOBA, COMIDA, LIBRO, MANZANA, TECNOLOGIA, ROLLO};
+    enum EstanteVisible { CAJA = 11, JUGO, ESCOBA, COMIDA, LIBRO, MANZANA, TECNOLOGIA, ROLLO};
     EstanteVisible estanteVisible;
+
+    const int primerEstante = 1;
+    const int cantidadEstantes = 10;
 
     private List<int> Get_List_Rand()
     {
-        List<int> list_return = new() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+        int posicionUltimoHijo = cantidadEstantes + primerEstante;
+        List<int> list_return = new();
+
+        for(int i = primerEstante; i < posicionUltimoHijo; ++i)
+        {
+            list_return.Add(i);
+        }
 
         for(int i = 0; i < Areas.objetos_contiene;i++)
         {

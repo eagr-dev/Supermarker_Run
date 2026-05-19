@@ -131,10 +131,11 @@ public abstract class IA : BehaviorEnemy
     protected Vector3 Ir_Caja()
     {
         int index = Random.Range(0, posicion_cajas.Count);
-        if (posicion_cajas[index].GetComponent<CajaEnemigo>().GetOcupado())
+        var caja = posicion_cajas[index].GetComponent<CajaEnemigo>();
+        if (caja.GetOcupado())
             return Random_position();
 
-        Vector3 vector3 = posicion_cajas[index].transform.position;
+        Vector3 vector3 = caja.GetPos();
         vector3.y = 0;
         return vector3;
     }
