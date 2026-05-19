@@ -98,11 +98,11 @@ public class Sistema_Guardado : MonoBehaviour
         int calidad_graficos = PlayerPrefs.GetInt(CCALIDAD, 2);
         QualitySettings.SetQualityLevel(calidad_graficos);
 
-        int nivel = PlayerPrefs.GetInt(CNIVEL, 15);
+        int nivel = PlayerPrefs.GetInt(CNIVEL, 1);
         if (nivel >= Nivel.nivel)
         {
             Debug.Log($"Nivel guardado {nivel} -Nivel actual {Nivel.nivel}");
-            Nivel.Set_Nivel(15);
+            Nivel.Set_Nivel((uint)nivel);
         }
 
         uint dinero = uint.Parse(PlayerPrefs.GetString(CDINERO, "0"));
