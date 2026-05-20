@@ -18,18 +18,22 @@ public class Seleccion_PU : MonoBehaviour
     [SerializeField]float distancia_minina = 3;
     [SerializeField]float duracionAnimacion = 0.5f;
 
-    private void Awake()
+    private void Start()
     {
         RP = FindFirstObjectByType<Repartir_power>();
+        Interfaz_PowerUp primerPU = null;
         foreach (Transform obj in objetos)
         {
-            //posiciones_iniciales.Add(obj.position);
             posiciones_iniciales.Add(obj.localPosition);
-            obj.GetComponent<Interfaz_PowerUp>().Set_Descripcion_Nombre();
-        }
-        var powerUp = objetos.GetChild(0).GetComponent<Interfaz_PowerUp>();
+            Interfaz_PowerUp powerUp = obj.GetComponent<Interfaz_PowerUp>();
 
-        SetText(powerUp);
+            if (primerPU is null)
+                primerPU = powerUp;
+            if(powerUp is not null)
+                powerUp.Set_Descripcion_Nombre();
+        }
+
+        SetText(primerPU);
     }
 
     public void BTN_SIG()
@@ -54,20 +58,22 @@ public class Seleccion_PU : MonoBehaviour
     private void ValidarCercano(Vector3 posicion_sumar)
     {
         Vector3 nueva_posicion;
-        for (int i = 0; i < objetos.childCount; i++)
+        var hijosConPowerUp = objetos.GetComponentsInChildren<Interfaz_PowerUp>();
+        int it = 0;
+        foreach(var obj in hijosConPowerUp)
         {
-            GameObject hijo = objetos.GetChild(i).gameObject;
-            Interfaz_PowerUp interfaz_PowerUp = hijo.GetComponent<Interfaz_PowerUp>();
-            interfaz_PowerUp.Animacion();
-            posiciones_iniciales[i] += posicion_sumar;
-            nueva_posicion = posiciones_iniciales[i];
-            StartCoroutine(AnimacionPU(hijo, nueva_posicion));
-            float magnitud = (posiciones_iniciales[i] - posicion_presentacion).magnitude;
-            if(magnitud < distancia_minina)
+            obj.Animacion();
+            posiciones_iniciales[it] += posicion_sumar;
+            nueva_posicion = posiciones_iniciales[it];
+            StartCoroutine(AnimacionPU(obj.gameObject, nueva_posicion));
+            float magnitud = (posiciones_iniciales[it] - posicion_presentacion).magnitude;
+            if (magnitud < distancia_minina)
             {
-                SetText(interfaz_PowerUp);
+                SetText(obj);
             }
+            it++;
         }
+
     }
 
     IEnumerator AnimacionPU(GameObject objeto, Vector3 nueva_posicion)

@@ -239,9 +239,6 @@ public class Mision : MonoBehaviour
 
         yield return StartCoroutine(AnimarLanzamiento(instancia, posicion_estante, direccion));
 
-        if (anterior != null)
-            anterior.transform.GetChild(0).gameObject.SetActive(false);
-
         IluminarSiguienteEstante();
 
         Destroy(instancia);
@@ -580,7 +577,10 @@ public class Mision : MonoBehaviour
     }
     private void IluminarEstanteConPrimerObjetoBuscar(string name)
     {
-        foreach(Areas area in areas)
+        if (anterior != null)
+            anterior.transform.GetChild(0).gameObject.SetActive(false);
+
+        foreach (Areas area in areas)
         {
             actual = area.GetAreaByObjectName(name);
             if(actual != null)
