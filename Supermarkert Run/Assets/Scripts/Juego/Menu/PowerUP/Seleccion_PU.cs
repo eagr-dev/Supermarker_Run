@@ -8,7 +8,7 @@ public class Seleccion_PU : MonoBehaviour
 {
     [SerializeField] float limite, valor_ant;
     int valor_actual;
-    [SerializeField] Transform objetos;
+    [SerializeField] Transform objetos, ultimoPowerUp;
     readonly List<Vector3> posiciones_iniciales = new();
     Repartir_power RP;
     [SerializeField]TMP_Text Nombre,Descripcion;
@@ -39,7 +39,7 @@ public class Seleccion_PU : MonoBehaviour
     public void BTN_SIG()
     {
         Click_Botones.Play();
-        if (objetos.GetChild(objetos.childCount - 1).localPosition == posicion_presentacion)
+        if (ultimoPowerUp.localPosition == posicion_presentacion)
             return;
         valor_actual++;
         ValidarCercano(resta_nueva_posicion);

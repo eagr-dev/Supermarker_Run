@@ -98,11 +98,11 @@ public class Sistema_Guardado : MonoBehaviour
         int calidad_graficos = PlayerPrefs.GetInt(CCALIDAD, 2);
         QualitySettings.SetQualityLevel(calidad_graficos);
 
-        int nivel = PlayerPrefs.GetInt(CNIVEL, 1);
+        uint nivel = uint.Parse(PlayerPrefs.GetString(CNIVEL, "1"));
         if (nivel >= Nivel.nivel)
         {
             Debug.Log($"Nivel guardado {nivel} -Nivel actual {Nivel.nivel}");
-            Nivel.Set_Nivel((uint)nivel);
+            Nivel.Set_Nivel(nivel);
         }
 
         uint dinero = uint.Parse(PlayerPrefs.GetString(CDINERO, "0"));
@@ -198,12 +198,13 @@ public class Sistema_Guardado : MonoBehaviour
 
     public void NewSaved()
     {
-        PlayerPrefs.SetInt(CNIVEL, (int)Nivel.nivel);
+        PlayerPrefs.SetString(CNIVEL, Nivel.nivel.ToString());
         PlayerPrefs.SetString(CDINERO, Dinero.Get_Dinero().ToString());
         PlayerPrefs.SetInt(CCALIDAD, QualitySettings.GetQualityLevel());
         PlayerPrefs.SetInt(CPOSICION_MATERIAL, PCMG.Get_Eleccion());
         PlayerPrefs.SetInt(CTIPO_CARRO, (int)PCMG.Get_Seleccion());
         PlayerPrefs.SetInt(CCALIDAD_SOMBRAS, (int)QualitySettings.shadows);
+        PlayerPrefs.Save();
     }
 
     [System.Obsolete("Sistema Bugueado Revisar Proximamente.")]

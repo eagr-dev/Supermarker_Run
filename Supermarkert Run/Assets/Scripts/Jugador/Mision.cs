@@ -56,7 +56,7 @@ public class Mision : MonoBehaviour
     {
         int misiones_obtenibles;
         int misions = (misiones_default + (int)(Nivel.nivel - 1));
-        misiones_obtenibles = misions > misiones_default ? (int)Nivel.nivel : misions;
+        misiones_obtenibles = Nivel.nivel <= misiones_default ? (int)Nivel.nivel : misions;
         int misiones = misiones_obtenibles <= maximo_misiones ? misiones_obtenibles : maximo_misiones;
         return misiones;
     }

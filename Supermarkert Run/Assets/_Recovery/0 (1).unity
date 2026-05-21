@@ -8737,7 +8737,6 @@ MonoBehaviour:
   limite: 6
   valor_ant: 0
   objetos: {fileID: 1195016817}
-  ultimoPowerUp: {fileID: 736356010}
   Nombre: {fileID: 1144817749}
   Descripcion: {fileID: 60316016}
   Click_Botones: {fileID: 1758843561}

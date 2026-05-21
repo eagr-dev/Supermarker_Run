@@ -82,10 +82,14 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        Move_Player();
         Camera_Move();
         Condicionales();
         mision.posicion_carro = Get_transform_carro().position;
+    }
+
+    private void FixedUpdate()
+    {
+        Mover_Player();
     }
 
     public void SetDeadZoneJoystick(float deadzone)
@@ -184,26 +188,32 @@ public class Player : MonoBehaviour
         Tiempo_Dejar_Objeto -= eliminar;
         Efecto = null;
     }
-
-    private void Move_Player()
+    private void Mover_Player()
     {
+        if (choque) return;
+
         Vertical_Move = joystick.Vertical * max_speed_V;
         Horizontal_Move = joystick.Horizontal * max_speed_H;
+
         Vector3 Movimiento = new Vector3(Horizontal_Move, 0, Vertical_Move).normalized;
-        //obtener_velocidad = new Vector3(Horizontal_Move, 0, Vertical_Move) * Time.deltaTime * speed;
-        transform.position += new Vector3(Horizontal_Move, 0, Vertical_Move) * Time.deltaTime * speed;
+        Vector3 obtener_velocidad = new Vector3(Horizontal_Move, 0, Vertical_Move) * speed;
+
+        rigid.MovePosition(rigid.position + obtener_velocidad * Time.fixedDeltaTime);
 
         animacion.SetFloat("VelX", Horizontal_Move);
         animacion.SetFloat("VelY", Vertical_Move);
 
-        if (Movimiento.magnitude >= 1)
+        if (Movimiento.magnitude >= 0.1f)
         {
             float angle = Mathf.Atan2(Movimiento.x, Movimiento.z) * Mathf.Rad2Deg;
             Quaternion rotate = Quaternion.Euler(0, angle, 0);
-            player_object.transform.rotation = Quaternion.Slerp(player_object.transform.rotation, rotate, speed * Time.deltaTime);
+            player_object.transform.rotation = Quaternion.Slerp(
+                player_object.transform.rotation,
+                rotate,
+                speed * Time.fixedDeltaTime
+            );
         }
     }
-
     private void Camera_Move()
     {
         camara.transform.position = transform.position + position_camera;
@@ -309,6 +319,16 @@ public class Player : MonoBehaviour
         choque_mayor = false;
     }
 
+    private IEnumerator Bloquear_Movimiento_Breve()
+    {
+        choque = true;
+        joystick.DeadZone = 1000;
+        rigid.linearVelocity = Vector3.zero;  // frena en seco
+        yield return new WaitForSeconds(0.2f);
+        choque = false;
+        joystick.DeadZone = 0;
+    }
+
     public Car Get_Carro()
     {
         Car carro = null;
@@ -395,6 +415,10 @@ public class Player : MonoBehaviour
                 Choque_sound.Play();
                 StartCoroutine(Retroceder(collision));
             }
+            else
+            {
+                StartCoroutine(Bloquear_Movimiento_Breve());
+            }
 
             if (max_speed_H <= 0 || max_speed_V <= 0)
                 New_Init();
@@ -461,7 +485,9 @@ public class Player : MonoBehaviour
         GameObject Boton_Presiono = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
         Dinero_Obtenido DO = FindFirstObjectByType<Dinero_Obtenido>();
         DO.Get_Mapa(SceneManager.GetActiveScene().name).cantidad_juegos++;
-        Nivel.Set_Nivel(Nivel.nivel + 1); // primero actualiza
+        Nivel.Set_Nivel(Nivel.nivel + 1);
+        PlayerPrefs.SetString("Nivel", Nivel.nivel.ToString()); 
+        PlayerPrefs.Save();
         Debug.Log($"Nuevo nivel {Nivel.nivel}");
 
         if (Boton_Presiono.name != "X2")
