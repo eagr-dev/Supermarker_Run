@@ -54,6 +54,7 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
 
     public void Inicializador()
     {
+        eleccion = (int)slider.value;
         PCMG = FindFirstObjectByType<Pase_Conexion_Menu_Gameplay>();
         carrito_Actual = Get_Active();
         slider.maxValue = carrito_Actual.GetComponent<Get_Content_Car>().Get_Counts_Car();
@@ -220,7 +221,7 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
     {
         eleccion_secundario = (int)(value != slider.maxValue ? value : value - 1);
         Set_Skin_Eleccion(eleccion_secundario);
-        PCMG.Set_Eleccion(eleccion_secundario);
+        //PCMG.Set_Eleccion(eleccion_secundario);
     }
 
     //Slider_Fin
@@ -229,7 +230,6 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
     {
         carrito_Actual = Get_Active();
         carrito_Actual.GetComponent<Get_Content_Car>().Set_Car(eleccion);
-        PCMG.Set_Eleccion(eleccion);
         Car Info_Car = carrito_Actual.GetComponent<Get_Content_Car>().Get_Car();
 
         if (Info_Car.precio != 0)

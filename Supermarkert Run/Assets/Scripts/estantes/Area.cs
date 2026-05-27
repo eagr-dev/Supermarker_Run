@@ -81,6 +81,16 @@ public class Area : BehaviorEnemy
         transform.GetChild((int)estanteVisible).gameObject.SetActive(true);
     }
 
+    public void OcultarEstante()
+    {
+        transform.GetChild((int)estanteVisible).gameObject.SetActive(false);
+    }
+
+    public void VisibilizarEstante()
+    {
+        transform.GetChild((int)estanteVisible).gameObject.SetActive(true);
+    }
+
     private void Start()
     {
         Acomodar_Estantes();

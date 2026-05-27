@@ -40,25 +40,6 @@ public class Animacion_Carga : MonoBehaviour
         }
 
         SceneManager.LoadScene(escena);
-        /*AsyncOperation proceso = SceneManager.LoadSceneAsync(escena);
-        proceso.allowSceneActivation = false;
-        while(!proceso.isDone)
-        {
-            yield return null;
-
-            if ((transform.position - objeto_Seguir.position).magnitude <= 3)
-            {
-                proceso.allowSceneActivation = true;
-            }
-        }
-
-        if(!proceso.allowSceneActivation)
-        {
-            float tiempo = (transform.position - objeto_Seguir.position).magnitude;
-            yield return new WaitForSeconds(tiempo + 1f);
-        }
-        proceso.allowSceneActivation = true;*/
-
     }
 
     private IEnumerator InicializarNavMesh()

@@ -36,4 +36,4 @@ MonoBehaviour:
   cantidad: 0
   name_mapa: "Mapa peque\xF1o"
   skin_car: {fileID: 2100000, guid: 8f38aad73fa821e4d8c3d5c7f63ea916, type: 2}
-  precio: 0
+  precio: 200
