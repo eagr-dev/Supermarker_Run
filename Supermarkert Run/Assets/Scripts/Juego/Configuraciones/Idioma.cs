@@ -14,11 +14,30 @@ public class Idioma : MonoBehaviour
     public enum Lengua { INGLES, ESPANIOL, PORTUGUES};
     static Lengua lengua = Lengua.INGLES;
     
-    private void Start()
+    private void Awake()
     {
+        Debug.Log("Asignando lenguaje");
         int eleccion = PlayerPrefs.GetInt("idioma", 0);
 
-        if(SceneManager.GetActiveScene().name != "Menu_principal")
+        switch (eleccion)
+        {
+            case 0:
+                lengua = Lengua.INGLES;
+                Modificacion_Idioma(Ingles, true);
+                break;
+            case 1:
+                lengua = Lengua.ESPANIOL;
+                Modificacion_Idioma(Espaniol, true);
+                break;
+            case 2:
+                lengua = Lengua.PORTUGUES;
+                Modificacion_Idioma(Portugues, true);
+                break;
+        }
+
+        Debug.Log($"La lengua elegida es {lengua}");
+
+        /*if (SceneManager.GetActiveScene().name != "Menu_principal")
         {
             switch (eleccion)
             {
@@ -36,7 +55,7 @@ public class Idioma : MonoBehaviour
                     break;
             }
         }
-      
+      */
     }
 
     public List<string> Get_Idioma()

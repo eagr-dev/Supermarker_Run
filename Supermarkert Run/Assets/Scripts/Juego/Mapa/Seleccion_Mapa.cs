@@ -50,8 +50,8 @@ public class Seleccion_Mapa : MonoBehaviour
         Comprar.SetActive(false);
         Aceptar.SetActive(true);
         Sistema_Guardado sg = FindFirstObjectByType<Sistema_Guardado>();
-        sg.NEW_ADD_MAPA(DO.Get_Mapa(seleccion_actual).nombre_espaniol);
-        sg.NewSaved();
+        sg.AgregarMapa(DO.Get_Mapa(seleccion_actual).nombre_espaniol);
+        sg.GuardarLocal();
     }
 
     public void BTN_SIG()
@@ -112,7 +112,9 @@ public class Seleccion_Mapa : MonoBehaviour
     {
         var lengua = Idioma.GetLengua();
 
-        switch(lengua)
+        Debug.Log($"Asignar textos mapas en {lengua}");
+
+        switch (lengua)
         {
             case Idioma.Lengua.ESPANIOL:
                 nombre = mapa.nombre_espaniol;

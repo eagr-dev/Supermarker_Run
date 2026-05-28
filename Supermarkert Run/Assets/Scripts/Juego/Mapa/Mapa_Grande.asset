@@ -21,7 +21,7 @@ MonoBehaviour:
   descripcion_portugues: Um mapa bastante grande e alguns objetos
   screen_map: {fileID: 21300000, guid: 0c74a375d7d2cc643a5aec77ac513b47, type: 3}
   precio: 1000
-  Valor_mapa: 500
+  Valor_mapa: 50
   cantidad_juegos: 0
   X_minimo: -66
   X_maximo: 60

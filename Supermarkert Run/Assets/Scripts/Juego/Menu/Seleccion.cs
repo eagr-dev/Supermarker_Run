@@ -41,7 +41,8 @@ public class Seleccion : MonoBehaviour
     {
         bool rotar_camara = camara.transform.rotation.eulerAngles != new Vector3(0, 0, 0);
         if ((int)(camara.fieldOfView - FOV) != 0)
-            StartCoroutine(Animacion_Acercar(FOVAC, FOV,rotacionOriginal,rotacion_carro, rotar_camara));
+            IniciarAnimacion(FOVAC, FOV, camara.transform.rotation.x, rotacionOriginal, rotar_camara);
+            //StartCoroutine(Animacion_Acercar(FOVAC, FOV,rotacionOriginal,rotacion_carro, rotar_camara));
         Click_Botones.Play();
         Pase_Conexion_Menu_Gameplay conector = FindFirstObjectByType<Pase_Conexion_Menu_Gameplay>();
         FindFirstObjectByType<Seleccion_Menu_Carrito>().Set_Car_Menu(conector.Get_Seleccion(),conector.Get_Eleccion());
@@ -64,33 +65,9 @@ public class Seleccion : MonoBehaviour
         Configuracion_Canvas.SetActive(false);
     }
 
-    /*public void BTN_Despliegue_CoPoCa() 
-    {
-        Click_Botones.Play();
-        StartCoroutine(Animacion_Despliegue(abierto));
-    }
-    public void BTN_Salida_CoPoCa() 
-    {
-        Click_Botones.Play();
-        StartCoroutine(Animacion_Despliegue(cerrado));
-    }*/
-
-    /*private IEnumerator Animacion_Despliegue(float posicion)
-    {
-        float tiempo = 0, duracion = 1;
-        while(tiempo < duracion)
-        {
-            var posicion_P = PadreCoPoCa.position;
-            posicion_P.x = Mathf.Lerp(posicion_P.x, posicion, tiempo / duracion);
-            PadreCoPoCa.position = posicion_P;
-            tiempo += Time.deltaTime;
-            yield return null;
-        }
-    }*/
-
     public void BTN_Power_Up()
     {
-        StartCoroutine(Animacion_Acercar(FOV, FOVAC,0,0,false));
+        IniciarAnimacion(FOV, FOVAC, camara.transform.rotation.eulerAngles.x, rotacionOriginal, false);
         Click_Botones.Play();
         Animacion_Npc.Caminar(Tiempo_Animacion, Posicion_Ir);
         foreach (var i in animacion_carrito)
@@ -112,7 +89,7 @@ public class Seleccion : MonoBehaviour
 
     public void BTN_Carro()
     {
-        StartCoroutine(Animacion_Acercar(FOV,FOVAC,rotacionOriginal,rotacion_carro,true));
+        IniciarAnimacion(FOV, FOVAC, rotacionOriginal, rotacion_carro, true);
         Click_Botones.Play();
         Menu_Canvas.SetActive(false);
         Carritos_Canvas.SetActive(true);
@@ -129,13 +106,60 @@ public class Seleccion : MonoBehaviour
 
     public void BTN_Jugar()
     {
+        StopAllCoroutines();
         Click_Botones.Play();
         string pos = FindFirstObjectByType<Seleccion_Mapa>().Get_Seleccion().nombre_espaniol;
-            //SceneManager.LoadScene(pos);
-            //return;
         Menu.Pause();
         StartCoroutine(Jugar(pos));
 
+    }
+
+
+    private Coroutine animacionActual;
+
+    private void IniciarAnimacion(float FOVA, float FOVB, float rotaciona, float rotacionb, bool rotar_camara)
+    {
+        // Detener la anterior si sigue corriendo
+        if (animacionActual != null)
+        {
+            StopCoroutine(animacionActual);
+            animacionActual = null;
+        }
+
+        animacionActual = StartCoroutine(Animacion_Acercar(FOVA, FOVB, rotaciona, rotacionb, rotar_camara));
+
+        AplicarEstadoFinal(FOVB, rotacionb, rotar_camara);
+    }
+
+    private void AplicarEstadoFinal(float FOVB, float rotacionb, bool rotar_camara)
+    {
+        camara.fieldOfView = FOVB;
+        if (rotar_camara)
+        {
+            Quaternion rotacion = new();
+            rotacion.eulerAngles = new Vector3(rotacionb, 0, 0);
+            camara.transform.rotation = rotacion;
+        }
+    }
+
+    private IEnumerator Animacion_Acercar(float FOVA,float FOVB, float rotaciona, float rotacionb,bool rotar_camara)
+    {
+        float tiempo = 1, timer = 0;
+
+        while(timer < tiempo)
+        {
+            camara.fieldOfView = Mathf.Lerp(FOVA, FOVB, timer / tiempo);
+            var rotacion = camara.transform.rotation;
+            if(rotar_camara)
+            {
+                rotacion.eulerAngles = Vector3.Lerp(new Vector3(rotaciona, 0, 0), new Vector3(rotacionb, 0, 0), timer / tiempo);
+                camara.transform.rotation = rotacion;
+            }
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        AplicarEstadoFinal(FOVB, rotacionb, rotar_camara);
     }
 
     IEnumerator Jugar(string escena)
@@ -155,31 +179,7 @@ public class Seleccion : MonoBehaviour
         AnimacionSP.Cambiar_Escena(escena);
     }
 
-    /*
-    public void BTN_Salida()
-    {
-        Click_Botones.Play();
-        FindObjectOfType<Sistema_Guardado>().Guardar();
-        Application.Quit(0);
-    }
-    */
-    private IEnumerator Animacion_Acercar(float FOVA,float FOVB, float rotaciona, float rotacionb,bool rotar_camara)
-    {
-        float tiempo = 1, timer = 0;
 
-        while(timer < tiempo)
-        {
-            camara.fieldOfView = Mathf.Lerp(FOVA, FOVB, timer / tiempo);
-            var rotacion = camara.transform.rotation;
-            if(rotar_camara)
-            {
-                rotacion.eulerAngles = Vector3.Lerp(new Vector3(rotaciona, 0, 0), new Vector3(rotacionb, 0, 0), timer / tiempo);
-                camara.transform.rotation = rotacion;
-            }
-            timer += Time.deltaTime;
-            yield return null;
-        }
-    }
     private void OnApplicationQuit()
     {
         if(Mapas_Canvas.activeInHierarchy || PowerUp_Canvas.activeInHierarchy || Configuracion_Canvas.activeInHierarchy)
@@ -187,7 +187,7 @@ public class Seleccion : MonoBehaviour
             Pase_Conexion_Menu_Gameplay conector = FindFirstObjectByType<Pase_Conexion_Menu_Gameplay>();
             FindFirstObjectByType<Seleccion_Menu_Carrito>().Set_Car_Menu(conector.Get_Seleccion(), conector.Get_Eleccion());
         }
-        FindFirstObjectByType<Sistema_Guardado>().NewSaved();
+        FindFirstObjectByType<Sistema_Guardado>().GuardarLocal();
     }
 
 }

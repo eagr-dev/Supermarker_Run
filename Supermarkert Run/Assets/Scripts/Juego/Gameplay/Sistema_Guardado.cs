@@ -1,107 +1,107 @@
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
-using TMPro;
 
 public class Sistema_Guardado : MonoBehaviour
 {
-    [SerializeField] private string URL_PATH_PERSONALIZADA;
-    [SerializeField] private List<Material> Material_Personalizada;
-    [SerializeField] private List<Car> carritos_personalizados;
     [SerializeField] private GameObject Reinicio, UI_Principal;
-    private DINERO Dinero;
-    private Seleccion_Menu_Carrito seleccion_carro;
-    string ruta = "";
-    Pase_Conexion_Menu_Gameplay PCMG;
-    const string CDINERO = "Dinero", CNIVEL = "Nivel", CCALIDAD = "Calidad", CPOSICION_MATERIAL = "Material", CTIPO_CARRO = "Carro", CCALIDAD_SOMBRAS = "Sombras";
 
+    const string CDINERO = "Dinero";
+    const string CNIVEL = "Nivel";
+    const string CCALIDAD = "Calidad";
+    const string CPOSICION_MATERIAL = "Material";
+    const string CTIPO_CARRO = "Carro";
+
+    private string RutaPersonalizado =>
+        $"{Application.persistentDataPath}/personalizado.json";
+
+    // ── Unity ──────────────────────────────────────────────────────────────
     private void Awake()
     {
-        URL_PATH_PERSONALIZADA = $"{ruta}/personalizado.json";
-        Dinero = FindFirstObjectByType<DINERO>();
-        PCMG = FindFirstObjectByType<Pase_Conexion_Menu_Gameplay>();
-        seleccion_carro = FindFirstObjectByType<Seleccion_Menu_Carrito>();
+        BuildStructs.Inicializar(
+            FindFirstObjectByType<DINERO>(),
+            FindFirstObjectByType<Pase_Conexion_Menu_Gameplay>(),
+            FindFirstObjectByType<Seleccion_Menu_Carrito>(),
+            FindFirstObjectByType<Dinero_Obtenido>()
+        );
     }
 
     private void Start()
     {
-        NewLoad();
-        NewLoadMaps();
+        CargarLocal();
+        CargarMapas();
     }
 
-    private void NewLoad()
+    // ── Carga ──────────────────────────────────────────────────────────────
+    private void CargarLocal()
     {
-        int calidad_graficos = PlayerPrefs.GetInt(CCALIDAD, 2);
-        QualitySettings.SetQualityLevel(calidad_graficos);
-
+        // 1. Leer PlayerPrefs
+        int calidad = PlayerPrefs.GetInt(CCALIDAD, 2);
         uint nivel = uint.Parse(PlayerPrefs.GetString(CNIVEL, "1"));
-        if (nivel >= Nivel.nivel)
-        {
-            Debug.Log($"Nivel guardado {nivel} -Nivel actual {Nivel.nivel}");
-            Nivel.Set_Nivel(nivel);
-        }
-
         uint dinero = uint.Parse(PlayerPrefs.GetString(CDINERO, "0"));
-        Dinero.Set_Dinero(dinero);
+        int tipoCarro = PlayerPrefs.GetInt(CTIPO_CARRO, 0);
+        int posicionSkin = PlayerPrefs.GetInt(CPOSICION_MATERIAL, 0);
 
-        Pase_Conexion_Menu_Gameplay.Tipo_Carro tipo_Carro = (Pase_Conexion_Menu_Gameplay.Tipo_Carro)PlayerPrefs.GetInt(CTIPO_CARRO, 0);
-        PCMG.Set_Seleccion(tipo_Carro);
-        int posicion_skin = PlayerPrefs.GetInt(CPOSICION_MATERIAL, 0);
-        seleccion_carro.Set_Car_Menu(tipo_Carro, posicion_skin);
-        seleccion_carro.Inicializador();
-        PCMG.Set_Eleccion(posicion_skin);
-        seleccion_carro.Set_Car_Menu(tipo_Carro, posicion_skin);
+        // 2. Aplicar a escena
+        QualitySettings.SetQualityLevel(calidad);
 
+        if (nivel >= Nivel.nivel)
+            Nivel.Set_Nivel(nivel);
+
+        BuildStructs.Dinero.Set_Dinero(dinero);
+
+        var tipoCarro_Enum = (Pase_Conexion_Menu_Gameplay.Tipo_Carro)tipoCarro;
+        BuildStructs.PCMG.Set_Seleccion(tipoCarro_Enum);
+        BuildStructs.PCMG.Set_Eleccion(posicionSkin);
+        BuildStructs.SelCarro.Set_Car_Menu(tipoCarro_Enum, posicionSkin);
+        BuildStructs.SelCarro.Inicializador();
+
+        // 3. El struct se actualiza solo con la escena ya aplicada
+        _ = new PlayerInformacionEstructura().Capturar(BuildStructs.Dinero, BuildStructs.PCMG);
     }
 
-    private void NewLoadMaps()
+    private void CargarMapas()
     {
         List<Mapa> mapas = FindFirstObjectByType<Dinero_Obtenido>().mapas;
+
         foreach (Mapa mapa in mapas)
-        {
-            if(PlayerPrefs.GetString(mapa.nombre_espaniol) == "true")
-            {
+            if (PlayerPrefs.GetString(mapa.nombre_espaniol) == "true")
                 mapa.precio = 0;
-            }
-        }
+
+        // El struct de mapas se actualiza solo
+        _ = new MapaEstructura().Capturar(mapas);
     }
 
-    public void NewSaved()
+    // ── Guardado ───────────────────────────────────────────────────────────
+    public void GuardarLocal()
     {
-        PlayerPrefs.SetString(CNIVEL, Nivel.nivel.ToString());
-        PlayerPrefs.SetString(CDINERO, Dinero.Get_Dinero().ToString());
-        PlayerPrefs.SetInt(CCALIDAD, QualitySettings.GetQualityLevel());
+        // Pide el struct con la información actual y guarda
+        PlayerInformacionEstructura datos = new PlayerInformacionEstructura().Capturar(
+            BuildStructs.Dinero, BuildStructs.PCMG);
 
-        PlayerPrefs.SetInt(CPOSICION_MATERIAL, PCMG.Get_Eleccion());
-        PlayerPrefs.SetInt(CTIPO_CARRO, (int)PCMG.Get_Seleccion());
-
-        PlayerPrefs.SetInt(CCALIDAD_SOMBRAS, (int)QualitySettings.shadows);
+        PlayerPrefs.SetString(CNIVEL, datos.nivel.ToString());
+        PlayerPrefs.SetString(CDINERO, datos.dinero.ToString());
+        PlayerPrefs.SetInt(CCALIDAD, datos.calidad);
+        PlayerPrefs.SetInt(CPOSICION_MATERIAL, datos.posicion_skin);
+        PlayerPrefs.SetInt(CTIPO_CARRO, datos.tipo_carro);
         PlayerPrefs.Save();
     }
 
-    [System.Obsolete("Sistema Bugueado Revisar Proximamente.")]
+    public void AgregarMapa(string nombreMapa)
+    {
+        PlayerPrefs.SetString(nombreMapa, "true");
+    }
+
+    [System.Obsolete("Sistema Bugueado — Revisar Próximamente.")]
     public void Guardar_Personalizado(float r, float g, float b, float a)
     {
-        Contenido_Personalizado contenido = new Contenido_Personalizado()
-        {
-            color = new Color(r, g, b, a)
-        };
-
-        string conte = JsonUtility.ToJson(contenido);
-
-        File.WriteAllText(URL_PATH_PERSONALIZADA, conte);
-
+        var contenido = new Contenido_Personalizado { color = new Color(r, g, b, a) };
+        File.WriteAllText(RutaPersonalizado, JsonUtility.ToJson(contenido));
     }
 
-    public void NEW_ADD_MAPA(string name_map)
+    public void BTN_Reinicio()
     {
-        PlayerPrefs.SetString(name_map, "true");
-    }
-
-    public void BTN_REINICIO()
-    {
-        FindFirstObjectByType<Sistema_Guardado>().NewSaved();
+        GuardarLocal();
         Application.Quit(0);
     }
 }
