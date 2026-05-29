@@ -1,22 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public interface IDatosNube { }
-
-public interface ICapturable<TSelf, TArg1, TArg2> : IDatosNube
-    //where TSelf : ICapturable<TSelf, TArg1, TArg2> 
-{
-    TSelf Capturar(TArg1 arg1, TArg2 arg2);
-}
-
-public interface ICapturable<TSelf, TArg1> : IDatosNube
-    //where TSelf : ICapturable<TSelf, TArg1>
-{
-    TSelf Capturar(TArg1 arg1);
-}
-
-public class PlayerInformacionEstructura : ICapturable<PlayerInformacionEstructura, DINERO, Pase_Conexion_Menu_Gameplay>
+[System.Serializable]
+public class PlayerInformacionEstructura
 {
     public int calidad;
     public uint nivel;
@@ -38,26 +24,22 @@ public class PlayerInformacionEstructura : ICapturable<PlayerInformacionEstructu
 
 }
 
-public class SkinsEstructura : ICapturable<SkinsEstructura, Pase_Conexion_Menu_Gameplay>
+[System.Serializable]
+public class SkinsEstructura
 {
-    public List<Car> carroPequenio;
-    public List<Car> carroMediano;
-    public List<Car> carroGrande;
+    public List<string> carroPequenio = new();
+    public List<string> carroMediano = new();
+    public List<string> carroGrande = new();
 
     //Aqui solo guardamos nombre y precio con eso sera mas que suficiente saber si la clase fue comprada o no y cual
-    private void GuardarInformacionNecesaria(List<Car> cars, ref List<Car> listaGuardar)
+    private void GuardarInformacionNecesaria(List<Car> cars, ref List<string> listaGuardar)
     {
-        listaGuardar = new();//por si se me olvida inicializarlo antes
-        foreach(Car car in cars)
+        listaGuardar = new();
+        foreach (Car car in cars)
         {
-            if(car.precio == 0)
+            if (car.precio == 0) // Si el precio es 0, asumimos que está comprado/desbloqueado
             {
-                Car aux = new();
-                aux.precio = 0;
-                aux.nombre_espaniol = car.nombre_espaniol;
-                aux.nombre_ingles = car.nombre_ingles;
-                aux.nombre_portugues = car.nombre_portugues;//Coloco tres para validar que realmente los nombres coincidan
-                listaGuardar.Add(aux);
+                listaGuardar.Add(car.nombre_espaniol);
             }
         }
     }
@@ -72,7 +54,8 @@ public class SkinsEstructura : ICapturable<SkinsEstructura, Pase_Conexion_Menu_G
     }
 }
 
-public class MapaEstructura : ICapturable<MapaEstructura, List<Mapa>>
+[System.Serializable]
+public class MapaEstructura
 {
     public List<string> mapasDesbloqueados;
 
@@ -85,6 +68,22 @@ public class MapaEstructura : ICapturable<MapaEstructura, List<Mapa>>
 
         mapasDesbloqueados = desbloqueados;
         return this;
+    }
+}
+
+[System.Serializable]
+public class MasterSaveInformacion
+{
+    public PlayerInformacionEstructura playerInformacion = new();
+    public SkinsEstructura skins = new();
+    public MapaEstructura mapa = new();
+
+    public MasterSaveInformacion(PlayerInformacionEstructura _playerInformacion, SkinsEstructura _skins,
+        MapaEstructura _mapa)
+    {
+        playerInformacion = _playerInformacion;
+        skins = _skins;
+        mapa = _mapa;
     }
 }
 

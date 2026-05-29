@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 public class SistemaGuardadoNube : MonoBehaviour
 {
-    private const string playerFile = "supermarket_run_player_file", mapaFile = "supermarket_run_mapas_file", carrosFile = "supermarket_run_carros_file";
+    private const string playerFile = "supermarket_run_player_file";
     private void Start() => InicializarGooglePlay();
 
     // ── Autenticación ──────────────────────────────────────────────────────
@@ -40,6 +40,7 @@ public class SistemaGuardadoNube : MonoBehaviour
         if (PlayGamesPlatform.Instance == null)
         {
             Debug.LogError("[Nube] PlayGamesPlatform no inicializado.");
+            Notificacion.MostrarAlertaNativa("Error al subir", "Google play games no esta disponible");
             return;
         }
 
@@ -54,12 +55,14 @@ public class SistemaGuardadoNube : MonoBehaviour
                 else
                     Debug.LogError("[Nube] Login fallido. No se puede subir.");
             });
+            Notificacion.MostrarAlertaNativa("Erro al subir", "No se pudo autenticar el usuario");
             return;
         }
 
         // 3. Verificar SavedGame disponible
         if (PlayGamesPlatform.Instance.SavedGame == null)
         {
+            Notificacion.MostrarAlertaNativa("Error al subir", "Actualmente no se encuetra dispoble el guardado en la nube");
             Debug.LogError("[Nube] SavedGame client no disponible.");
             return;
         }
@@ -75,27 +78,14 @@ public class SistemaGuardadoNube : MonoBehaviour
         Debug.Log($"[Nube] Subiendo — Nivel:{datos.nivel} Dinero:{datos.dinero}");
 
         // TODO: serializar y subir con SavedGame API
-        string player = JsonUtility.ToJson(datos);
-        string mapa = JsonUtility.ToJson(mapas);
-        string skins = JsonUtility.ToJson(skinsEstructura);
+        MasterSaveInformacion Saveinformacion = new(datos, skinsEstructura, mapas);
+        string informacion = JsonUtility.ToJson(Saveinformacion);
 
         //Subir datos del player
         PlayGamesPlatform.Instance.SavedGame.OpenWithAutomaticConflictResolution(playerFile,
             DataSource.ReadCacheOrNetwork,
             ConflictResolutionStrategy.UseLongestPlaytime,
-            (status, metadata) => OnArchivoAbiertoParaEscribir(status, metadata, player));
-
-        //Subir datos de los mapas comprados
-        PlayGamesPlatform.Instance.SavedGame.OpenWithAutomaticConflictResolution(mapaFile,
-            DataSource.ReadCacheOrNetwork,
-            ConflictResolutionStrategy.UseLongestPlaytime,
-            (status, metadata) => OnArchivoAbiertoParaEscribir(status, metadata, mapa));
-
-        //Subir datos de las skins obtenidas
-        PlayGamesPlatform.Instance.SavedGame.OpenWithAutomaticConflictResolution(carrosFile,
-            DataSource.ReadCacheOrNetwork,
-            ConflictResolutionStrategy.UseLongestPlaytime,
-            (status, metadata) => OnArchivoAbiertoParaEscribir(status, metadata, skins));
+            (status, metadata) => OnArchivoAbiertoParaEscribir(status, metadata, informacion));
     }
 
     /// <summary>Usuario baja su progreso: recibe datos y los aplica a escena.</summary>
@@ -113,21 +103,7 @@ public class SistemaGuardadoNube : MonoBehaviour
         playerFile,
         DataSource.ReadCacheOrNetwork,
         ConflictResolutionStrategy.UseLongestPlaytime,
-        (status, metadata) => OnArchivoAbiertoParaLeer<SkinsEstructura>(status, metadata));
-
-        PlayGamesPlatform.Instance.SavedGame.OpenWithAutomaticConflictResolution(
-        playerFile,
-        DataSource.ReadCacheOrNetwork,
-        ConflictResolutionStrategy.UseLongestPlaytime,
-        (status, metadata) => OnArchivoAbiertoParaLeer<MapaEstructura>(status, metadata));
-
-        PlayGamesPlatform.Instance.SavedGame.OpenWithAutomaticConflictResolution(
-        playerFile, 
-        DataSource.ReadCacheOrNetwork,
-        ConflictResolutionStrategy.UseLongestPlaytime, 
-        (status, metadata) => OnArchivoAbiertoParaLeer<PlayerInformacionEstructura>(status, metadata)
-    );
-
+        (status, metadata) => OnArchivoAbiertoParaLeer(status, metadata));
     }
 
     /****************************/
@@ -144,7 +120,7 @@ public class SistemaGuardadoNube : MonoBehaviour
             Debug.Log($"El archivo dice {datosParaGuardar}");
 
             // 1. Google solo entiende BYTES, así que convertimos tu String/JSON
-            byte[] datosEnBytes = System.Text.Encoding.UTF8.GetBytes(datosParaGuardar);
+            byte[] datosEnBytes = Encoding.UTF8.GetBytes(datosParaGuardar);
 
             // 2. Creamos los metadatos (información sobre el archivo que verá Google)
             SavedGameMetadataUpdate metadataUpdate = new SavedGameMetadataUpdate.Builder()
@@ -158,6 +134,7 @@ public class SistemaGuardadoNube : MonoBehaviour
                 datosEnBytes,
                 (status, metadata) => { Debug.Log($"El estado de guardado fue {status}"); }
             );
+            Notificacion.MostrarAlertaNativa("Exito", "Se subieron los datos de manera exitosa");
         }
         else
         {
@@ -172,7 +149,7 @@ public class SistemaGuardadoNube : MonoBehaviour
     /*                          */
     /****************************/
 
-    private void OnArchivoAbiertoParaLeer<T>(SavedGameRequestStatus status, ISavedGameMetadata metadata) where T : IDatosNube, new()
+    private void OnArchivoAbiertoParaLeer(SavedGameRequestStatus status, ISavedGameMetadata metadata)
     {
         if (status == SavedGameRequestStatus.Success)
         {
@@ -181,8 +158,7 @@ public class SistemaGuardadoNube : MonoBehaviour
             // Le pedimos a Google los bytes crudos del archivo
             PlayGamesPlatform.Instance.SavedGame.ReadBinaryData(metadata, (status, data) =>
             {
-                OnDatosDescargados<T>(status, data);
-                FindFirstObjectByType<Calidad>().Modificacion_Idioma();
+                OnDatosDescargados(status, data);
             });
         }
         else
@@ -191,7 +167,7 @@ public class SistemaGuardadoNube : MonoBehaviour
         }
     }
 
-    private void OnDatosDescargados<T>(SavedGameRequestStatus status, byte[] data) where T : IDatosNube, new()
+    private void OnDatosDescargados(SavedGameRequestStatus status, byte[] data)
     {
         if (status == SavedGameRequestStatus.Success)
         {
@@ -213,32 +189,31 @@ public class SistemaGuardadoNube : MonoBehaviour
             try
             {
                 // 2. Deserializamos el JSON usando tu estructura exacta
-                T datos = JsonUtility.FromJson<T>(json);
+                MasterSaveInformacion datos = JsonUtility.FromJson<MasterSaveInformacion>(json);
                 Debug.Log($"La clase a asignar es {datos}");
 
-                // 3. ¡Magia! Enviamos los datos a tu método para actualizar el supermercado
-                switch (datos)
-                {
-                    case PlayerInformacionEstructura playerInfo:
-                        // Tu método específico que acepta esta clase
-                        AplicarDatosJugador(playerInfo);
-                        break;
+                SkinsEstructura skinsInfo = datos.skins;
+                AplicarSkins(skinsInfo);
 
-                    case SkinsEstructura skinsInfo:
-                        AplicarSkins(skinsInfo);
-                        break;
+                MapaEstructura mapasInfo = datos.mapa;
+                AplicarMapas(mapasInfo);
 
-                    case MapaEstructura mapasInfo:
-                        AplicarMapas(mapasInfo);
-                        break;
-                }
+                PlayerInformacionEstructura playerInfo = datos.playerInformacion;
+                AplicarDatosJugador(playerInfo);
+
+                FindFirstObjectByType<Sistema_Guardado>().GuardarLocal();
+
+                FindFirstObjectByType<Calidad>().Modificacion_Idioma();
 
                 Debug.Log("[Nube] ¡Progreso descargado y aplicado con éxito!");
             }
             catch (Exception e)
             {
                 Debug.LogError($"[Nube] Error al deserializar el JSON de la nube: {e.Message}");
+                Notificacion.MostrarAlertaNativa("No exito", "Hubo un error al extraer la informacion");
+                return;
             }
+            Notificacion.MostrarAlertaNativa("Bajar informacion", "Se pudo bajar la informacion de manera correcta");
         }
         else
         {
@@ -267,52 +242,36 @@ public class SistemaGuardadoNube : MonoBehaviour
         BuildStructs.SelCarro.Set_Car_Menu(tipoCarro, datos.posicion_skin);
     }
 
-    private void AplicarSkins(SkinsEstructura skins)
+    private void AplicarSkins(SkinsEstructura skinsInfo)
     {
-        foreach(Car car in skins.carroPequenio) 
+        Pase_Conexion_Menu_Gameplay pcmg = BuildStructs.PCMG;
+
+        // 1. Carros Pequeños
+        foreach (Car carroReal in pcmg.cars_Peq)
         {
-            foreach (Car carroPCMG in BuildStructs.PCMG.cars_Peq)
+            // Si el nombre de este carro real está en la lista descargada de la nube...
+            if (skinsInfo.carroPequenio.Contains(carroReal.nombre_espaniol))
             {
-                if (car.precio == 0 && (car.nombre_espaniol == carroPCMG.nombre_espaniol ||
-                    car.nombre_portugues == carroPCMG.nombre_portugues || car.nombre_ingles == carroPCMG.nombre_ingles)) 
-                {
-                    carroPCMG.precio = 0;
-                    Debug.Log($"El carro {carroPCMG.nombre_espaniol} del tipo pequeño se compro");
-                    //Se que parece mucho pero necesito verificar que es el mismo carro por 
-                    //sus caracteristicas no su posicion en memoria
-                }
+                carroReal.precio = 0; // Lo marcamos como comprado/desbloqueado
             }
-
         }
-        foreach(Car car in skins.carroMediano) 
-        { 
-            foreach(Car carroPCMG in BuildStructs.PCMG.cars_Med)
-            {
-                if(car.precio == 0 && (car.nombre_espaniol == carroPCMG.nombre_espaniol || 
-                    car.nombre_portugues == carroPCMG.nombre_portugues || car.nombre_ingles == carroPCMG.nombre_ingles))
-                {
-                    carroPCMG.precio = 0;
-                    Debug.Log($"El carro {carroPCMG.nombre_espaniol} del tipo mediano se compro");
-                    //Se que parece mucho pero necesito verificar que es el mismo carro por 
-                    //sus caracteristicas no su posicion en memoria
-                }
-            }
 
+        // 2. Carros Medianos
+        foreach (Car carroReal in pcmg.cars_Med)
+        {
+            if (skinsInfo.carroMediano.Contains(carroReal.nombre_espaniol))
+            {
+                carroReal.precio = 0;
+            }
         }
-        foreach(Car car in skins.carroGrande) 
-        { 
-            foreach(Car carroPCMG in BuildStructs.PCMG.cars_Gra)
-            {
-                if(car.precio == 0 && (car.nombre_espaniol == carroPCMG.nombre_espaniol || 
-                    car.nombre_portugues == carroPCMG.nombre_portugues || car.nombre_ingles == carroPCMG.nombre_ingles))
-                {
-                    carroPCMG.precio = 0;
-                    Debug.Log($"El carro {carroPCMG.nombre_espaniol} del tipo grande se compro");
-                    //Se que parece mucho pero necesito verificar que es el mismo carro por 
-                    //sus caracteristicas no su posicion en memoria
-                }
-            }
 
+        // 3. Carros Grandes
+        foreach (Car carroReal in pcmg.cars_Gra)
+        {
+            if (skinsInfo.carroGrande.Contains(carroReal.nombre_espaniol))
+            {
+                carroReal.precio = 0;
+            }
         }
     }
 
