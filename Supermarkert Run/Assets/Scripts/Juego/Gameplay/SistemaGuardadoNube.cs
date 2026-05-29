@@ -141,6 +141,7 @@ public class SistemaGuardadoNube : MonoBehaviour
         if (status == SavedGameRequestStatus.Success)
         {
             Debug.Log("Paso 2: Archivo abierto. Convirtiendo datos a bytes...");
+            Debug.Log($"El archivo dice {datosParaGuardar}");
 
             // 1. Google solo entiende BYTES, así que convertimos tu String/JSON
             byte[] datosEnBytes = System.Text.Encoding.UTF8.GetBytes(datosParaGuardar);
@@ -178,7 +179,11 @@ public class SistemaGuardadoNube : MonoBehaviour
             Debug.Log("[Nube] Archivo abierto con éxito. Descargando bytes...");
 
             // Le pedimos a Google los bytes crudos del archivo
-            PlayGamesPlatform.Instance.SavedGame.ReadBinaryData(metadata, (status, data) => OnDatosDescargados<T>(status, data));
+            PlayGamesPlatform.Instance.SavedGame.ReadBinaryData(metadata, (status, data) =>
+            {
+                OnDatosDescargados<T>(status, data);
+                FindFirstObjectByType<Calidad>().Modificacion_Idioma();
+            });
         }
         else
         {
@@ -194,6 +199,8 @@ public class SistemaGuardadoNube : MonoBehaviour
 
             // 1. Convertimos los bytes devueltos por Google en el string JSON original
             string json = Encoding.UTF8.GetString(data);
+            Debug.Log($"El tamanio de data es {data.Length}");
+            Debug.Log($"el string dice {json}");
 
             // Control de seguridad: Si el archivo existe pero está vacío (usuario nuevo)
             if (string.IsNullOrEmpty(json) || data.Length == 0)
@@ -207,6 +214,7 @@ public class SistemaGuardadoNube : MonoBehaviour
             {
                 // 2. Deserializamos el JSON usando tu estructura exacta
                 T datos = JsonUtility.FromJson<T>(json);
+                Debug.Log($"La clase a asignar es {datos}");
 
                 // 3. ¡Magia! Enviamos los datos a tu método para actualizar el supermercado
                 switch (datos)
@@ -248,6 +256,7 @@ public class SistemaGuardadoNube : MonoBehaviour
     {
         if (!BuildStructs.Listo) return;
 
+        Debug.Log("BuildStructs si esta listo");
         QualitySettings.SetQualityLevel(datos.calidad);
         Nivel.Set_Nivel(datos.nivel);
         BuildStructs.Dinero.Set_Dinero(datos.dinero);
@@ -260,27 +269,51 @@ public class SistemaGuardadoNube : MonoBehaviour
 
     private void AplicarSkins(SkinsEstructura skins)
     {
-        var pcmg = BuildStructs.PCMG;
+        foreach(Car car in skins.carroPequenio) 
+        {
+            foreach (Car carroPCMG in BuildStructs.PCMG.cars_Peq)
+            {
+                if (car.precio == 0 && (car.nombre_espaniol == carroPCMG.nombre_espaniol ||
+                    car.nombre_portugues == carroPCMG.nombre_portugues || car.nombre_ingles == carroPCMG.nombre_ingles)) 
+                {
+                    carroPCMG.precio = 0;
+                    Debug.Log($"El carro {carroPCMG.nombre_espaniol} del tipo pequeño se compro");
+                    //Se que parece mucho pero necesito verificar que es el mismo carro por 
+                    //sus caracteristicas no su posicion en memoria
+                }
+            }
 
-        // Control de seguridad por si las listas de la escena vienen nulas por defecto
-        if (pcmg.cars_Peq is null) pcmg.cars_Peq = new List<Car>();
-        if (pcmg.cars_Med is null) pcmg.cars_Med = new List<Car>();
-        if (pcmg.cars_Gra is null) pcmg.cars_Gra = new List<Car>();
+        }
+        foreach(Car car in skins.carroMediano) 
+        { 
+            foreach(Car carroPCMG in BuildStructs.PCMG.cars_Med)
+            {
+                if(car.precio == 0 && (car.nombre_espaniol == carroPCMG.nombre_espaniol || 
+                    car.nombre_portugues == carroPCMG.nombre_portugues || car.nombre_ingles == carroPCMG.nombre_ingles))
+                {
+                    carroPCMG.precio = 0;
+                    Debug.Log($"El carro {carroPCMG.nombre_espaniol} del tipo mediano se compro");
+                    //Se que parece mucho pero necesito verificar que es el mismo carro por 
+                    //sus caracteristicas no su posicion en memoria
+                }
+            }
 
-        // 1. Procesar Carros Pequeños
-        pcmg.cars_Peq.Clear(); // Borramos lo que sea que tenga la escena por defecto
-        if (skins.carroPequenio != null)
-            pcmg.cars_Peq.AddRange(skins.carroPequenio); // Copiamos los elementos de la nube
+        }
+        foreach(Car car in skins.carroGrande) 
+        { 
+            foreach(Car carroPCMG in BuildStructs.PCMG.cars_Gra)
+            {
+                if(car.precio == 0 && (car.nombre_espaniol == carroPCMG.nombre_espaniol || 
+                    car.nombre_portugues == carroPCMG.nombre_portugues || car.nombre_ingles == carroPCMG.nombre_ingles))
+                {
+                    carroPCMG.precio = 0;
+                    Debug.Log($"El carro {carroPCMG.nombre_espaniol} del tipo grande se compro");
+                    //Se que parece mucho pero necesito verificar que es el mismo carro por 
+                    //sus caracteristicas no su posicion en memoria
+                }
+            }
 
-        // 2. Procesar Carros Medianos
-        pcmg.cars_Med.Clear();
-        if (skins.carroMediano != null)
-            pcmg.cars_Med.AddRange(skins.carroMediano);
-
-        // 3. Procesar Carros Grandes
-        pcmg.cars_Gra.Clear();
-        if (skins.carroGrande != null)
-            pcmg.cars_Gra.AddRange(skins.carroGrande);
+        }
     }
 
     private void AplicarMapas(MapaEstructura mapas)
@@ -290,7 +323,10 @@ public class SistemaGuardadoNube : MonoBehaviour
             foreach(Mapa mapa in BuildStructs.Dinero_Obtenido.mapas)
             {
                 if (mapa.nombre_espaniol == nameMapa)
+                {
                     mapa.precio = 0;
+                    Debug.Log($"el mapa {mapa.nombre_espaniol} se compro");
+                }
             }
         }
     }

@@ -44,11 +44,29 @@ public class SkinsEstructura : ICapturable<SkinsEstructura, Pase_Conexion_Menu_G
     public List<Car> carroMediano;
     public List<Car> carroGrande;
 
+    //Aqui solo guardamos nombre y precio con eso sera mas que suficiente saber si la clase fue comprada o no y cual
+    private void GuardarInformacionNecesaria(List<Car> cars, ref List<Car> listaGuardar)
+    {
+        listaGuardar = new();//por si se me olvida inicializarlo antes
+        foreach(Car car in cars)
+        {
+            if(car.precio == 0)
+            {
+                Car aux = new();
+                aux.precio = 0;
+                aux.nombre_espaniol = car.nombre_espaniol;
+                aux.nombre_ingles = car.nombre_ingles;
+                aux.nombre_portugues = car.nombre_portugues;//Coloco tres para validar que realmente los nombres coincidan
+                listaGuardar.Add(aux);
+            }
+        }
+    }
+
     public SkinsEstructura Capturar(Pase_Conexion_Menu_Gameplay arg1)
     {
-        carroPequenio = arg1.cars_Peq;
-        carroMediano = arg1.cars_Med;
-        carroGrande = arg1.cars_Gra;
+        GuardarInformacionNecesaria(arg1.cars_Peq, ref carroPequenio);
+        GuardarInformacionNecesaria(arg1.cars_Med, ref carroMediano);
+        GuardarInformacionNecesaria(arg1.cars_Gra, ref carroGrande);
 
         return this;
     }

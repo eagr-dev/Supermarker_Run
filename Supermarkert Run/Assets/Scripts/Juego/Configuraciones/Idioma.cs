@@ -36,26 +36,6 @@ public class Idioma : MonoBehaviour
         }
 
         Debug.Log($"La lengua elegida es {lengua}");
-
-        /*if (SceneManager.GetActiveScene().name != "Menu_principal")
-        {
-            switch (eleccion)
-            {
-                case 0:
-                    lengua = Lengua.INGLES;
-                    Modificacion_Idioma(Ingles, true);
-                    break;
-                case 1:
-                    lengua = Lengua.ESPANIOL;
-                    Modificacion_Idioma(Espaniol, true);
-                    break;
-                case 2:
-                    lengua = Lengua.PORTUGUES;
-                    Modificacion_Idioma(Portugues, true);
-                    break;
-            }
-        }
-      */
     }
 
     public List<string> Get_Idioma()
@@ -91,13 +71,6 @@ public class Idioma : MonoBehaviour
                 Textos_UI[i].text = Idioma[i];
             }
         }
-        /*else
-        {
-            for (int i = 0; i < Textos_UI.Count; i++)
-            {
-                Textos_UI[i].text = Idioma[i] + ":\n" + "0/" + Contenido_Carro.Get_Car().cant_limite_carga.ToString();
-            }
-        }*/
     }
 
     public static string Espacio_Idioma()
