@@ -16059,6 +16059,7 @@ GameObject:
   - component: {fileID: 873666814}
   - component: {fileID: 873666813}
   - component: {fileID: 873666815}
+  - component: {fileID: 873666816}
   m_Layer: 0
   m_Name: Controlador
   m_TagString: Untagged
@@ -16107,6 +16108,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79c845133ac8a8343b0669afe2503061, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SistemaGuardadoNube
+--- !u!114 &873666816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 873666812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 701d7053e9b97fe49807bc9bee2cc347, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Anuncios
 --- !u!1 &876911475
 GameObject:
   m_ObjectHideFlags: 0

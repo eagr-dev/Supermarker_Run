@@ -112,8 +112,30 @@ public class Seleccion_PU : MonoBehaviour
     public void BTN_Power()
     {
         Click_Botones.Play();
-        Debug.Log($"Se envio la posicion {valor_actual}");
-        RP.Set_Enum(Mathf.Abs(valor_actual));
-        Debug.Log($"se dio {RP.Get_Power_Up()}");
+
+        //Validar que se vio el anuncio
+        Anuncios.Instancia.MostrarAnuncioRecompensa((bool exito) =>
+        {
+            if(!exito)
+            {
+                Debug.Log("El jugador no completo su anuncio");
+                Notificacion.MostrarAlertaNativa(new NotificacionInformacionStruct(
+                "Aviso", "No se pudo otorgar la recompensa. Asegúrate de ver el video completo.",
+                "Notice", "Could not grant reward. Make sure to watch the full video.",
+                "Aviso", "Não foi possível conceder a recompensa. Certifique-se de assistir ao vídeo completo."
+                ));
+                return;
+            }
+            
+            RP.Set_Enum(Mathf.Abs(valor_actual));
+            Debug.Log($"Se vio con exito el anuncio y obtuvo {RP.Get_Power_Up()}");
+
+            Notificacion.MostrarAlertaNativa(new NotificacionInformacionStruct(
+            "¡Recompensa!", "Has recibido tu recompensa con éxito.",
+            "Reward!", "You have successfully received your reward.",
+            "Recompensa!", "Você recebeu sua recompensa com sucesso."
+            ));
+        }
+        );
     }
 }

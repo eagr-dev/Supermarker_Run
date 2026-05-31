@@ -40,7 +40,12 @@ public class SistemaGuardadoNube : MonoBehaviour
         if (PlayGamesPlatform.Instance == null)
         {
             Debug.LogError("[Nube] PlayGamesPlatform no inicializado.");
-            Notificacion.MostrarAlertaNativa("Error al subir", "Google play games no esta disponible");
+            
+            Notificacion.MostrarAlertaNativa(new NotificacionInformacionStruct(
+                "Error al subir", "Google Play Games no está disponible.",
+                "Upload Error", "Google Play Games is not available.",
+                "Erro ao enviar", "Google Play Games não está disponível."
+            ));
             return;
         }
 
@@ -55,14 +60,22 @@ public class SistemaGuardadoNube : MonoBehaviour
                 else
                     Debug.LogError("[Nube] Login fallido. No se puede subir.");
             });
-            Notificacion.MostrarAlertaNativa("Erro al subir", "No se pudo autenticar el usuario");
+            Notificacion.MostrarAlertaNativa(new NotificacionInformacionStruct(
+            "Error al subir", "No se pudo autenticar el usuario.",
+            "Upload Error", "Could not authenticate user.",
+            "Erro ao enviar", "Não foi possível autenticar o usuário."
+            ));
             return;
         }
 
         // 3. Verificar SavedGame disponible
         if (PlayGamesPlatform.Instance.SavedGame == null)
         {
-            Notificacion.MostrarAlertaNativa("Error al subir", "Actualmente no se encuetra dispoble el guardado en la nube");
+            Notificacion.MostrarAlertaNativa(new NotificacionInformacionStruct(
+            "Error al subir", "Actualmente no se encuentra disponible el guardado en la nube.",
+            "Upload Error", "Cloud save is currently unavailable.",
+            "Erro ao enviar", "O salvamento na nuvem não está disponível no momento."
+            ));
             Debug.LogError("[Nube] SavedGame client no disponible.");
             return;
         }
@@ -134,7 +147,11 @@ public class SistemaGuardadoNube : MonoBehaviour
                 datosEnBytes,
                 (status, metadata) => { Debug.Log($"El estado de guardado fue {status}"); }
             );
-            Notificacion.MostrarAlertaNativa("Exito", "Se subieron los datos de manera exitosa");
+            Notificacion.MostrarAlertaNativa(new NotificacionInformacionStruct(
+            "Éxito", "Se subieron los datos de manera exitosa.",
+            "Success", "Data uploaded successfully.",
+            "Sucesso", "Dados enviados com sucesso."
+            ));
         }
         else
         {
@@ -210,10 +227,18 @@ public class SistemaGuardadoNube : MonoBehaviour
             catch (Exception e)
             {
                 Debug.LogError($"[Nube] Error al deserializar el JSON de la nube: {e.Message}");
-                Notificacion.MostrarAlertaNativa("No exito", "Hubo un error al extraer la informacion");
+                Notificacion.MostrarAlertaNativa(new NotificacionInformacionStruct(
+            "Error", "Hubo un error al extraer la información.",
+            "Error", "There was an error extracting the data.",
+            "Erro", "Houve um erro ao extrair as informações."
+            ));
                 return;
             }
-            Notificacion.MostrarAlertaNativa("Bajar informacion", "Se pudo bajar la informacion de manera correcta");
+            Notificacion.MostrarAlertaNativa(new NotificacionInformacionStruct(
+            "Bajar información", "Se pudo bajar la información de manera correcta.",
+            "Download Data", "Data downloaded successfully.",
+            "Baixar dados", "Dados baixados com sucesso."
+            ));
         }
         else
         {
