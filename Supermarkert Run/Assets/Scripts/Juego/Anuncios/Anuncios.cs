@@ -4,6 +4,9 @@ using System;
 
 public class Anuncios : MonoBehaviour
 {
+    [Tooltip("Activa para usar IDs de prueba. Desactiva para usar IDs reales.")]
+    [SerializeField] private static bool DevelopmentBuild = true;
+
 #if UNITY_EDITOR
     // En el editor de PC siempre usamos el ID de prueba
     private const string AD_UNIT_ID = "ca-app-pub-3940256099942544/5224354917";
@@ -14,7 +17,7 @@ public class Anuncios : MonoBehaviour
         get 
         {
             // Si el APK se compiló como "Development Build" (Pruebas)
-            if (Debug.isDebugBuild) 
+            if (DevelopmentBuild) 
             {
                 return "ca-app-pub-3940256099942544/5224354917"; // ID de prueba
             }
