@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8149334798595649873}
   - component: {fileID: 7635523591227529581}
   - component: {fileID: 5915085898419300130}
+  - component: {fileID: 8893412262185440242}
   m_Layer: 5
   m_Name: Ganar 1
   m_TagString: Untagged
@@ -109,6 +110,29 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &8893412262185440242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 992324720397764961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e1c59e4849fb264a9580193d6f43573, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Idioma
+  idiomas:
+  - Texto: {fileID: 6529406223261930008}
+    Ingles: '!YOU WIN!'
+    Espaniol: '!GANASTE!'
+    Portugues: "!VOC\xCA GANHOU!"
+    Formato: 0
+  - Texto: {fileID: 1751213617203847788}
+    Ingles: menu
+    Espaniol: "men\xFA"
+    Portugues: menu
+    Formato: 0
 --- !u!1 &1107805227059778036
 GameObject:
   m_ObjectHideFlags: 0
@@ -10430,8 +10454,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -18, y: 183}
-  m_SizeDelta: {x: 976.762, y: 230.405}
+  m_AnchoredPosition: {x: -22.6104, y: 183}
+  m_SizeDelta: {x: 1265.4529, y: 230.405}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6500344269564473891
 CanvasRenderer:
@@ -10495,7 +10519,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0

@@ -23,20 +23,16 @@ public class Seleccion_Mapa : MonoBehaviour
     
     private int seleccion, seleccion_actual;
 
-    private void Awake()
-    {
-        DO = FindFirstObjectByType<Dinero_Obtenido>();
-    }
-
     private void Start()
     {
+        DO = BuildStructs.Dinero_Obtenido;
         Mostrar(DO.Get_Mapa(0));
     }
 
     public void BTN_Comprar()
     {
         Click_Botones.Play();
-        DINERO di = FindFirstObjectByType<DINERO>();
+        DINERO di = BuildStructs.Dinero;
         bool compra = di.Set_Compra((uint)DO.Get_Mapa(seleccion_actual).precio);
         if (!compra)
         {

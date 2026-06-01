@@ -4,26 +4,28 @@ using System;
 
 public class Anuncios : MonoBehaviour
 {
+
     [Tooltip("Activa para usar IDs de prueba. Desactiva para usar IDs reales.")]
-    [SerializeField] private static bool DevelopmentBuild = true;
+    [SerializeField] private bool DevelopmentBuild = true; // CORREGIDO: Sin static
 
 #if UNITY_EDITOR
     // En el editor de PC siempre usamos el ID de prueba
     private const string AD_UNIT_ID = "ca-app-pub-3940256099942544/5224354917";
 #elif UNITY_ANDROID
-    // En el celular, el ID se elige dinámicamente usando una propiedad 'get'
-    private static string AD_UNIT_ID 
+    // CORREGIDO: Propiedad de instancia (sin static) para leer correctamente DevelopmentBuild
+    private string AD_UNIT_ID 
     {
         get 
         {
-            // Si el APK se compiló como "Development Build" (Pruebas)
+            // Si la casilla está marcada en el Inspector
             if (DevelopmentBuild) 
             {
                 return "ca-app-pub-3940256099942544/5224354917"; // ID de prueba
             }
             else 
             {
-                return "ca-app-pub-YOUR-REAL-ANDROID-REWARDED-ID-HERE"; // ID Real
+                // TODO: Recuerda cambiar esto por tu ID REAL de la consola de AdMob cuando pases a producción
+                return "ca-app-pub-3940256099942544~3347511713"; 
             }
         }
     }

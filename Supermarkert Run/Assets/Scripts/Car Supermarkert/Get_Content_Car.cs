@@ -9,7 +9,12 @@ public class Get_Content_Car : MonoBehaviour
     [SerializeField]MeshRenderer r;
     public Pase_Conexion_Menu_Gameplay.Tipo_Carro TC;
     public int posicion;
-    public Car Get_Car() => car[posicion];
+    public Car Get_Car()
+    {
+        Debug.Log($"La posicion de la skin es {posicion} el nombre es " +
+            $"{gameObject.transform.parent.gameObject.name}");
+        return car[posicion];
+    }
 
     public int Get_Counts_Car() => car.Count;
 
@@ -22,7 +27,8 @@ public class Get_Content_Car : MonoBehaviour
 
     private void Awake()
     {
-        Pase_Conexion_Menu_Gameplay PCMG = FindFirstObjectByType<Pase_Conexion_Menu_Gameplay>();
+        Pase_Conexion_Menu_Gameplay PCMG = BuildStructs.PCMG;
+        Debug.Log($"PCMG existe? {(PCMG is not null ? "si" : "no" )}");
         posicion = PCMG.Get_Eleccion();
         PCMG.Set_List_All(ref car, TC);
         r.material = car[posicion].skin_car;

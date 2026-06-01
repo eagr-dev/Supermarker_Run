@@ -8778,7 +8778,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Luces: {fileID: 0}
   calidad: {fileID: 448327956}
-  Idioma: {fileID: 1290487409}
+  TMPIdioma: {fileID: 1290487409}
   Sombra: {fileID: 1052844395}
   Sol: {fileID: 1026219072}
   Luz_Dinamica: {fileID: 0}
@@ -8796,6 +8796,132 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e1c59e4849fb264a9580193d6f43573, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  idiomas:
+  - Texto: {fileID: 1794212365}
+    Ingles: Level
+    Espaniol: Nivel
+    Portugues: "N\xEDvel"
+    Formato: 1
+  - Texto: {fileID: 243872175}
+    Ingles: $
+    Espaniol: $
+    Portugues: $
+    Formato: 2
+  - Texto: {fileID: 742117842}
+    Ingles: Quality
+    Espaniol: Calidad
+    Portugues: qualidade
+    Formato: 0
+  - Texto: {fileID: 1190758678}
+    Ingles: language
+    Espaniol: Idioma
+    Portugues: linguagem
+    Formato: 0
+  - Texto: {fileID: 911970496}
+    Ingles: '!Play!'
+    Espaniol: '!Jugar!'
+    Portugues: '!jogar!'
+    Formato: 0
+  - Texto: {fileID: 93828110}
+    Ingles: cars
+    Espaniol: carros
+    Portugues: carros
+    Formato: 0
+  - Texto: {fileID: 93828110}
+    Ingles: cars
+    Espaniol: carros
+    Portugues: carros
+    Formato: 0
+  - Texto: {fileID: 1070410988}
+    Ingles: maps
+    Espaniol: mapas
+    Portugues: mapas
+    Formato: 0
+  - Texto: {fileID: 1070410988}
+    Ingles: maps
+    Espaniol: mapas
+    Portugues: mapas
+    Formato: 0
+  - Texto: {fileID: 1366009600}
+    Ingles: settings
+    Espaniol: configuracion
+    Portugues: "configura\xE7\xE3o"
+    Formato: 0
+  - Texto: {fileID: 138958768}
+    Ingles: powerup
+    Espaniol: powerup
+    Portugues: powerup
+    Formato: 0
+  - Texto: {fileID: 1281965817}
+    Ingles: little
+    Espaniol: "peque\xF1o"
+    Portugues: pequeno
+    Formato: 0
+  - Texto: {fileID: 2106989357}
+    Ingles: medium
+    Espaniol: mediano
+    Portugues: "m\xE9dio"
+    Formato: 0
+  - Texto: {fileID: 593436332}
+    Ingles: big
+    Espaniol: grande
+    Portugues: grande
+    Formato: 0
+  - Texto: {fileID: 1596451718}
+    Ingles: personalization
+    Espaniol: personalizar
+    Portugues: personalizar
+    Formato: 0
+  - Texto: {fileID: 1233518748}
+    Ingles: buy
+    Espaniol: comprar
+    Portugues: comprar
+    Formato: 0
+  - Texto: {fileID: 2121540505}
+    Ingles: buy
+    Espaniol: comprar
+    Portugues: comprar
+    Formato: 0
+  - Texto: {fileID: 884299197}
+    Ingles: buy
+    Espaniol: comprar
+    Portugues: comprar
+    Formato: 0
+  - Texto: {fileID: 1523549954}
+    Ingles: exit
+    Espaniol: salir
+    Portugues: sair
+    Formato: 0
+  - Texto: {fileID: 439401835}
+    Ingles: exit
+    Espaniol: salir
+    Portugues: sair
+    Formato: 0
+  - Texto: {fileID: 16402624}
+    Ingles: exit
+    Espaniol: salir
+    Portugues: sair
+    Formato: 0
+  - Texto: {fileID: 2124108202}
+    Ingles: accept
+    Espaniol: aceptar
+    Portugues: Aceitar
+    Formato: 0
+  - Texto: {fileID: 1343357462}
+    Ingles: accept
+    Espaniol: aceptar
+    Portugues: Aceitar
+    Formato: 0
+  - Texto: {fileID: 1923969554}
+    Ingles: accept
+    Espaniol: aceptar
+    Portugues: Aceitar
+    Formato: 0
+  - Texto: {fileID: 1527573809}
+    Ingles: accept
+    Espaniol: aceptar
+    Portugues: Aceitar
+    Formato: 0
   Textos_UI:
   - {fileID: 1794212365}
   - {fileID: 243872175}
@@ -16120,6 +16246,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 701d7053e9b97fe49807bc9bee2cc347, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Anuncios
+  DevelopmentBuild: 1
 --- !u!1 &876911475
 GameObject:
   m_ObjectHideFlags: 0

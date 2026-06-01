@@ -24,11 +24,11 @@ public class Sistema_Guardado : MonoBehaviour
             FindFirstObjectByType<Seleccion_Menu_Carrito>(),
             FindFirstObjectByType<Dinero_Obtenido>()
         );
+        CargarLocal();
     }
 
     private void Start()
     {
-        CargarLocal();
         CargarMapas();
     }
 
@@ -62,7 +62,7 @@ public class Sistema_Guardado : MonoBehaviour
 
     private void CargarMapas()
     {
-        List<Mapa> mapas = FindFirstObjectByType<Dinero_Obtenido>().mapas;
+        List<Mapa> mapas = BuildStructs.Dinero_Obtenido.mapas;
 
         foreach (Mapa mapa in mapas)
             if (PlayerPrefs.GetString(mapa.nombre_espaniol) == "true")

@@ -220,7 +220,7 @@ public class SistemaGuardadoNube : MonoBehaviour
 
                 FindFirstObjectByType<Sistema_Guardado>().GuardarLocal();
 
-                FindFirstObjectByType<Calidad>().Modificacion_Idioma();
+                FindFirstObjectByType<Idioma>().AsignarLenguajeATextos();
 
                 Debug.Log("[Nube] ¡Progreso descargado y aplicado con éxito!");
             }

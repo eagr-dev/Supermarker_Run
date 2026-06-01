@@ -9,19 +9,12 @@ public class Seleccion_Carrito : MonoBehaviour
     [SerializeField] private GameObject Carrito_mediano;
     [SerializeField] private GameObject Carrito_grande;
     [SerializeField] private RigBuilder Rigid_Animacion;
-    
-
-    
 
     private Pase_Conexion_Menu_Gameplay SMC;
 
-    private void Awake()
-    {
-        SMC = FindFirstObjectByType<Pase_Conexion_Menu_Gameplay>();
-    }
-
     void Start()
     {
+        SMC = BuildStructs.PCMG;
         Carrito_pequeno.SetActive(false);
         Carrito_mediano.SetActive(false);
         Carrito_grande.SetActive(false);

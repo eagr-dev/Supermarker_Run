@@ -22,7 +22,7 @@ public class Obstaculos : MonoBehaviour
 
     private void Awake()
     {
-        mapa_content = FindFirstObjectByType<Dinero_Obtenido>().Get_Mapa(SceneManager.GetActiveScene().name);
+        mapa_content = BuildStructs.Dinero_Obtenido.Get_Mapa(SceneManager.GetActiveScene().name);
         spawn = mapa_content.spawn;
 
         Crear_Spawns();

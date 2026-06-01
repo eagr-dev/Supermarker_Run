@@ -477,13 +477,13 @@ public class Player : MonoBehaviour
             Ganar_canvas.transform.GetChild(i).GetComponent<ParticleSystem>().Play();
         }
 
-            Dinero_Obtenido DO = FindFirstObjectByType<Dinero_Obtenido>();
+            Dinero_Obtenido DO = BuildStructs.Dinero_Obtenido;
             Dinero_Text.text = $"$ {DO.Get_Dinero()}"; 
     }
     public void BTN_Ganar()
     {
         GameObject Boton_Presiono = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
-        Dinero_Obtenido DO = FindFirstObjectByType<Dinero_Obtenido>();
+        Dinero_Obtenido DO = BuildStructs.Dinero_Obtenido;
         DO.Get_Mapa(SceneManager.GetActiveScene().name).cantidad_juegos++;
         Nivel.Set_Nivel(Nivel.nivel + 1);
         PlayerPrefs.SetString("Nivel", Nivel.nivel.ToString()); 

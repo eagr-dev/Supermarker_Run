@@ -8,7 +8,7 @@ public class Calidad : MonoBehaviour
 {
     [SerializeField] Toggle Luces;
     [SerializeField] TMP_Dropdown calidad;
-    [SerializeField] TMP_Dropdown Idioma;
+    [SerializeField] TMP_Dropdown TMPIdioma;
     //[SerializeField] GameObject Sombra_Falsa;
     [SerializeField] Sombras Sombra;
     [SerializeField] GameObject Sol;
@@ -22,8 +22,8 @@ public class Calidad : MonoBehaviour
     private void Start()
     {
         calidad.value = PlayerPrefs.GetInt("Calidad",QualitySettings.GetQualityLevel());
-        Idioma.value = PlayerPrefs.GetInt("idioma", 0);
-        Modificacion_Idioma();
+        TMPIdioma.value = PlayerPrefs.GetInt("idioma", 0);
+        idioma.AsignarLenguajeATextos();
         QualitySettings.shadows = ShadowQuality.Disable;
     }
 
@@ -36,26 +36,9 @@ public class Calidad : MonoBehaviour
     public void Eleccion_Idioma()
     {
         Click_Botones.Play();
-        PlayerPrefs.SetInt("idioma", Idioma.value);
-        Modificacion_Idioma();
-    }
-
-    public void Modificacion_Idioma()
-    {
-        List<string> Parametro = new();
-        List<string> Idioma = idioma.Get_Idioma();
-        Parametro.Add(Idioma[0] + ":" + Nivel.nivel.ToString());
-        Parametro.Add("$" + BuildStructs.Dinero.Get_Dinero().ToString());
-
-        Debug.Log(Idioma[0] + ":" + Nivel.nivel.ToString());
-        Debug.Log(BuildStructs.Dinero.Get_Dinero());
-
-        for(int i = 2; i < Idioma.Count; i++)
-        {
-            Parametro.Add(Idioma[i]);
-        }
-
-        idioma.Modificacion_Idioma(Parametro, false);
+        PlayerPrefs.SetInt("idioma", TMPIdioma.value);
+        Idioma.SetLengua((Idioma.Lengua)TMPIdioma.value);
+        idioma.AsignarLenguajeATextos();
     }
 
 }

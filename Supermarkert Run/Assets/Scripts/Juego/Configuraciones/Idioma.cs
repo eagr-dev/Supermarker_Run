@@ -6,10 +6,24 @@ using UnityEngine.SceneManagement;
 
 public class Idioma : MonoBehaviour
 {
-    public List<TMP_Text> Textos_UI;
-    public List<string> Ingles;
-    public List<string> Espaniol;
-    public List<string> Portugues;
+    public enum TipoFormato
+    {
+        Estatico,
+        Nivel,
+        Dinero
+    }
+
+    [System.Serializable]
+    public struct ContenIdioma
+    {
+        public TMP_Text Texto;
+        public string Ingles;
+        public string Espaniol;
+        public string Portugues;
+        public TipoFormato Formato;
+    }
+
+    public List<ContenIdioma> idiomas;
 
     public enum Lengua { INGLES, ESPANIOL, PORTUGUES};
     static Lengua lengua = Lengua.INGLES;
@@ -18,83 +32,48 @@ public class Idioma : MonoBehaviour
     {
         Debug.Log("Asignando lenguaje");
         int eleccion = PlayerPrefs.GetInt("idioma", 0);
-
-        switch (eleccion)
-        {
-            case 0:
-                lengua = Lengua.INGLES;
-                Modificacion_Idioma(Ingles, true);
-                break;
-            case 1:
-                lengua = Lengua.ESPANIOL;
-                Modificacion_Idioma(Espaniol, true);
-                break;
-            case 2:
-                lengua = Lengua.PORTUGUES;
-                Modificacion_Idioma(Portugues, true);
-                break;
-        }
+        lengua = (Lengua)eleccion;
+        AsignarLenguajeATextos();
 
         Debug.Log($"La lengua elegida es {lengua}");
     }
 
-    public List<string> Get_Idioma()
+    private string AplicarFormato(string textoBase, TipoFormato formato)
     {
-        List<string> retorno = Ingles;
-        switch (PlayerPrefs.GetInt("idioma",0))
+        return formato switch
         {
-            case 0:
-                lengua = Lengua.INGLES;
-                retorno = Ingles;
-                break;
-            case 1:
-                lengua = Lengua.ESPANIOL;
-                retorno = Espaniol;
-                break;
-            case 2:
-                lengua = Lengua.PORTUGUES;
-                retorno = Portugues;
-                break;
-        }
-
-        return retorno;
+            TipoFormato.Nivel => textoBase + ":" + Nivel.nivel.ToString(),
+            TipoFormato.Dinero => "$" + BuildStructs.Dinero.Get_Dinero().ToString(),
+            _ => textoBase
+        };
     }
 
-
-
-    public void Modificacion_Idioma(List<string> Idioma, bool Mapa)
+    public void AsignarLenguajeATextos()
     {
-        if (!Mapa)
+        switch (lengua)
         {
-            for(int i = 0; i < Textos_UI.Count; i++)
-            {
-                Textos_UI[i].text = Idioma[i];
-            }
-        }
-    }
-
-    public static string Espacio_Idioma()
-    {
-        string texto = "";
-
-        switch (PlayerPrefs.GetInt("idioma",0))
-        {
-            case 0:
-                texto = "Available space";
+            case Lengua.ESPANIOL:
+                foreach (ContenIdioma i in idiomas)
+                    i.Texto.text = AplicarFormato(i.Espaniol, i.Formato);
                 break;
-            case 1:
-                texto = "Espacio disponible";
+            case Lengua.INGLES:
+                foreach (ContenIdioma i in idiomas)
+                    i.Texto.text = AplicarFormato(i.Ingles, i.Formato);
                 break;
-            case 2:
-                texto = "Espaço disponível";
+            case Lengua.PORTUGUES:
+                foreach (ContenIdioma i in idiomas)
+                    i.Texto.text = AplicarFormato(i.Portugues, i.Formato);
                 break;
         }
-
-        return texto;
     }
 
     static public Lengua GetLengua()
     {
         return lengua;
+    }
+
+    static public void SetLengua(Lengua _lengua)
+    {
+        lengua = _lengua;
     }
 }

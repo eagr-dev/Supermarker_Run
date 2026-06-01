@@ -2025,17 +2025,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8967828480180511981, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
   m_PrefabInstance: {fileID: 207002737}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &259936821 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5939932555449713282, guid: 07a4c56f5b9e701468326be94edbb142, type: 3}
-  m_PrefabInstance: {fileID: 114491361}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 114491363}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &272712139
 GameObject:
   m_ObjectHideFlags: 0
@@ -6690,7 +6679,6 @@ GameObject:
   - component: {fileID: 1452680637}
   - component: {fileID: 1452680641}
   - component: {fileID: 1452680642}
-  - component: {fileID: 1452680643}
   m_Layer: 0
   m_Name: Piso
   m_TagString: Piso
@@ -6910,30 +6898,6 @@ MonoBehaviour:
   - {fileID: 171178267}
   - {fileID: 1255915093}
   - {fileID: 1395779752}
---- !u!114 &1452680643
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1452680636}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e1c59e4849fb264a9580193d6f43573, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Textos_UI:
-  - {fileID: 259936821}
-  - {fileID: 114491362}
-  Ingles:
-  - No space
-  - Available space
-  Espaniol:
-  - No espacio
-  - Espacio disponible
-  Portugues:
-  - "n\xE3o espa\xE7o"
-  - "Espa\xE7o dispon\xEDvel"
 --- !u!1001 &1577783186
 PrefabInstance:
   m_ObjectHideFlags: 0

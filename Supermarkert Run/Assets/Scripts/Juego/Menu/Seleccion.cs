@@ -37,15 +37,21 @@ public class Seleccion : MonoBehaviour
     [SerializeField] private AudioSource Click_Botones;
     [SerializeField] private AudioSource Menu;
 
+    static Pase_Conexion_Menu_Gameplay conector;
+
+    private void Start()
+    {
+        conector = BuildStructs.PCMG;
+    }
     public void BTN_Regreso()
     {
         bool rotar_camara = camara.transform.rotation.eulerAngles != new Vector3(0, 0, 0);
         if ((int)(camara.fieldOfView - FOV) != 0)
             IniciarAnimacion(FOVAC, FOV, camara.transform.rotation.x, rotacionOriginal, rotar_camara);
-            //StartCoroutine(Animacion_Acercar(FOVAC, FOV,rotacionOriginal,rotacion_carro, rotar_camara));
+
         Click_Botones.Play();
-        Pase_Conexion_Menu_Gameplay conector = FindFirstObjectByType<Pase_Conexion_Menu_Gameplay>();
-        FindFirstObjectByType<Seleccion_Menu_Carrito>().Set_Car_Menu(conector.Get_Seleccion(),conector.Get_Eleccion());
+        
+        BuildStructs.SelCarro.Set_Car_Menu(conector.Get_Seleccion(),conector.Get_Eleccion());
         if((Animacion_Npc.transform.position - Posicion_Original.position).magnitude >= 3)
         {
             Animacion_Npc.Caminar(Tiempo_Animacion, Posicion_Original);
@@ -94,7 +100,7 @@ public class Seleccion : MonoBehaviour
         Menu_Canvas.SetActive(false);
         Carritos_Canvas.SetActive(true);
         Animacion_Npc.Caminar(Tiempo_Animacion, Posicion_Ir);
-        FindFirstObjectByType<Pase_Conexion_Menu_Gameplay>().Set_Seleccion(Pase_Conexion_Menu_Gameplay.Tipo_Carro.PEQUEÑO);
+        conector.Set_Seleccion(Pase_Conexion_Menu_Gameplay.Tipo_Carro.PEQUEÑO);
     }
 
     public void BTN_Configuraciones()
@@ -184,8 +190,7 @@ public class Seleccion : MonoBehaviour
     {
         if(Mapas_Canvas.activeInHierarchy || PowerUp_Canvas.activeInHierarchy || Configuracion_Canvas.activeInHierarchy)
         {
-            Pase_Conexion_Menu_Gameplay conector = FindFirstObjectByType<Pase_Conexion_Menu_Gameplay>();
-            FindFirstObjectByType<Seleccion_Menu_Carrito>().Set_Car_Menu(conector.Get_Seleccion(), conector.Get_Eleccion());
+            BuildStructs.SelCarro.Set_Car_Menu(conector.Get_Seleccion(), conector.Get_Eleccion());
         }
         FindFirstObjectByType<Sistema_Guardado>().GuardarLocal();
     }

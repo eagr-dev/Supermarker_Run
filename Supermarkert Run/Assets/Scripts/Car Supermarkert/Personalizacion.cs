@@ -17,19 +17,31 @@ public class Personalizacion : MonoBehaviour
     private Car carro;
     [SerializeField] List<Car> carritos_personalizados;
 
-    private void Awake()
-    {
-        SMC = FindFirstObjectByType<Seleccion_Menu_Carrito>();
-    }
-
     private void Start()
     {
-        carro = SMC.Get_Active().GetComponent<Get_Content_Car>().Get_Car();
+        SMC = BuildStructs.SelCarro;
+        StartCoroutine(EsperarCarroActivo());
+    }
+
+    private IEnumerator EsperarCarroActivo()
+    {
+        Get_Content_Car gcc = null;
+
+        while (gcc == null)
+        {
+            var obj = SMC.Get_Active();
+            if (obj != null)
+                gcc = obj.GetComponent<Get_Content_Car>();
+
+            yield return null; // espera un frame e intenta de nuevo
+        }
+
+        carro = gcc.Get_Car();
         foreach (Car carro in carritos_personalizados)
         {
-            carro.peso =                    carro.skin_car.color.r * carro.peso_maximo;
-            carro.velocidad_adicional =     carro.skin_car.color.g * carro.velocidad_maxima;
-            carro.cant_limite_carga =  (int)carro.skin_car.color.b * carro.maximo_a_cargar;
+            carro.peso = carro.skin_car.color.r * carro.peso_maximo;
+            carro.velocidad_adicional = carro.skin_car.color.g * carro.velocidad_maxima;
+            carro.cant_limite_carga = (int)carro.skin_car.color.b * carro.maximo_a_cargar;
             carro.resistencia_choque = (int)carro.skin_car.color.a * carro.maxima_resistencia;
         }
 
@@ -40,7 +52,7 @@ public class Personalizacion : MonoBehaviour
         Choque.text = carro.resistencia_choque.ToString() + "%";
     }
 
-    public void Rojo(float valor) 
+        public void Rojo(float valor) 
     {
         rojo = valor;
         Calculo();

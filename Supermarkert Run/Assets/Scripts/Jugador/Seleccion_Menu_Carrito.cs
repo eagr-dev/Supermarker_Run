@@ -55,7 +55,7 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
     public void Inicializador()
     {
         eleccion = (int)slider.value;
-        PCMG = FindFirstObjectByType<Pase_Conexion_Menu_Gameplay>();
+        PCMG = BuildStructs.PCMG;
         carrito_Actual = Get_Active();
         slider.maxValue = carrito_Actual.GetComponent<Get_Content_Car>().Get_Counts_Car();
         carrito_Actual.GetComponent<Get_Content_Car>().Set_Car(eleccion);
@@ -155,7 +155,7 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
     public void BTN_Comprar()
     {
         Click_Botones.Play();
-        DINERO dinero = FindFirstObjectByType<DINERO>();
+        DINERO dinero = BuildStructs.Dinero;
         carrito_Actual = Get_Active();
         Car carrito_comprar = carrito_Actual.GetComponent<Get_Content_Car>().Get_Car();
 
@@ -283,13 +283,12 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
     }
     public GameObject Get_Active()
     {
-        GameObject retorno = Carrito_pequeno;
+        if (Carrito_pequeno.activeInHierarchy) return Carrito_pequeno;
+        if (Carrito_mediano.activeInHierarchy) return Carrito_mediano;
+        if (Carrito_grande.activeInHierarchy) return Carrito_grande;
 
-        if (Carrito_pequeno.activeInHierarchy) retorno = Carrito_pequeno;
-        else if (Carrito_mediano.activeInHierarchy) retorno = Carrito_mediano;
-        else if (Carrito_grande.activeInHierarchy) retorno = Carrito_grande;
-
-        return retorno;
+        Debug.LogWarning("Ningun carro activo, revisa el orden de inicializacion");
+        return null;
     }
 
     public void Set_Car_Menu(Pase_Conexion_Menu_Gameplay.Tipo_Carro TC, int posicion)
@@ -321,8 +320,8 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
 
     private void Mostrar_Dinero()
     {
-        Calidad calidad = FindFirstObjectByType<Calidad>();
-        calidad.Modificacion_Idioma();
+        Idioma idioma = FindFirstObjectByType<Idioma>();
+        idioma.AsignarLenguajeATextos();
         
     }
 

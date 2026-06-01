@@ -1823,7 +1823,6 @@ GameObject:
   - component: {fileID: 1452680637}
   - component: {fileID: 1452680641}
   - component: {fileID: 1452680642}
-  - component: {fileID: 1452680643}
   m_Layer: 0
   m_Name: Piso
   m_TagString: Piso
@@ -2042,30 +2041,6 @@ MonoBehaviour:
   posicion_cajas:
   - {fileID: 1204397150}
   - {fileID: 626331919}
---- !u!114 &1452680643
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1452680636}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e1c59e4849fb264a9580193d6f43573, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Textos_UI:
-  - {fileID: 3705911046001335274}
-  - {fileID: 1877943204}
-  Ingles:
-  - No space
-  - Available space
-  Espaniol:
-  - No espacio
-  - Espacio disponible
-  Portugues:
-  - "n\xE3o espa\xE7o"
-  - "Espa\xE7o dispon\xEDvel"
 --- !u!114 &1858993475 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2641343785563226394, guid: 07a4c56f5b9e701468326be94edbb142, type: 3}
@@ -3090,17 +3065,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2641343785563226390, guid: 07a4c56f5b9e701468326be94edbb142, type: 3}
   m_PrefabInstance: {fileID: 3705911046001335272}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3705911046001335274 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5939932555449713282, guid: 07a4c56f5b9e701468326be94edbb142, type: 3}
-  m_PrefabInstance: {fileID: 3705911046001335272}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 33831572}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3705911046001335275 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5502266786909631561, guid: 07a4c56f5b9e701468326be94edbb142, type: 3}

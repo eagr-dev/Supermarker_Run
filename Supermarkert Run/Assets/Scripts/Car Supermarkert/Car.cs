@@ -41,12 +41,12 @@ public class Car : ScriptableObject
     public string Get_Juegos()
     {
         if (name_mapa == null || name_mapa == "") Debug.Log("no especifico requisitos");
-        return FindFirstObjectByType<Dinero_Obtenido>().Get_Mapa(name_mapa).cantidad_juegos.ToString();
+        return BuildStructs.Dinero_Obtenido.Get_Mapa(name_mapa).cantidad_juegos.ToString();
     }
 
     public bool Get_Requisito()
     {
-        return uint.Parse(cantidad) <= FindFirstObjectByType<Dinero_Obtenido>().Get_Mapa(name_mapa).cantidad_juegos;
+        return uint.Parse(cantidad) <= BuildStructs.Dinero_Obtenido.Get_Mapa(name_mapa).cantidad_juegos;
     }
     public Material skin_car;
     public uint precio;
