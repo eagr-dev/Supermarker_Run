@@ -4255,6 +4255,7 @@ MonoBehaviour:
   camara: {fileID: 727720674}
   Click_Botones: {fileID: 1758843561}
   Menu: {fileID: 2102670921}
+  anuncios: {fileID: 102706525}
 --- !u!23 &431994174
 MeshRenderer:
   m_ObjectHideFlags: 0

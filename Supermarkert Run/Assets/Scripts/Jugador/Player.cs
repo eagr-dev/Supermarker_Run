@@ -54,6 +54,9 @@ public class Player : MonoBehaviour
     [Header("Sonido")]
     [SerializeField] private AudioSource Choque_sound;
 
+    //Anuncios
+    private Anuncios anuncios;
+
     private void Awake()
     {
         mision = FindFirstObjectByType<Mision>();
@@ -67,6 +70,7 @@ public class Player : MonoBehaviour
         }
         Power_Respective();
         obtener_Objeto_suelo.onClick.AddListener(BTN_Agarrar_Objeto);
+        anuncios = FindAnyObjectByType<Anuncios>();
     }
 
     private void Start()
@@ -446,7 +450,7 @@ public class Player : MonoBehaviour
     //Botones->Perder
     public void Perder()
     {
-        SceneManager.LoadScene(0);
+        anuncios.MostrarAnuncioIntersticial(() => SceneManager.LoadScene(0));
     }
 
 
@@ -454,8 +458,11 @@ public class Player : MonoBehaviour
 
     public void Reinicio()
     {
+        anuncios.MostrarAnuncioIntersticial( () => 
+        { 
         Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        });
     }
 
 
@@ -491,9 +498,14 @@ public class Player : MonoBehaviour
         Debug.Log($"Nuevo nivel {Nivel.nivel}");
 
         if (Boton_Presiono.name != "X2")
-            DO.Recompensa();
+        {
+            anuncios.AumentarConteoPartidas(() =>
+            {
+                DO.Recompensa();
+            });
+        }
         else
-            FindAnyObjectByType<Anuncios>().MostrarAnuncioRecompensa((bool exito) =>
+            anuncios.MostrarAnuncioRecompensa((bool exito) =>
             {
                 if (!exito)
                 {
@@ -503,10 +515,11 @@ public class Player : MonoBehaviour
                     "Notice", "Could not grant reward. Make sure to watch the full video.",
                     "Aviso", "Não foi possível conceder a recompensa. Certifique-se de assistir ao vídeo completo."
                     ));
+                    
                     DO.Recompensa();
                     return;
                 }
-            DO.Recompensa_X2();
+                DO.Recompensa_X2();
             });
         
     }

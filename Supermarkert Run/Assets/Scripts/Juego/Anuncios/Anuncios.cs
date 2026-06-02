@@ -1,41 +1,53 @@
 using UnityEngine;
 using GoogleMobileAds.Api;
 using System;
+using System.Collections;
 
 public class Anuncios : MonoBehaviour
 {
 
     [Tooltip("Activa para usar IDs de prueba. Desactiva para usar IDs reales.")]
-    [SerializeField] private bool DevelopmentBuild = true; // CORREGIDO: Sin static
+    [SerializeField] private bool DevelopmentBuild = true;
 
 #if UNITY_EDITOR
-    // En el editor de PC siempre usamos el ID de prueba
     private const string AD_UNIT_ID = "ca-app-pub-3940256099942544/5224354917";
+    private const string BANNER_UNIT_ID = "ca-app-pub-3940256099942544/6300978111";
+    private const string INTERSTITIAL_UNIT_ID = "ca-app-pub-3940256099942544/1033173712"; // 
 #elif UNITY_ANDROID
-    // CORREGIDO: Propiedad de instancia (sin static) para leer correctamente DevelopmentBuild
     private string AD_UNIT_ID 
+    {
+        get { return DevelopmentBuild ? "ca-app-pub-3940256099942544/5224354917" : "ca-app-pub-TU_ID_RECOMPENSA_AQUI"; }
+    }
+
+    private string BANNER_UNIT_ID 
+    {
+        get { return DevelopmentBuild ? "ca-app-pub-3940256099942544/6300978111" : "ca-app-pub-TU_ID_BANNER_AQUI"; }
+    }
+
+    // El nuevo ID para los anuncios de pantalla completa (Penalizaciones)
+    private string INTERSTITIAL_UNIT_ID 
     {
         get 
         {
-            // Si la casilla está marcada en el Inspector
             if (DevelopmentBuild) 
-            {
-                return "ca-app-pub-3940256099942544/5224354917"; // ID de prueba
-            }
+                return "ca-app-pub-3940256099942544/1033173712"; // ID Prueba Android
             else 
-            {
-                // TODO: Recuerda cambiar esto por tu ID REAL de la consola de AdMob cuando pases a producción
-                return "ca-app-pub-3940256099942544~3347511713"; 
-            }
+                return "ca-app-pub-TU_ID_REAL_INTERSTITIAL_AQUI"; 
         }
     }
 #else
     private const string AD_UNIT_ID = "ca-app-pub-3940256099942544/5224354917";
+    private const string BANNER_UNIT_ID = "ca-app-pub-3940256099942544/6300978111";
+    private const string INTERSTITIAL_UNIT_ID = "ca-app-pub-3940256099942544/1033173712";
 #endif
 
-
     public static Anuncios Instancia { get; private set; }
+
+    private int conteoPartidas = 0;
+
     private RewardedAd rewardedAd;
+    private BannerView bannerView;
+    private InterstitialAd interstitialAd;
 
     private void Awake()
     {
@@ -50,16 +62,22 @@ public class Anuncios : MonoBehaviour
         }
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        MobileAds.Initialize( (InitializationStatus init) => 
+        // La inicialización SIEMPRE debe ir en el Start para evitar conflictos de hilos nativos
+        MobileAds.Initialize((InitializationStatus init) =>
         {
-            Debug.Log("Inicializando anuncios");
+            Debug.Log("[AdMob] Inicializado correctamente.");
             CargarAnuncioRecompensa();
+            SolicitudCargarBanner();
+            CargarAnuncioIntersticial();
         });
     }
 
+
+    // =========================================================================
+    // LÓGICA DE RECOMPENSA (REWARDS)
+    // =========================================================================
     private void CargarAnuncioRecompensa()
     {
         // Si ya hay uno cargado, lo limpiamos antes de pedir otro
@@ -134,4 +152,135 @@ public class Anuncios : MonoBehaviour
         };
     }
 
+    // =========================================================================
+    // LÓGICA DEL PANEL DE BANNER
+    // =========================================================================
+
+    public void SolicitudCargarBanner()
+    {
+        // Si ya existe un banner previo, lo destruimos para no duplicar memoria
+        if (bannerView != null)
+        {
+            bannerView.Destroy();
+            bannerView = null;
+        }
+
+        // Creamos un tamaño adaptativo estándar para teléfonos, posicionado abajo al centro (Bottom)
+        bannerView = new BannerView(BANNER_UNIT_ID, AdSize.Banner, AdPosition.Top);
+
+        var adRequest = new AdRequest();
+        Debug.Log("[AdMob] Solicitando carga de Banner...");
+        bannerView.LoadAd(adRequest);
+    }
+
+    // Función pública para mostrar el Banner en menús o tiendas
+    public void MostrarBanner()
+    {
+        if (bannerView == null)
+        {
+            SolicitudCargarBanner();
+        }
+        else
+        {
+            Debug.Log("[AdMob] Mostrando Banner en pantalla.");
+            bannerView.Show();
+        }
+    }
+
+    // Función pública para ocultar el Banner (útil al iniciar el gameplay principal)</dt>
+    public void OcultarBanner()
+    {
+        if (bannerView != null)
+        {
+            Debug.Log("[AdMob] Ocultando Banner de la pantalla.");
+            bannerView.Hide();
+        }
+    }
+
+    // Limpieza de memoria si se destruye el objeto
+    private void OnDestroy()
+    {
+        if (bannerView != null)
+        {
+            bannerView.Destroy();
+        }
+    }
+
+    // =========================================================================
+    // LÓGICA DEL INTERSTICIAL
+    // =========================================================================
+    private void CargarAnuncioIntersticial()
+    {
+        if (interstitialAd is not null)
+        {
+            interstitialAd.Destroy();
+            interstitialAd = null;
+        }
+
+        var adRequest = new AdRequest();
+        Debug.Log("[AdMob] Solicitando carga de Intersticial...");
+
+        InterstitialAd.Load(INTERSTITIAL_UNIT_ID, adRequest, (InterstitialAd ad, LoadAdError error) =>
+        {
+            if (error is not null)
+            {
+                Debug.LogError($"[AdMob] Falló la carga del Intersticial: {error}");
+                return;
+            }
+
+            interstitialAd = ad;
+            Debug.Log("[AdMob] Anuncio Intersticial cargado y listo.");
+
+            // Suscribir eventos para cuando el jugador cierre el anuncio
+            ad.OnAdFullScreenContentClosed += () =>
+            {
+                Debug.Log("[AdMob] Intersticial cerrado. Precargando el siguiente...");
+                CargarAnuncioIntersticial(); // Clave: Precargar el siguiente de inmediato
+            };
+
+            ad.OnAdFullScreenContentFailed += (AdError adError) =>
+            {
+                Debug.LogError($"[AdMob] Falló la reproducción del Intersticial: {adError}");
+                CargarAnuncioIntersticial();
+            };
+        });
+    }
+    public void MostrarAnuncioIntersticial(Action onAdClosedCallback)
+    {
+        if (interstitialAd is not null && interstitialAd.CanShowAd())
+        {
+            Debug.Log("[AdMob] Mostrando Intersticial de penalización.");
+
+            // Si el anuncio se muestra, ejecutamos la acción del juego en cuanto el usuario lo cierre
+            interstitialAd.OnAdFullScreenContentClosed += () =>
+            {
+                onAdClosedCallback?.Invoke();
+            };
+
+            interstitialAd.Show();
+        }
+        else
+        {
+            Debug.LogWarning("[AdMob] El intersticial no estaba listo. Continuando juego sin interrupción.");
+            // Si no hay internet o no cargó, dejamos que el juego continúe al instante para no romper la experiencia
+            onAdClosedCallback?.Invoke();
+        }
+    }
+
+    public void AumentarConteoPartidas(Action onAdClosedCallback)
+    {
+        conteoPartidas++;
+        if (conteoPartidas >= 3)
+        {
+            Debug.Log($"[AdMob] Se alcanzó el límite de 3 partidas. Mostrando 1 anuncio...");
+
+            conteoPartidas = 0; // Reiniciamos contador
+            MostrarAnuncioIntersticial(onAdClosedCallback);
+        }
+        else
+        {
+            Debug.Log("[AdMob] Aún no toca anuncio. Continuando flujo...");
+            onAdClosedCallback?.Invoke();
+        }
+    }
 }

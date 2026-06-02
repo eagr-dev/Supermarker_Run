@@ -34,12 +34,23 @@ public class Seleccion : MonoBehaviour
     [SerializeField] private AudioSource Click_Botones;
     [SerializeField] private AudioSource Menu;
 
+    [Header("Anuncios")]
+    [SerializeField] private Anuncios anuncios;
+
     static Pase_Conexion_Menu_Gameplay conector;
 
     private void Start()
     {
         conector = BuildStructs.PCMG;
+        StartCoroutine(MostrarBannerConRetraso());
     }
+
+    private IEnumerator MostrarBannerConRetraso()
+    {
+        yield return null;
+        anuncios.MostrarBanner();
+    }
+
     public void BTN_Regreso()
     {
         bool rotar_camara = camara.transform.rotation.eulerAngles != new Vector3(0, 0, 0);
@@ -167,6 +178,7 @@ public class Seleccion : MonoBehaviour
 
     IEnumerator Jugar(string escena)
     {
+        anuncios.OcultarBanner();
         Animacion_Npc.Caminar(Tiempo_Animacion, Posicion_Ir);
         foreach (var i in animacion_carrito)
         {

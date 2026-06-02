@@ -11,8 +11,6 @@ public class Get_Content_Car : MonoBehaviour
     public int posicion;
     public Car Get_Car()
     {
-        Debug.Log($"La posicion de la skin es {posicion} el nombre es " +
-            $"{gameObject.transform.parent.gameObject.name}");
         return car[posicion];
     }
 

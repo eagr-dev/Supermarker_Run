@@ -7,6 +7,12 @@ public class Pausa : MonoBehaviour
     [SerializeField] GameObject UI_PAUSA;
     [SerializeField] GameObject UI_MISIONES;
     [SerializeField] AudioSource my_audio;
+    Anuncios anuncios;
+
+    private void Start()
+    {
+        anuncios = FindFirstObjectByType<Anuncios>();
+    }
 
     public void BTN_PAUSA()
     {
@@ -26,9 +32,12 @@ public class Pausa : MonoBehaviour
 
     public void BTN_REGRESAR()
     {
-        my_audio.Play();
-        Time.timeScale = 1;
-        SceneManager.LoadScene(0);
+        anuncios.MostrarAnuncioIntersticial(() =>
+        {
+            my_audio.Play();
+            Time.timeScale = 1;
+            SceneManager.LoadScene(0);
+        });
     }
 
     public void BTN_Misiones()

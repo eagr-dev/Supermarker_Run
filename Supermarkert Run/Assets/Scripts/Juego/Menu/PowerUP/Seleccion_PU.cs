@@ -17,6 +17,7 @@ public class Seleccion_PU : MonoBehaviour
     Vector3 suma_nueva_posicion = new(7, 0, 0), resta_nueva_posicion = new(-7, 0, 0);
     [SerializeField]float distancia_minina = 3;
     [SerializeField]float duracionAnimacion = 0.5f;
+    bool animado = false;
 
     private void Start()
     {
@@ -39,8 +40,9 @@ public class Seleccion_PU : MonoBehaviour
     public void BTN_SIG()
     {
         Click_Botones.Play();
-        if (ultimoPowerUp.localPosition == posicion_presentacion)
+        if (ultimoPowerUp.localPosition.x <= posicion_presentacion.x)
             return;
+        if (animado) return;
         valor_actual++;
         ValidarCercano(resta_nueva_posicion);
     }
@@ -50,6 +52,8 @@ public class Seleccion_PU : MonoBehaviour
         Click_Botones.Play();
         if (objetos.GetChild(0).localPosition == posicion_presentacion)
             return;
+        if (animado) return;
+
         valor_actual--;
         ValidarCercano(suma_nueva_posicion);
     }
@@ -78,6 +82,7 @@ public class Seleccion_PU : MonoBehaviour
 
     IEnumerator AnimacionPU(GameObject objeto, Vector3 nueva_posicion)
     {
+        animado = true;
         Transform transform = objeto.transform;
         Vector3 posicionInicial = transform.localPosition;
         Vector3 posicionFinal = nueva_posicion;
@@ -100,6 +105,7 @@ public class Seleccion_PU : MonoBehaviour
 
         // Asegurar posición final exacta
         transform.localPosition = posicionFinal;
+        animado = false;
     }
 
     void SetText(Interfaz_PowerUp interfaz_PowerUp)
