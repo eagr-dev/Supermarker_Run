@@ -192,7 +192,7 @@ public class Mision : MonoBehaviour
 
     public bool Verificar_Objeto_este_mision(string obj)
     {
-        if (carro.objetos_actuales > carro.cant_limite_carga)
+        if (carro.objetos_actuales + 1 > carro.cant_limite_carga)
         {
             StartCoroutine(Tiempo_Aparicion());
             return false;
@@ -293,7 +293,6 @@ public class Mision : MonoBehaviour
     {
         Sin_espacio.SetActive(true);
         yield return new WaitForSeconds(1);
-        carro.objetos_actuales = 0;
         Sin_espacio.SetActive(false);
     }
 

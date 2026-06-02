@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: celshaddingPiso
-  m_Shader: {fileID: 4800000, guid: 1a59b0c553fe56048b7a5fe3674206c1, type: 3}
+  m_Shader: {fileID: 10770, guid: 0000000000000000f000000000000000, type: 0}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -29,6 +29,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _ColorMask: 15
     - _Glossiness: 2
     - _OutlineWidth: 0.01
     - _RimAmount: 1
@@ -36,10 +37,17 @@ Material:
     - _ShadowSmoothness: 1
     - _ShadowThreshold: 0.5
     - _SpecularStrength: 1
+    - _Stencil: 0
+    - _StencilComp: 8
+    - _StencilOp: 0
+    - _StencilReadMask: 255
+    - _StencilWriteMask: 255
+    - _UseUIAlphaClip: 0
     m_Colors:
-    - _Color: {r: 0.22012573, g: 0.2165832, b: 0.15990263, a: 1}
+    - _Color: {r: 0.0727762, g: 0.0727762, b: 0.0727762, a: 1}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 0.2901961, g: 0.28627452, b: 0.22352941, a: 1}
     - _ShadowColor: {r: 0.16981131, g: 0.16751826, b: 0.13082945, a: 1}
     - _SpecularColor: {r: 0.2901961, g: 0.28627452, b: 0.22352941, a: 1}
   m_BuildTextureStacks: []
+  m_AllowLocking: 1

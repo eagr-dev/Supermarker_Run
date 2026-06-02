@@ -16,10 +16,7 @@ public class Seleccion : MonoBehaviour
     [Header("Animaciones")]
 
     [Header("Animaciones/Escena")]
-    [SerializeField] private GameObject Animacion;
     [SerializeField] private Animacion_Carga AnimacionSP;
-    [SerializeField] private Animator animcion_jugar;
-    [SerializeField] private AnimationClip tiempo_animacion_jugar;
 
     [Header("Animaciones/Carrito|Jugador")]
     [SerializeField] private Transform Posicion_Original;
@@ -178,10 +175,8 @@ public class Seleccion : MonoBehaviour
         }
 
         yield return new WaitForSeconds(0.5f);
-        animcion_jugar.Play("PANEL");
         Menu_Canvas.SetActive(false);
-        yield return new WaitForSeconds((tiempo_animacion_jugar.length / 2) - 0.10f);
-        Animacion.SetActive(true);
+        yield return new WaitForSeconds(0.2f);
         AnimacionSP.Cambiar_Escena(escena);
     }
 

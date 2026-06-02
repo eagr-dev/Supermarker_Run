@@ -43,7 +43,7 @@ public class Idioma : MonoBehaviour
         return formato switch
         {
             TipoFormato.Nivel => textoBase + ":" + Nivel.nivel.ToString(),
-            TipoFormato.Dinero => "$" + BuildStructs.Dinero.Get_Dinero().ToString(),
+            TipoFormato.Dinero => BuildStructs.Dinero.Get_Dinero().ToString(),
             _ => textoBase
         };
     }

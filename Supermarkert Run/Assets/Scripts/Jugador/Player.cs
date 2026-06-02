@@ -493,7 +493,22 @@ public class Player : MonoBehaviour
         if (Boton_Presiono.name != "X2")
             DO.Recompensa();
         else
+            FindAnyObjectByType<Anuncios>().MostrarAnuncioRecompensa((bool exito) =>
+            {
+                if (!exito)
+                {
+                    Debug.Log("El jugador no completo su anuncio");
+                    Notificacion.MostrarAlertaNativa(new NotificacionInformacionStruct(
+                    "Aviso", "No se pudo otorgar la recompensa. Asegúrate de ver el video completo.",
+                    "Notice", "Could not grant reward. Make sure to watch the full video.",
+                    "Aviso", "Não foi possível conceder a recompensa. Certifique-se de assistir ao vídeo completo."
+                    ));
+                    DO.Recompensa();
+                    return;
+                }
             DO.Recompensa_X2();
+            });
+        
     }
 
     private void BTN_Agarrar_Objeto()
