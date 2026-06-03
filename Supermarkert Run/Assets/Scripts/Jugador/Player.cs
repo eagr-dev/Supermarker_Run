@@ -54,9 +54,6 @@ public class Player : MonoBehaviour
     [Header("Sonido")]
     [SerializeField] private AudioSource Choque_sound;
 
-    //Anuncios
-    private Anuncios anuncios;
-
     private void Awake()
     {
         mision = FindFirstObjectByType<Mision>();
@@ -70,7 +67,6 @@ public class Player : MonoBehaviour
         }
         Power_Respective();
         obtener_Objeto_suelo.onClick.AddListener(BTN_Agarrar_Objeto);
-        anuncios = FindAnyObjectByType<Anuncios>();
     }
 
     private void Start()
@@ -450,7 +446,7 @@ public class Player : MonoBehaviour
     //Botones->Perder
     public void Perder()
     {
-        anuncios.MostrarAnuncioIntersticial(() => SceneManager.LoadScene(0));
+        Anuncios.Instancia.MostrarAnuncioIntersticial(() => SceneManager.LoadScene(0));
     }
 
 
@@ -458,7 +454,7 @@ public class Player : MonoBehaviour
 
     public void Reinicio()
     {
-        anuncios.MostrarAnuncioIntersticial( () => 
+        Anuncios.Instancia.MostrarAnuncioIntersticial( () => 
         { 
         Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -499,13 +495,13 @@ public class Player : MonoBehaviour
 
         if (Boton_Presiono.name != "X2")
         {
-            anuncios.AumentarConteoPartidas(() =>
+            Anuncios.Instancia.AumentarConteoPartidas(() =>
             {
                 DO.Recompensa();
             });
         }
         else
-            anuncios.MostrarAnuncioRecompensa((bool exito) =>
+            Anuncios.Instancia.MostrarAnuncioRecompensa((bool exito) =>
             {
                 if (!exito)
                 {

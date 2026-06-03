@@ -192,16 +192,18 @@ public class Mision : MonoBehaviour
 
     public bool Verificar_Objeto_este_mision(string obj)
     {
+        //Primero Verificamos si ya lo tomamos o guardamos
+        var obj_tomo = Se_repite_objeto_tomado(obj);
+        if (obj_tomo.Item2 || obj_tomo.Item1 < 0)
+            return false;
+        if (objetos[obj_tomo.Item1].Item3) return false;
+
+        //Despues si ninguno de los 2 se cumple mandamos que no tiene espacio
         if (carro.objetos_actuales + 1 > carro.cant_limite_carga)
         {
             StartCoroutine(Tiempo_Aparicion());
             return false;
         }
-
-        var obj_tomo = Se_repite_objeto_tomado(obj);
-        if (obj_tomo.Item2 || obj_tomo.Item1 < 0)
-            return false;
-        if (objetos[obj_tomo.Item1].Item3) return false;
 
         var emision = Punto.emission;
         emision.enabled = true;
@@ -362,8 +364,14 @@ public class Mision : MonoBehaviour
 
     public void BTN_Pag_Ant()
     {
-        final_lista = inicio_lista <= 0 ? final_lista : inicio_lista;
-        inicio_lista = objetos.Count < (inicio_lista - misiones_default) ? (inicio_lista - misiones_default) : 0;
+        if (inicio_lista <= 0) return; // Ya estás en la primera página, no hay nada atrás
+
+        final_lista = inicio_lista;
+        inicio_lista = inicio_lista - misiones_default;
+
+        // Clamp por seguridad, no debería pasar pero por si acaso
+        if (inicio_lista < 0) inicio_lista = 0;
+
         Limpiar_Textos();
         Mostrar();
     }

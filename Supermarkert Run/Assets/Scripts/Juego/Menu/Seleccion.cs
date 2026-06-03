@@ -34,9 +34,6 @@ public class Seleccion : MonoBehaviour
     [SerializeField] private AudioSource Click_Botones;
     [SerializeField] private AudioSource Menu;
 
-    [Header("Anuncios")]
-    [SerializeField] private Anuncios anuncios;
-
     static Pase_Conexion_Menu_Gameplay conector;
 
     private void Start()
@@ -48,11 +45,12 @@ public class Seleccion : MonoBehaviour
     private IEnumerator MostrarBannerConRetraso()
     {
         yield return null;
-        anuncios.MostrarBanner();
+        Anuncios.Instancia.MostrarBanner();
     }
 
     public void BTN_Regreso()
     {
+        Anuncios.Instancia.MostrarBanner();
         bool rotar_camara = camara.transform.rotation.eulerAngles != new Vector3(0, 0, 0);
         if ((int)(camara.fieldOfView - FOV) != 0)
             IniciarAnimacion(FOVAC, FOV, camara.transform.rotation.x, rotacionOriginal, rotar_camara);
@@ -81,6 +79,7 @@ public class Seleccion : MonoBehaviour
 
     public void BTN_Power_Up()
     {
+        Anuncios.Instancia.OcultarBanner();
         IniciarAnimacion(FOV, FOVAC, camara.transform.rotation.eulerAngles.x, rotacionOriginal, false);
         Click_Botones.Play();
         Animacion_Npc.Caminar(Tiempo_Animacion, Posicion_Ir);
@@ -96,6 +95,7 @@ public class Seleccion : MonoBehaviour
 
     public void BTN_Mapa()
     {
+        Anuncios.Instancia.OcultarBanner();
         Click_Botones.Play();
         Menu_Canvas.SetActive(false);
         Mapas_Canvas.SetActive(true);
@@ -178,7 +178,7 @@ public class Seleccion : MonoBehaviour
 
     IEnumerator Jugar(string escena)
     {
-        anuncios.OcultarBanner();
+        Anuncios.Instancia.OcultarBanner();
         Animacion_Npc.Caminar(Tiempo_Animacion, Posicion_Ir);
         foreach (var i in animacion_carrito)
         {
