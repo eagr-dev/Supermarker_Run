@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject player_object;
     [SerializeField] private GameObject camara;
     Vector3 position_camera = new(0, 7, -10);
+    [SerializeField] private float distanciaEstante = 3f;
 
     [Header("Otros")]
     public Vector3 position_Reset;
@@ -109,11 +110,16 @@ public class Player : MonoBehaviour
         }
         if (choque)
         {
-            Vector3 punto_retroceder = (transform.position - punto_choque.point).normalized;
+            Vector3 punto_retroceder = (transform.position - punto_choque.point);
+            punto_retroceder.y = 0;
+            punto_retroceder = punto_retroceder.normalized;
+            rigid.AddForce(punto_retroceder * 100f, ForceMode.Impulse);
+            /*Vector3 punto_retroceder = (transform.position - punto_choque.point).normalized;
             rigid.AddForce(punto_retroceder * 100, ForceMode.Impulse);
-            //Hacer animacion de caida en la couritina
+            //Hacer animacion de caida en la couritina*/
+
         }
-        if (transform.position.y < 0) transform.position = position_Reset;
+        if (transform.position.y < -1) transform.position = position_Reset;
     }
 
 
@@ -198,7 +204,8 @@ public class Player : MonoBehaviour
         Vector3 Movimiento = new Vector3(Horizontal_Move, 0, Vertical_Move).normalized;
         Vector3 obtener_velocidad = new Vector3(Horizontal_Move, 0, Vertical_Move) * speed;
 
-        rigid.MovePosition(rigid.position + obtener_velocidad * Time.fixedDeltaTime);
+        //rigid.MovePosition(rigid.position + obtener_velocidad * Time.fixedDeltaTime);
+        rigid.linearVelocity = new Vector3(obtener_velocidad.x, rigid.linearVelocity.y, obtener_velocidad.z);
 
         animacion.SetFloat("VelX", Horizontal_Move);
         animacion.SetFloat("VelY", Vertical_Move);
@@ -310,9 +317,11 @@ public class Player : MonoBehaviour
         //Animacion caida
         joystick.DeadZone = 1000;
         punto_choque = collision.contacts[0];
+        rigid.linearVelocity = Vector3.zero;
         choque = true;
         yield return new WaitForSeconds(1);
         //Animacion levantarse
+        rigid.linearVelocity = Vector3.zero;
         Set_Rigs(1);
         joystick.DeadZone = 0;
         choque = false;

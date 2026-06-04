@@ -10,33 +10,30 @@ public class Camara_Objetos_Desaparecer : MonoBehaviour
     private Area area;
     [SerializeField] private Transform personaje;
 
-    // Start is called before the first frame update
 
     // Update is called once per frame
     private void FixedUpdate()
     {
-        Vector3 origin = transform.position; 
-        Vector3 direction = (personaje.position - origin).normalized;
+        Vector3 origin = transform.position;
+        Vector3 playerPos = personaje.position;
+        Vector3 direction = (playerPos - origin).normalized;
         ray = new Ray(origin, direction);
 
-        if (Physics.Raycast(ray, out laser) && laser.collider.CompareTag("Area"))
+        float distancia = Vector3.Distance(origin, playerPos);
+
+        if (Physics.Raycast(ray, out laser, distancia) && laser.collider.CompareTag("Area"))
         {
-            
             if (objeto is not null && !IsID(laser.collider, objeto))
             {
                 area = objeto.GetComponent<Area>();
                 area.VisibilizarEstante();
                 objeto = null;
             }
-            else
-            {
-                objeto = laser.collider;
-                area = objeto.GetComponent<Area>();
-                area.OcultarEstante();
-            }
-
+            objeto = laser.collider;
+            area = objeto.GetComponent<Area>();
+            area.OcultarEstante();
         }
-        else if(objeto is not null)
+        else if (objeto is not null)
         {
             area = objeto.GetComponent<Area>();
             area.VisibilizarEstante();

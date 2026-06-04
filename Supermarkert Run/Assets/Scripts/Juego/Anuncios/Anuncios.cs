@@ -16,12 +16,12 @@ public class Anuncios : MonoBehaviour
 #elif UNITY_ANDROID
     private string AD_UNIT_ID 
     {
-        get { return DevelopmentBuild ? "ca-app-pub-3940256099942544/5224354917" : "ca-app-pub-TU_ID_RECOMPENSA_AQUI"; }
+        get { return DevelopmentBuild ? "ca-app-pub-3940256099942544/5224354917" : "ca-app-pub-3641463045788683/7451450924"; }
     }
 
     private string BANNER_UNIT_ID 
     {
-        get { return DevelopmentBuild ? "ca-app-pub-3940256099942544/6300978111" : "ca-app-pub-TU_ID_BANNER_AQUI"; }
+        get { return DevelopmentBuild ? "ca-app-pub-3940256099942544/6300978111" : "ca-app-pub-3641463045788683/2835068977"; }
     }
 
     // El nuevo ID para los anuncios de pantalla completa (Penalizaciones)
@@ -32,7 +32,7 @@ public class Anuncios : MonoBehaviour
             if (DevelopmentBuild) 
                 return "ca-app-pub-3940256099942544/1033173712"; // ID Prueba Android
             else 
-                return "ca-app-pub-TU_ID_REAL_INTERSTITIAL_AQUI"; 
+                return "ca-app-pub-3641463045788683/7259879230"; 
         }
     }
 #else
@@ -48,7 +48,7 @@ public class Anuncios : MonoBehaviour
     private RewardedAd rewardedAd;
     private BannerView bannerView;
     private InterstitialAd interstitialAd;
-
+    private bool bannerDebeEstarVisible = true;
     private void Awake()
     {
         if (Instancia == null)
@@ -168,6 +168,14 @@ public class Anuncios : MonoBehaviour
         // Creamos un tamaño adaptativo estándar para teléfonos, posicionado abajo al centro (Bottom)
         bannerView = new BannerView(BANNER_UNIT_ID, AdSize.Banner, AdPosition.Top);
 
+        bannerView.OnBannerAdLoaded += () =>
+        {
+            if (bannerDebeEstarVisible)
+                bannerView.Show();
+            else
+                bannerView.Hide(); 
+        };
+
         var adRequest = new AdRequest();
         Debug.Log("[AdMob] Solicitando carga de Banner...");
         bannerView.LoadAd(adRequest);
@@ -176,6 +184,7 @@ public class Anuncios : MonoBehaviour
     // Función pública para mostrar el Banner en menús o tiendas
     public void MostrarBanner()
     {
+        bannerDebeEstarVisible = true;
         if (bannerView == null)
         {
             SolicitudCargarBanner();
@@ -190,6 +199,7 @@ public class Anuncios : MonoBehaviour
     // Función pública para ocultar el Banner (útil al iniciar el gameplay principal)</dt>
     public void OcultarBanner()
     {
+        bannerDebeEstarVisible = false;
         if (bannerView != null)
         {
             Debug.Log("[AdMob] Ocultando Banner de la pantalla.");
