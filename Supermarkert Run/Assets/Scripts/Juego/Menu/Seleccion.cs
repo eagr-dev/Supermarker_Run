@@ -44,13 +44,15 @@ public class Seleccion : MonoBehaviour
 
     private IEnumerator MostrarBannerConRetraso()
     {
-        yield return null;
+        while (Anuncios.Instancia == null || !Anuncios.Instancia.Inicializado)
+        {
+            yield return null; // Espera al siguiente frame
+        }
         Anuncios.Instancia.MostrarBanner();
     }
 
     public void BTN_Regreso()
     {
-        Anuncios.Instancia.MostrarBanner();
         bool rotar_camara = camara.transform.rotation.eulerAngles != new Vector3(0, 0, 0);
         if ((int)(camara.fieldOfView - FOV) != 0)
             IniciarAnimacion(FOVAC, FOV, camara.transform.rotation.x, rotacionOriginal, rotar_camara);
@@ -79,7 +81,6 @@ public class Seleccion : MonoBehaviour
 
     public void BTN_Power_Up()
     {
-        Anuncios.Instancia.OcultarBanner();
         IniciarAnimacion(FOV, FOVAC, camara.transform.rotation.eulerAngles.x, rotacionOriginal, false);
         Click_Botones.Play();
         Animacion_Npc.Caminar(Tiempo_Animacion, Posicion_Ir);
@@ -95,7 +96,6 @@ public class Seleccion : MonoBehaviour
 
     public void BTN_Mapa()
     {
-        Anuncios.Instancia.OcultarBanner();
         Click_Botones.Play();
         Menu_Canvas.SetActive(false);
         Mapas_Canvas.SetActive(true);
@@ -178,7 +178,7 @@ public class Seleccion : MonoBehaviour
 
     IEnumerator Jugar(string escena)
     {
-        Anuncios.Instancia.OcultarBanner();
+        yield return StartCoroutine(Anuncios.Instancia.DestruirBannerSeguro());
         Animacion_Npc.Caminar(Tiempo_Animacion, Posicion_Ir);
         foreach (var i in animacion_carrito)
         {

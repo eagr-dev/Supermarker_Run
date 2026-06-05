@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using GoogleMobileAds.Api;
 using System;
 using System.Collections;
@@ -8,6 +8,10 @@ public class Anuncios : MonoBehaviour
 
     [Tooltip("Activa para usar IDs de prueba. Desactiva para usar IDs reales.")]
     [SerializeField] private bool DevelopmentBuild = true;
+
+    [Tooltip("Los ID de prueba y real para app ID de admon.")]
+    [SerializeField] private string DevelopmentIDBuild = "ca-app-pub-3940256099942544~3347511713";
+    [SerializeField] private string DeploymentIDBuild = "ca-app-pub-3641463045788683~3556593478";
 
 #if UNITY_EDITOR
     private const string AD_UNIT_ID = "ca-app-pub-3940256099942544/5224354917";
@@ -48,7 +52,8 @@ public class Anuncios : MonoBehaviour
     private RewardedAd rewardedAd;
     private BannerView bannerView;
     private InterstitialAd interstitialAd;
-    private bool bannerDebeEstarVisible = true;
+    public bool Inicializado { get; private set; } = false;
+
     private void Awake()
     {
         if (Instancia == null)
@@ -64,10 +69,11 @@ public class Anuncios : MonoBehaviour
 
     void Start()
     {
-        // La inicialización SIEMPRE debe ir en el Start para evitar conflictos de hilos nativos
+        // La inicializaciï¿½n SIEMPRE debe ir en el Start para evitar conflictos de hilos nativos
         MobileAds.Initialize((InitializationStatus init) =>
         {
             Debug.Log("[AdMob] Inicializado correctamente.");
+            Inicializado = true;
             CargarAnuncioRecompensa();
             SolicitudCargarBanner();
             CargarAnuncioIntersticial();
@@ -76,7 +82,7 @@ public class Anuncios : MonoBehaviour
 
 
     // =========================================================================
-    // LÓGICA DE RECOMPENSA (REWARDS)
+    // Lï¿½GICA DE RECOMPENSA (REWARDS)
     // =========================================================================
     private void CargarAnuncioRecompensa()
     {
@@ -93,7 +99,7 @@ public class Anuncios : MonoBehaviour
         {
             if (error is not null)
             {
-                Debug.LogError($"[AdMob] Falló la carga del anuncio: {error}");
+                Debug.LogError($"[AdMob] Fallï¿½ la carga del anuncio: {error}");
                 return;
             }
 
@@ -128,11 +134,11 @@ public class Anuncios : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("[AdMob] El anuncio no está listo todavía o falló la conexión.");
+            Debug.LogWarning("[AdMob] El anuncio no estï¿½ listo todavï¿½a o fallï¿½ la conexiï¿½n.");
             Notificacion.MostrarAlertaNativa(new NotificacionInformacionStruct(
-            "Anuncio no disponible", "El anuncio no está listo todavía o falló la conexión. Intenta de nuevo más tarde.",
+            "Anuncio no disponible", "El anuncio no estï¿½ listo todavï¿½a o fallï¿½ la conexiï¿½n. Intenta de nuevo mï¿½s tarde.",
             "Ad Unavailable", "The ad is not ready yet or the connection failed. Please try again later.",
-            "Anúncio indisponível", "O anúncio ainda não está pronto ou a conexão falhou. Tente novamente mais tarde."
+            "Anï¿½ncio indisponï¿½vel", "O anï¿½ncio ainda nï¿½o estï¿½ pronto ou a conexï¿½o falhou. Tente novamente mais tarde."
             ));
         }
     }
@@ -147,17 +153,24 @@ public class Anuncios : MonoBehaviour
 
         ad.OnAdFullScreenContentFailed += (AdError error) =>
         {
-            Debug.LogError($"[AdMob] Falló la reproducción del anuncio: {error}");
-            CargarAnuncioRecompensa(); // Intentamos cargar otro si este falló
+            Debug.LogError($"[AdMob] Fallï¿½ la reproducciï¿½n del anuncio: {error}");
+            CargarAnuncioRecompensa(); // Intentamos cargar otro si este fallï¿½
         };
     }
 
     // =========================================================================
-    // LÓGICA DEL PANEL DE BANNER
+    // Lï¿½GICA DEL PANEL DE BANNER
     // =========================================================================
 
     public void SolicitudCargarBanner()
     {
+        
+        if (!Inicializado)
+        {
+            Debug.LogWarning("[AdMob] Se intentÃ³ cargar un banner antes de terminar la inicializaciÃ³n.");
+            return;
+        }
+
         // Si ya existe un banner previo, lo destruimos para no duplicar memoria
         if (bannerView != null)
         {
@@ -165,45 +178,39 @@ public class Anuncios : MonoBehaviour
             bannerView = null;
         }
 
-        // Creamos un tamaño adaptativo estándar para teléfonos, posicionado abajo al centro (Bottom)
+        // Creamos un tamaï¿½o adaptativo estï¿½ndar para telï¿½fonos, posicionado abajo al centro (Bottom)
         bannerView = new BannerView(BANNER_UNIT_ID, AdSize.Banner, AdPosition.Top);
-
-        bannerView.OnBannerAdLoaded += () =>
-        {
-            if (bannerDebeEstarVisible)
-                bannerView.Show();
-            else
-                bannerView.Hide(); 
-        };
 
         var adRequest = new AdRequest();
         Debug.Log("[AdMob] Solicitando carga de Banner...");
         bannerView.LoadAd(adRequest);
     }
 
-    // Función pública para mostrar el Banner en menús o tiendas
+    // Funciï¿½n pï¿½blica para mostrar el Banner en menï¿½s o tiendas
     public void MostrarBanner()
     {
-        bannerDebeEstarVisible = true;
-        if (bannerView == null)
-        {
-            SolicitudCargarBanner();
-        }
-        else
-        {
-            Debug.Log("[AdMob] Mostrando Banner en pantalla.");
-            bannerView.Show();
-        }
+        Debug.Log("[AdMob] Recreando y mostrando Banner.");
+        SolicitudCargarBanner();
     }
 
-    // Función pública para ocultar el Banner (útil al iniciar el gameplay principal)</dt>
+    // Funciï¿½n pï¿½blica para ocultar el Banner (ï¿½til al iniciar el gameplay principal)</dt>
     public void OcultarBanner()
     {
-        bannerDebeEstarVisible = false;
+        StartCoroutine(DestruirBannerSeguro());
+    }
+
+    public IEnumerator DestruirBannerSeguro()
+    {
+        // Espera a que termine el frame grÃ¡fico actual y da 100ms de tolerancia
+        // para que el hilo nativo de Android procese la carga de la escena limpia
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForSeconds(0.15f);
+
         if (bannerView != null)
         {
-            Debug.Log("[AdMob] Ocultando Banner de la pantalla.");
-            bannerView.Hide();
+            Debug.Log("[AdMob] Destruyendo Banner por completo para el Gameplay.");
+            bannerView.Destroy();
+            bannerView = null;
         }
     }
 
@@ -217,7 +224,7 @@ public class Anuncios : MonoBehaviour
     }
 
     // =========================================================================
-    // LÓGICA DEL INTERSTICIAL
+    // Lï¿½GICA DEL INTERSTICIAL
     // =========================================================================
     private void CargarAnuncioIntersticial()
     {
@@ -234,7 +241,7 @@ public class Anuncios : MonoBehaviour
         {
             if (error is not null)
             {
-                Debug.LogError($"[AdMob] Falló la carga del Intersticial: {error}");
+                Debug.LogError($"[AdMob] Fallï¿½ la carga del Intersticial: {error}");
                 return;
             }
 
@@ -250,7 +257,7 @@ public class Anuncios : MonoBehaviour
 
             ad.OnAdFullScreenContentFailed += (AdError adError) =>
             {
-                Debug.LogError($"[AdMob] Falló la reproducción del Intersticial: {adError}");
+                Debug.LogError($"[AdMob] Fallï¿½ la reproducciï¿½n del Intersticial: {adError}");
                 CargarAnuncioIntersticial();
             };
         });
@@ -259,9 +266,9 @@ public class Anuncios : MonoBehaviour
     {
         if (interstitialAd is not null && interstitialAd.CanShowAd())
         {
-            Debug.Log("[AdMob] Mostrando Intersticial de penalización.");
+            Debug.Log("[AdMob] Mostrando Intersticial de penalizaciï¿½n.");
 
-            // Si el anuncio se muestra, ejecutamos la acción del juego en cuanto el usuario lo cierre
+            // Si el anuncio se muestra, ejecutamos la acciï¿½n del juego en cuanto el usuario lo cierre
             interstitialAd.OnAdFullScreenContentClosed += () =>
             {
                 onAdClosedCallback?.Invoke();
@@ -271,8 +278,8 @@ public class Anuncios : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("[AdMob] El intersticial no estaba listo. Continuando juego sin interrupción.");
-            // Si no hay internet o no cargó, dejamos que el juego continúe al instante para no romper la experiencia
+            Debug.LogWarning("[AdMob] El intersticial no estaba listo. Continuando juego sin interrupciï¿½n.");
+            // Si no hay internet o no cargï¿½, dejamos que el juego continï¿½e al instante para no romper la experiencia
             onAdClosedCallback?.Invoke();
         }
     }
@@ -282,14 +289,14 @@ public class Anuncios : MonoBehaviour
         conteoPartidas++;
         if (conteoPartidas >= 3)
         {
-            Debug.Log($"[AdMob] Se alcanzó el límite de 3 partidas. Mostrando 1 anuncio...");
+            Debug.Log($"[AdMob] Se alcanzï¿½ el lï¿½mite de 3 partidas. Mostrando 1 anuncio...");
 
             conteoPartidas = 0; // Reiniciamos contador
             MostrarAnuncioIntersticial(onAdClosedCallback);
         }
         else
         {
-            Debug.Log("[AdMob] Aún no toca anuncio. Continuando flujo...");
+            Debug.Log("[AdMob] Aï¿½n no toca anuncio. Continuando flujo...");
             onAdClosedCallback?.Invoke();
         }
     }

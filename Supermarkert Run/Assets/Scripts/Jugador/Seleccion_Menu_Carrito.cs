@@ -122,14 +122,12 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
 
     public void BTN_Skin()
     {
-        Anuncios.Instancia.OcultarBanner();
         Click_Botones.Play();
         Canvas_Eleccion.SetActive(false);
         Canvas_Skin.SetActive(true);
     }
     public void BTN_Eleccion()
     {
-        Anuncios.Instancia.MostrarBanner();
         Click_Botones.Play();
         Carrito_pequeno.GetComponent<Get_Content_Car>().Set_Car(eleccion);
         Carrito_mediano.GetComponent<Get_Content_Car>().Set_Car(eleccion);
