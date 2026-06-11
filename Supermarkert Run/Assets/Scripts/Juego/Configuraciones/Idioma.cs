@@ -72,8 +72,16 @@ public class Idioma : MonoBehaviour
         return lengua;
     }
 
-    static public void SetLengua(Lengua _lengua)
+    /*static public void SetLengua(Lengua _lengua)
     {
         lengua = _lengua;
+    }*/
+
+    public static event System.Action OnLenguaChanged;
+
+    public static void SetLengua(Lengua nueva)
+    {
+        lengua = nueva;
+        OnLenguaChanged?.Invoke();
     }
 }

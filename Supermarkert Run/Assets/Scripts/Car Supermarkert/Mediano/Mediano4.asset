@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   peso: 35
   velocidad_adicional: 2.2
-  cant_limite_carga: 50
+  cant_limite_carga: 20
   objetos_actuales: 0
   resistencia_choque: 40
   peso_maximo: 0

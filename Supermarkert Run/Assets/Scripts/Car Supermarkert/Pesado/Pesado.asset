@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   peso: 50
   velocidad_adicional: 1
-  cant_limite_carga: 100
+  cant_limite_carga: 55
   objetos_actuales: 0
   resistencia_choque: 70
   peso_maximo: 0
   velocidad_maxima: 0
   maximo_a_cargar: 0
-  maxima_resistencia: 0
+  maxima_resistencia: 80
   nombre_espaniol: Pesado
   descripcion_espanio: Tanque pesado ideal para misiones largas, gran resistencia
     pero poca velocidad y agilidad

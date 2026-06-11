@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fdc222640aea6240990c32f14f08ede, type: 3}
   m_Name: Pesado4
   m_EditorClassIdentifier: 
-  peso: 50
+  peso: 60
   velocidad_adicional: 1.7
-  cant_limite_carga: 100
+  cant_limite_carga: 60
   objetos_actuales: 0
   resistencia_choque: 60
   peso_maximo: 0
   velocidad_maxima: 0
   maximo_a_cargar: 0
-  maxima_resistencia: 0
+  maxima_resistencia: 80
   nombre_espaniol: Pesado Oro
   descripcion_espanio: Tanque pesado ideal para misiones largas, gran resistencia
     pero poca velocidad y agilidad

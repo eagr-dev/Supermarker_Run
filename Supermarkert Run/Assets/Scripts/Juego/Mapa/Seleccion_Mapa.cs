@@ -21,12 +21,27 @@ public class Seleccion_Mapa : MonoBehaviour
     private Dinero_Obtenido DO;
 
     
-    private int seleccion, seleccion_actual;
+    private int seleccion, seleccion_actual = 0;
+
+    private void OnEnable()
+    {
+        Idioma.OnLenguaChanged += RefrescarIdioma;
+    }
+
+    private void OnDisable()
+    {
+        Idioma.OnLenguaChanged -= RefrescarIdioma;
+    }
+
+    private void RefrescarIdioma()
+    {
+        Mostrar(DO.Get_Mapa(seleccion_actual));
+    }
 
     private void Start()
     {
         DO = BuildStructs.Dinero_Obtenido;
-        Mostrar(DO.Get_Mapa(0));
+        Mostrar(DO.Get_Mapa(seleccion_actual));
     }
 
     public void BTN_Comprar()
@@ -42,7 +57,6 @@ public class Seleccion_Mapa : MonoBehaviour
             
         DO.Get_Mapa(seleccion_actual).precio = 0;
         Mostrar(DO.Get_Mapa(seleccion_actual));
-        Precio.text = "$ " + DO.Get_Mapa(seleccion).precio.ToString();
         Comprar.SetActive(false);
         Aceptar.SetActive(true);
         Sistema_Guardado sg = FindFirstObjectByType<Sistema_Guardado>();
@@ -98,10 +112,8 @@ public class Seleccion_Mapa : MonoBehaviour
         NombreTraducido(mapa, ref nombre, ref descripcion);
         Nombre.text = nombre;
         Descripcion.text = descripcion;
-        Precio.text = mapa.precio.ToString();
-        Cantidad_Dar.text = "$" + mapa.Valor_mapa.ToString();
         if(mapa.screen_map != null)
-        Muestra.sprite = mapa.screen_map;
+            Muestra.sprite = mapa.screen_map;
     }
 
     private void NombreTraducido(Mapa mapa, ref string nombre, ref string descripcion)
@@ -115,14 +127,20 @@ public class Seleccion_Mapa : MonoBehaviour
             case Idioma.Lengua.ESPANIOL:
                 nombre = mapa.nombre_espaniol;
                 descripcion = mapa.descripcion_espaniol;
+                Precio.text = $"Precio: {mapa.precio}";
+                Cantidad_Dar.text = $"Obtendras: {mapa.Valor_mapa}";
                 break;
             case Idioma.Lengua.INGLES:
                 nombre = mapa.nombre_ingles;
                 descripcion = mapa.descripcion_ingles;
+                Precio.text = $"Price: {mapa.Valor_mapa}";
+                Cantidad_Dar.text = $"You will get: {mapa.Valor_mapa}";
                 break;
             case Idioma.Lengua.PORTUGUES:
                 nombre = mapa.nombre_portugues;
                 descripcion = mapa.descripcion_portugues;
+                Precio.text = $"Preço: {mapa.Valor_mapa}";
+                Cantidad_Dar.text = $"Você vai conseguir: {mapa.Valor_mapa}";
                 break;
         }
     }
