@@ -18,13 +18,14 @@ public class Sistema_Guardado : MonoBehaviour
     // ── Unity ──────────────────────────────────────────────────────────────
     private void Awake()
     {
-        BuildStructs.Inicializar(
+        bool yaEstabaListo = BuildStructs.Inicializar(
             FindFirstObjectByType<DINERO>(),
             FindFirstObjectByType<Pase_Conexion_Menu_Gameplay>(),
             FindFirstObjectByType<Seleccion_Menu_Carrito>(),
             FindFirstObjectByType<Dinero_Obtenido>()
         );
-        CargarLocal();
+        if(!yaEstabaListo)
+            CargarLocal();
     }
 
     private void Start()

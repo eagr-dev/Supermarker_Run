@@ -53,6 +53,7 @@ public class Anuncios : MonoBehaviour
     private BannerView bannerView;
     private InterstitialAd interstitialAd;
     public bool Inicializado { get; private set; } = false;
+    private bool _pendingHide = false;
 
     private void Awake()
     {
@@ -164,62 +165,140 @@ public class Anuncios : MonoBehaviour
 
     public void SolicitudCargarBanner()
     {
-        
         if (!Inicializado)
         {
             Debug.LogWarning("[AdMob] Se intentó cargar un banner antes de terminar la inicialización.");
             return;
         }
 
-        // Si ya existe un banner previo, lo destruimos para no duplicar memoria
-        if (bannerView != null)
-        {
-            bannerView.Destroy();
-            bannerView = null;
-        }
+        // Si ya existe uno, destruir antes de crear otro
+        DestruirBannerInterno();
 
-        // Creamos un tama�o adaptativo est�ndar para tel�fonos, posicionado abajo al centro (Bottom)
         bannerView = new BannerView(BANNER_UNIT_ID, AdSize.Banner, AdPosition.Top);
+
+        // ═══ CAPA 2: Suscribir eventos ANTES de cargar ═══
+        // Si se pidió ocultar mientras cargaba, el evento lo detecta al terminar
+        bannerView.OnBannerAdLoaded += OnBannerLoaded;
+        bannerView.OnBannerAdLoadFailed += OnBannerFailed;
 
         var adRequest = new AdRequest();
         Debug.Log("[AdMob] Solicitando carga de Banner...");
         bannerView.LoadAd(adRequest);
+
+        // ═══ CAPA 3: Coroutine de timeout (fallback de 2s) ═══
+        // Si AdMob nunca dispara el evento (crash interno), este coroutine termina igual
+        StartCoroutine(TimeoutDestruccionBanner());
     }
 
-    // Funci�n p�blica para mostrar el Banner en men�s o tiendas
-    public void MostrarBanner()
+    private void OnBannerLoaded()
     {
-        Debug.Log("[AdMob] Recreando y mostrando Banner.");
-        SolicitudCargarBanner();
-    }
+        Debug.Log("[AdMob] Banner cargado.");
 
-    // Funci�n p�blica para ocultar el Banner (�til al iniciar el gameplay principal)</dt>
-    public void OcultarBanner()
-    {
-        StartCoroutine(DestruirBannerSeguro());
-    }
-
-    public IEnumerator DestruirBannerSeguro()
-    {
-        // Espera a que termine el frame gráfico actual y da 100ms de tolerancia
-        // para que el hilo nativo de Android procese la carga de la escena limpia
-        yield return new WaitForEndOfFrame();
-        yield return new WaitForSeconds(0.15f);
-
-        if (bannerView != null)
+        // ═══ CAPA 2 en acción ═══
+        // Si mientras cargaba alguien llamó OcultarBanner(), lo destruimos ahora
+        if (_pendingHide)
         {
-            Debug.Log("[AdMob] Destruyendo Banner por completo para el Gameplay.");
-            bannerView.Destroy();
-            bannerView = null;
+            Debug.Log("[AdMob] Se detectó _pendingHide=true al cargar. Destruyendo banner.");
+            DestruirBannerInterno();
         }
     }
 
-    // Limpieza de memoria si se destruye el objeto
+    private void OnBannerFailed(LoadAdError error)
+    {
+        Debug.LogError($"[AdMob] Banner falló al cargar: {error}");
+
+        // Misma lógica: si se pidió ocultar, limpiar referencia de todas formas
+        if (_pendingHide)
+        {
+            Debug.Log("[AdMob] Banner falló pero _pendingHide=true. Limpiando referencia.");
+            DestruirBannerInterno();
+        }
+    }
+
+    private IEnumerator TimeoutDestruccionBanner()
+    {
+        // Esperar máximo 2 segundos. Si para entonces _pendingHide sigue true
+        // y bannerView no fue destruido, forzamos la destrucción.
+        yield return new WaitForSeconds(2f);
+
+        if (_pendingHide && bannerView != null)
+        {
+            Debug.LogWarning("[AdMob] Timeout alcanzado con _pendingHide=true. Destruyendo banner a la fuerza.");
+            DestruirBannerInterno();
+        }
+    }
+
+    /// <summary>
+    /// Método interno centralizado para destruir el banner.
+    /// Todo pasa por aquí — nunca llamar Destroy() directamente desde fuera.
+    /// </summary>
+    private void DestruirBannerInterno()
+    {
+        if (bannerView == null) return;
+
+        try
+        {
+            bannerView.OnBannerAdLoaded -= OnBannerLoaded;
+            bannerView.OnBannerAdLoadFailed -= OnBannerFailed;
+            bannerView.Destroy();
+        }
+        catch (Exception e)
+        {
+            // AdMob a veces lanza si el estado nativo es inválido. Ignoramos — ya limpiamos.
+            Debug.LogWarning($"[AdMob] Excepción al destruir banner (ignorada): {e.Message}");
+        }
+        finally
+        {
+            // null SIEMPRE, sin importar si Destroy() lanzó o no
+            bannerView = null;
+            _pendingHide = false;
+        }
+    }
+
+    [Obsolete("Hasta no encontrar solucion de que realmente se muestra despues de ocultar no usar")]
+    public void MostrarBanner()
+    {
+        _pendingHide = false;
+
+        // Si ya existe un banner vivo, solo mostrarlo — no crear otro
+        if (bannerView != null)
+        {
+            Debug.Log("[AdMob] Banner ya existe, mostrando el existente.");
+            bannerView.Show();
+            return;
+        }
+
+        // Solo llega aquí si fue destruido (después de un gameplay)
+        Debug.Log("[AdMob] Banner no existe, solicitando uno nuevo.");
+        SolicitudCargarBanner();
+    }
+
+    [Obsolete("Hasta no encontrar solucion de que realmente se oculte no usar")]
+    public void OcultarBanner()
+    {
+        // ═══ CAPA 1: Flag inmediato ═══
+        // Se activa antes de cualquier async — cualquier callback lo verá
+        _pendingHide = true;
+
+        if (bannerView != null)
+        {
+            // Si ya existe y está listo, destruir directo
+            DestruirBannerInterno();
+        }
+        else
+        {
+            Debug.Log("[AdMob] OcultarBanner llamado pero banner aún no existe. Flag activado, capas 2 y 3 lo manejarán.");
+        }
+    }
+
+    // Quitar el viejo IEnumerator DestruirBannerSeguro() — ya no se necesita
+    // La lógica está integrada en las 3 capas
+
     private void OnDestroy()
     {
         if (bannerView != null)
         {
-            bannerView.Destroy();
+            DestruirBannerInterno();
         }
     }
 

@@ -89,20 +89,40 @@ public class MasterSaveInformacion
 
 public static class BuildStructs
 {
+#if UNITY_EDITOR
+    [UnityEditor.InitializeOnEnterPlayMode]
+    static void ResetOnPlay(UnityEditor.EnterPlayModeOptions options)
+    {
+        Debug.Log("Hacer Listo en Falso");
+        Listo = false;
+    }
+#endif
     public static DINERO Dinero { get; private set; }
     public static Pase_Conexion_Menu_Gameplay PCMG { get; private set; }
     public static Seleccion_Menu_Carrito SelCarro { get; private set; }
     public static Dinero_Obtenido Dinero_Obtenido { get; private set; }
     public static bool Listo { get; private set; }
 
-    public static void Inicializar(DINERO dinero,
+    public static bool Inicializar(DINERO dinero,
                                    Pase_Conexion_Menu_Gameplay pcmg,
                                    Seleccion_Menu_Carrito selCarro, Dinero_Obtenido dinero_Obtenido)
     {
+        if (Listo)
+        {
+            Debug.Log("SeleccionMenuCarrito");
+            SelCarro = selCarro;
+            var seleccion = PCMG.Get_Seleccion();
+            var eleccion = PCMG.Get_Eleccion();
+            Debug.Log($"seleccion: {seleccion}, eleccion : {eleccion}");
+            SelCarro.Set_Car_Menu(seleccion, eleccion);
+            SelCarro.Inicializador();
+            return true;
+        }
         Dinero = dinero;
         PCMG = pcmg;
         SelCarro = selCarro;
         Dinero_Obtenido = dinero_Obtenido;
         Listo = true;
+        return false;
     }
 }

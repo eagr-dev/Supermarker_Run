@@ -39,17 +39,17 @@ public class Seleccion : MonoBehaviour
     private void Start()
     {
         conector = BuildStructs.PCMG;
-        StartCoroutine(MostrarBannerConRetraso());
+        //StartCoroutine(MostrarBannerConRetraso());
     }
 
-    private IEnumerator MostrarBannerConRetraso()
+    /*private IEnumerator MostrarBannerConRetraso()
     {
         while (Anuncios.Instancia == null || !Anuncios.Instancia.Inicializado)
         {
             yield return null; // Espera al siguiente frame
         }
         Anuncios.Instancia.MostrarBanner();
-    }
+    }*/
 
     public void BTN_Regreso()
     {
@@ -108,7 +108,7 @@ public class Seleccion : MonoBehaviour
         Menu_Canvas.SetActive(false);
         Carritos_Canvas.SetActive(true);
         Animacion_Npc.Caminar(Tiempo_Animacion, Posicion_Ir);
-        conector.Set_Seleccion(Pase_Conexion_Menu_Gameplay.Tipo_Carro.PEQUEÑO);
+        conector.Set_Seleccion(BuildStructs.PCMG.Get_Seleccion());
     }
 
     public void BTN_Configuraciones()
@@ -126,6 +126,12 @@ public class Seleccion : MonoBehaviour
         Menu.Pause();
         StartCoroutine(Jugar(pos));
 
+    }
+
+
+    public void BTN_Privacidad()
+    {
+        Application.OpenURL("https://Gatoprogramador888.github.io");
     }
 
 
@@ -178,7 +184,7 @@ public class Seleccion : MonoBehaviour
 
     IEnumerator Jugar(string escena)
     {
-        yield return StartCoroutine(Anuncios.Instancia.DestruirBannerSeguro());
+        //Anuncios.Instancia.OcultarBanner();
         Animacion_Npc.Caminar(Tiempo_Animacion, Posicion_Ir);
         foreach (var i in animacion_carrito)
         {
