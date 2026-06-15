@@ -133,13 +133,13 @@ public class Seleccion_Mapa : MonoBehaviour
             case Idioma.Lengua.INGLES:
                 nombre = mapa.nombre_ingles;
                 descripcion = mapa.descripcion_ingles;
-                Precio.text = $"Price: {mapa.Valor_mapa}";
+                Precio.text = $"Price: {mapa.precio}";
                 Cantidad_Dar.text = $"You will get: {mapa.Valor_mapa}";
                 break;
             case Idioma.Lengua.PORTUGUES:
                 nombre = mapa.nombre_portugues;
                 descripcion = mapa.descripcion_portugues;
-                Precio.text = $"Preço: {mapa.Valor_mapa}";
+                Precio.text = $"Preço: {mapa.precio}";
                 Cantidad_Dar.text = $"Você vai conseguir: {mapa.Valor_mapa}";
                 break;
         }
