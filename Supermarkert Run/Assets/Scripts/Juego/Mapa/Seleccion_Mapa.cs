@@ -41,6 +41,7 @@ public class Seleccion_Mapa : MonoBehaviour
     private void Start()
     {
         DO = BuildStructs.Dinero_Obtenido;
+        seleccion_actual = DO.Get_Seleccion();
         Mostrar(DO.Get_Mapa(seleccion_actual));
     }
 

@@ -17,7 +17,6 @@ public class Dinero_Obtenido : MonoBehaviour
 
     public int Get_Dinero()
     {
-        Mision mision = FindFirstObjectByType<Mision>();
         return mapas[Pos].Valor_mapa;
     }
 
@@ -33,11 +32,13 @@ public class Dinero_Obtenido : MonoBehaviour
         SceneManager.LoadScene(0);
     }
 
+    [System.Obsolete("usa Get_Mapa")]
     public void Set_Posicion(int pos) => Pos = pos;
 
     public Mapa Get_Mapa(int pos)
     {
         if (mapas.Count <= pos || pos < 0) return null;
+        Pos = pos;
         return mapas[pos];
     }
     
@@ -49,5 +50,7 @@ public class Dinero_Obtenido : MonoBehaviour
         }
         return null;
     }
+
+    public int Get_Seleccion() => Pos;
 
 }

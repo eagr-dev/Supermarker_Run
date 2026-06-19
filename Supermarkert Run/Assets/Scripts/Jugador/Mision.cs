@@ -35,7 +35,7 @@ public class Mision : MonoBehaviour
 
     //Areas para hacer que el area tenga un resplandor
     Areas[] areas;
-    Area actual, anterior;
+    List<Area> actuales = new();
 
     private void Start()
     {
@@ -584,17 +584,20 @@ public class Mision : MonoBehaviour
     }
     private void IluminarEstanteConPrimerObjetoBuscar(string name)
     {
-        if (anterior != null)
-            anterior.transform.GetChild(0).gameObject.SetActive(false);
+        foreach (Area area in actuales)
+        {
+            area.transform.GetChild(0).gameObject.SetActive(false);
+        }
+        actuales.Clear();        
 
         foreach (Areas area in areas)
         {
-            actual = area.GetAreaByObjectName(name);
-            if(actual != null)
-                actual.transform.GetChild(0).gameObject.SetActive(true);
-        }
+            Area _area = area.GetAreaByObjectName(name);
+            if (_area is null) continue;
 
-        anterior = actual;
+            _area.transform.GetChild(0).gameObject.SetActive(true);
+            actuales.Add(_area);
+        }
     }
 
 

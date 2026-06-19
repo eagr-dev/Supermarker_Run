@@ -42,6 +42,7 @@ public class Player : MonoBehaviour
     private float Tiempo_Dejar_Objeto = 1;
     [SerializeField] private Button obtener_Objeto_suelo;
     private Objeto_caido se_tomo_objeto;
+    private HashSet<GameObject> objetosEnRango = new();
 
     [Header("Particulas")]
     [SerializeField] private List<ParticleSystem> particulas;
@@ -54,6 +55,16 @@ public class Player : MonoBehaviour
 
     [Header("Sonido")]
     [SerializeField] private AudioSource Choque_sound;
+
+    private void OnEnable()
+    {
+        Objeto_caido.OnObjetoDestruido += ManejarObjetoDestruido;
+    }
+
+    private void OnDisable()
+    {
+        Objeto_caido.OnObjetoDestruido -= ManejarObjetoDestruido;
+    }
 
     private void Awake()
     {
@@ -383,12 +394,14 @@ public class Player : MonoBehaviour
             var estante = other.gameObject.GetComponent<IGuardarObjeto>();
             if (!mision.Verificar_Objeto_este_mision(estante.Get_Object()))
                 return;
+            SetDeadZoneJoystick(1000);
             StartCoroutine(mision.AnimacionTomarObjeto(estante.Get_Object(), other.transform.position));
         }
         else if (other.CompareTag("Objeto"))
         {
-            obtener_Objeto_suelo.gameObject.SetActive(true);
+            objetosEnRango.Add(other.gameObject);
             se_tomo_objeto = other.gameObject.GetComponent<Objeto_caido>();
+            obtener_Objeto_suelo.gameObject.SetActive(true);
         }
         else if (other.CompareTag("Caja"))
         {
@@ -446,7 +459,33 @@ public class Player : MonoBehaviour
     {
         if (other.CompareTag("Objeto"))
         {
-            obtener_Objeto_suelo.gameObject.SetActive(false);
+            objetosEnRango.Remove(other.gameObject);
+            ActualizarBoton();
+        }
+    }
+
+    //Boton de tomar objeto
+    private void ManejarObjetoDestruido(GameObject obj)
+    {
+        if (!objetosEnRango.Remove(obj)) return;
+
+        if (se_tomo_objeto != null && se_tomo_objeto.gameObject == obj)
+            se_tomo_objeto = null;
+
+        ActualizarBoton();
+    }
+
+    private void ActualizarBoton()
+    {
+        obtener_Objeto_suelo.gameObject.SetActive(objetosEnRango.Count > 0);
+
+        if (objetosEnRango.Count > 0 && se_tomo_objeto == null)
+        {
+            foreach (var obj in objetosEnRango)
+            {
+                se_tomo_objeto = obj.GetComponent<Objeto_caido>();
+                break;
+            }
         }
     }
 
