@@ -229,11 +229,12 @@ public class Mision : MonoBehaviour
         //Esperar a que el jugador se detenga para iniciar
         yield return new WaitForSeconds(1);
 
-        GameObject gameObject = Areas.Get_GameObject(obj);
+        //GameObject gameObject = Areas.Get_GameObject(obj);
+        GameObject instancia = ObjetoLanzado(obj, esRecogible: false);
 
-        if (gameObject == null) yield break;
+        if (instancia == null) yield break;
 
-        GameObject instancia = Instantiate(gameObject);
+        //GameObject instancia = Instantiate(gameObject);
 
         Vector3 posicion_carro = player.Get_transform_carro().position;
 
@@ -271,11 +272,12 @@ public class Mision : MonoBehaviour
         Espacio_Disponible.text = carro.objetos_actuales.ToString() + "/" + carro.cant_limite_carga.ToString();
         float scale = 0.5f;
 
-        GameObject objeto = Areas.Get_GameObject(nombreObjeto);
+        //GameObject objeto = Areas.Get_GameObject(nombreObjeto);
+        GameObject instancia = ObjetoLanzado(nombreObjeto, esRecogible: false);
 
-        if (gameObject == null) yield break;
+        if (instancia == null) yield break;
 
-        GameObject instancia = Instantiate(objeto);
+        //GameObject instancia = Instantiate(objeto);
 
         //Modificar la escala
         instancia.transform.localScale = new(scale, scale, scale);
@@ -385,17 +387,18 @@ public class Mision : MonoBehaviour
     // ============================================================
     // CREAR INSTANCIA DE OBJETO (Unificado)
     // ============================================================
-    private GameObject ObjetoLanzado(string name)
+    private GameObject ObjetoLanzado(string name, bool esRecogible)
     {
-        GameObject objeto = Areas.Get_GameObject(name);
+        GameObject objeto = Areas.Get_GameObject(name, esRecogible);
 
-        if (gameObject == null) return null;
+        if (objeto == null) return null;
 
         GameObject instancia = Instantiate(objeto);
-        List<Material> materials = new();
-        instancia.transform.GetChild(0).GetComponent<MeshRenderer>().GetMaterials(materials);
-        materials.Add(material_objeto);
-        instancia.transform.GetChild(0).GetComponent<MeshRenderer>().SetMaterials(materials);
+        //WTF QUE HIZO AQUI LA IA PORQUE HACER ESTO?
+        //List<Material> materials = new();
+        //instancia.transform.GetChild(0).GetComponent<MeshRenderer>().GetMaterials(materials);
+        //materials.Add(material_objeto);
+        //instancia.transform.GetChild(0).GetComponent<MeshRenderer>().SetMaterials(materials);
         return instancia;
     }
 
@@ -429,7 +432,7 @@ public class Mision : MonoBehaviour
         Vector3 direccionAjustada =  posicionAjustada != posicionDestino ? posicionAjustada - positionA : positionB;
 
         // Crear y lanzar el objeto
-        GameObject instancia = ObjetoLanzado(name);
+        GameObject instancia = ObjetoLanzado(name, esRecogible: true);
 
         if (gameObject == null) return;
 
@@ -506,7 +509,7 @@ public class Mision : MonoBehaviour
     // en Recuperar_Todos_Los_Objetos.
     private void LanzarObjetoConTrayectoria(string name, Vector3 posicionOrigen, Vector3 posicionDestino)
     {
-        GameObject instancia = ObjetoLanzado(name);
+        GameObject instancia = ObjetoLanzado(name, esRecogible: false);
 
         if (gameObject == null) return;
 

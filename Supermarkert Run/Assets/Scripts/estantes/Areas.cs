@@ -65,7 +65,27 @@ public class Areas : MonoBehaviour
         Frutas_y_verduras = new string[] { "Maçã", "Banana", "Laranja", "Morango", "Uva", "Cenoura", "Tomate", "Alface", "Brócolis", "Pepino" } // Fruits and vegetables
     };
 
-    static readonly List<string> prefabsResource = new() { "escoba 1", "hamburguesa 1", "microondas 1", "cajaJugo", "caja", "libro", "PepelHigienico 1", "manzana 1" };
+    static readonly List<string> prefabsResource = new() { 
+        "escoba 1",
+        "hamburguesa 1", 
+        "microondas 1",
+        "cajaJugo",
+        "caja",
+        "libro",
+        "PepelHigienico 1",
+        "manzana 1",
+        };
+
+    static readonly List<string> prefabsResourceRecogibles = new() {
+        "escoba 1Recogible",
+        "hamburguesa 1Recogible",
+        "microondas 1Recogible",
+        "cajaJugoRecogible",
+        "cajaRecogible",
+        "libroRecogible",
+        "PepeHigienico 1Recogible",
+        "manzana 1Recogible"
+    };
 
     private List<int> Get_List_Rand()
     {
@@ -155,15 +175,15 @@ public class Areas : MonoBehaviour
     
 
 
-    public static GameObject Get_GameObject(string name)
+    public static GameObject Get_GameObject(string name, bool esRecogible)
     {
-        
         for(int i = 0; i < areas;i++)
         {
             for(int j = 0; j < objetos_contiene; j++)
             {
                 if (name != Objetos[i][j]) continue;
-                string nameObject = prefabsResource[i];
+                
+                string nameObject = esRecogible ? prefabsResourceRecogibles[i] : prefabsResource[i];
                 GameObject objeto = Resources.Load<GameObject>(nameObject);
                 return objeto;
             }
