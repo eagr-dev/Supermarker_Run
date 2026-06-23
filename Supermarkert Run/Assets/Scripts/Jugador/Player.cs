@@ -11,7 +11,8 @@ public class Player : MonoBehaviour
 {
     [Header("Joystick_Velocidad")]
     [SerializeField] private float max_speed_H = 1, max_speed_V = 1, Vertical_Move = 0, Horizontal_Move = 0, speed = 1, resistencia_porcentual = 0, velocidad_porcentual = 0;
-    //Vector3 obtener_velocidad;
+    [SerializeField] private float friccionHielo = 10f; // qué tan rápido frena (mayor = frena antes)
+    private float velocidadResbalon;
     [SerializeField] private Joystick joystick;
 
     [Header("Camara")]
@@ -43,6 +44,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Button obtener_Objeto_suelo;
     private Objeto_caido se_tomo_objeto;
     private HashSet<GameObject> objetosEnRango = new();
+    private bool estaEnCaja = false;
 
     [Header("Particulas")]
     [SerializeField] private List<ParticleSystem> particulas;
@@ -207,7 +209,7 @@ public class Player : MonoBehaviour
     }
     private void Mover_Player()
     {
-        if (choque) return;
+        if (choque || resbalon) return;
 
         Vertical_Move = joystick.Vertical * max_speed_V;
         Horizontal_Move = joystick.Horizontal * max_speed_H;
@@ -299,27 +301,37 @@ public class Player : MonoBehaviour
         }
     }
 
-    private IEnumerator Resbalon()
+    private IEnumerator Resbalon(Vector3 direccion, float velocidadInicial)
     {
         resbalon = true;
         joystick.gameObject.SetActive(false);
-        yield return new WaitForSeconds(1);
-        joystick.gameObject.SetActive(true);
+
+        direccion = direccion.normalized;
+        velocidadResbalon = velocidadInicial;
+
+        while (velocidadResbalon > 0.1f && resbalon)
+        {
+            rigid.MovePosition(rigid.position + direccion * velocidadResbalon * Time.fixedDeltaTime);
+            velocidadResbalon -= friccionHielo * Time.fixedDeltaTime; // frenado lineal por fricción
+            yield return new WaitForFixedUpdate();
+        }
+
         yield return new WaitForSeconds(0.5f);
         resbalon = false;
-
+        joystick.gameObject.SetActive(true);
     }
 
     private IEnumerator Animacion_Tiempo_Caja(Caja caja)
     {
+        estaEnCaja = true;
         Set_Rigs(0);
         //Animacion colocar objetos
         joystick.DeadZone = 1000;
         yield return StartCoroutine(caja.HacerObjetosCajaVisible(Tiempo_Dejar_Objeto, mision));
-        //yield return new WaitForSeconds(tiempo_total + 0.5f);
         Set_Rigs(1);
         joystick.DeadZone = 0;
         mision.Espacio_Disponible.text = carrito.objetos_actuales.ToString() + "/" +  carrito.cant_limite_carga.ToString();
+        estaEnCaja = false;
     }
 
     IEnumerator Retroceder(Collision collision)
@@ -389,7 +401,7 @@ public class Player : MonoBehaviour
     //Collisiones
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Estante") || other.CompareTag("Carro"))
+        if ((other.CompareTag("Estante") || other.CompareTag("Carro")) && (!resbalon || !choque))
         {
             var estante = other.gameObject.GetComponent<IGuardarObjeto>();
             if (!mision.Verificar_Objeto_este_mision(estante.Get_Object()))
@@ -397,24 +409,28 @@ public class Player : MonoBehaviour
             SetDeadZoneJoystick(1000);
             StartCoroutine(mision.AnimacionTomarObjeto(estante.Get_Object(), other.transform.position));
         }
-        else if (other.CompareTag("Objeto"))
+        else if ((other.CompareTag("Objeto")) && (!resbalon || !choque))
         {
             objetosEnRango.Add(other.gameObject);
             se_tomo_objeto = other.gameObject.GetComponent<Objeto_caido>();
             obtener_Objeto_suelo.gameObject.SetActive(true);
         }
-        else if (other.CompareTag("Caja"))
+        else if (other.CompareTag("Caja") && !resbalon)
         {
             Caja caja = other.gameObject.GetComponent<Caja>();
             StartCoroutine(Animacion_Tiempo_Caja(caja));
-            //mision.Volver_Objetos_Caja();
-            //Gano(caja);
         }
-        else if (other.CompareTag("Mojado"))
+        else if (other.CompareTag("Mojado") && !resbalon)
         {
             Exclamacion.Play();
             Particula_Detener();
-            StartCoroutine(Resbalon());
+            Vector3 velocidadHorizontal = new(rigid.linearVelocity.x, rigid.linearVelocity.y, rigid.linearVelocity.z);
+            Vector3 direccion = velocidadHorizontal.sqrMagnitude > 0.01f
+                ? velocidadHorizontal.normalized
+                : transform.forward;
+            float velocidadInicial = velocidadHorizontal.magnitude;
+
+            StartCoroutine(Resbalon(direccion, velocidadInicial));
         }
     }
 
@@ -423,11 +439,14 @@ public class Player : MonoBehaviour
     {
         if (!collision.gameObject.CompareTag("Piso") && !collision.gameObject.CompareTag("Caja"))
         {
-            StopCoroutine(Resbalon());
-            Exclamacion.Play();
-
+            //StopCoroutine(Resbalon(transform.forward, 0f));
             resbalon = false;
             joystick.gameObject.SetActive(true);
+
+            if (estaEnCaja)
+                return;
+
+            Exclamacion.Play();
 
             velocidad_porcentual = Velocidad_joystick();
 

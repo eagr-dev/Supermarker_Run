@@ -36190,9 +36190,11 @@ MonoBehaviour:
   speed: 1
   resistencia_porcentual: 0
   velocidad_porcentual: 0
+  friccionHielo: 4
   joystick: {fileID: 0}
   player_object: {fileID: 8592851397395496535}
   camara: {fileID: 0}
+  distanciaEstante: 3
   position_Reset: {x: 0, y: 0, z: 0}
   rigs:
   - {fileID: 3232013635402166312}
