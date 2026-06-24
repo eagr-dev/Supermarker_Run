@@ -22,7 +22,7 @@ public class Mision : MonoBehaviour
     [Header("UI Misiones")]
     [SerializeField] private TMP_Text[] text_misiones = new TMP_Text[10];
     [SerializeField] private Image[] images = new Image[10];
-    [SerializeField] private Sprite[] icons = new Sprite[7];
+    [SerializeField] private Sprite[] icons = new Sprite[8];
     [SerializeField] private Sprite iconObjectInCash, iconClean;
     [SerializeField] private TMP_Text posicion_texto;
     int inicio_lista = 0, final_lista = 10;
@@ -71,8 +71,8 @@ public class Mision : MonoBehaviour
 
         while (objetos.Count < misiones_hacer && iterador < maximo_intentos)
         {
-            int area = Random.Range(0, 7);
-            int nombre_objeto = Random.Range(0, 9);
+            int area = Random.Range(0, Areas._areas);
+            int nombre_objeto = Random.Range(0, Areas._objetos_contiene);
             string obj = Areas.Objetos[area][nombre_objeto];
             if (!Se_repite_objeto(obj))
             {

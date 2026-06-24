@@ -10,9 +10,10 @@ public class Areas : MonoBehaviour
     public enum Area_product { Limpieza_Hogar = 0, Comida, Electrodomesticos, Bebidas, Carros, Articulos_Escolares, Higiene_Personal, Fruta_Verdura, NINGUNO };
 
     /*son 8 pero debo acomodar para evitar errores, debo modificar las areas de todos los mapas*/
-    public const int areas = 7, objetos_contiene = 10; 
+    public const int areas = 8, objetos_contiene = 10;
+    public static int _areas = areas, _objetos_contiene = objetos_contiene;
 
-    public static string[][] Objetos = new string[areas + 1][]
+    public static string[][] Objetos = new string[areas][]
 {
     new string[objetos_contiene], // Limpieza_Hogar
     new string[objetos_contiene], // Comida

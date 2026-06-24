@@ -55,8 +55,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _GlowStregth: 1
-    - _PulseSpeed: 1
+    - _GlowStregth: 5
+    - _PulseSpeed: 2
     - _QueueControl: 0
     - _QueueOffset: 0
     - _XRMotionVectorsPass: 1

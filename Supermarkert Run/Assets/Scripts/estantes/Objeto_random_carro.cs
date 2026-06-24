@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Objeto_random_carro : MonoBehaviour, IGuardarObjeto
 {
-    [SerializeField] private Areas.Area_product area;
     [SerializeField] private string objeto;
 
     public string Get_Object() => objeto;
@@ -12,15 +11,11 @@ public class Objeto_random_carro : MonoBehaviour, IGuardarObjeto
     // Start is called before the first frame update
     void Start()
     {
-        int producto = Random.Range(0, 9);
+        int producto = Random.Range(0, Areas._objetos_contiene);
+        int area = Random.Range(0, Areas._areas);
         if (Areas.Objetos == null)
             Debug.Log("Objetos de areas esta en nulo");
-        objeto = Areas.Objetos[(int)area][producto];
+        objeto = Areas.Objetos[area][producto];
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

@@ -20,7 +20,7 @@ MonoBehaviour:
   nombre_portugues: Mapa grande
   descripcion_portugues: Um mapa bastante grande e alguns objetos
   screen_map: {fileID: 21300000, guid: 0c74a375d7d2cc643a5aec77ac513b47, type: 3}
-  precio: 500
+  precio: 0
   Valor_mapa: 50
   cantidad_juegos: 0
   X_minimo: -66
@@ -30,7 +30,7 @@ MonoBehaviour:
   cantidad_enemigos: 40
   cantidad_rateros: 0
   cantidad_minima_obstaculos: 10
-  cantidad_maxima_obstaculos: 27
-  cantidad_minina_carritos: 5
-  cantidad_maxima_carritos: 20
+  cantidad_maxima_obstaculos: 20
+  cantidad_minina_carritos: 15
+  cantidad_maxima_carritos: 30
   spawn: {fileID: 11400000, guid: 2165a66f4b88f5844a2ef15ccfe62192, type: 2}

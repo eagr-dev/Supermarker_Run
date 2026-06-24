@@ -10,20 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fccae54630314f34f86b256be3ef5559, type: 3}
-  m_Name: SpawMapa1
+  m_Name: SpawPequenio
   m_EditorClassIdentifier: 
   puntos:
-  - posicion: {x: 7.9490623, y: 0.5, z: 6.3516426}
+  - posicion: {x: 12.468261, y: 0.5, z: 21.978552}
     rotacion: {x: 0, y: 0, z: 0, w: 1}
-  - posicion: {x: -8.677293, y: 0.5, z: -4.081627}
+  - posicion: {x: 12.468251, y: 0.5, z: -2.7824116}
     rotacion: {x: 0, y: 0, z: 0, w: 1}
-  - posicion: {x: -25.264235, y: 0.5, z: 1.7777472}
+  - posicion: {x: 29.442657, y: 0.5, z: -2.7824116}
     rotacion: {x: 0, y: 0, z: 0, w: 1}
-  - posicion: {x: -41.553314, y: 5.3052807, z: 10.906371}
+  - posicion: {x: 29.08934, y: 0.5, z: 28.097656}
     rotacion: {x: 0, y: 0, z: 0, w: 1}
-  - posicion: {x: -33.08227, y: 0.5, z: 26.839859}
+  - posicion: {x: -4.03152, y: 0.5, z: 26.782059}
     rotacion: {x: 0, y: 0, z: 0, w: 1}
-  - posicion: {x: -16.248579, y: 0.5, z: 26.272106}
+  - posicion: {x: -4.8539166, y: 0.5, z: 11.792401}
     rotacion: {x: 0, y: 0, z: 0, w: 1}
-  - posicion: {x: -1.479353, y: 0.5, z: 26.272106}
+  - posicion: {x: -21.340145, y: 0.5, z: -4.836851}
+    rotacion: {x: 0, y: 0, z: 0, w: 1}
+  - posicion: {x: -39.19557, y: 0.5, z: 11.26716}
+    rotacion: {x: 0, y: 0, z: 0, w: 1}
+  - posicion: {x: -33.477333, y: 0.5, z: 26.633196}
+    rotacion: {x: 0, y: 0, z: 0, w: 1}
+  - posicion: {x: -4.9650073, y: 0.5, z: 20.529434}
     rotacion: {x: 0, y: 0, z: 0, w: 1}

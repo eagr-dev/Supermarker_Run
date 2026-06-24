@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fccae54630314f34f86b256be3ef5559, type: 3}
-  m_Name: SpawnMapa2
+  m_Name: SpawnMediano
   m_EditorClassIdentifier: 
   puntos:
   - posicion: {x: 33.990585, y: 0, z: 16.149378}
@@ -47,5 +47,37 @@ MonoBehaviour:
     rotacion: {x: 0, y: 0, z: 0, w: 1}
   - posicion: {x: -34.229958, y: 0, z: -6.9143305}
     rotacion: {x: 0, y: 0, z: 0, w: 1}
-  - posicion: {x: -33.21738, y: 0.5, z: 12.843445}
+  - posicion: {x: -33.21738, y: 0, z: 12.843445}
+    rotacion: {x: 0, y: 0, z: 0, w: 1}
+  - posicion: {x: 6.410731, y: 0, z: 13.991966}
+    rotacion: {x: 0, y: 0, z: 0, w: 1}
+  - posicion: {x: -6.447385, y: 0, z: -14.690405}
+    rotacion: {x: 0, y: 0, z: 0, w: 1}
+  - posicion: {x: -33.908054, y: 0, z: -64.392334}
+    rotacion: {x: 0, y: 0, z: 0, w: 1}
+  - posicion: {x: -5.7779884, y: 0, z: -60.53428}
+    rotacion: {x: 0, y: 0, z: 0, w: 1}
+  - posicion: {x: 28.123825, y: 0, z: -77.80003}
+    rotacion: {x: 0, y: 0, z: 0, w: 1}
+  - posicion: {x: 28.123825, y: 0, z: -77.80003}
+    rotacion: {x: 0, y: 0, z: 0, w: 1}
+  - posicion: {x: 0.3793738, y: 0, z: -90.5717}
+    rotacion: {x: 0, y: 0, z: 0, w: 1}
+  - posicion: {x: -35.316875, y: 0, z: -90.41997}
+    rotacion: {x: 0, y: 0, z: 0, w: 1}
+  - posicion: {x: -35.316875, y: 0, z: -76.13792}
+    rotacion: {x: 0, y: 0, z: 0, w: 1}
+  - posicion: {x: 28.447002, y: 0.5, z: -61.42537}
+    rotacion: {x: 0, y: 0, z: 0, w: 1}
+  - posicion: {x: -5.186523, y: 0.5, z: -76.292496}
+    rotacion: {x: 0, y: 0, z: 0, w: 1}
+  - posicion: {x: -33.50618, y: 0.5, z: -76.1639}
+    rotacion: {x: 0, y: 0, z: 0, w: 1}
+  - posicion: {x: 1.0573633, y: 0.5, z: -91.82803}
+    rotacion: {x: 0, y: 0, z: 0, w: 1}
+  - posicion: {x: 30.477093, y: 0.5, z: -87.36839}
+    rotacion: {x: 0, y: 0, z: 0, w: 1}
+  - posicion: {x: 30.477093, y: 0.5, z: -86.7986}
+    rotacion: {x: 0, y: 0, z: 0, w: 1}
+  - posicion: {x: 30.88235, y: 0.5, z: -59.48355}
     rotacion: {x: 0, y: 0, z: 0, w: 1}

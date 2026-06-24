@@ -36262,6 +36262,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 2cad6241a9c09b445b2288848990cac6, type: 3}
   - {fileID: 21300000, guid: c8b82711b40450b4ea531a94b64d7466, type: 3}
   - {fileID: 21300000, guid: c30d0393126f0554bb8c1c1d69a4a4fb, type: 3}
+  - {fileID: 21300000, guid: dc546eee6af857c45af6fb35173cb2ba, type: 3}
   iconObjectInCash: {fileID: 21300000, guid: 9cda324b2f51e6a42908110f5b1f1006, type: 3}
   iconClean: {fileID: 21300000, guid: fc97e829226967647a185f8a5e12cf90, type: 3}
   posicion_texto: {fileID: 0}
