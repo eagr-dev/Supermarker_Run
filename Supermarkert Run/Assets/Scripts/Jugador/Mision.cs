@@ -225,6 +225,9 @@ public class Mision : MonoBehaviour
 
     public IEnumerator AnimacionTomarObjeto(string obj, Vector3 posicion_estante)
     {
+        if (!Verificar_Objeto_este_mision(obj))
+            yield break;
+
         player.SetDeadZoneJoystick(1000);
         //Esperar a que el jugador se detenga para iniciar
         yield return new WaitForSeconds(1);

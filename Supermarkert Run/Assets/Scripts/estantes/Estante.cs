@@ -14,5 +14,5 @@ public class Estante : MonoBehaviour, IGuardarObjeto
         Tag = tag;
     }
 
-    string IGuardarObjeto.Get_Object() => objeto;
+    public string Get_Object() => objeto;
 }

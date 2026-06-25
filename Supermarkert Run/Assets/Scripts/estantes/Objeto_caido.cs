@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Objeto_caido : MonoBehaviour, IGuardarObjeto
 {
-    public static event Action<GameObject> OnObjetoDestruido;
+    public static event Action<Objeto_caido> OnObjetoDestruido;
     private Vector3 escalaFinal = new(0.5f, 0.5f , 0.5f);
     private Vector3 escalaPrincipio = new();
     private float timeAnimation = 9f;
@@ -19,10 +19,10 @@ public class Objeto_caido : MonoBehaviour, IGuardarObjeto
 
     private void OnDestroy()
     {
-        OnObjetoDestruido?.Invoke(gameObject);
+        OnObjetoDestruido?.Invoke(this);
     }
 
-    string IGuardarObjeto.Get_Object()
+    public string Get_Object()
     {
         return name;
     }
