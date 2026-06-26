@@ -83,8 +83,8 @@ public class Areas : MonoBehaviour
         "microondas 1Recogible",
         "cajaJugoRecogible",
         "cajaRecogible",
-        "libroRecogible",
-        "PepeHigienico 1Recogible",
+        "libro 1Recogible",
+        "PepelHigienico 1Recogible",
         "manzana 1Recogible"
     };
 

@@ -177,6 +177,7 @@ public class Mision : MonoBehaviour
                 Debug.Log($"objeto recuperado {nombreObjeto}");
                 if (!Verificar_Objeto_este_mision(nombreObjeto))
                     continue;
+                TomarObjeto(nombreObjeto);
                 posicion_carro = new(posicion_carro.x, 0.5f, posicion_carro.z);
                 LanzarObjetoConTrayectoria(nombreObjeto, posicionEnemigo, posicion_carro);
                 
@@ -198,13 +199,18 @@ public class Mision : MonoBehaviour
             return false;
         if (objetos[obj_tomo.Item1].Item3) return false;
 
+        return true;
+    }
+
+    private void TomarObjeto(string obj)
+    {
         //Despues si ninguno de los 2 se cumple mandamos que no tiene espacio
         if (carro.objetos_actuales + 1 > carro.cant_limite_carga)
         {
             StartCoroutine(Tiempo_Aparicion());
-            return false;
+            return;
         }
-
+        var obj_tomo = Se_repite_objeto_tomado(obj);
         var emision = Punto.emission;
         emision.enabled = true;
         Obtener_objeto.Play();
@@ -218,8 +224,6 @@ public class Mision : MonoBehaviour
         Espacio_Disponible.text = carro.objetos_actuales.ToString() + "/" + carro.cant_limite_carga.ToString();
         misiones_hechas++;
         Mostrar();
-
-        return true;
     }
 
 
@@ -227,7 +231,7 @@ public class Mision : MonoBehaviour
     {
         if (!Verificar_Objeto_este_mision(obj))
             yield break;
-
+        TomarObjeto(obj);
         player.SetDeadZoneJoystick(1000);
         //Esperar a que el jugador se detenga para iniciar
         yield return new WaitForSeconds(1);
@@ -243,7 +247,7 @@ public class Mision : MonoBehaviour
 
         Vector3 direccion = posicion_carro - posicion_estante;
 
-        yield return StartCoroutine(AnimarLanzamiento(instancia, posicion_estante, direccion));
+        yield return AnimarLanzamiento(instancia, posicion_estante, direccion);
 
         IluminarSiguienteEstante();
 
@@ -437,7 +441,7 @@ public class Mision : MonoBehaviour
         // Crear y lanzar el objeto
         GameObject instancia = ObjetoLanzado(name, esRecogible: true);
 
-        if (gameObject == null) return;
+        if (instancia == null) return;
 
         InformacionObjeto(ref instancia, name);
         StartCoroutine(AnimarLanzamiento(instancia, positionA, direccionAjustada));

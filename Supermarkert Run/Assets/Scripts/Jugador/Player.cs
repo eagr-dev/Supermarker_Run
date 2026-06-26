@@ -409,14 +409,19 @@ public class Player : MonoBehaviour
         iniciarAnimacion(nombreObjeto, posicion);
     }
 
+    private Coroutine corutinaRuleta;
     IEnumerator AnimacionRuleta(Objeto_random_carro carro, string nombreObjeto, Vector3 posicion)
     {
+        if (carro is null) yield break;
         SetDeadZoneJoystick(10000);
         obtener_Objeto_carro.gameObject.SetActive(false);
-        yield return StartCoroutine(carro.AnimacionUI());
+
+        yield return carro.AnimacionUI(mision.Verificar_Objeto_este_mision(nombreObjeto)); // sin StartCoroutine
         yield return new WaitForSeconds(0.5f);
-        yield return StartCoroutine(mision.AnimacionTomarObjeto(nombreObjeto, posicion));
+        yield return mision.AnimacionTomarObjeto(nombreObjeto, posicion); // sin StartCoroutine
+
         obtener_Objeto_carro.gameObject.SetActive(true);
+        corutinaRuleta = null;
         SetDeadZoneJoystick(0);
     }
 
@@ -505,8 +510,16 @@ public class Player : MonoBehaviour
             objetosEnRango.Remove(other.GetComponent<Objeto_caido>());
             ActualizarBoton();
         }
-        else if(other.CompareTag("Carro"))
+        else if (other.CompareTag("Carro"))
         {
+            if (corutinaRuleta != null)
+            {
+                StopCoroutine(corutinaRuleta);
+                corutinaRuleta = null;
+            }
+            se_tomo_objeto_carro?.CancelarAnimacionUI(); // método nuevo que tú agregas
+            SetDeadZoneJoystick(0);
+            se_tomo_objeto_carro = null;
             obtener_Objeto_carro.gameObject.SetActive(false);
         }
     }
@@ -623,8 +636,7 @@ public class Player : MonoBehaviour
             return;
         }
 
-        if(mision.Verificar_Objeto_este_mision(se_tomo_objeto_suelo.name))
-            StartCoroutine(mision.AnimacionTomarObjeto(se_tomo_objeto_suelo.name, se_tomo_objeto_suelo.transform.position));
+        StartCoroutine(mision.AnimacionTomarObjeto(se_tomo_objeto_suelo.name, se_tomo_objeto_suelo.transform.position));
 
         obtener_Objeto_suelo.gameObject.SetActive(false);
         Destroy(se_tomo_objeto_suelo.gameObject, 1);
@@ -633,8 +645,7 @@ public class Player : MonoBehaviour
 
     private void BTN_Agarrar_Objeto_Carro()
     {
-        
         ProcesarObjetoEncontrado(se_tomo_objeto_carro.Get_Object(), se_tomo_objeto_carro.transform.position,
-                (nombre, pos) => StartCoroutine(AnimacionRuleta(se_tomo_objeto_carro, nombre, pos)));
+            (nombre, pos) => corutinaRuleta = StartCoroutine(AnimacionRuleta(se_tomo_objeto_carro, nombre, pos)));
     }
 }

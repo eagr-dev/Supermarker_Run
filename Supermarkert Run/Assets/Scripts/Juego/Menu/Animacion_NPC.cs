@@ -30,19 +30,31 @@ public class Animacion_NPC : MonoBehaviour
         }
     }
 
+    private Coroutine corutinaCaminar;
+    public Transform DestinoActual { get; private set; }
+
     public void Caminar(float tiempo_animacion, Transform objetivo)
     {
-        StopAllCoroutines();
+        DestinoActual = objetivo;
+        if (corutinaCaminar != null)
+            StopCoroutine(corutinaCaminar);
         GPS.destination = objetivo.position;
         es_estatico = false;
-        StartCoroutine(Animacion_Caminar(tiempo_animacion));
+        corutinaCaminar = StartCoroutine(Animacion_Caminar(tiempo_animacion));
     }
 
     private IEnumerator Animacion_Caminar(float tiempo_animacion)
     {
         animacion.Play("WALKING");
-        yield return new WaitForSeconds(tiempo_animacion);
-        StartCoroutine(Media_Vuelta());
+        float t = 0;
+        while ((GPS.pathPending || GPS.remainingDistance > GPS.stoppingDistance + 0.05f) && t < tiempo_animacion + 3f)
+        {
+            t += Time.deltaTime;
+            yield return null;
+        }
+        GPS.updateRotation = false;
+        yield return Media_Vuelta();
+        GPS.updateRotation = true;
         yield return new WaitForSeconds(0.5f);
         animacion.Play("PARADO");
         yield return new WaitForSeconds(2);
@@ -51,12 +63,15 @@ public class Animacion_NPC : MonoBehaviour
 
     private IEnumerator Media_Vuelta()
     {
+        Quaternion inicio = transform.rotation;
+        Quaternion destino = Quaternion.Euler(0, 180, 0);
         float tiempo = 1f, timer = 0;
-        while(timer < tiempo)
+        while (timer < tiempo)
         {
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(new Vector3(0, 180, 0)), timer / tiempo);
+            transform.rotation = Quaternion.Lerp(inicio, destino, timer / tiempo);
             timer += Time.deltaTime;
             yield return null;
         }
+        transform.rotation = destino;
     }
 }

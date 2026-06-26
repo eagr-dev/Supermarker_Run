@@ -39,17 +39,7 @@ public class Seleccion : MonoBehaviour
     private void Start()
     {
         conector = BuildStructs.PCMG;
-        //StartCoroutine(MostrarBannerConRetraso());
     }
-
-    /*private IEnumerator MostrarBannerConRetraso()
-    {
-        while (Anuncios.Instancia == null || !Anuncios.Instancia.Inicializado)
-        {
-            yield return null; // Espera al siguiente frame
-        }
-        Anuncios.Instancia.MostrarBanner();
-    }*/
 
     public void BTN_Regreso()
     {
@@ -60,7 +50,9 @@ public class Seleccion : MonoBehaviour
         Click_Botones.Play();
         
         BuildStructs.SelCarro.Set_Car_Menu(conector.Get_Seleccion(),conector.Get_Eleccion());
-        if((Animacion_Npc.transform.position - Posicion_Original.position).magnitude >= 3)
+
+        //if((Animacion_Npc.transform.position - Posicion_Original.position).magnitude >= 3)
+        if (Animacion_Npc.DestinoActual != Posicion_Original)
         {
             Animacion_Npc.Caminar(Tiempo_Animacion, Posicion_Original);
             if(!Carritos_Canvas.activeInHierarchy)
@@ -81,6 +73,7 @@ public class Seleccion : MonoBehaviour
 
     public void BTN_Power_Up()
     {
+
         IniciarAnimacion(FOV, FOVAC, camara.transform.rotation.eulerAngles.x, rotacionOriginal, false);
         Click_Botones.Play();
         Animacion_Npc.Caminar(Tiempo_Animacion, Posicion_Ir);
@@ -103,6 +96,7 @@ public class Seleccion : MonoBehaviour
 
     public void BTN_Carro()
     {
+
         IniciarAnimacion(FOV, FOVAC, rotacionOriginal, rotacion_carro, true);
         Click_Botones.Play();
         Menu_Canvas.SetActive(false);

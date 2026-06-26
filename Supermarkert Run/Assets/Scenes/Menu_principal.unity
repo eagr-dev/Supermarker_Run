@@ -1552,7 +1552,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Posicion_Llegar: {fileID: 303519430}
   Posicion_Original: {fileID: 418983130}
-  Tiempo: 5
+  Tiempo: 2
 --- !u!1 &124632786
 GameObject:
   m_ObjectHideFlags: 0
@@ -15003,7 +15003,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Posicion_Llegar: {fileID: 303519430}
   Posicion_Original: {fileID: 440160491}
-  Tiempo: 5
+  Tiempo: 2
 --- !u!1 &1327050456
 GameObject:
   m_ObjectHideFlags: 0
@@ -19259,7 +19259,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Posicion_Llegar: {fileID: 303519430}
   Posicion_Original: {fileID: 841188328}
-  Tiempo: 5
+  Tiempo: 2
 --- !u!1 &1567690762
 GameObject:
   m_ObjectHideFlags: 0
