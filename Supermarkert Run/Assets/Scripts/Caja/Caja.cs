@@ -76,7 +76,7 @@ public class Caja : MonoBehaviour
 
     private IEnumerator AnimarSliderYLanzarObjeto(float progresoAnterior, float progresoActual, float tiempo, string objeto, Mision mision)
     {
-        Coroutine lanzar_Objeto = StartCoroutine(mision.AnimacionDejarObjetosCaja(dejar_roducto.position, objeto, tiempo));
+        Coroutine lanzar_Objeto = StartCoroutine(mision.AnimacionDejarObjetosCaja(dejar_roducto.position, objeto));
         Coroutine animar_Slider = StartCoroutine(AnimarProgresoSlider(progresoAnterior, progresoActual, tiempo));
         yield return lanzar_Objeto;
         yield return animar_Slider;

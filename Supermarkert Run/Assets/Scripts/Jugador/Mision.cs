@@ -36,6 +36,7 @@ public class Mision : MonoBehaviour
     //Areas para hacer que el area tenga un resplandor
     Areas[] areas;
     List<Area> actuales = new();
+    float duracion = 1;
 
     private void Start()
     {
@@ -60,6 +61,8 @@ public class Mision : MonoBehaviour
         int misiones = misiones_obtenibles <= maximo_misiones ? misiones_obtenibles : maximo_misiones;
         return misiones;
     }
+
+    public void SetTiempo(float nuevoTiempo) => duracion = nuevoTiempo;
 
     private void Set_objetos()
     {
@@ -199,17 +202,18 @@ public class Mision : MonoBehaviour
             return false;
         if (objetos[obj_tomo.Item1].Item3) return false;
 
+        //Despues si ninguno de los 2 se cumple mandamos que no tiene espacio
+        if (carro.objetos_actuales + 1 > carro.cant_limite_carga)
+        {
+            StartCoroutine(Tiempo_Aparicion());
+            return false;
+        }
+
         return true;
     }
 
     private void TomarObjeto(string obj)
     {
-        //Despues si ninguno de los 2 se cumple mandamos que no tiene espacio
-        if (carro.objetos_actuales + 1 > carro.cant_limite_carga)
-        {
-            StartCoroutine(Tiempo_Aparicion());
-            return;
-        }
         var obj_tomo = Se_repite_objeto_tomado(obj);
         var emision = Punto.emission;
         emision.enabled = true;
@@ -247,7 +251,7 @@ public class Mision : MonoBehaviour
 
         Vector3 direccion = posicion_carro - posicion_estante;
 
-        yield return AnimarLanzamiento(instancia, posicion_estante, direccion);
+        yield return AnimarLanzamiento(instancia, posicion_estante, direccion, duracion);
 
         IluminarSiguienteEstante();
 
@@ -273,7 +277,7 @@ public class Mision : MonoBehaviour
         return objetos_entregados;
     }
 
-    public IEnumerator AnimacionDejarObjetosCaja(Vector3 posicionCaja, string nombreObjeto, float tiempo)
+    public IEnumerator AnimacionDejarObjetosCaja(Vector3 posicionCaja, string nombreObjeto)
     {
         carro.objetos_actuales--;
         Espacio_Disponible.text = carro.objetos_actuales.ToString() + "/" + carro.cant_limite_carga.ToString();
@@ -293,7 +297,7 @@ public class Mision : MonoBehaviour
         Vector3 posicionInicial = transform.position;
         Vector3 direccion = posicionCaja - posicionInicial;
 
-        yield return StartCoroutine(AnimarLanzamiento(instancia, posicionInicial, direccion, tiempo));
+        yield return AnimarLanzamiento(instancia, posicionInicial, direccion, duracion);
 
         Destroy(instancia);
     }

@@ -95,6 +95,7 @@ public class Player : MonoBehaviour
         }
         NO_INICIAR_PARTICULAS();
         carrito = Get_Carro();
+        mision.SetTiempo(Tiempo_Dejar_Objeto);
     }
 
     void Update()
@@ -589,7 +590,7 @@ public class Player : MonoBehaviour
         }
 
             Dinero_Obtenido DO = BuildStructs.Dinero_Obtenido;
-            Dinero_Text.text = $"$ {DO.Get_Dinero()}"; 
+            Dinero_Text.text = $"{DO.Get_Dinero()}"; 
     }
     public void BTN_Ganar()
     {
