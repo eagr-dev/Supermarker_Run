@@ -12,7 +12,6 @@ public class Objeto_random_carro : MonoBehaviour, IGuardarObjeto
     [SerializeField] private GameObject UIRoullete, UIAnuncios;
     [SerializeField] private Image[] images = new Image[maxImage];
     [SerializeField] private Sprite[] sprites = new Sprite[maxSprite];
-    [SerializeField] private float tiempo_animacion = 2;
     [SerializeField] private TMP_Text nombre_objeto, objetos_buscados;
     [SerializeField] private AudioSource sonido_ruleta, sonido_acierto, sonido_fallo;
     [SerializeField] private Image iconoFalloAcierto;

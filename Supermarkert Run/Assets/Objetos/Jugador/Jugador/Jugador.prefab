@@ -35488,6 +35488,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
       objectReference: {fileID: 0}
+    - target: {fileID: 6529177171549159459, guid: 872ce180debe30f41891621cd4510a8e, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7045341008025897462, guid: 872ce180debe30f41891621cd4510a8e, type: 3}
       propertyPath: m_Materials.Array.size
       value: 1
@@ -35799,13 +35803,16 @@ PrefabInstance:
       addedObject: {fileID: 3748611634939655014}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 31e5e4601c394f644b274ac998aed966, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 7850602263511872560}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 31e5e4601c394f644b274ac998aed966, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1490818536175871681}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 31e5e4601c394f644b274ac998aed966, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 454264591751875870}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 31e5e4601c394f644b274ac998aed966, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5381887594320282798}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 31e5e4601c394f644b274ac998aed966, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7850602263511872560}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 31e5e4601c394f644b274ac998aed966, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8180956312264988501}
@@ -36190,7 +36197,6 @@ MonoBehaviour:
   speed: 1
   resistencia_porcentual: 0
   velocidad_porcentual: 0
-  friccionHielo: 4
   joystick: {fileID: 0}
   player_object: {fileID: 8592851397395496535}
   camara: {fileID: 0}
@@ -36205,6 +36211,7 @@ MonoBehaviour:
   animacion: {fileID: 3068091169133543063}
   Dinero_Text: {fileID: 0}
   obtener_Objeto_suelo: {fileID: 0}
+  obtener_Objeto_carro: {fileID: 0}
   particulas:
   - {fileID: 3123426594477238551}
   - {fileID: 3280896444541754041}
@@ -36283,6 +36290,42 @@ MonoBehaviour:
   Carrito_mediano: {fileID: 2223052009513710149}
   Carrito_grande: {fileID: 404506394651045560}
   Rigid_Animacion: {fileID: 5381887594320282798}
+--- !u!114 &7850602263511872560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8592851397395496535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc8e7631ea00aac4ba67e6d89764956a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Sombras_Lista:
+  - {fileID: 4927470395117186168}
+  - {fileID: 1951978125852671861}
+  - {fileID: 8168680588486114908}
+  - {fileID: 5808106558715774841}
+  Sombras_Modelos_Carrito:
+  - {fileID: 6447506068187164289}
+  - {fileID: 7886258796546013283}
+  - {fileID: 8517812117718983838}
+  Sombras_Modelo_Jugador: {fileID: 7881060081301839444}
+--- !u!114 &1490818536175871681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8592851397395496535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0fd8e1299c1cd94d8559d5f3f53ab3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CarRuntime
+  objetos_actuales: 0
+  datosCarro: {fileID: 0}
 --- !u!114 &454264591751875870
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36385,28 +36428,6 @@ MonoBehaviour:
   - m_Rig: {fileID: 3168330963420014068}
     m_Active: 0
   m_Effectors: []
---- !u!114 &7850602263511872560
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8592851397395496535}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc8e7631ea00aac4ba67e6d89764956a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Sombras_Lista:
-  - {fileID: 4927470395117186168}
-  - {fileID: 1951978125852671861}
-  - {fileID: 8168680588486114908}
-  - {fileID: 5808106558715774841}
-  Sombras_Modelos_Carrito:
-  - {fileID: 6447506068187164289}
-  - {fileID: 7886258796546013283}
-  - {fileID: 8517812117718983838}
-  Sombras_Modelo_Jugador: {fileID: 7881060081301839444}
 --- !u!82 &8180956312264988501
 AudioSource:
   m_ObjectHideFlags: 0

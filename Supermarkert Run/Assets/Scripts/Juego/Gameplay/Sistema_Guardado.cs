@@ -11,6 +11,7 @@ public class Sistema_Guardado : MonoBehaviour
     const string CCALIDAD = "Calidad";
     const string CPOSICION_MATERIAL = "Material";
     const string CTIPO_CARRO = "Carro";
+    const string CCARRO_PEQUENIO = "CarroPequenio", CCARRO_MEDIANO = "CarroMediano", CCARRO_GRANDE = "CarroGrande";
 
     private string RutaPersonalizado =>
         $"{Application.persistentDataPath}/personalizado.json";
@@ -30,6 +31,7 @@ public class Sistema_Guardado : MonoBehaviour
 
     private void Start()
     {
+        BuildStructs.SelCarro.Inicializador();
         CargarMapas();
     }
 
@@ -43,6 +45,7 @@ public class Sistema_Guardado : MonoBehaviour
         int tipoCarro = PlayerPrefs.GetInt(CTIPO_CARRO, 0);
         int posicionSkin = PlayerPrefs.GetInt(CPOSICION_MATERIAL, 0);
 
+
         // 2. Aplicar a escena
         QualitySettings.SetQualityLevel(calidad);
 
@@ -52,10 +55,9 @@ public class Sistema_Guardado : MonoBehaviour
         BuildStructs.Dinero.Set_Dinero(dinero);
 
         var tipoCarro_Enum = (Pase_Conexion_Menu_Gameplay.Tipo_Carro)tipoCarro;
-        BuildStructs.PCMG.Set_Seleccion(tipoCarro_Enum);
-        BuildStructs.PCMG.Set_Eleccion(posicionSkin);
+        BuildStructs.PCMG.Set_Seleccion_Carro(tipoCarro_Enum);
+        BuildStructs.PCMG.Set_Seleccion_Skin(posicionSkin);
         BuildStructs.SelCarro.Set_Car_Menu(tipoCarro_Enum, posicionSkin);
-        BuildStructs.SelCarro.Inicializador();
 
         // 3. El struct se actualiza solo con la escena ya aplicada
         _ = new PlayerInformacionEstructura().Capturar(BuildStructs.Dinero, BuildStructs.PCMG);
@@ -71,6 +73,32 @@ public class Sistema_Guardado : MonoBehaviour
 
         // El struct de mapas se actualiza solo
         _ = new MapaEstructura().Capturar(mapas);
+    }
+
+    public void CargarCarros(OrquestadorAumentadorNivelCarro pequenio,
+        OrquestadorAumentadorNivelCarro mediano, OrquestadorAumentadorNivelCarro grande)
+    {
+        if (PlayerPrefs.HasKey(CCARRO_PEQUENIO))
+        {
+            string jsonP = PlayerPrefs.GetString(CCARRO_PEQUENIO);
+            var json = JsonUtility.FromJson<PersonalizadoEstructura.GuardarInformacionEstructura>(jsonP);
+            pequenio.SetNivelStats(json.level, json.stats);
+
+        }
+
+        if (PlayerPrefs.HasKey(CCARRO_MEDIANO))
+        {
+            string jsonM = PlayerPrefs.GetString(CCARRO_MEDIANO);
+            var json = JsonUtility.FromJson<PersonalizadoEstructura.GuardarInformacionEstructura>(jsonM);
+            mediano.SetNivelStats(json.level, json.stats);
+        }
+
+        if (PlayerPrefs.HasKey(CCARRO_GRANDE))
+        {
+            string jsonG = PlayerPrefs.GetString(CCARRO_GRANDE);
+            var json = JsonUtility.FromJson<PersonalizadoEstructura.GuardarInformacionEstructura>(jsonG);
+            grande.SetNivelStats(json.level, json.stats);
+        }
     }
 
     // ── Guardado ───────────────────────────────────────────────────────────
@@ -93,11 +121,19 @@ public class Sistema_Guardado : MonoBehaviour
         PlayerPrefs.SetString(nombreMapa, "true");
     }
 
-    [System.Obsolete("Sistema Bugueado — Revisar Próximamente.")]
-    public void Guardar_Personalizado(float r, float g, float b, float a)
+    public void Guardar_Personalizado(OrquestadorAumentadorNivelCarro pequenio,
+        OrquestadorAumentadorNivelCarro mediano, OrquestadorAumentadorNivelCarro grande)
     {
-        var contenido = new Contenido_Personalizado { color = new Color(r, g, b, a) };
-        File.WriteAllText(RutaPersonalizado, JsonUtility.ToJson(contenido));
+        PersonalizadoEstructura estructura = new PersonalizadoEstructura().Capturar(BuildStructs.PCMG);
+
+        string jsonP = JsonUtility.ToJson(estructura.pequenio);
+        string jsonM = JsonUtility.ToJson(estructura.mediano);
+        string jsonG = JsonUtility.ToJson(estructura.grande);
+
+        PlayerPrefs.SetString(CCARRO_PEQUENIO, jsonP);
+        PlayerPrefs.SetString(CCARRO_MEDIANO, jsonM);
+        PlayerPrefs.SetString(CCARRO_GRANDE, jsonG);
+        PlayerPrefs.Save();
     }
 
     public void BTN_Reinicio()

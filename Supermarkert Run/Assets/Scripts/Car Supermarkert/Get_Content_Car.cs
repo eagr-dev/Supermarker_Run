@@ -5,30 +5,51 @@ using System;
 
 public class Get_Content_Car : MonoBehaviour
 {
-    private List<Car> car = new();
+    private CarSkinData skin;
     [SerializeField]MeshRenderer r;
     public Pase_Conexion_Menu_Gameplay.Tipo_Carro TC;
-    public int posicion;
-    public Car Get_Car()
+    public int posicion = 0;
+
+    public CarSkinData Get_Car_Skin()
     {
-        return car[posicion];
+        return skin;
     }
 
-    public int Get_Counts_Car() => car.Count;
-
+    //Este es de CarRuntime
     public void Set_Car(int new_posicion)
     {
+        MaterialPropertyBlock propertyBlock = new();
+        // Seguridad: Si 'r' es nulo, no podemos aplicar el propertyBlock
+        if (r == null) return;
+
+        propertyBlock.Clear();
+
         posicion = new_posicion;
-        if(posicion < car.Count)
-        r.material = car[posicion].skin_car;
+        skin = BuildStructs.PCMG.GetSkin(posicion);
+
+        // 1. Validamos el mesh primero
+        if (skin.mesh != null)
+        {
+            r = skin.mesh;
+        }
+
+        // 2. El truco está aquí: si no hay textura, hay que "limpiar" el propertyBlock
+        if (skin.texture != null)
+        {
+            propertyBlock.SetTexture("_MainTex", skin.texture);
+        }
+
+        // 3. Aplicamos el color (si la skin no tiene color, será transparente/negro por defecto del struct)
+        propertyBlock.SetColor("_Color", skin.color);
+
+        // 4. Aplicamos los cambios al mesh renderer
+        r.SetPropertyBlock(propertyBlock);
     }
+
 
     private void Awake()
     {
-        Pase_Conexion_Menu_Gameplay PCMG = BuildStructs.PCMG;
-        Debug.Log($"PCMG existe? {(PCMG is not null ? "si" : "no" )}");
-        posicion = PCMG.Get_Eleccion();
-        PCMG.Set_List_All(ref car, TC);
-        r.material = car[posicion].skin_car;
+        posicion = BuildStructs.PCMG.Get_Eleccion();
+        Set_Car(posicion);
     }
 }

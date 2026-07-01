@@ -13,7 +13,8 @@ public class Seleccion_Carrito_Ai : MonoBehaviour
         index = Random.Range(0, 2);
         Carritos[index].SetActive(true);
         rigid_animaciones.layers[index].active = true;
-        int posmat = Random.Range(0, Carritos[index].GetComponent<Get_Content_Car>().Get_Counts_Car() - 1);
+        int posmat = Random.Range(0, BuildStructs.PCMG.GetCountSkins() - 1);
+        //Aqui es CarRuntime
         Carritos[index].GetComponent<Get_Content_Car>().Set_Car(posmat);
     }
 

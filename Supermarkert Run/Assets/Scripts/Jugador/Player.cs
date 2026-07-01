@@ -10,9 +10,7 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     [Header("Joystick_Velocidad")]
-    [SerializeField] private float max_speed_H = 1, max_speed_V = 1, Vertical_Move = 0, Horizontal_Move = 0, speed = 1, resistencia_porcentual = 0, velocidad_porcentual = 0;
-    [SerializeField] private float friccionHielo = 10f; // qué tan rápido frena (mayor = frena antes)
-    private float velocidadResbalon;
+    [SerializeField] private float max_speed_H = 1, max_speed_V = 1, Vertical_Move = 0, Horizontal_Move = 0, speed = 1, resistencia_porcentual = 0, velocidad_porcentual = 0;    private float velocidadResbalon;
     [SerializeField] private Joystick joystick;
 
     [Header("Camara")]
@@ -32,7 +30,8 @@ public class Player : MonoBehaviour
     private bool resbalon = false;
     private bool choque = false;
     private bool choque_mayor = false;
-    private Car carrito;
+    private CarRuntime carrito;
+    //private CarSkinData skinData;
 
     [Header("Mision_Caja")]
     private Mision mision;
@@ -84,6 +83,7 @@ public class Player : MonoBehaviour
         Power_Respective();
         obtener_Objeto_suelo.onClick.AddListener(BTN_Agarrar_Objeto_Suelo);
         obtener_Objeto_carro.onClick.AddListener(BTN_Agarrar_Objeto_Carro);
+
     }
 
     private void Start()
@@ -94,7 +94,9 @@ public class Player : MonoBehaviour
             emission.enabled = false;
         }
         NO_INICIAR_PARTICULAS();
-        carrito = Get_Carro();
+        carrito = GetComponent<CarRuntime>();
+        carrito.Inicializar(BuildStructs.PCMG.GetOrquestador());
+        Init(carrito);
         mision.SetTiempo(Tiempo_Dejar_Objeto);
     }
 
@@ -279,22 +281,22 @@ public class Player : MonoBehaviour
     }
 
     //Inicio
-    public void Init(Car carro)
+    public void Init(CarRuntime carro)
     {
-        rigid.mass +=               carro.peso;
-        speed +=                        carro.velocidad_adicional;
-        max_speed_H +=                  carro.velocidad_adicional;
-        max_speed_V +=                  carro.velocidad_adicional;
-        resistencia_porcentual = (float)carro.resistencia_choque / 100;
+        rigid.mass +=               carro.Peso;
+        speed +=                        carro.VelocidadAdicional;
+        max_speed_H +=                  carro.VelocidadAdicional;
+        max_speed_V +=                  carro.VelocidadAdicional;
+        resistencia_porcentual = (float)carro.Blindaje / 100;
         carrito = carro;
     }
 
     private void New_Init()
     {
         float velocidad = PU == Repartir_power.Power_Up.VELOCIDAD ?  Efecto.Get_Efecto<float>() : 1;
-        speed       = velocidad + carrito.velocidad_adicional;
-        max_speed_H = velocidad + carrito.velocidad_adicional;
-        max_speed_V = velocidad + carrito.velocidad_adicional;
+        speed       = velocidad + carrito.VelocidadAdicional;
+        max_speed_H = velocidad + carrito.VelocidadAdicional;
+        max_speed_V = velocidad + carrito.VelocidadAdicional;
     }
 
     private void Set_Rigs(float valor)
@@ -316,7 +318,7 @@ public class Player : MonoBehaviour
         while (velocidadResbalon > 0.1f && resbalon)
         {
             rigid.MovePosition(rigid.position + direccion * velocidadResbalon * Time.fixedDeltaTime);
-            velocidadResbalon -= friccionHielo * Time.fixedDeltaTime; // frenado lineal por fricción
+            velocidadResbalon -= carrito.Agarre * Time.fixedDeltaTime; // frenado lineal por fricción
             yield return new WaitForFixedUpdate();
         }
 
@@ -334,7 +336,7 @@ public class Player : MonoBehaviour
         yield return StartCoroutine(caja.HacerObjetosCajaVisible(Tiempo_Dejar_Objeto, mision));
         Set_Rigs(1);
         joystick.DeadZone = 0;
-        mision.Espacio_Disponible.text = carrito.objetos_actuales.ToString() + "/" +  carrito.cant_limite_carga.ToString();
+        mision.Espacio_Disponible.text = carrito.objetos_actuales.ToString() + "/" +  carrito.Capacidad.ToString();
         estaEnCaja = false;
     }
 
@@ -365,12 +367,9 @@ public class Player : MonoBehaviour
         joystick.DeadZone = 0;
     }
 
-    public Car Get_Carro()
+    public CarRuntime Get_Carro()
     {
-        Car carro = null;
-        Transform hijo = Get_transform_carro();
-        carro = hijo.GetComponent<Get_Content_Car>().Get_Car();
-        return carro;
+        return carrito;
     }
 
     public Transform Get_transform_carro()

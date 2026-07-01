@@ -88,10 +88,10 @@ public class SistemaGuardadoNube : MonoBehaviour
 
         SkinsEstructura skinsEstructura = new SkinsEstructura().Capturar(BuildStructs.PCMG);
 
-        Debug.Log($"[Nube] Subiendo — Nivel:{datos.nivel} Dinero:{datos.dinero}");
+        PersonalizadoEstructura personalizadoEstructura = new PersonalizadoEstructura().Capturar(BuildStructs.PCMG);
 
         // TODO: serializar y subir con SavedGame API
-        MasterSaveInformacion Saveinformacion = new(datos, skinsEstructura, mapas);
+        MasterSaveInformacion Saveinformacion = new(datos, skinsEstructura, mapas, personalizadoEstructura);
         string informacion = JsonUtility.ToJson(Saveinformacion);
 
         //Subir datos del player
@@ -212,6 +212,9 @@ public class SistemaGuardadoNube : MonoBehaviour
                 SkinsEstructura skinsInfo = datos.skins;
                 AplicarSkins(skinsInfo);
 
+                PersonalizadoEstructura personalizadoEstructura = datos.personalizado;
+                AplicarPersonalizaciones(personalizadoEstructura);
+
                 MapaEstructura mapasInfo = datos.mapa;
                 AplicarMapas(mapasInfo);
 
@@ -262,40 +265,29 @@ public class SistemaGuardadoNube : MonoBehaviour
         BuildStructs.Dinero.Set_Dinero(datos.dinero);
 
         var tipoCarro = (Pase_Conexion_Menu_Gameplay.Tipo_Carro)datos.tipo_carro;
-        BuildStructs.PCMG.Set_Seleccion(tipoCarro);
-        BuildStructs.PCMG.Set_Eleccion(datos.posicion_skin);
+        BuildStructs.PCMG.Set_Seleccion_Carro(tipoCarro);
+        BuildStructs.PCMG.Set_Seleccion_Skin(datos.posicion_skin);
         BuildStructs.SelCarro.Set_Car_Menu(tipoCarro, datos.posicion_skin);
     }
 
     private void AplicarSkins(SkinsEstructura skinsInfo)
     {
         Pase_Conexion_Menu_Gameplay pcmg = BuildStructs.PCMG;
+        List<CarSkinData> listaSkins = pcmg.GetListSkins();
 
-        // 1. Carros Pequeños
-        foreach (Car carroReal in pcmg.cars_Peq)
+        for (int i = 0; i < listaSkins.Count; i++)
         {
             // Si el nombre de este carro real está en la lista descargada de la nube...
-            if (skinsInfo.carroPequenio.Contains(carroReal.nombre_espaniol))
+            if (skinsInfo.listaNombreSkins.Contains(listaSkins[i].nombre_espaniol))
             {
-                carroReal.precio = 0; // Lo marcamos como comprado/desbloqueado
-            }
-        }
+                // 1. Sacamos el struct de la lista (esto crea una copia modificable)
+                CarSkinData skinModificada = listaSkins[i];
 
-        // 2. Carros Medianos
-        foreach (Car carroReal in pcmg.cars_Med)
-        {
-            if (skinsInfo.carroMediano.Contains(carroReal.nombre_espaniol))
-            {
-                carroReal.precio = 0;
-            }
-        }
+                // 2. Cambiamos el precio en la copia
+                skinModificada.precio = 0;
 
-        // 3. Carros Grandes
-        foreach (Car carroReal in pcmg.cars_Gra)
-        {
-            if (skinsInfo.carroGrande.Contains(carroReal.nombre_espaniol))
-            {
-                carroReal.precio = 0;
+                // 3. Volvemos a guardar el struct modificado en la lista original
+                listaSkins[i] = skinModificada;
             }
         }
     }
@@ -313,5 +305,13 @@ public class SistemaGuardadoNube : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void AplicarPersonalizaciones(PersonalizadoEstructura personalizadoEstructura)
+    {
+        var orquestadores = BuildStructs.PCMG.GetOrquestadores();
+        orquestadores.Item1.SetNivelStats(personalizadoEstructura.pequenio.level, personalizadoEstructura.pequenio.stats);
+        orquestadores.Item2.SetNivelStats(personalizadoEstructura.mediano.level, personalizadoEstructura.mediano.stats);
+        orquestadores.Item3.SetNivelStats(personalizadoEstructura.grande.level, personalizadoEstructura.grande.stats);
     }
 }

@@ -8,9 +8,9 @@ public class Pase_Conexion_Menu_Gameplay : MonoBehaviour
     public enum Tipo_Carro { PEQUEÑO, MEDIANO, GRANDE }
     Tipo_Carro sel;
     int ele;
-    public List<Car> cars_Peq;
-    public List<Car> cars_Med;
-    public List<Car> cars_Gra;
+
+    [SerializeField] private SkinDatabase skinDatabase;
+    [SerializeField] private OrquestadorAumentadorNivelCarro pequenio, mediano, grande; 
 
     private void Awake()
     {
@@ -23,45 +23,42 @@ public class Pase_Conexion_Menu_Gameplay : MonoBehaviour
             Pase_Conexion_Menu_Gameplay.conector = this;
             DontDestroyOnLoad(this.gameObject);
         }
+    }
 
-        for(int i = 0; i < cars_Peq.Count; i++)
-        {
-            cars_Peq[i].objetos_actuales = 0;
-            cars_Med[i].objetos_actuales = 0;
-            cars_Gra[i].objetos_actuales = 0;
-        }
-
+    private void Start()
+    {
+        FindFirstObjectByType<Sistema_Guardado>().CargarCarros(pequenio, mediano, grande);
     }
 
     public Tipo_Carro Get_Seleccion() => sel;
 
     public int Get_Eleccion() => ele;
 
-    public void Set_Seleccion(Tipo_Carro new_value) => sel = new_value;
-    public void Set_Eleccion(int new_value) => ele = new_value;
-
-    public void Set_List_All(ref List<Car> list_Car, Tipo_Carro TC)
+    public void Set_Seleccion_Carro(Tipo_Carro new_value) => sel = new_value;
+    public void Set_Seleccion_Skin(int new_value) => ele = new_value;
+    
+    public CarSkinData GetSkin(int index)
     {
-        switch(TC)
+        return skinDatabase.GetSkin(index);
+    }
+
+    public List<CarSkinData> GetListSkins() => skinDatabase.skins;
+
+    public int GetCountSkins() => skinDatabase.skins.Count;
+
+    public OrquestadorAumentadorNivelCarro GetOrquestador()
+    {
+        return sel switch
         {
-            case Tipo_Carro.PEQUEÑO:
-                foreach (Car car in cars_Peq)
-                {
-                    list_Car.Add(car);
-                }
-                break;
-            case Tipo_Carro.MEDIANO:
-                foreach (Car car in cars_Med)
-                {
-                    list_Car.Add(car);
-                }
-                break;
-            case Tipo_Carro.GRANDE:
-                foreach (Car car in cars_Gra)
-                {
-                    list_Car.Add(car);
-                }
-                break;
-        }
+            Tipo_Carro.PEQUEÑO => pequenio,
+            Tipo_Carro.MEDIANO => mediano,
+            Tipo_Carro.GRANDE => grande,
+            _ => null,
+        };
+    }
+
+    public (OrquestadorAumentadorNivelCarro, OrquestadorAumentadorNivelCarro, OrquestadorAumentadorNivelCarro) GetOrquestadores()
+    {
+        return (pequenio, mediano, grande);
     }
 }

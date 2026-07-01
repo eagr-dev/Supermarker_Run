@@ -1,287 +1,120 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class Seleccion_Menu_Carrito : MonoBehaviour
 {
-
-    //static Seleccion_Menu_Carrito SMC;
     Pase_Conexion_Menu_Gameplay.Tipo_Carro Seleccion = Pase_Conexion_Menu_Gameplay.Tipo_Carro.PEQUEÑO;
     Pase_Conexion_Menu_Gameplay PCMG;
-    int eleccion = 0, eleccion_secundario = 0;
     GameObject carrito_Actual;
+
     [SerializeField] private GameObject Carrito_pequeno;
     [SerializeField] private GameObject Carrito_mediano;
     [SerializeField] private GameObject Carrito_grande;
+
     [SerializeField] private GameObject Canvas_Eleccion;
     [SerializeField] private GameObject Canvas_Skin;
-    [SerializeField] private GameObject BTN_comprar;
-    [SerializeField] private GameObject BTN_comprar_personalizar;
-    [SerializeField] private GameObject BTN_aceptar;
-    [SerializeField] private GameObject Dinero_Insuficiente;
     [SerializeField] private GameObject Canvas_Personalizar;
 
-    [SerializeField] private Slider slider;
+    [SerializeField] private Button Skin, Personalizar, EleccionDeSkins, EleccionDePersonalizar, Pequeño, Mediano, Grande;
 
-    [SerializeField] private TMP_Text Nombre;
-    [SerializeField] private TMP_Text Descripcion;
-    [SerializeField] private TMP_Text Peso;
-    [SerializeField] private TMP_Text Velocidad;
-    [SerializeField] private TMP_Text Limite_Carga;
-    [SerializeField] private TMP_Text Resistencia_choque;
-    [SerializeField] private TMP_Text Precio;
-    [SerializeField] private TMP_Text Precio_personalizar;
-    [SerializeField] private TMP_Text Requisitos;
     [SerializeField] private AudioSource Click_Botones;
 
+    // Referencia a la clase que ahora maneja toda la logica de skins
+    [SerializeField] private Seleccion_Menu_Skin SkinMenu;
 
-    [SerializeField] private bool Comprar;
-    [SerializeField] private bool Comprar_Skin;
-
-
-
-    /*private void Awake()
-    {
-        //Pase_Conexion_Menu_Gameplay pinit = FindObjectOfType<Pase_Conexion_Menu_Gameplay>();
-        //Set_Car_Menu(pinit.Get_Seleccion(),pinit.Get_Eleccion());
-        carrito_Actual = Get_Active();
-        slider.maxValue = Carrito_pequeno.GetComponent<Get_Content_Car>().Get_Counts_Car();
-        Set_Skin_Eleccion();
-        Mostrar_Dinero();
-    } */
+    [Header("Scroll View de Skins (Optimizado)")]
+    [SerializeField] private GameObject botonSkinPrefab;      // Tu Prefab con el script Button_Skin_Item
+    [SerializeField] private Transform contenedorScrollView;  // El objeto 'Content' dentro del Scroll View
 
     public void Inicializador()
     {
-        eleccion = (int)slider.value;
         PCMG = BuildStructs.PCMG;
         carrito_Actual = Get_Active();
-        slider.maxValue = carrito_Actual.GetComponent<Get_Content_Car>().Get_Counts_Car();
-        carrito_Actual.GetComponent<Get_Content_Car>().Set_Car(eleccion);
-        Set_Skin_Eleccion(eleccion);
+        SkinMenu.Inicializador();
+        GenerarBotonesSkins();
         Mostrar_Dinero();
+        Pequeño.onClick.AddListener(BTN_Chico);
+        Mediano.onClick.AddListener(BTN_Mediano);
+        Grande.onClick.AddListener(BTN_Grande);
+        Skin.onClick.AddListener(BTN_Skin);
+        Personalizar.onClick.AddListener(BTN_Personalizar);
+        EleccionDeSkins.onClick.AddListener(BTN_Eleccion);
+        EleccionDePersonalizar.onClick.AddListener(BTN_Eleccion);
     }
 
+    public void GenerarBotonesSkins()
+    {
+        foreach (Transform hijo in contenedorScrollView)
+        {
+            Destroy(hijo.gameObject);
+        }
+
+        int totalSkins = PCMG.GetCountSkins();
+        Debug.Log($"el total de skins son {totalSkins}");
+
+        for (int i = 0; i < totalSkins; i++)
+        {
+            CarSkinData skinData = PCMG.GetSkin(i);
+
+            GameObject nuevoBoton = Instantiate(botonSkinPrefab, contenedorScrollView);
+            Button_Skin_Item scriptBoton = nuevoBoton.GetComponent<Button_Skin_Item>();
+            scriptBoton.ConfigurarBoton(i, skinData, this);
+        }
+    }
     public void Set_Seleccion(Pase_Conexion_Menu_Gameplay.Tipo_Carro New_TC) => Seleccion = New_TC;
 
-    //BTN
     //BTN->Eleccion_Carrito
-    public void BTN_Chico()
-    {
-        Click_Botones.Play();
-        if (Seleccion != Pase_Conexion_Menu_Gameplay.Tipo_Carro.PEQUEÑO) slider.value = 0;
-        else slider.value = eleccion;
-        Carrito_grande.SetActive(false);
-        Carrito_mediano.SetActive(false);
-        Carrito_pequeno.SetActive(true);
-        Set_Skin_Eleccion(eleccion);
-        slider.value = 0;
-        Animacion(Carrito_pequeno);
-        Seleccion = Pase_Conexion_Menu_Gameplay.Tipo_Carro.PEQUEÑO;
-        PCMG.Set_Seleccion(Seleccion);
-    }
+    private void BTN_Chico() => Cambiar_Carro(Carrito_pequeno, Pase_Conexion_Menu_Gameplay.Tipo_Carro.PEQUEÑO);
+    private void BTN_Mediano() => Cambiar_Carro(Carrito_mediano, Pase_Conexion_Menu_Gameplay.Tipo_Carro.MEDIANO);
+    private void BTN_Grande() => Cambiar_Carro(Carrito_grande, Pase_Conexion_Menu_Gameplay.Tipo_Carro.GRANDE);
 
-    public void BTN_Mediante()
+    private void Cambiar_Carro(GameObject nuevo, Pase_Conexion_Menu_Gameplay.Tipo_Carro tipo)
     {
         Click_Botones.Play();
-        if (Seleccion != Pase_Conexion_Menu_Gameplay.Tipo_Carro.MEDIANO) slider.value = 0;
-        else slider.value = eleccion;
-        Carrito_grande.SetActive(false);
-        Carrito_mediano.SetActive(true);
-        Carrito_pequeno.SetActive(false);
-        Set_Skin_Eleccion(eleccion);
-        slider.value = 0;
-        Animacion(Carrito_mediano);
-        Seleccion = Pase_Conexion_Menu_Gameplay.Tipo_Carro.MEDIANO;
-        PCMG.Set_Seleccion(Seleccion);
-    }
 
-    public void BTN_Grande()
-    {
-        Click_Botones.Play();
-        if (Seleccion != Pase_Conexion_Menu_Gameplay.Tipo_Carro.GRANDE) slider.value = 0;
-        else slider.value = eleccion;
-        Carrito_grande.SetActive(true);
-        Carrito_mediano.SetActive(false);
-        Carrito_pequeno.SetActive(false);
-        Set_Skin_Eleccion(eleccion);
-        slider.value = 0;
-        Animacion(Carrito_grande);
-        Seleccion = Pase_Conexion_Menu_Gameplay.Tipo_Carro.GRANDE;
-        PCMG.Set_Seleccion(Seleccion);
+        Carrito_pequeno.SetActive(nuevo == Carrito_pequeno);
+        Carrito_mediano.SetActive(nuevo == Carrito_mediano);
+        Carrito_grande.SetActive(nuevo == Carrito_grande);
+
+        carrito_Actual = nuevo;
+        SkinMenu.Refrescar_Carro_Activo(carrito_Actual);
+
+        Animacion(nuevo);
+        Seleccion = tipo;
+        PCMG.Set_Seleccion_Carro(Seleccion);
     }
 
     private void Animacion(GameObject objeto)
     {
         Transform padre = objeto.transform.parent;
-        padre.position = new Vector3(padre.position.x,-1,padre.position.z);
+        padre.position = new Vector3(padre.position.x, -1, padre.position.z);
     }
 
     //BTN->Canvas
-
-    public void BTN_Skin()
+    private void BTN_Skin()
     {
         Click_Botones.Play();
         Canvas_Eleccion.SetActive(false);
         Canvas_Skin.SetActive(true);
     }
-    public void BTN_Eleccion()
+
+    private void BTN_Eleccion()
     {
         Click_Botones.Play();
-        Carrito_pequeno.GetComponent<Get_Content_Car>().Set_Car(eleccion);
-        Carrito_mediano.GetComponent<Get_Content_Car>().Set_Car(eleccion);
-        Carrito_grande.GetComponent<Get_Content_Car>().Set_Car(eleccion);
+        SkinMenu.Aplicar_Eleccion_A(Carrito_pequeno, Carrito_mediano, Carrito_grande);
         Canvas_Eleccion.SetActive(true);
         Canvas_Skin.SetActive(false);
-        if (Comprar) slider.value = 0;
+        Canvas_Personalizar.SetActive(false);
+        SkinMenu.Reset_Slider_Si_Comprando();
     }
 
-    //BTN->Skin
-
-    public void BTN_Aceptar()
+    private void BTN_Personalizar()
     {
-        Click_Botones.Play();
-        eleccion = eleccion_secundario;
-        Set_Skin_Eleccion(eleccion);
-        Carrito_pequeno.GetComponent<Get_Content_Car>().Set_Car(eleccion);
-        Carrito_mediano.GetComponent<Get_Content_Car>().Set_Car(eleccion);
-        Carrito_grande.GetComponent<Get_Content_Car>().Set_Car(eleccion);
-        PCMG.Set_Eleccion(eleccion);
-    }
-
-    //BTN->Compra
-
-    public void BTN_Comprar()
-    {
-        Click_Botones.Play();
-        DINERO dinero = BuildStructs.Dinero;
-        carrito_Actual = Get_Active();
-        Car carrito_comprar = carrito_Actual.GetComponent<Get_Content_Car>().Get_Car();
-
-        if (!dinero.Set_Compra(carrito_comprar.precio) || !carrito_comprar.Get_Requisito())
-            StartCoroutine(Tiempo_Vision());
-        else
-        {
-            carrito_comprar.Get_Requisito();
-            carrito_comprar.precio = 0;
-            Precio.text = "$ " + carrito_comprar.precio.ToString() + ".";
-            Precio_personalizar.text = "$ " + carrito_comprar.precio.ToString() + ".";
-            BTN_comprar.SetActive(false);
-            BTN_comprar_personalizar.SetActive(false);
-
-            if (Canvas_Personalizar.activeInHierarchy)
-            {
-                float[] retorno = FindFirstObjectByType<Personalizacion>().Get_RGB();
-                FindFirstObjectByType<Sistema_Guardado>().Guardar_Personalizado(retorno[0], retorno[1], retorno[2], retorno[3]);
-            }
-            BTN_aceptar.SetActive(true);
-        }
-        Mostrar_Dinero();
-    }
-
-    private IEnumerator Tiempo_Vision()
-    {
-        Dinero_Insuficiente.SetActive(true);
-        yield return new WaitForSeconds(1);
-        Dinero_Insuficiente.SetActive(false);
-    }
-
-    //BTN->Personalizar
-
-    public void BTN_Personalizar()
-    {
-        Debug.Log("Personalizar");
         Click_Botones.Play();
         Canvas_Eleccion.SetActive(false);
         Canvas_Personalizar.SetActive(true);
-        eleccion = Get_Active().GetComponent<Get_Content_Car>().Get_Counts_Car() - 1;
-        Set_Skin_Eleccion(eleccion);
-        FindFirstObjectByType<Personalizacion>().Guardado();
     }
 
-    public void BTN_Salida()
-    {
-
-        Click_Botones.Play();
-        if (Get_Active().GetComponent<Get_Content_Car>().Get_Car().precio > 0)
-        {
-            Debug.Log("Personalizado");
-            FindFirstObjectByType<Personalizacion>().Restar();
-        }
-        Canvas_Eleccion.SetActive(true);
-        Canvas_Personalizar.SetActive(false);
-
-    }
-
-    //BTN_Fin
-
-    //Slider
-    //Slider->Skin
-    public void Slider_Seleccion(float value)
-    {
-        eleccion_secundario = (int)(value != slider.maxValue ? value : value - 1);
-        Set_Skin_Eleccion(eleccion_secundario);
-        //PCMG.Set_Eleccion(eleccion_secundario);
-    }
-
-    //Slider_Fin
-
-    public void Set_Skin_Eleccion(int eleccion)
-    {
-        carrito_Actual = Get_Active();
-        carrito_Actual.GetComponent<Get_Content_Car>().Set_Car(eleccion);
-        Car Info_Car = carrito_Actual.GetComponent<Get_Content_Car>().Get_Car();
-
-        if (Info_Car.precio != 0)
-        {
-            BTN_comprar.SetActive(true);
-            BTN_aceptar.SetActive(false);
-            Comprar = true;
-        }
-        else
-        {
-            BTN_comprar.SetActive(false);
-            BTN_aceptar.SetActive(true);
-            Comprar = false;
-        }
-
-        string nombre = "", descripcion = "", requisitos = "";
-
-        LenguajeANombreDescripcionRequisitoCarrito(Info_Car, ref nombre, ref descripcion, ref requisitos);
-
-        Nombre.text = nombre;
-        Descripcion.text = descripcion;
-        Peso.text = Info_Car.peso.ToString() + "Kg.";
-        Velocidad.text = Info_Car.velocidad_adicional.ToString() + ".";
-        Limite_Carga.text = Info_Car.cant_limite_carga.ToString() + "Kg.";
-        Resistencia_choque.text = Info_Car.resistencia_choque.ToString() + "%.";
-        Precio.text = "$ " + Info_Car.precio.ToString() + ".";
-        Requisitos.text = requisitos + ":" + Info_Car.Get_Juegos() + "/" + Info_Car.cantidad;
-    }
-
-    private void LenguajeANombreDescripcionRequisitoCarrito(Car car, ref string nombre, ref string descripcion, ref string requisitos)
-    {
-        Idioma.Lengua lengua =Idioma.GetLengua();
-        switch(lengua)
-        {
-            case Idioma.Lengua.INGLES:
-                nombre = car.nombre_ingles;
-                descripcion = car.descripcioningles;
-                requisitos = car.requisitos_ingles;
-                break;
-            case Idioma.Lengua.ESPANIOL:
-                nombre = car.nombre_espaniol;
-                descripcion = car.descripcion_espaniol;
-                requisitos = car.requisitos_espaniol;
-                break;
-            case Idioma.Lengua.PORTUGUES:
-                nombre = car.nombre_portugues;
-                descripcion = car.descripcionportugues;
-                requisitos = car.requisitos_portugues;
-                break;
-        }
-    }
     public GameObject Get_Active()
     {
         if (Carrito_pequeno.activeInHierarchy) return Carrito_pequeno;
@@ -292,44 +125,40 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
         return null;
     }
 
+    // Usado por Sistema_Guardado al cargar la partida
     public void Set_Car_Menu(Pase_Conexion_Menu_Gameplay.Tipo_Carro TC, int posicion)
     {
-        eleccion = posicion;
         Seleccion = TC;
         Carrito_pequeno.SetActive(false);
         Carrito_mediano.SetActive(false);
         Carrito_grande.SetActive(false);
 
-
-        switch(TC)
+        GameObject objetivo = TC switch
         {
-            case Pase_Conexion_Menu_Gameplay.Tipo_Carro.PEQUEÑO:
-                Carrito_pequeno.SetActive(true);
-                Carrito_pequeno.GetComponent<Get_Content_Car>().Set_Car(eleccion);
-                break;
-            case Pase_Conexion_Menu_Gameplay.Tipo_Carro.MEDIANO:
-                Carrito_mediano.SetActive(true);
-                Carrito_mediano.GetComponent<Get_Content_Car>().Set_Car(eleccion);
-                break;
-            case Pase_Conexion_Menu_Gameplay.Tipo_Carro.GRANDE:
-                Carrito_grande.SetActive(true);
-                Carrito_grande.GetComponent<Get_Content_Car>().Set_Car(eleccion);
-                break;
-        }
+        Pase_Conexion_Menu_Gameplay.Tipo_Carro.PEQUEÑO => Carrito_pequeno,
+            Pase_Conexion_Menu_Gameplay.Tipo_Carro.MEDIANO => Carrito_mediano,
+            Pase_Conexion_Menu_Gameplay.Tipo_Carro.GRANDE => Carrito_grande,
+            _ => null
+        };
 
+        if (objetivo == null) return;
+
+        objetivo.SetActive(true);
+        carrito_Actual = objetivo;
+        SkinMenu.Set_Skin_Eleccion(objetivo, posicion);
     }
 
     private void Mostrar_Dinero()
     {
         Idioma idioma = FindFirstObjectByType<Idioma>();
         idioma.AsignarLenguajeATextos();
-        
     }
 
     private void OnApplicationQuit()
     {
-        if (Canvas_Personalizar.activeInHierarchy && BTN_comprar_personalizar.activeInHierarchy) 
-            FindFirstObjectByType<Personalizacion>().Restar();
-        FindFirstObjectByType<Sistema_Guardado>().GuardarLocal();
+        Sistema_Guardado sistema_Guardado = FindFirstObjectByType<Sistema_Guardado>();
+        sistema_Guardado.GuardarLocal();
+        var orquestadores = BuildStructs.PCMG.GetOrquestadores();
+        sistema_Guardado.Guardar_Personalizado(orquestadores.Item1, orquestadores.Item2, orquestadores.Item3);
     }
 }

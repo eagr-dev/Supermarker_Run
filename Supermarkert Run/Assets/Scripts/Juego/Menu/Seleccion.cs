@@ -102,7 +102,7 @@ public class Seleccion : MonoBehaviour
         Menu_Canvas.SetActive(false);
         Carritos_Canvas.SetActive(true);
         Animacion_Npc.Caminar(Tiempo_Animacion, Posicion_Ir);
-        conector.Set_Seleccion(BuildStructs.PCMG.Get_Seleccion());
+        conector.Set_Seleccion_Carro(BuildStructs.PCMG.Get_Seleccion());
     }
 
     public void BTN_Configuraciones()

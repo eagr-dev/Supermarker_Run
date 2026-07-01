@@ -27,15 +27,12 @@ public class PlayerInformacionEstructura
 [System.Serializable]
 public class SkinsEstructura
 {
-    public List<string> carroPequenio = new();
-    public List<string> carroMediano = new();
-    public List<string> carroGrande = new();
-
+    public List<string> listaNombreSkins = new();
     //Aqui solo guardamos nombre y precio con eso sera mas que suficiente saber si la clase fue comprada o no y cual
-    private void GuardarInformacionNecesaria(List<Car> cars, ref List<string> listaGuardar)
+    private void GuardarInformacionSkinsCarro(List<CarSkinData> cars, ref List<string> listaGuardar)
     {
         listaGuardar = new();
-        foreach (Car car in cars)
+        foreach (CarSkinData car in cars)
         {
             if (car.precio == 0) // Si el precio es 0, asumimos que está comprado/desbloqueado
             {
@@ -46,9 +43,7 @@ public class SkinsEstructura
 
     public SkinsEstructura Capturar(Pase_Conexion_Menu_Gameplay arg1)
     {
-        GuardarInformacionNecesaria(arg1.cars_Peq, ref carroPequenio);
-        GuardarInformacionNecesaria(arg1.cars_Med, ref carroMediano);
-        GuardarInformacionNecesaria(arg1.cars_Gra, ref carroGrande);
+        GuardarInformacionSkinsCarro(arg1.GetListSkins(), ref listaNombreSkins);
 
         return this;
     }
@@ -72,18 +67,50 @@ public class MapaEstructura
 }
 
 [System.Serializable]
+public class PersonalizadoEstructura
+{
+    [System.Serializable]
+    public struct GuardarInformacionEstructura
+    {
+        public CarStats stats;
+        public CarStatsLevel level;
+
+        public GuardarInformacionEstructura(CarStats _stats, CarStatsLevel _level)
+        {
+            stats = _stats;
+            level = _level;
+        }
+    }
+    public GuardarInformacionEstructura pequenio, mediano, grande;
+
+    public PersonalizadoEstructura Capturar(Pase_Conexion_Menu_Gameplay PCMG)
+    {
+        var orquestadores = PCMG.GetOrquestadores();
+        var _pequenio = orquestadores.Item1;
+        var _mediano = orquestadores.Item2;
+        var _grande = orquestadores.Item3;
+        pequenio = new(_pequenio.StatsActuales, _pequenio.CarStatsLevel);
+        mediano = new(_mediano.StatsActuales, _mediano.CarStatsLevel);
+        grande = new(_grande.StatsActuales, _grande.CarStatsLevel);
+        return this;
+    }
+}
+
+[System.Serializable]
 public class MasterSaveInformacion
 {
     public PlayerInformacionEstructura playerInformacion = new();
     public SkinsEstructura skins = new();
     public MapaEstructura mapa = new();
+    public PersonalizadoEstructura personalizado = new();
 
     public MasterSaveInformacion(PlayerInformacionEstructura _playerInformacion, SkinsEstructura _skins,
-        MapaEstructura _mapa)
+        MapaEstructura _mapa, PersonalizadoEstructura _personalizado)
     {
         playerInformacion = _playerInformacion;
         skins = _skins;
         mapa = _mapa;
+        personalizado = _personalizado;
     }
 }
 

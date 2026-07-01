@@ -12,7 +12,7 @@ public class Mision : MonoBehaviour
     int misiones_hacer = 0;
     public TMP_Text Espacio_Disponible;
     public GameObject Sin_espacio;
-    Car carro;
+    CarRuntime carro;
     [SerializeField] private AudioSource Obtener_objeto;
     [SerializeField] private ParticleSystem Punto;
     [SerializeField] private Player player;
@@ -45,9 +45,9 @@ public class Mision : MonoBehaviour
         misiones_hacer = Cantidad_Nivel();
         Set_objetos();
         carro = player.Get_Carro();
-        player.Init(carro);
+        //player.Init(carro);
         carro.objetos_actuales = 0;
-        Espacio_Disponible.text = carro.objetos_actuales.ToString() + "/" + carro.cant_limite_carga.ToString();
+        Espacio_Disponible.text = carro.objetos_actuales.ToString() + "/" + carro.Capacidad.ToString();
         Limpiar_Textos();
         Mostrar();
         SetAreas();
@@ -191,7 +191,7 @@ public class Mision : MonoBehaviour
             IluminarEstanteConPrimerObjetoBuscar(objetos[misiones_hechas].Item1);
 
         Mostrar();
-        Espacio_Disponible.text = carro.objetos_actuales.ToString() + "/" + carro.cant_limite_carga.ToString();
+        Espacio_Disponible.text = carro.objetos_actuales.ToString() + "/" + carro.Capacidad.ToString();
     }
 
     public bool Verificar_Objeto_este_mision(string obj)
@@ -203,7 +203,7 @@ public class Mision : MonoBehaviour
         if (objetos[obj_tomo.Item1].Item3) return false;
 
         //Despues si ninguno de los 2 se cumple mandamos que no tiene espacio
-        if (carro.objetos_actuales + 1 > carro.cant_limite_carga)
+        if (carro.objetos_actuales + 1 > carro.Capacidad)
         {
             StartCoroutine(Tiempo_Aparicion());
             return false;
@@ -225,7 +225,7 @@ public class Mision : MonoBehaviour
         true,
         false
         );
-        Espacio_Disponible.text = carro.objetos_actuales.ToString() + "/" + carro.cant_limite_carga.ToString();
+        Espacio_Disponible.text = carro.objetos_actuales.ToString() + "/" + carro.Capacidad.ToString();
         misiones_hechas++;
         Mostrar();
     }
@@ -280,7 +280,7 @@ public class Mision : MonoBehaviour
     public IEnumerator AnimacionDejarObjetosCaja(Vector3 posicionCaja, string nombreObjeto)
     {
         carro.objetos_actuales--;
-        Espacio_Disponible.text = carro.objetos_actuales.ToString() + "/" + carro.cant_limite_carga.ToString();
+        Espacio_Disponible.text = carro.objetos_actuales.ToString() + "/" + carro.Capacidad.ToString();
         float scale = 0.5f;
 
         //GameObject objeto = Areas.Get_GameObject(nombreObjeto);
@@ -333,7 +333,7 @@ public class Mision : MonoBehaviour
 
     public void Mostrar()
     {
-        Espacio_Disponible.text = carro.objetos_actuales.ToString() + "/" + carro.cant_limite_carga.ToString();
+        Espacio_Disponible.text = carro.objetos_actuales.ToString() + "/" + carro.Capacidad.ToString();
         posicion_texto.text = inicio_lista.ToString() + " : " + final_lista.ToString();
         CleanIcons();
 

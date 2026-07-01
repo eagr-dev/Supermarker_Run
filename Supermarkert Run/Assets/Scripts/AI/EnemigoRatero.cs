@@ -33,7 +33,7 @@ public class EnemigoRatero : IA
 
     [Header("Informacion Jugador")]
     private Mision misionJugador;
-    private Car carroJugador;
+    private CarRuntime carroJugador;
 
     protected override void Awake()
     {
