@@ -42,6 +42,11 @@ public class Pase_Conexion_Menu_Gameplay : MonoBehaviour
         return skinDatabase.GetSkin(index);
     }
 
+    public void SetSkin(int index, CarSkinData data)
+    {
+        skinDatabase.skins[index] = data;
+    }
+
     public List<CarSkinData> GetListSkins() => skinDatabase.skins;
 
     public int GetCountSkins() => skinDatabase.skins.Count;

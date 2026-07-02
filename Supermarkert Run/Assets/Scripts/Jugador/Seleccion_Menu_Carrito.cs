@@ -105,7 +105,6 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
         Canvas_Eleccion.SetActive(true);
         Canvas_Skin.SetActive(false);
         Canvas_Personalizar.SetActive(false);
-        SkinMenu.Reset_Slider_Si_Comprando();
     }
 
     private void BTN_Personalizar()
@@ -145,6 +144,7 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
 
         objetivo.SetActive(true);
         carrito_Actual = objetivo;
+        Animacion(objetivo);
         SkinMenu.Set_Skin_Eleccion(objetivo, posicion);
     }
 

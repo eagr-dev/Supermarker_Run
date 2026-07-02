@@ -16,6 +16,7 @@ public class Seleccion_Mapa : MonoBehaviour
     [SerializeField] private GameObject Sin_Dinero;
     [SerializeField] private Image Muestra;
     [SerializeField] private AudioSource Click_Botones;
+    [SerializeReference] Idioma idioma;
 
 
     private Dinero_Obtenido DO;
@@ -63,6 +64,7 @@ public class Seleccion_Mapa : MonoBehaviour
         Sistema_Guardado sg = FindFirstObjectByType<Sistema_Guardado>();
         sg.AgregarMapa(DO.Get_Mapa(seleccion_actual).nombre_espaniol);
         sg.GuardarLocal();
+        idioma.AsignarLenguajeATextos();
     }
 
     public void BTN_SIG()

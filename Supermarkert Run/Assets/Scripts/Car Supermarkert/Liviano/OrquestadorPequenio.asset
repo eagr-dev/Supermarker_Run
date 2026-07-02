@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: CarroPequenio
+  m_Script: {fileID: 11500000, guid: 678106c6786de554ab0f2a98b54aa6e6, type: 3}
+  m_Name: OrquestadorPequenio
   m_EditorClassIdentifier: Assembly-CSharp::OrquestadorAumentadorNivelCarro
   minimo:
     velocidad: 2
@@ -30,6 +30,12 @@ MonoBehaviour:
     peso: 2
     agarre: 0.1
     blindaje: 2
+  maxLevel:
+    velocidad: 11
+    capacidad: 11
+    peso: 11
+    agarre: 11
+    blindaje: 11
   actualLevel:
     velocidad: 1
     capacidad: 1

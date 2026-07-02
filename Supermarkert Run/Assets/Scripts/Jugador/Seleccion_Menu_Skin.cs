@@ -11,8 +11,6 @@ public class Seleccion_Menu_Skin : MonoBehaviour
     private int eleccion = 0;
     private int eleccion_secundario = 0;
 
-    [SerializeField] private Slider slider;
-
     [SerializeField] private TMP_Text Nombre;
     [SerializeField] private TMP_Text Precio;
 
@@ -22,17 +20,13 @@ public class Seleccion_Menu_Skin : MonoBehaviour
 
     [SerializeField] private AudioSource Click_Botones;
 
-    [SerializeField] private bool Comprar;
-    [SerializeField] private bool Comprar_Skin;
+    [SerializeReference] Idioma idioma;
 
     public int Eleccion => eleccion;
 
     public void Inicializador()
     {
-        slider.maxValue = BuildStructs.PCMG.GetCountSkins();
         eleccion = BuildStructs.PCMG.Get_Eleccion();
-        slider.value = eleccion;
-        slider.onValueChanged.AddListener(Slider_Seleccion);
         BTN_aceptar.onClick.AddListener(BTN_Aceptar);
         BTN_comprar.onClick.AddListener(BTN_Comprar);
     }
@@ -41,16 +35,9 @@ public class Seleccion_Menu_Skin : MonoBehaviour
     // para que la skin actual se re-aplique al nuevo carro visible
     public void Refrescar_Carro_Activo(GameObject nuevoCarrito)
     {
-        slider.value = eleccion;
         Set_Skin_Eleccion(nuevoCarrito, eleccion);
     }
 
-    //Slider->Skin
-    private void Slider_Seleccion(float value)
-    {
-        eleccion_secundario = (int)(value != slider.maxValue ? value : value - 1);
-        Set_Skin_Eleccion(Carritos.Get_Active(), eleccion_secundario);
-    }
 
     //BTN->Skin
     public void BTN_Aceptar()
@@ -66,8 +53,7 @@ public class Seleccion_Menu_Skin : MonoBehaviour
     {
         Click_Botones.Play();
         DINERO dinero = BuildStructs.Dinero;
-        GameObject carritoActivo = Carritos.Get_Active();
-        CarSkinData carrito_comprar = carritoActivo.GetComponent<Get_Content_Car>().Get_Car_Skin();
+        CarSkinData carrito_comprar = BuildStructs.PCMG.GetSkin(eleccion_secundario);
 
         if (!dinero.Set_Compra(carrito_comprar.precio))
         {
@@ -76,9 +62,11 @@ public class Seleccion_Menu_Skin : MonoBehaviour
         else
         {
             carrito_comprar.precio = 0;
+            BuildStructs.PCMG.SetSkin(eleccion_secundario, carrito_comprar);
             Precio.text = carrito_comprar.precio.ToString() + ".";
             BTN_comprar.gameObject.SetActive(false);
             BTN_aceptar.gameObject.SetActive(true);
+            idioma.AsignarLenguajeATextos();
         }
     }
 
@@ -97,31 +85,31 @@ public class Seleccion_Menu_Skin : MonoBehaviour
         pequeno.GetComponent<Get_Content_Car>().Set_Car(eleccion);
         mediano.GetComponent<Get_Content_Car>().Set_Car(eleccion);
         grande.GetComponent<Get_Content_Car>().Set_Car(eleccion);
-    }
-
-    public void Reset_Slider_Si_Comprando()
-    {
-        if (Comprar) slider.value = 0;
+        if (BTN_comprar.gameObject.activeInHierarchy)
+        {
+            BTN_comprar.gameObject.SetActive(false);
+            var data = pequeno.GetComponent<Get_Content_Car>().Get_Car_Skin();
+            MostrarContenidoUI(data);
+        }
     }
 
     public void Set_Skin_Eleccion(GameObject carritoActivo, int nuevaEleccion)
     {
         if (carritoActivo == null) return;
 
+        eleccion_secundario = nuevaEleccion;
         carritoActivo.GetComponent<Get_Content_Car>().Set_Car(nuevaEleccion);
         CarSkinData Info_Car = carritoActivo.GetComponent<Get_Content_Car>().Get_Car_Skin();
 
-        if (Info_Car.precio != 0)
+        if (Info_Car.precio > 0)
         {
             BTN_comprar.gameObject.SetActive(true);
             BTN_aceptar.gameObject.SetActive(false);
-            Comprar = true;
         }
         else
         {
             BTN_comprar.gameObject.SetActive(false);
             BTN_aceptar.gameObject.SetActive(true);
-            Comprar = false;
         }
 
         MostrarContenidoUI(Info_Car);
