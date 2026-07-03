@@ -22,6 +22,7 @@ public class Personalizacion : MonoBehaviour
     [SerializeReference] Idioma idioma;
 
     [SerializeField] ParticleSystem aumento;
+    [SerializeField] AudioSource audio;
 
     bool isclickeable = true;
 
@@ -61,6 +62,7 @@ public class Personalizacion : MonoBehaviour
         actual.DisminuirPeso();
         uint precioActual = actual.PrecioPeso();
         aumento.Play();
+        audio.Play();
         StartCoroutine(ActualizarUI(Peso, precioAnterior, precioActual, actual.SePuedeMejorarPeso));
     }
 
@@ -81,6 +83,7 @@ public class Personalizacion : MonoBehaviour
         actual.AumentarVelocidad();
         uint precioActual = actual.PrecioVelocidad();
         aumento.Play();
+        audio.Play();
         StartCoroutine(ActualizarUI(Velocidad, precioAnterior, precioActual, actual.SePuedeMejorarVelocidad));
     }
 
@@ -102,6 +105,7 @@ public class Personalizacion : MonoBehaviour
 
         uint precioActual = actual.PrecioCapacidad();
         aumento.Play();
+        audio.Play();
         StartCoroutine(ActualizarUI(Carga, precioAnterior, precioActual, actual.SePuedeMejorarCapacidad));
     }
 
@@ -122,6 +126,7 @@ public class Personalizacion : MonoBehaviour
         actual.AumentarBlindaje();
         uint precioActual = actual.PrecioBlindaje();
         aumento.Play();
+        audio.Play();
         StartCoroutine(ActualizarUI(Choque, precioAnterior, precioActual, actual.SePuedeMejorarBlindaje));
     }
 
@@ -142,6 +147,7 @@ public class Personalizacion : MonoBehaviour
         actual.AumentarAgarre();
         uint precioActual = actual.PrecioAgarre();
         aumento.Play();
+        audio.Play();
         StartCoroutine(ActualizarUI(Agarre, precioAnterior, precioActual, actual.SePuedeMejorarAgarre));
     }
 
@@ -163,7 +169,7 @@ public class Personalizacion : MonoBehaviour
         Vector3 escalaOriginal = texto.transform.localScale;
         Vector3 escalaObjetivo = escalaOriginal * 1.25f; // Aumento del 25%
 
-        float duracionAnimacion = 0.8f; // Tiempo total que durará todo el efecto
+        float duracionAnimacion = 1.5f; // Tiempo total que durará todo el efecto
         float tiempoTranscurrido = 0f;
 
         // Velocidad del pulso (a mayor número, más rápido se infla y desinfla)

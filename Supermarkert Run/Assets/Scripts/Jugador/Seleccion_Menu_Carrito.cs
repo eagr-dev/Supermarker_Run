@@ -25,6 +25,8 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
     [Header("Scroll View de Skins (Optimizado)")]
     [SerializeField] private GameObject botonSkinPrefab;      // Tu Prefab con el script Button_Skin_Item
     [SerializeField] private Transform contenedorScrollView;  // El objeto 'Content' dentro del Scroll View
+    [SerializeField] private ScrollRect miScrollRect; // Arrastra tu ScrollRect aquí
+    [SerializeField] private RectTransform contentPanel;
 
     public void Inicializador()
     {
@@ -50,7 +52,6 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
         }
 
         int totalSkins = PCMG.GetCountSkins();
-        Debug.Log($"el total de skins son {totalSkins}");
 
         for (int i = 0; i < totalSkins; i++)
         {
@@ -60,6 +61,10 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
             Button_Skin_Item scriptBoton = nuevoBoton.GetComponent<Button_Skin_Item>();
             scriptBoton.ConfigurarBoton(i, skinData, this);
         }
+
+        Canvas.ForceUpdateCanvases();
+        LayoutRebuilder.ForceRebuildLayoutImmediate(contentPanel);
+        miScrollRect.horizontalNormalizedPosition = 0f;
     }
     public void Set_Seleccion(Pase_Conexion_Menu_Gameplay.Tipo_Carro New_TC) => Seleccion = New_TC;
 
