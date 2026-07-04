@@ -4,6 +4,7 @@ using UnityEngine;
 [System.Serializable]
 public struct CarSkinData
 {
+    public int id;
     public string nombre_ingles, nombre_espaniol, nombre_portugues;
     public Texture2D texture;
     public Color color;

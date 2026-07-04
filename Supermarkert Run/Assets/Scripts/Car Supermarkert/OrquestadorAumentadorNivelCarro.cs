@@ -39,7 +39,7 @@ public class OrquestadorAumentadorNivelCarro : ScriptableObject
         blindaje = 1
     };
 
-    private const double porcentajeAumentarPrecio = 1.35f, precio = 25f;
+    [SerializeField] private double porcentajeAumentarPrecio = 1.35f, precio = 25f;
 
     public void SetNivelStats(CarStatsLevel level, CarStats stats)
     {
@@ -48,6 +48,7 @@ public class OrquestadorAumentadorNivelCarro : ScriptableObject
     }
 
     public CarStats StatsActuales => minimo;
+    public CarStats StatsMaximas => maximo;
     public CarStatsLevel CarStatsLevel => actualLevel;
     public void AumentarVelocidad()
     {
@@ -78,11 +79,11 @@ public class OrquestadorAumentadorNivelCarro : ScriptableObject
         actualLevel.blindaje++;
     }
 
-    public bool SePuedeMejorarVelocidad => !(minimo.velocidad + aumento.velocidad > maximo.velocidad && actualLevel.velocidad + 1 > maxLevel.velocidad);
-    public bool SePuedeMejorarCapacidad => !(minimo.capacidad + aumento.capacidad > maximo.capacidad && actualLevel.capacidad + 1 > maxLevel.capacidad);
-    public bool SePuedeMejorarPeso => !(minimo.peso + aumento.peso > maximo.peso && actualLevel.peso + 1 > maxLevel.peso);
-    public bool SePuedeMejorarAgarre => !(minimo.agarre + aumento.agarre > maximo.agarre && actualLevel.agarre + 1 > maxLevel.agarre);
-    public bool SePuedeMejorarBlindaje => !(minimo.blindaje + aumento.blindaje > maximo.blindaje && actualLevel.blindaje + 1 > maxLevel.blindaje);
+    public bool SePuedeMejorarVelocidad => !(actualLevel.velocidad + 1 > maxLevel.velocidad);
+    public bool SePuedeMejorarCapacidad => !(actualLevel.capacidad + 1 > maxLevel.capacidad);
+    public bool SePuedeMejorarPeso => !(actualLevel.peso + 1 > maxLevel.peso);
+    public bool SePuedeMejorarAgarre => !(actualLevel.agarre + 1 > maxLevel.agarre);
+    public bool SePuedeMejorarBlindaje => !(actualLevel.blindaje + 1 > maxLevel.blindaje);
 
     public uint PrecioVelocidad()
     {

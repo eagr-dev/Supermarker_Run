@@ -278,7 +278,7 @@ public class SistemaGuardadoNube : MonoBehaviour
         for (int i = 0; i < listaSkins.Count; i++)
         {
             // Si el nombre de este carro real está en la lista descargada de la nube...
-            if (skinsInfo.listaNombreSkins.Contains(listaSkins[i].nombre_espaniol))
+            if (skinsInfo.listaNombreSkins.Contains(listaSkins[i].id))
             {
                 // 1. Sacamos el struct de la lista (esto crea una copia modificable)
                 CarSkinData skinModificada = listaSkins[i];

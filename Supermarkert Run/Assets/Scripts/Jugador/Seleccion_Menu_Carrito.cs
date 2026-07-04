@@ -21,6 +21,7 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
 
     // Referencia a la clase que ahora maneja toda la logica de skins
     [SerializeField] private Seleccion_Menu_Skin SkinMenu;
+    [SerializeField] private Personalizacion personalizacion;
 
     [Header("Scroll View de Skins (Optimizado)")]
     [SerializeField] private GameObject botonSkinPrefab;      // Tu Prefab con el script Button_Skin_Item
@@ -56,6 +57,8 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
         for (int i = 0; i < totalSkins; i++)
         {
             CarSkinData skinData = PCMG.GetSkin(i);
+            skinData.id = i;
+            BuildStructs.PCMG.SetSkin(i, skinData);
 
             GameObject nuevoBoton = Instantiate(botonSkinPrefab, contenedorScrollView);
             Button_Skin_Item scriptBoton = nuevoBoton.GetComponent<Button_Skin_Item>();
@@ -117,6 +120,7 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
         Click_Botones.Play();
         Canvas_Eleccion.SetActive(false);
         Canvas_Personalizar.SetActive(true);
+        personalizacion.MostrarUI();
     }
 
     public GameObject Get_Active()
@@ -164,6 +168,6 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
         Sistema_Guardado sistema_Guardado = FindFirstObjectByType<Sistema_Guardado>();
         sistema_Guardado.GuardarLocal();
         var orquestadores = BuildStructs.PCMG.GetOrquestadores();
-        sistema_Guardado.Guardar_Personalizado(orquestadores.Item1, orquestadores.Item2, orquestadores.Item3);
+        sistema_Guardado.Guardar_Personalizado();
     }
 }

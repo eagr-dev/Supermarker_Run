@@ -27,16 +27,16 @@ public class PlayerInformacionEstructura
 [System.Serializable]
 public class SkinsEstructura
 {
-    public List<string> listaNombreSkins = new();
+    public List<int> listaNombreSkins = new();
     //Aqui solo guardamos nombre y precio con eso sera mas que suficiente saber si la clase fue comprada o no y cual
-    private void GuardarInformacionSkinsCarro(List<CarSkinData> cars, ref List<string> listaGuardar)
+    private void GuardarInformacionSkinsCarro(List<CarSkinData> cars, ref List<int> listaGuardar)
     {
         listaGuardar = new();
         foreach (CarSkinData car in cars)
         {
             if (car.precio == 0) // Si el precio es 0, asumimos que está comprado/desbloqueado
             {
-                listaGuardar.Add(car.nombre_espaniol);
+                listaGuardar.Add(car.id);
             }
         }
     }

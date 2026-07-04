@@ -54,6 +54,8 @@ public class Sistema_Guardado : MonoBehaviour
 
         BuildStructs.Dinero.Set_Dinero(dinero);
 
+        CargarSkinsCompradas();
+
         var tipoCarro_Enum = (Pase_Conexion_Menu_Gameplay.Tipo_Carro)tipoCarro;
         BuildStructs.PCMG.Set_Seleccion_Carro(tipoCarro_Enum);
         BuildStructs.PCMG.Set_Seleccion_Skin(posicionSkin);
@@ -101,6 +103,17 @@ public class Sistema_Guardado : MonoBehaviour
         }
     }
 
+    void CargarSkinsCompradas()
+    {
+        for (int i = 0; i < BuildStructs.PCMG.GetCountSkins(); i++)
+        {
+            if (!PlayerPrefs.HasKey(i.ToString())) continue;
+            var skin = BuildStructs.PCMG.GetSkin(i);
+            skin.precio = 0;
+            BuildStructs.PCMG.SetSkin(i, skin);
+        }
+    }
+
     // ── Guardado ───────────────────────────────────────────────────────────
     public void GuardarLocal()
     {
@@ -113,16 +126,27 @@ public class Sistema_Guardado : MonoBehaviour
         PlayerPrefs.SetInt(CCALIDAD, datos.calidad);
         PlayerPrefs.SetInt(CPOSICION_MATERIAL, datos.posicion_skin);
         PlayerPrefs.SetInt(CTIPO_CARRO, datos.tipo_carro);
+        GuardarSkins();
         PlayerPrefs.Save();
     }
 
     public void AgregarMapa(string nombreMapa)
     {
         PlayerPrefs.SetString(nombreMapa, "true");
+        PlayerPrefs.Save();
     }
 
-    public void Guardar_Personalizado(OrquestadorAumentadorNivelCarro pequenio,
-        OrquestadorAumentadorNivelCarro mediano, OrquestadorAumentadorNivelCarro grande)
+    public void GuardarSkins()
+    {
+        var PCMG = BuildStructs.PCMG;
+        for (int i = 0; i < PCMG.GetCountSkins(); i++)
+        {
+            if (PCMG.GetSkin(i).precio != 0) continue;
+            PlayerPrefs.SetInt(i.ToString(), 0);
+        }
+    }
+
+    public void Guardar_Personalizado()
     {
         PersonalizadoEstructura estructura = new PersonalizadoEstructura().Capturar(BuildStructs.PCMG);
 

@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 678106c6786de554ab0f2a98b54aa6e6, type: 3}
+  m_Name: OrquestadorMediano
+  m_EditorClassIdentifier: Assembly-CSharp::OrquestadorAumentadorNivelCarro
+  minimo:
+    velocidad: 1.5
+    capacidad: 15
+    peso: 60
+    agarre: 2
+    blindaje: 40
+  maximo:
+    velocidad: 2.5
+    capacidad: 35
+    peso: 30
+    agarre: 4
+    blindaje: 60
+  aumento:
+    velocidad: 0.1
+    capacidad: 2
+    peso: 3
+    agarre: 0.2
+    blindaje: 2
+  maxLevel:
+    velocidad: 11
+    capacidad: 11
+    peso: 11
+    agarre: 11
+    blindaje: 11
+  actualLevel:
+    velocidad: 1
+    capacidad: 1
+    peso: 1
+    agarre: 1
+    blindaje: 1
+  porcentajeAumentarPrecio: 1.350000023841858
+  precio: 50
