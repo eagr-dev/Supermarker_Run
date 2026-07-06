@@ -103,6 +103,7 @@ public class Seleccion_Menu_Skin : MonoBehaviour
 
         if (Info_Car.precio > 0)
         {
+            BTN_comprar.transform.GetComponentInChildren<TMP_Text>().text = $"${Info_Car.precio}";
             BTN_comprar.gameObject.SetActive(true);
             BTN_aceptar.gameObject.SetActive(false);
         }

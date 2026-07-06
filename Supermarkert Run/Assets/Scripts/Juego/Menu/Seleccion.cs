@@ -50,6 +50,7 @@ public class Seleccion : MonoBehaviour
         Click_Botones.Play();
         
         BuildStructs.SelCarro.Set_Car_Menu(conector.Get_Seleccion(),conector.Get_Eleccion());
+        BuildStructs.SelCarro.RegresarUIASuEstadoActual();
 
         //if((Animacion_Npc.transform.position - Posicion_Original.position).magnitude >= 3)
         if (Animacion_Npc.DestinoActual != Posicion_Original)

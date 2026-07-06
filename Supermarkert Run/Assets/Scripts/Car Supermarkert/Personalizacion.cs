@@ -29,7 +29,8 @@ public class Personalizacion : MonoBehaviour
     [SerializeField] Button BTN_agarre;
 
     [Header("Otros")]
-    [SerializeReference] Idioma idioma;
+    [SerializeField] Idioma idioma;
+    [SerializeField] Sistema_Guardado guardado;
 
     [SerializeField] ParticleSystem aumento;
     [SerializeField] AudioSource audio;
@@ -97,6 +98,7 @@ public class Personalizacion : MonoBehaviour
             statActual = actual.StatsActuales.peso,
             statMaxima = actual.StatsMaximas.peso
         }));
+        guardado.Guardar_Personalizado();
     }
 
     void BTNVelocidad()
@@ -129,6 +131,7 @@ public class Personalizacion : MonoBehaviour
             statActual = actual.StatsActuales.velocidad,
             statMaxima = actual.StatsMaximas.velocidad
         }));
+        guardado.Guardar_Personalizado();
     }
 
     void BTNCarga()
@@ -162,6 +165,7 @@ public class Personalizacion : MonoBehaviour
             statActual = actual.StatsActuales.capacidad,
             statMaxima = actual.StatsMaximas.capacidad
         }));
+        guardado.Guardar_Personalizado();
     }
 
     void BTNBlindaje()
@@ -194,6 +198,7 @@ public class Personalizacion : MonoBehaviour
             statActual = actual.StatsActuales.blindaje,
             statMaxima = actual.StatsMaximas.blindaje
         }));
+        guardado.Guardar_Personalizado();
     }
 
     void BTNAgarre()
@@ -225,6 +230,7 @@ public class Personalizacion : MonoBehaviour
             statActual = actual.StatsActuales.agarre,
             statMaxima = actual.StatsMaximas.agarre
         }));
+        guardado.Guardar_Personalizado();
     }
 
     public void MostrarUI()
@@ -294,5 +300,6 @@ public class Personalizacion : MonoBehaviour
         animacion.textoLimite.text = $"{System.Math.Round(animacion.statActual, 2)}/{animacion.statMaxima}";
         animacion.textoLimite.transform.localScale = escalaOriginalLimite;
         isclickeable = true;
+        idioma.AsignarLenguajeATextos();
     }
 }

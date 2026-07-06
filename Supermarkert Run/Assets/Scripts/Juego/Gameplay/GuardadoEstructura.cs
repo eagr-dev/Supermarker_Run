@@ -97,20 +97,48 @@ public class PersonalizadoEstructura
 }
 
 [System.Serializable]
+public class CarroCompradoEstructura
+{
+    [System.Serializable]
+    public struct Data
+    {
+        public Pase_Conexion_Menu_Gameplay.Tipo_Carro tipo_Carro;
+        public uint precio;
+
+        public void Asignacion(CarritoComprado carritoComprado)
+        {
+            tipo_Carro = carritoComprado.tipo_Carro;
+            precio = carritoComprado.precio;
+        }
+    }
+    public Data pequenio, mediano, grande;
+
+    public CarroCompradoEstructura Capturar(Pase_Conexion_Menu_Gameplay PCMG)
+    {
+        pequenio.Asignacion(PCMG.GetComprado(Pase_Conexion_Menu_Gameplay.Tipo_Carro.PEQUEÑO));
+        mediano.Asignacion(PCMG.GetComprado(Pase_Conexion_Menu_Gameplay.Tipo_Carro.MEDIANO));
+        grande.Asignacion(PCMG.GetComprado(Pase_Conexion_Menu_Gameplay.Tipo_Carro.GRANDE));
+        return this;
+    }
+}
+
+[System.Serializable]
 public class MasterSaveInformacion
 {
     public PlayerInformacionEstructura playerInformacion = new();
     public SkinsEstructura skins = new();
     public MapaEstructura mapa = new();
     public PersonalizadoEstructura personalizado = new();
+    public CarroCompradoEstructura carroComprado = new();
 
     public MasterSaveInformacion(PlayerInformacionEstructura _playerInformacion, SkinsEstructura _skins,
-        MapaEstructura _mapa, PersonalizadoEstructura _personalizado)
+        MapaEstructura _mapa, PersonalizadoEstructura _personalizado, CarroCompradoEstructura _carroComprado)
     {
         playerInformacion = _playerInformacion;
         skins = _skins;
         mapa = _mapa;
         personalizado = _personalizado;
+        carroComprado = _carroComprado;
     }
 }
 

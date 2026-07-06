@@ -1,5 +1,8 @@
+using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+
 
 public class Seleccion_Menu_Carrito : MonoBehaviour
 {
@@ -16,12 +19,18 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
     [SerializeField] private GameObject Canvas_Personalizar;
 
     [SerializeField] private Button Skin, Personalizar, EleccionDeSkins, EleccionDePersonalizar, Pequeño, Mediano, Grande;
+    [SerializeField] private Button comprar;
 
     [SerializeField] private AudioSource Click_Botones;
 
     // Referencia a la clase que ahora maneja toda la logica de skins
     [SerializeField] private Seleccion_Menu_Skin SkinMenu;
     [SerializeField] private Personalizacion personalizacion;
+
+    [SerializeField] private TMP_Text NoMoney;
+    [SerializeField] private Idioma idioma;
+
+    CarritoComprado comprado = null;
 
     [Header("Scroll View de Skins (Optimizado)")]
     [SerializeField] private GameObject botonSkinPrefab;      // Tu Prefab con el script Button_Skin_Item
@@ -43,6 +52,7 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
         Personalizar.onClick.AddListener(BTN_Personalizar);
         EleccionDeSkins.onClick.AddListener(BTN_Eleccion);
         EleccionDePersonalizar.onClick.AddListener(BTN_Eleccion);
+        comprar.onClick.AddListener(ComprarCarro);
     }
 
     public void GenerarBotonesSkins()
@@ -84,10 +94,29 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
         Carrito_mediano.SetActive(nuevo == Carrito_mediano);
         Carrito_grande.SetActive(nuevo == Carrito_grande);
 
-        carrito_Actual = nuevo;
-        SkinMenu.Refrescar_Carro_Activo(carrito_Actual);
+        comprado = BuildStructs.PCMG.GetComprado(tipo);
+        SkinMenu.Refrescar_Carro_Activo(nuevo);
 
         Animacion(nuevo);
+
+
+        if (!comprado.esComprado)
+        {
+            Personalizar.gameObject.SetActive(false);
+            Skin.gameObject.SetActive(false);
+            comprar.transform.GetComponentInChildren<TMP_Text>().text = $"${comprado.precio}";
+            comprar.gameObject.SetActive(true);
+            return;
+        }
+        else
+        {
+            Personalizar.gameObject.SetActive(true);
+            Skin.gameObject.SetActive(true);
+            comprar.gameObject.SetActive(false);
+        }
+
+        carrito_Actual = nuevo;
+
         Seleccion = tipo;
         PCMG.Set_Seleccion_Carro(Seleccion);
     }
@@ -163,11 +192,36 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
         idioma.AsignarLenguajeATextos();
     }
 
+    private void ComprarCarro()
+    {
+        if(!BuildStructs.Dinero.Set_Compra(comprado.precio))
+        {
+            StartCoroutine(AnimacionNoDinero());
+        }
+        comprado.precio = 0;
+        Cambiar_Carro(Get_Active(), comprado.tipo_Carro);
+        idioma.AsignarLenguajeATextos();
+    }
+
+    public void RegresarUIASuEstadoActual()
+    {
+        Personalizar.gameObject.SetActive(true);
+        Skin.gameObject.SetActive(true);
+        comprar.gameObject.SetActive(false);
+    }
+
+    IEnumerator AnimacionNoDinero()
+    {
+        NoMoney.gameObject.SetActive(true);
+        yield return new WaitForSeconds(1);
+        NoMoney.gameObject.SetActive(false);
+    }
+
     private void OnApplicationQuit()
     {
         Sistema_Guardado sistema_Guardado = FindFirstObjectByType<Sistema_Guardado>();
         sistema_Guardado.GuardarLocal();
-        var orquestadores = BuildStructs.PCMG.GetOrquestadores();
         sistema_Guardado.Guardar_Personalizado();
     }
+
 }

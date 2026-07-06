@@ -55,6 +55,7 @@ public class Sistema_Guardado : MonoBehaviour
         BuildStructs.Dinero.Set_Dinero(dinero);
 
         CargarSkinsCompradas();
+        Cargar_Carros_Comprados();
 
         var tipoCarro_Enum = (Pase_Conexion_Menu_Gameplay.Tipo_Carro)tipoCarro;
         BuildStructs.PCMG.Set_Seleccion_Carro(tipoCarro_Enum);
@@ -114,6 +115,19 @@ public class Sistema_Guardado : MonoBehaviour
         }
     }
 
+    public void Cargar_Carros_Comprados()
+    {
+        CarroCompradoEstructura carroComprado = new CarroCompradoEstructura().Capturar(BuildStructs.PCMG);
+
+        carroComprado.pequenio.precio = (uint)PlayerPrefs.GetInt(carroComprado.pequenio.tipo_Carro.ToString());
+
+        if (PlayerPrefs.HasKey(carroComprado.mediano.tipo_Carro.ToString()))
+            carroComprado.mediano.precio = (uint)PlayerPrefs.GetInt(carroComprado.mediano.tipo_Carro.ToString());
+
+        if (PlayerPrefs.HasKey(carroComprado.grande.tipo_Carro.ToString()))
+            carroComprado.grande.precio = (uint)PlayerPrefs.GetInt(carroComprado.grande.tipo_Carro.ToString());
+    }
+
     // ── Guardado ───────────────────────────────────────────────────────────
     public void GuardarLocal()
     {
@@ -127,6 +141,7 @@ public class Sistema_Guardado : MonoBehaviour
         PlayerPrefs.SetInt(CPOSICION_MATERIAL, datos.posicion_skin);
         PlayerPrefs.SetInt(CTIPO_CARRO, datos.tipo_carro);
         GuardarSkins();
+        Guardar_Carros_Comprados();
         PlayerPrefs.Save();
     }
 
@@ -153,10 +168,20 @@ public class Sistema_Guardado : MonoBehaviour
         string jsonP = JsonUtility.ToJson(estructura.pequenio);
         string jsonM = JsonUtility.ToJson(estructura.mediano);
         string jsonG = JsonUtility.ToJson(estructura.grande);
-
+        Debug.Log(jsonP);
         PlayerPrefs.SetString(CCARRO_PEQUENIO, jsonP);
         PlayerPrefs.SetString(CCARRO_MEDIANO, jsonM);
         PlayerPrefs.SetString(CCARRO_GRANDE, jsonG);
+        PlayerPrefs.Save();
+    }
+
+    public void Guardar_Carros_Comprados()
+    {
+        CarroCompradoEstructura carroComprado = new CarroCompradoEstructura().Capturar(BuildStructs.PCMG);
+
+        PlayerPrefs.SetInt(carroComprado.pequenio.tipo_Carro.ToString(), (int)carroComprado.pequenio.precio);
+        PlayerPrefs.SetInt(carroComprado.mediano.tipo_Carro.ToString(), (int)carroComprado.mediano.precio);
+        PlayerPrefs.SetInt(carroComprado.grande.tipo_Carro.ToString(), (int)carroComprado.grande.precio);
         PlayerPrefs.Save();
     }
 

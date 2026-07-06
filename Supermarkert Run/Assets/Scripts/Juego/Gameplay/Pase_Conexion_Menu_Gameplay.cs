@@ -11,6 +11,7 @@ public class Pase_Conexion_Menu_Gameplay : MonoBehaviour
 
     [SerializeField] private SkinDatabase skinDatabase;
     [SerializeField] private OrquestadorAumentadorNivelCarro pequenio, mediano, grande; 
+    [SerializeField] private CarritoComprado pequenio_comprado ,mediano_comprado, grande_comprado; 
 
     private void Awake()
     {
@@ -28,6 +29,7 @@ public class Pase_Conexion_Menu_Gameplay : MonoBehaviour
     private void Start()
     {
         FindFirstObjectByType<Sistema_Guardado>().CargarCarros(pequenio, mediano, grande);
+        Debug.LogWarning($"Los carros son de este tipo en compra {pequenio_comprado.tipo_Carro}, {mediano_comprado.tipo_Carro}, {grande_comprado.tipo_Carro}");
     }
 
     public Tipo_Carro Get_Seleccion() => sel;
@@ -65,5 +67,19 @@ public class Pase_Conexion_Menu_Gameplay : MonoBehaviour
     public (OrquestadorAumentadorNivelCarro, OrquestadorAumentadorNivelCarro, OrquestadorAumentadorNivelCarro) GetOrquestadores()
     {
         return (pequenio, mediano, grande);
+    }
+
+
+    public CarritoComprado GetComprado(Tipo_Carro tipo_Carro)
+    {
+        switch (tipo_Carro)
+        {
+            case Tipo_Carro.PEQUEÑO: return pequenio_comprado; 
+            case Tipo_Carro.MEDIANO : return mediano_comprado; 
+            case Tipo_Carro.GRANDE : return grande_comprado; 
+        }
+
+
+        return null;
     }
 }
