@@ -35,6 +35,7 @@ public class Seleccion : MonoBehaviour
     [SerializeField] private AudioSource Menu;
 
     static Pase_Conexion_Menu_Gameplay conector;
+    bool estaAjustes = false;
 
     private void Start()
     {
@@ -59,7 +60,7 @@ public class Seleccion : MonoBehaviour
             if(!Carritos_Canvas.activeInHierarchy)
                 foreach (var i in animacion_carrito)
                 {
-                    if (i.gameObject.activeInHierarchy)
+                    if (i.gameObject.activeInHierarchy && !estaAjustes)
                         i.Iniciar_Animacion(true);
                 }
         }
@@ -70,6 +71,8 @@ public class Seleccion : MonoBehaviour
         Menu_Canvas.SetActive(true);
         PU.SetActive(false);
         Configuracion_Canvas.SetActive(false);
+        if (estaAjustes)
+            estaAjustes = false;
     }
 
     public void BTN_Power_Up()
@@ -111,6 +114,7 @@ public class Seleccion : MonoBehaviour
         Click_Botones.Play();
         Menu_Canvas.SetActive(false);
         Configuracion_Canvas.SetActive(true);
+        estaAjustes = true;
     }
 
     public void BTN_Jugar()
@@ -141,7 +145,8 @@ public class Seleccion : MonoBehaviour
             animacionActual = null;
         }
 
-        animacionActual = StartCoroutine(Animacion_Acercar(FOVA, FOVB, rotaciona, rotacionb, rotar_camara));
+        if(!estaAjustes)
+            animacionActual = StartCoroutine(Animacion_Acercar(FOVA, FOVB, rotaciona, rotacionb, rotar_camara));
 
         AplicarEstadoFinal(FOVB, rotacionb, rotar_camara);
     }

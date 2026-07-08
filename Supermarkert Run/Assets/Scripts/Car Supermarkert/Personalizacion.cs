@@ -237,20 +237,21 @@ public class Personalizacion : MonoBehaviour
     public void MostrarUI()
     {
         var actual = BuildStructs.PCMG.GetOrquestador();
-        peso.costo.text = actual.SePuedeMejorarPeso ? actual.PrecioPeso().ToString() : "100%";
-        peso.porcentajeAvanzado.fillAmount = (actual.CarStatsLevel.peso - 1/actual.CarStatsMaxLevel.peso - 1);
+        peso.costo.text = actual.SePuedeMejorarPeso ? $"${actual.PrecioPeso()}" : "100%";
+        peso.porcentajeAvanzado.fillAmount = ((float)(actual.CarStatsLevel.peso - 1)/(float)(actual.CarStatsMaxLevel.peso - 1));
 
-        velocidad.costo.text = actual.SePuedeMejorarVelocidad ? actual.PrecioVelocidad().ToString() : "100%";
-        velocidad.porcentajeAvanzado.fillAmount = (actual.CarStatsLevel.velocidad - 1 / actual.CarStatsMaxLevel.velocidad - 1);
+        velocidad.costo.text = actual.SePuedeMejorarVelocidad ? $"${actual.PrecioVelocidad()}" : "100%";
+        velocidad.porcentajeAvanzado.fillAmount = ((float)(actual.CarStatsLevel.velocidad - 1) / (float)(actual.CarStatsMaxLevel.velocidad - 1));
 
-        carga.costo.text = actual.SePuedeMejorarCapacidad ? actual.PrecioCapacidad().ToString() : "100%";
-        carga.porcentajeAvanzado.fillAmount = (actual.CarStatsLevel.capacidad - 1/actual.CarStatsMaxLevel.capacidad - 1);
+        carga.costo.text = actual.SePuedeMejorarCapacidad ? $"${actual.PrecioCapacidad()}" : "100%";
+        carga.porcentajeAvanzado.fillAmount = ((float)(actual.CarStatsLevel.capacidad - 1)/(float)(actual.CarStatsMaxLevel.capacidad - 1));
 
-        choque.costo.text = actual.SePuedeMejorarBlindaje ? actual.PrecioBlindaje().ToString() : "100%";
-        choque.porcentajeAvanzado.fillAmount = (actual.CarStatsLevel.blindaje - 1/actual.CarStatsMaxLevel.blindaje - 1);
+        choque.costo.text = actual.SePuedeMejorarBlindaje ? $"${actual.PrecioBlindaje()}" : "100%";
+        choque.porcentajeAvanzado.fillAmount = ((float)(actual.CarStatsLevel.blindaje - 1)/(float)(actual.CarStatsMaxLevel.blindaje - 1));
 
-        agarre.costo.text = actual.SePuedeMejorarAgarre ? actual.PrecioAgarre().ToString() : "100%";
-        agarre.porcentajeAvanzado.fillAmount = (actual.CarStatsLevel.agarre - 1/actual.CarStatsMaxLevel.agarre - 1);
+        agarre.costo.text = actual.SePuedeMejorarAgarre ? $"${actual.PrecioAgarre()}" : "100%";
+        agarre.porcentajeAvanzado.fillAmount = ((float)(actual.CarStatsLevel.agarre - 1)/(float)(actual.CarStatsMaxLevel.agarre - 1));
+
         idioma.AsignarLenguajeATextos();
     }
 
@@ -278,7 +279,7 @@ public class Personalizacion : MonoBehaviour
             // Suavizado sutil para el cambio de números
             float progresoSuave = progreso * progreso * (3f - 2f * progreso);
             uint valorActual = (uint)Mathf.Lerp(animacion.dineroAntes, animacion.dineroAhora, progresoSuave);
-            animacion.texto.text = valorActual.ToString();
+            animacion.texto.text = $"${valorActual}";
 
             //0 es el nivel anterior y 1 es el actual
             float valorActualLimite = Mathf.Lerp(0, 1, progresoSuave);
@@ -299,7 +300,7 @@ public class Personalizacion : MonoBehaviour
 
         // --- 3. ESTADO FINAL ---
         // Nos aseguramos de que al terminar el bucle, todo quede en sus valores exactos
-        animacion.texto.text = animacion.esMaximo ? animacion.dineroAhora.ToString() : "100%";
+        animacion.texto.text = animacion.esMaximo ? $"${animacion.dineroAhora}" : "100%";
         animacion.texto.transform.localScale = escalaOriginal;
         //el 0.10f es el avance ya que 10 niveles si es 1 cada nivel aumentado es del 0.10 osea 10%
         animacion.slider.fillAmount = llenadoActual + 0.10f;
