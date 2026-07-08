@@ -131,6 +131,9 @@ public class Sistema_Guardado : MonoBehaviour
     // ── Guardado ───────────────────────────────────────────────────────────
     public void GuardarLocal()
     {
+
+        Debug.Log("Guardando en local...");
+
         // Pide el struct con la información actual y guarda
         PlayerInformacionEstructura datos = new PlayerInformacionEstructura().Capturar(
             BuildStructs.Dinero, BuildStructs.PCMG);
@@ -169,6 +172,8 @@ public class Sistema_Guardado : MonoBehaviour
         string jsonM = JsonUtility.ToJson(estructura.mediano);
         string jsonG = JsonUtility.ToJson(estructura.grande);
         Debug.Log(jsonP);
+        Debug.Log(jsonM);
+        Debug.Log(jsonG);
         PlayerPrefs.SetString(CCARRO_PEQUENIO, jsonP);
         PlayerPrefs.SetString(CCARRO_MEDIANO, jsonM);
         PlayerPrefs.SetString(CCARRO_GRANDE, jsonG);
@@ -183,11 +188,5 @@ public class Sistema_Guardado : MonoBehaviour
         PlayerPrefs.SetInt(carroComprado.mediano.tipo_Carro.ToString(), (int)carroComprado.mediano.precio);
         PlayerPrefs.SetInt(carroComprado.grande.tipo_Carro.ToString(), (int)carroComprado.grande.precio);
         PlayerPrefs.Save();
-    }
-
-    public void BTN_Reinicio()
-    {
-        GuardarLocal();
-        Application.Quit(0);
     }
 }

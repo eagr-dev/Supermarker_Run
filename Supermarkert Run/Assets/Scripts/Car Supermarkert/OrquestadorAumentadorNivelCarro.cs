@@ -50,6 +50,7 @@ public class OrquestadorAumentadorNivelCarro : ScriptableObject
     public CarStats StatsActuales => minimo;
     public CarStats StatsMaximas => maximo;
     public CarStatsLevel CarStatsLevel => actualLevel;
+    public CarStatsLevel CarStatsMaxLevel => maxLevel;
     public void AumentarVelocidad()
     {
         minimo.velocidad += aumento.velocidad;

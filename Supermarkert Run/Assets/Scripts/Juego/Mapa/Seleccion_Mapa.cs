@@ -63,7 +63,6 @@ public class Seleccion_Mapa : MonoBehaviour
         Aceptar.SetActive(true);
         Sistema_Guardado sg = FindFirstObjectByType<Sistema_Guardado>();
         sg.AgregarMapa(DO.Get_Mapa(seleccion_actual).nombre_espaniol);
-        sg.GuardarLocal();
         idioma.AsignarLenguajeATextos();
     }
 

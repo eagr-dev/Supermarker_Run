@@ -15,6 +15,7 @@ public class DINERO : MonoBehaviour
             return false;
         }
         Dinero -= dinero;
+        PlayerPrefs.SetString("Dinero", Dinero.ToString());
         return true;
     }
 
@@ -25,7 +26,11 @@ public class DINERO : MonoBehaviour
     }
 
 
-    public void Set_Dinero(uint dinero) => Dinero = dinero;
+    public void Set_Dinero(uint dinero) 
+    { 
+        Dinero = dinero;
+        PlayerPrefs.SetString("Dinero", Dinero.ToString());
+    }
 
 
 }

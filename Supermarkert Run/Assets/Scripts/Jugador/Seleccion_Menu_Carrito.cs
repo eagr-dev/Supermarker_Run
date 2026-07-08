@@ -201,6 +201,8 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
         comprado.precio = 0;
         Cambiar_Carro(Get_Active(), comprado.tipo_Carro);
         idioma.AsignarLenguajeATextos();
+        Sistema_Guardado sg = FindFirstObjectByType<Sistema_Guardado>();
+        sg.Guardar_Carros_Comprados();
     }
 
     public void RegresarUIASuEstadoActual()

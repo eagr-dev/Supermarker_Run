@@ -6,27 +6,7 @@ using UnityEngine.UI;
 
 public class Personalizacion : MonoBehaviour
 {
-    [Header("Costos")]
-    [SerializeField] TMP_Text Peso;
-    [SerializeField] TMP_Text Velocidad;
-    [SerializeField] TMP_Text Carga;
-    [SerializeField] TMP_Text Choque;
-    [SerializeField] TMP_Text Agarre;
     [SerializeField] TMP_Text NoMoney;
-
-    [Header("Limites")]
-    [SerializeField] TMP_Text PesoLimite;
-    [SerializeField] TMP_Text VelocidadLimite;
-    [SerializeField] TMP_Text CargaLimite;
-    [SerializeField] TMP_Text ChoqueLimite;
-    [SerializeField] TMP_Text AgarreLimite;
-
-    [Header("Botones")]
-    [SerializeField] Button BTN_peso;
-    [SerializeField] Button BTN_velocidad;
-    [SerializeField] Button BTN_carga;
-    [SerializeField] Button BTN_choque;
-    [SerializeField] Button BTN_agarre;
 
     [Header("Otros")]
     [SerializeField] Idioma idioma;
@@ -35,17 +15,37 @@ public class Personalizacion : MonoBehaviour
     [SerializeField] ParticleSystem aumento;
     [SerializeField] AudioSource audio;
 
+    [Header("Prefab")]
+    [SerializeField]Prefab peso, velocidad, carga, choque, agarre;
+
+    [System.Serializable]
+    struct Prefab
+    {
+        public TMP_Text costo;
+        public Image porcentajeAvanzado;
+        public Button button;
+    }
+
     bool isclickeable = true;
 
     internal struct PeticionAnimacion
     {
         public TMP_Text texto;
-        public TMP_Text textoLimite; 
+        [System.Obsolete]
+        public TMP_Text textoLimite;
+        public Image slider;
         public uint dineroAntes;
         public uint dineroAhora;
+        [System.Obsolete("Ahora se usa nivel")]
         public double statAnterior;
+        [System.Obsolete("Ahora se usa nivel")]
         public double statActual;
+        [System.Obsolete("Ahora se usa nivel")]
         public double statMaxima;
+
+        public int levelAnterior;
+        public int levelActual;
+        public int levelMax;
         public bool esMaximo;
     }
 
@@ -53,11 +53,11 @@ public class Personalizacion : MonoBehaviour
     {
         MostrarUI();
         NoMoney.gameObject.SetActive(false);
-        BTN_peso.onClick.AddListener(BTNPeso);
-        BTN_velocidad.onClick.AddListener(BTNVelocidad);
-        BTN_carga.onClick.AddListener(BTNCarga);
-        BTN_choque.onClick.AddListener(BTNBlindaje);
-        BTN_agarre.onClick.AddListener(BTNAgarre);
+        peso.button.onClick.AddListener(BTNPeso);
+        velocidad.button.onClick.AddListener(BTNVelocidad);
+        carga.button.onClick.AddListener(BTNCarga);
+        choque.button.onClick.AddListener(BTNBlindaje);
+        agarre.button.onClick.AddListener(BTNAgarre);
         
     }
 
@@ -75,7 +75,7 @@ public class Personalizacion : MonoBehaviour
         if (!actual.SePuedeMejorarPeso || !isclickeable) return;
 
         uint precioAnterior = actual.PrecioPeso();
-        float statAnterior = actual.StatsActuales.peso;
+        int levelAnterior = actual.CarStatsLevel.peso;
 
         if (!BuildStructs.Dinero.Set_Compra(actual.PrecioPeso()))
         {
@@ -89,14 +89,14 @@ public class Personalizacion : MonoBehaviour
         audio.Play();
         StartCoroutine(ActualizarUI(new PeticionAnimacion
         {
-            texto = Peso,
+            texto = peso.costo,
             dineroAntes = precioAnterior,
             dineroAhora = precioActual,
             esMaximo = actual.SePuedeMejorarPeso,
-            textoLimite = PesoLimite,
-            statAnterior = statAnterior,
-            statActual = actual.StatsActuales.peso,
-            statMaxima = actual.StatsMaximas.peso
+            slider = peso.porcentajeAvanzado,
+            levelAnterior = levelAnterior,
+            levelActual = actual.CarStatsLevel.peso,
+            levelMax = actual.CarStatsMaxLevel.peso
         }));
         guardado.Guardar_Personalizado();
     }
@@ -108,7 +108,7 @@ public class Personalizacion : MonoBehaviour
         if (!actual.SePuedeMejorarVelocidad || !isclickeable) return;
 
         uint precioAnterior = actual.PrecioVelocidad();
-        float statAnterior = actual.StatsActuales.velocidad;
+        int levelAnterior = actual.CarStatsLevel.velocidad;
 
         if (!BuildStructs.Dinero.Set_Compra(precioAnterior))
         {
@@ -122,14 +122,14 @@ public class Personalizacion : MonoBehaviour
         audio.Play();
         StartCoroutine(ActualizarUI(new PeticionAnimacion
         {
-            texto = Velocidad,
+            texto = velocidad.costo,
             dineroAntes = precioAnterior,
             dineroAhora = precioActual,
             esMaximo = actual.SePuedeMejorarVelocidad,
-            textoLimite = VelocidadLimite,
-            statAnterior = statAnterior,
-            statActual = actual.StatsActuales.velocidad,
-            statMaxima = actual.StatsMaximas.velocidad
+            slider = velocidad.porcentajeAvanzado,
+            levelAnterior = levelAnterior,
+            levelActual = actual.CarStatsLevel.velocidad,
+            levelMax = actual.CarStatsMaxLevel.velocidad
         }));
         guardado.Guardar_Personalizado();
     }
@@ -141,7 +141,7 @@ public class Personalizacion : MonoBehaviour
         if (!actual.SePuedeMejorarCapacidad || !isclickeable) return;
 
         uint precioAnterior = actual.PrecioCapacidad();
-        int statAnterior = actual.StatsActuales.capacidad;
+        int levelAnterior = actual.CarStatsLevel.capacidad;
 
         if (!BuildStructs.Dinero.Set_Compra(precioAnterior))
         {
@@ -156,14 +156,14 @@ public class Personalizacion : MonoBehaviour
         audio.Play();
         StartCoroutine(ActualizarUI(new PeticionAnimacion
         {
-            texto = Carga,
+            texto = carga.costo,
             dineroAntes = precioAnterior,
             dineroAhora = precioActual,
             esMaximo = actual.SePuedeMejorarCapacidad,
-            textoLimite = CargaLimite,
-            statAnterior = statAnterior,
-            statActual = actual.StatsActuales.capacidad,
-            statMaxima = actual.StatsMaximas.capacidad
+            slider = carga.porcentajeAvanzado,
+            levelAnterior = levelAnterior,
+            levelActual = actual.CarStatsLevel.capacidad,
+            levelMax = actual.CarStatsMaxLevel.capacidad
         }));
         guardado.Guardar_Personalizado();
     }
@@ -175,7 +175,8 @@ public class Personalizacion : MonoBehaviour
         if (!actual.SePuedeMejorarBlindaje || !isclickeable) return;
 
         uint precioAnterior = actual.PrecioBlindaje();
-        int statAnterior = actual.StatsActuales.blindaje;
+
+        int levelAnterior = actual.CarStatsLevel.blindaje;
 
         if (!BuildStructs.Dinero.Set_Compra(precioAnterior))
         {
@@ -189,14 +190,14 @@ public class Personalizacion : MonoBehaviour
         audio.Play();
         StartCoroutine(ActualizarUI(new PeticionAnimacion
         {
-            texto = Choque,
+            texto = choque.costo,
             dineroAntes = precioAnterior,
             dineroAhora = precioActual,
             esMaximo = actual.SePuedeMejorarBlindaje,
-            textoLimite = ChoqueLimite,
-            statAnterior = statAnterior,
-            statActual = actual.StatsActuales.blindaje,
-            statMaxima = actual.StatsMaximas.blindaje
+            slider = choque.porcentajeAvanzado,
+            levelAnterior = levelAnterior,
+            levelActual = actual.CarStatsLevel.blindaje,
+            levelMax = actual.CarStatsMaxLevel.blindaje
         }));
         guardado.Guardar_Personalizado();
     }
@@ -208,7 +209,7 @@ public class Personalizacion : MonoBehaviour
         if (!actual.SePuedeMejorarAgarre || !isclickeable) return;
 
         uint precioAnterior = actual.PrecioAgarre();
-        float statAnterior = actual.StatsActuales.agarre;
+        int levelAnterior = actual.CarStatsLevel.agarre;
 
         if (!BuildStructs.Dinero.Set_Compra(precioAnterior))
         {
@@ -221,31 +222,35 @@ public class Personalizacion : MonoBehaviour
         aumento.Play();
         audio.Play();
         StartCoroutine(ActualizarUI(new PeticionAnimacion{ 
-            texto = Agarre,
+            texto = agarre.costo,
             dineroAntes = precioAnterior, 
             dineroAhora = precioActual, 
             esMaximo = actual.SePuedeMejorarAgarre,
-            textoLimite = AgarreLimite,
-            statAnterior = statAnterior,
-            statActual = actual.StatsActuales.agarre,
-            statMaxima = actual.StatsMaximas.agarre
-        }));
+            slider = agarre.porcentajeAvanzado,
+            levelAnterior = levelAnterior,
+            levelActual = actual.CarStatsLevel.agarre,
+            levelMax = actual.CarStatsMaxLevel.agarre
+    }));
         guardado.Guardar_Personalizado();
     }
 
     public void MostrarUI()
     {
         var actual = BuildStructs.PCMG.GetOrquestador();
-        Peso.text = actual.SePuedeMejorarPeso ? actual.PrecioPeso().ToString() : "100%";
-        Velocidad.text = actual.SePuedeMejorarVelocidad ? actual.PrecioVelocidad().ToString() : "100%";
-        Carga.text = actual.SePuedeMejorarCapacidad ? actual.PrecioCapacidad().ToString() : "100%";
-        Choque.text = actual.SePuedeMejorarBlindaje ? actual.PrecioBlindaje().ToString() : "100%";
-        Agarre.text = actual.SePuedeMejorarAgarre ? actual.PrecioAgarre().ToString() : "100%";
-        PesoLimite.text = $"{System.Math.Round(actual.StatsActuales.peso, 2)}/{actual.StatsMaximas.peso}";
-        VelocidadLimite.text = $"{System.Math.Round(actual.StatsActuales.velocidad, 2)}/{actual.StatsMaximas.velocidad}";
-        CargaLimite.text = $"{actual.StatsActuales.capacidad}/{actual.StatsMaximas.capacidad}";
-        ChoqueLimite.text = $"{actual.StatsActuales.blindaje}/{actual.StatsMaximas.blindaje}";
-        AgarreLimite.text = $"{System.Math.Round(actual.StatsActuales.agarre, 2)}/{actual.StatsMaximas.agarre}";
+        peso.costo.text = actual.SePuedeMejorarPeso ? actual.PrecioPeso().ToString() : "100%";
+        peso.porcentajeAvanzado.fillAmount = (actual.CarStatsLevel.peso - 1/actual.CarStatsMaxLevel.peso - 1);
+
+        velocidad.costo.text = actual.SePuedeMejorarVelocidad ? actual.PrecioVelocidad().ToString() : "100%";
+        velocidad.porcentajeAvanzado.fillAmount = (actual.CarStatsLevel.velocidad - 1 / actual.CarStatsMaxLevel.velocidad - 1);
+
+        carga.costo.text = actual.SePuedeMejorarCapacidad ? actual.PrecioCapacidad().ToString() : "100%";
+        carga.porcentajeAvanzado.fillAmount = (actual.CarStatsLevel.capacidad - 1/actual.CarStatsMaxLevel.capacidad - 1);
+
+        choque.costo.text = actual.SePuedeMejorarBlindaje ? actual.PrecioBlindaje().ToString() : "100%";
+        choque.porcentajeAvanzado.fillAmount = (actual.CarStatsLevel.blindaje - 1/actual.CarStatsMaxLevel.blindaje - 1);
+
+        agarre.costo.text = actual.SePuedeMejorarAgarre ? actual.PrecioAgarre().ToString() : "100%";
+        agarre.porcentajeAvanzado.fillAmount = (actual.CarStatsLevel.agarre - 1/actual.CarStatsMaxLevel.agarre - 1);
         idioma.AsignarLenguajeATextos();
     }
 
@@ -256,15 +261,13 @@ public class Personalizacion : MonoBehaviour
         Vector3 escalaOriginal = animacion.texto.transform.localScale;
         Vector3 escalaObjetivo = escalaOriginal * 1.25f; // Aumento del 25%
 
-        Vector3 escalaOriginalLimite = animacion.textoLimite.transform.localScale;
-        Vector3 escalaObjetivoLimite = escalaOriginal * 1.25f; // Aumento del 25%
-
         float duracionAnimacion = 1.5f; // Tiempo total que durará todo el efecto
         float tiempoTranscurrido = 0f;
 
         // Velocidad del pulso (a mayor número, más rápido se infla y desinfla)
         // Con 3f, hará aproximadamente 3 ciclos completos de pulso.
         float velocidadPulso = 3f;
+        float llenadoActual = animacion.slider.fillAmount;
 
         while (tiempoTranscurrido < duracionAnimacion)
         {
@@ -277,9 +280,12 @@ public class Personalizacion : MonoBehaviour
             uint valorActual = (uint)Mathf.Lerp(animacion.dineroAntes, animacion.dineroAhora, progresoSuave);
             animacion.texto.text = valorActual.ToString();
 
-            float valorActualLimite = Mathf.Lerp((float)animacion.statAnterior, (float)animacion.statActual, progresoSuave);
-            animacion.textoLimite.text = $"{System.Math.Round(valorActualLimite, 2)}/{animacion.statMaxima}";
+            //0 es el nivel anterior y 1 es el actual
+            float valorActualLimite = Mathf.Lerp(0, 1, progresoSuave);
 
+            //el 0.10 es el avance ya que significa que avanzamos hasta el 10% a su valor actual
+            animacion.slider.fillAmount =  llenadoActual + (valorActualLimite * 0.10f);
+            
             // --- 2. MATEMÁTICAS DEL PULSO CONTINUO ---
             // Usamos valor absoluto (Abs) sobre el Seno para que la escala fluctúe 
             // siempre en positivo entre escalaOriginal (0) y escalaObjetivo (1).
@@ -287,8 +293,6 @@ public class Personalizacion : MonoBehaviour
 
             // Interpolamos la escala usando la onda senoidal continua
             animacion.texto.transform.localScale = Vector3.Lerp(escalaOriginal, escalaObjetivo, onda);
-            animacion.textoLimite.transform.localScale = Vector3.Lerp(escalaOriginalLimite, escalaObjetivoLimite, onda);
-
 
             yield return null;
         }
@@ -297,8 +301,8 @@ public class Personalizacion : MonoBehaviour
         // Nos aseguramos de que al terminar el bucle, todo quede en sus valores exactos
         animacion.texto.text = animacion.esMaximo ? animacion.dineroAhora.ToString() : "100%";
         animacion.texto.transform.localScale = escalaOriginal;
-        animacion.textoLimite.text = $"{System.Math.Round(animacion.statActual, 2)}/{animacion.statMaxima}";
-        animacion.textoLimite.transform.localScale = escalaOriginalLimite;
+        //el 0.10f es el avance ya que 10 niveles si es 1 cada nivel aumentado es del 0.10 osea 10%
+        animacion.slider.fillAmount = llenadoActual + 0.10f;
         isclickeable = true;
         idioma.AsignarLenguajeATextos();
     }
