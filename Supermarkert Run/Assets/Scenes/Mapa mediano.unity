@@ -1900,6 +1900,10 @@ PrefabInstance:
       propertyPath: obtener_Objeto_suelo
       value: 
       objectReference: {fileID: 396494589}
+    - target: {fileID: 1214457975653736139, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
+      propertyPath: sliderDistanciaRatero
+      value: 
+      objectReference: {fileID: 1892762892}
     - target: {fileID: 7395996999866375472, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
       propertyPath: Text
       value: 
@@ -7620,6 +7624,7 @@ GameObject:
   - component: {fileID: 1452680637}
   - component: {fileID: 1452680641}
   - component: {fileID: 1452680642}
+  - component: {fileID: 1452680643}
   m_Layer: 0
   m_Name: Piso
   m_TagString: Piso
@@ -7839,6 +7844,21 @@ MonoBehaviour:
   - {fileID: 171178267}
   - {fileID: 1255915093}
   - {fileID: 1395779752}
+  rateroManager: {fileID: 1452680643}
+--- !u!114 &1452680643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1452680636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee4eb8ebdd6d2334fa538ae1e6835ba1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RateroManager
+  tiempoEntreRotaciones: 10
+  tiempoTotalJuego: 600
 --- !u!1001 &1577783186
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8967,6 +8987,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1892762892 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6417689333621208368, guid: 07a4c56f5b9e701468326be94edbb142, type: 3}
+  m_PrefabInstance: {fileID: 114491361}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
 --- !u!1 &1917690813
 GameObject:
   m_ObjectHideFlags: 0

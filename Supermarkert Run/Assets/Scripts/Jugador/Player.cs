@@ -23,6 +23,7 @@ public class Player : MonoBehaviour
     public Vector3 position_Reset;
     //private Get_Content_Car carrito_contenido;
     private Rigidbody rigid;
+    [SerializeField] Slider sliderDistanciaRatero;
 
     [Header("Carro")]
     private ContactPoint punto_choque;
@@ -88,6 +89,8 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        if (sliderDistanciaRatero == null) throw new Exception("Pendejo agrega el pinche slider");
+
         for (int i = 5; i < 8; i++)
         {
             ParticleSystem.EmissionModule emission = Ganar_canvas.transform.GetChild(i).GetComponent<ParticleSystem>().emission;
@@ -523,6 +526,16 @@ public class Player : MonoBehaviour
             obtener_Objeto_carro.gameObject.SetActive(false);
         }
     }
+
+    public void AnimarSlider(float distanciaJugadoYRatero, float distanciaSegura)
+    {
+        sliderDistanciaRatero.value = distanciaJugadoYRatero / distanciaSegura;
+    }
+
+    public void ActivarSlider() => sliderDistanciaRatero.gameObject.SetActive(true);
+    public void DesactivarSlider() => sliderDistanciaRatero.gameObject.SetActive(false);
+
+    public Vector3 GetSpawnPlayer() => position_Reset;
 
     //Boton de tomar objeto
     private void ManejarObjetoDestruido(Objeto_caido obj)

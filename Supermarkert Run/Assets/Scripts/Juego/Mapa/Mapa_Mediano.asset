@@ -20,7 +20,7 @@ MonoBehaviour:
   nombre_portugues: "Mapa m\xE9dio"
   descripcion_portugues: Um mapa um pouco mais longo que pequeno
   screen_map: {fileID: 21300000, guid: 630f3602c3a5eca46b737252da28e055, type: 3}
-  precio: 100
+  precio: 250
   Valor_mapa: 30
   cantidad_juegos: 0
   X_minimo: -45.9
@@ -28,7 +28,7 @@ MonoBehaviour:
   Y_minimo: -48
   Y_maximo: 35
   cantidad_enemigos: 20
-  cantidad_rateros: 0
+  cantidad_rateros: 5
   cantidad_minima_obstaculos: 5
   cantidad_maxima_obstaculos: 10
   cantidad_minina_carritos: 5

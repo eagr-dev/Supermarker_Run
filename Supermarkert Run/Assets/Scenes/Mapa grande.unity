@@ -15580,6 +15580,7 @@ GameObject:
   - component: {fileID: 1452680637}
   - component: {fileID: 1452680641}
   - component: {fileID: 1452680642}
+  - component: {fileID: 1452680643}
   m_Layer: 0
   m_Name: Piso
   m_TagString: Piso
@@ -15801,6 +15802,21 @@ MonoBehaviour:
   - {fileID: 1008438922}
   - {fileID: 1529109715}
   - {fileID: 1504934502}
+  rateroManager: {fileID: 1452680643}
+--- !u!114 &1452680643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1452680636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee4eb8ebdd6d2334fa538ae1e6835ba1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RateroManager
+  tiempoEntreRotaciones: 10
+  tiempoTotalJuego: 600
 --- !u!1001 &1483310361
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19641,6 +19657,17 @@ Transform:
   - {fileID: 2060025846}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1867498777 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6417689333621208368, guid: 07a4c56f5b9e701468326be94edbb142, type: 3}
+  m_PrefabInstance: {fileID: 564910490}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
 --- !u!1001 &1894856319
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22092,6 +22119,10 @@ PrefabInstance:
       propertyPath: obtener_Objeto_suelo
       value: 
       objectReference: {fileID: 1714637175}
+    - target: {fileID: 1214457975653736139, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
+      propertyPath: sliderDistanciaRatero
+      value: 
+      objectReference: {fileID: 1867498777}
     - target: {fileID: 7395996999866375472, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
       propertyPath: Text
       value: 

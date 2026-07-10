@@ -959,6 +959,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 90}
+--- !u!114 &829544190 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6417689333621208368, guid: 07a4c56f5b9e701468326be94edbb142, type: 3}
+  m_PrefabInstance: {fileID: 3705911046001335272}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
 --- !u!1001 &900248585
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2076,6 +2087,7 @@ GameObject:
   - component: {fileID: 1452680637}
   - component: {fileID: 1452680641}
   - component: {fileID: 1452680642}
+  - component: {fileID: 1452680643}
   m_Layer: 0
   m_Name: Piso
   m_TagString: Piso
@@ -2297,6 +2309,21 @@ MonoBehaviour:
   - {fileID: 1263177141}
   - {fileID: 13707540}
   - {fileID: 900248586}
+  rateroManager: {fileID: 1452680643}
+--- !u!114 &1452680643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1452680636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee4eb8ebdd6d2334fa538ae1e6835ba1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RateroManager
+  tiempoEntreRotaciones: 10
+  tiempoTotalJuego: 600
 --- !u!114 &1858993475 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2641343785563226394, guid: 07a4c56f5b9e701468326be94edbb142, type: 3}
@@ -2373,7 +2400,7 @@ PrefabInstance:
       objectReference: {fileID: 4257092684879669230}
     - target: {fileID: 1214457975653736139, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
       propertyPath: position_Reset.x
-      value: 4.46
+      value: 19.7
       objectReference: {fileID: 0}
     - target: {fileID: 1214457975653736139, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
       propertyPath: position_Reset.y
@@ -2381,7 +2408,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1214457975653736139, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
       propertyPath: position_Reset.z
-      value: 36.9
+      value: 36.09
       objectReference: {fileID: 0}
     - target: {fileID: 1214457975653736139, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
       propertyPath: velocidad_Rotacion
@@ -2403,6 +2430,10 @@ PrefabInstance:
       propertyPath: Velocidad_Operacion_T
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 1214457975653736139, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
+      propertyPath: sliderDistanciaRatero
+      value: 
+      objectReference: {fileID: 829544190}
     - target: {fileID: 3068091169133543063, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
       propertyPath: m_Enabled
       value: 1

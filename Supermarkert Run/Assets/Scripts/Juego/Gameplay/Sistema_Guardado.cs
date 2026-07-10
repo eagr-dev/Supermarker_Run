@@ -117,15 +117,23 @@ public class Sistema_Guardado : MonoBehaviour
 
     public void Cargar_Carros_Comprados()
     {
-        CarroCompradoEstructura carroComprado = new CarroCompradoEstructura().Capturar(BuildStructs.PCMG);
+        // Pequeño (siempre existe la key según tu lógica original)
+        var pequenio = BuildStructs.PCMG.GetComprado(Pase_Conexion_Menu_Gameplay.Tipo_Carro.PEQUEÑO);
+        string keyP = pequenio.tipo_Carro.ToString();
+        if (PlayerPrefs.HasKey(keyP))
+            pequenio.precio = (uint)PlayerPrefs.GetInt(keyP);
 
-        carroComprado.pequenio.precio = (uint)PlayerPrefs.GetInt(carroComprado.pequenio.tipo_Carro.ToString());
+        // Mediano
+        var mediano = BuildStructs.PCMG.GetComprado(Pase_Conexion_Menu_Gameplay.Tipo_Carro.MEDIANO);
+        string keyM = mediano.tipo_Carro.ToString();
+        if (PlayerPrefs.HasKey(keyM))
+            mediano.precio = (uint)PlayerPrefs.GetInt(keyM);
 
-        if (PlayerPrefs.HasKey(carroComprado.mediano.tipo_Carro.ToString()))
-            carroComprado.mediano.precio = (uint)PlayerPrefs.GetInt(carroComprado.mediano.tipo_Carro.ToString());
-
-        if (PlayerPrefs.HasKey(carroComprado.grande.tipo_Carro.ToString()))
-            carroComprado.grande.precio = (uint)PlayerPrefs.GetInt(carroComprado.grande.tipo_Carro.ToString());
+        // Grande
+        var grande = BuildStructs.PCMG.GetComprado(Pase_Conexion_Menu_Gameplay.Tipo_Carro.GRANDE);
+        string keyG = grande.tipo_Carro.ToString();
+        if (PlayerPrefs.HasKey(keyG))
+            grande.precio = (uint)PlayerPrefs.GetInt(keyG);
     }
 
     // ── Guardado ───────────────────────────────────────────────────────────

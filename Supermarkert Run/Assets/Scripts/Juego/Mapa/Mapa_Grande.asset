@@ -28,7 +28,7 @@ MonoBehaviour:
   Y_minimo: -110
   Y_maximo: 60
   cantidad_enemigos: 40
-  cantidad_rateros: 0
+  cantidad_rateros: 10
   cantidad_minima_obstaculos: 10
   cantidad_maxima_obstaculos: 20
   cantidad_minina_carritos: 15

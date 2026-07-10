@@ -1,21 +1,25 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemigoRatero : IA
 {
-    [Header("Configuración Ratero")]
+    [Header("ConfiguraciÃ³n Ratero")]
+    [SerializeField] private float distanciaSecurity = 15f; // renombrada internamente por claridad o mantÃ©n distanciaSeguridad
     [SerializeField] private float distanciaSeguridad = 15f;
     [SerializeField] private float tiempoAntesDeDesaparecer = 15f;
     [SerializeField] private float velocidadHuida = 6f;
     [SerializeField] private float velocidadNormal = 5f;
     [SerializeField] private float tiempoAnimacion = 1f;
     [SerializeField] private float tiempoEsperaJugadorDetenerse = 0.5f;
+    private Vector3 posicionPuerta;
+    private bool puertaObtenida = false;
 
     [Header("Sistema de Huida Inteligente")]
     [SerializeField] private float distanciaEscape = 10f;
     [SerializeField] private float tiempoEntreRecalculos = 0.35f;
     [SerializeField] private float margenEsquina = 1.5f;
+    [SerializeField] private float distanciaLlegadaPuerta = 2f;
 
     private float tiempoUltimoRecalculo = 0f;
 
@@ -29,11 +33,24 @@ public class EnemigoRatero : IA
     private bool estaHuyendo = false;
     private Coroutine coroutinaDesaparicion;
     private List<string> objetosRobados;
-    //private Vector3 posicion_carro = new();
 
     [Header("Informacion Jugador")]
     private Mision misionJugador;
     private CarRuntime carroJugador;
+    Player player;
+
+    private void OnEnable()
+    {
+        // Cuando el RateroManager activa este enemigo con SetActive(true), el NavMeshAgent
+        // pierde su destino previo. Si aÃºn no estÃ¡ huyendo, le ordenamos patrullar inmediatamente.
+        if (!estaHuyendo && objecto_seguir != null && mapa_content != null)
+        {
+            estaDetenido = false;
+            navegador.speed = velocidadNormal;
+            ReanudarMovimiento();
+            New_position(Random_position());
+        }
+    }
 
     protected override void Awake()
     {
@@ -44,51 +61,61 @@ public class EnemigoRatero : IA
             indicadorRatero.SetActive(true);
     }
 
-    protected override bool DebePuedeIrACaja()
-    {
-        return false;
-    }
+    protected override bool DebePuedeIrACaja() => false;
 
     protected override void Update()
     {
-        base.Update();
-
-        if (estaHuyendo && jugadorTransform != null)
+        if (estaHuyendo)
         {
-            float distanciaJugador = Vector3.Distance(transform.position, jugadorTransform.position);
-
-            if (distanciaJugador >= distanciaSeguridad)
+            if (jugadorTransform == null && player != null)
             {
-                if (coroutinaDesaparicion == null)
-                {
-                    coroutinaDesaparicion = StartCoroutine(ContadorDesaparicion());
-                }
+                jugadorTransform = player.transform;
             }
-            else
+
+            if (jugadorTransform != null)
             {
-                if (coroutinaDesaparicion != null)
+                float distanciaJugador = Vector3.Distance(transform.position, jugadorTransform.position);
+
+                // Mantenemos los efectos si el jugador estÃ¡ cerca
+                if (distanciaJugador < distanciaSeguridad)
                 {
-                    if (efectoRobo != null) efectoRobo.Play();
-                    if (sonidoRobo != null) sonidoRobo.Play();
-                    StopCoroutine(coroutinaDesaparicion);
-                    coroutinaDesaparicion = null;
+                    if (efectoRobo != null && !efectoRobo.isPlaying) efectoRobo.Play();
+                    if (sonidoRobo != null && !sonidoRobo.isPlaying) sonidoRobo.Play();
                 }
 
-                // NUEVO SISTEMA DE HUIDA INTELIGENTE
-                ContinuarHuida_PorEvaluacion();
+                // El slider sigue mostrando la distancia real al jugador
+                if (player != null)
+                    player.AnimarSlider(distanciaJugador, distanciaSeguridad);
             }
+
+            ContinuarHuida_PorEvaluacion();
+        }
+        else
+        {
+            base.Update();
         }
     }
 
     protected override void OnColisionConJugador(Collision collision)
     {
-        Player player = collision.gameObject.GetComponent<Player>();
+        player = collision.gameObject.GetComponent<Player>();
+
+        jugadorTransform = player.transform;
+
+        if (!puertaObtenida)
+        {
+            posicionPuerta = player.GetSpawnPlayer();
+            puertaObtenida = true;
+            Debug.LogWarning($"[RATERO ORIGEN] Coordenadas de la puerta guardadas: {posicionPuerta.ToString("F2")}");
+        }
+
+
         if (misionJugador == null)
         {
             misionJugador = collision.gameObject.GetComponent<Mision>();
         }
 
-        if(carroJugador == null)
+        if (carroJugador == null)
         {
             carroJugador = player.Get_Carro();
         }
@@ -98,19 +125,26 @@ public class EnemigoRatero : IA
 
         if (!haRobado)
         {
-            StopCoroutine(nameof(EsperarYMoverse));
+            // CAMBIO CLAVE 1: Declaramos que estÃ¡ huyendo e interrumpe a la IA inmediatamente
+            estaHuyendo = true;
+            StopAllCoroutines();
             estaDetenido = false;
             StartCoroutine(RobarTodosLosObjetos(player));
+            player.ActivarSlider();
         }
         else if (estaHuyendo)
         {
+            StopAllCoroutines();
             StartCoroutine(DevolverTodosLosObjetos(player));
+            player.DesactivarSlider();
         }
     }
 
     private IEnumerator RobarTodosLosObjetos(Player player)
     {
+        Debug.Log("[RATERO LOG] Iniciando proceso de robo y rotaciones...");
         if (efectoRobo != null) efectoRobo.Play();
+
         navegador.isStopped = true;
         player.SetDeadZoneJoystick(1000);
         DetenerMovimiento();
@@ -118,28 +152,38 @@ public class EnemigoRatero : IA
         yield return new WaitForSeconds(tiempoEsperaJugadorDetenerse);
 
         if (sonidoRobo != null) sonidoRobo.Play();
+        RateroManager.PublicarEmpezaRobo(gameObject);
 
-        yield return StartCoroutine(RotarAmbosDeFrente(player.transform));
+        yield return RotarAmbosDeFrente(player.transform);
 
         Vector3 vector3 = PositionCarroIA();
         misionJugador.Eliminar_Todo_Al_Chocar_Y_Dar(ref objetosRobados, vector3);
 
         haRobado = true;
-        estaHuyendo = true;
+
         yield return new WaitForSeconds(tiempoAnimacion);
-        Debug.Log("terminar de robar objetos");
+
+        Debug.Log("[RATERO LOG] Robo terminado. Â¡A correr a la puerta!");
         navegador.isStopped = false;
-        
         player.SetDeadZoneJoystick(0);
         navegador.speed = velocidadHuida;
         ReanudarMovimiento();
+
+        // Iniciamos el movimiento inteligente a la puerta
         IniciarHuida();
     }
 
     private IEnumerator DevolverTodosLosObjetos(Player player)
     {
-        Debug.Log("¡El jugador atrapó al ratero! Recupera sus objetos");
         if (efectoRobo != null) efectoRobo.Stop();
+
+        // â”€â”€ CLAVE: Detener el contador de la puerta si estaba corriendo â”€â”€
+        if (coroutinaDesaparicion != null)
+        {
+            StopCoroutine(coroutinaDesaparicion);
+            coroutinaDesaparicion = null;
+        }
+
         navegador.speed = velocidadNormal;
         navegador.isStopped = true;
         player.SetDeadZoneJoystick(1000);
@@ -147,13 +191,14 @@ public class EnemigoRatero : IA
 
         yield return new WaitForSeconds(tiempoEsperaJugadorDetenerse);
 
-
-        yield return StartCoroutine(RotarAmbosDeFrente(player.transform));
+        yield return RotarAmbosDeFrente(player.transform);
 
         Vector3 position = PositionCarroIA();
         misionJugador.Recuperar_Todos_Los_Objetos(objetosRobados, position);
 
         objetosRobados.Clear();
+
+        // Volvemos a sus estados normales para que siga en el mapa
         haRobado = false;
         estaHuyendo = false;
 
@@ -162,38 +207,28 @@ public class EnemigoRatero : IA
         navegador.isStopped = false;
         player.SetDeadZoneJoystick(0);
 
-        if (coroutinaDesaparicion != null)
-        {
-            StopCoroutine(coroutinaDesaparicion);
-            coroutinaDesaparicion = null;
-        }
+        // Le avisa al manager que el robo se frustrÃ³ (el manager NO lo desactivarÃ¡, 
+        // gracias al cambio que hicimos antes en el RateroManager)
+        RateroManager.PublicarRoboFrustrado(gameObject);
+
+        // Reanuda su caminata/patrulla normal por el mapa
         ReanudarMovimiento();
         New_position(Random_position());
     }
 
-
-    // ============================================================
-    // MÉTODO PRINCIPAL: Rota ambos al mismo tiempo
-    // ============================================================
     private IEnumerator RotarAmbosDeFrente(Transform jugador)
     {
-        // Iniciar ambas rotaciones simultáneamente
         Coroutine rotacionEnemigo = StartCoroutine(RotarHaciaObjetivo(transform, jugador.position));
         Coroutine rotacionJugador = StartCoroutine(RotarHaciaObjetivo(jugador, transform.position));
 
-        // Esperar a que ambas terminen
         yield return rotacionEnemigo;
         yield return rotacionJugador;
     }
 
-    // ============================================================
-    // Método genérico de rotación (reutilizable para ambos)
-    // ============================================================
     private IEnumerator RotarHaciaObjetivo(Transform objeto, Vector3 posicionObjetivo)
     {
-        // Calcular dirección hacia el objetivo
         Vector3 direccion = (posicionObjetivo - objeto.position).normalized;
-        direccion.y = 0; // Solo rotación horizontal
+        direccion.y = 0;
 
         if (direccion == Vector3.zero)
             yield break;
@@ -206,14 +241,10 @@ public class EnemigoRatero : IA
         {
             tiempoTranscurrido += Time.deltaTime;
             float t = tiempoTranscurrido / duracionRotacion;
-
-            // Rotación esférica suave
             objeto.rotation = Quaternion.Slerp(rotacionInicial, rotacionObjetivo, t);
-
             yield return null;
         }
 
-        // Asegurar rotación final exacta
         objeto.rotation = rotacionObjetivo;
     }
 
@@ -230,118 +261,161 @@ public class EnemigoRatero : IA
         ContinuarHuida_PorEvaluacion();
     }
 
-    // ----------------------------------------------------------------------
-    //  NUEVO SISTEMA DE HUIDA INTELIGENTE
-    // ----------------------------------------------------------------------
-
     private void ContinuarHuida_PorEvaluacion()
     {
-        if (jugadorTransform == null) return;
+        if (jugadorTransform == null || !puertaObtenida) return;
+
+        float distanciaPuerta = Vector3.Distance(transform.position, posicionPuerta);
+
+        // CUANDO LLEGA A LA PUERTA:
+        if (distanciaPuerta < distanciaLlegadaPuerta)
+        {
+            navegador.isStopped = true; // Se detiene en la puerta
+
+            // Si el contador no ha empezado a correr, lo iniciamos aquÃ­
+            if (coroutinaDesaparicion == null)
+            {
+                Debug.Log("[RATERO] LleguÃ© a la puerta. Iniciando temporizador para desaparecer...");
+                coroutinaDesaparicion = StartCoroutine(ContadorDesaparicion());
+            }
+            return;
+        }
 
         if (Time.time - tiempoUltimoRecalculo < tiempoEntreRecalculos)
             return;
 
         tiempoUltimoRecalculo = Time.time;
-
-        Vector3 mejorPunto = CalcularMejorPuntoDeEscape();
-        New_position(mejorPunto);
+        navegador.isStopped = false;
+        New_position(posicionPuerta);
     }
 
     private Vector3 CalcularMejorPuntoDeEscape()
     {
         Vector3 posRatero = transform.position;
         Vector3 posJugador = jugadorTransform.position;
+        Vector3 posPuerta = posicionPuerta;
+
+        float distanciaAPuertaReal = Vector3.Distance(posRatero, posPuerta);
+
+        if (distanciaAPuertaReal <= distanciaEscape * 1.5f)
+        {
+            Vector3 puntoPuerta = ObtenerPuntoNavMesh(posPuerta);
+            if (puntoPuerta != Vector3.zero)
+                return puntoPuerta;
+        }
+
+        Vector3 dirDirectaMeta = (posPuerta - posRatero).normalized;
 
         Vector3[] direcciones = new Vector3[]
         {
+            dirDirectaMeta,
             Vector3.right,
             Vector3.left,
             Vector3.forward,
             Vector3.back,
-            (Vector3.right + Vector3.forward).normalized,
-            (Vector3.left + Vector3.forward).normalized,
-            (Vector3.right + Vector3.back).normalized,
-            (Vector3.left + Vector3.back).normalized
+            (Vector3.right  + Vector3.forward).normalized,
+            (Vector3.left   + Vector3.forward).normalized,
+            (Vector3.right  + Vector3.back).normalized,
+            (Vector3.left   + Vector3.back).normalized
         };
 
         float mejorPuntuacion = float.MinValue;
-        Vector3 mejorDireccion = Vector3.zero;
+        Vector3 mejorPunto = posRatero;
 
         foreach (Vector3 dir in direcciones)
         {
-            Vector3 puntoDestino = posRatero + dir * distanciaEscape;
+            Vector3 candidato = posRatero + dir * distanciaEscape;
 
-            puntoDestino.x = Mathf.Clamp(puntoDestino.x, mapa_content.X_minimo + margenEsquina, mapa_content.X_maximo - margenEsquina);
-            puntoDestino.z = Mathf.Clamp(puntoDestino.z, mapa_content.Y_minimo + margenEsquina, mapa_content.Y_maximo - margenEsquina);
-            puntoDestino.y = 0;
+            candidato.x = Mathf.Clamp(candidato.x, mapa_content.X_minimo + margenEsquina, mapa_content.X_maximo - margenEsquina);
+            candidato.z = Mathf.Clamp(candidato.z, mapa_content.Y_minimo + margenEsquina, mapa_content.Y_maximo - margenEsquina);
+            candidato.y = posRatero.y;
 
-            float puntuacion = EvaluarDireccion(posRatero, puntoDestino, posJugador);
+            Vector3 puntoValido = ObtenerPuntoNavMesh(candidato);
+            if (puntoValido == Vector3.zero)
+                continue;
+
+            float puntuacion = EvaluarDireccionHaciaPuerta(puntoValido, posJugador, posPuerta, dir);
 
             if (puntuacion > mejorPuntuacion)
             {
                 mejorPuntuacion = puntuacion;
-                mejorDireccion = dir;
+                mejorPunto = puntoValido;
             }
         }
 
-        Vector3 puntoFinal = posRatero + mejorDireccion * distanciaEscape;
-        puntoFinal.x = Mathf.Clamp(puntoFinal.x, mapa_content.X_minimo + margenEsquina, mapa_content.X_maximo - margenEsquina);
-        puntoFinal.z = Mathf.Clamp(puntoFinal.z, mapa_content.Y_minimo + margenEsquina, mapa_content.Y_maximo - margenEsquina);
-        puntoFinal.y = 0;
-
-        return puntoFinal;
+        return mejorPunto;
     }
 
-    private float EvaluarDireccion(Vector3 posRatero, Vector3 puntoDestino, Vector3 posJugador)
+    private Vector3 ObtenerPuntoNavMesh(Vector3 punto)
+    {
+        if (UnityEngine.AI.NavMesh.SamplePosition(punto, out UnityEngine.AI.NavMeshHit hit, 2f, UnityEngine.AI.NavMesh.AllAreas))
+            return hit.position;
+
+        return Vector3.zero;
+    }
+
+    private float EvaluarDireccionHaciaPuerta(Vector3 puntoDestino, Vector3 posJugador, Vector3 posPuerta, Vector3 direccionEvaluada)
     {
         float puntuacion = 0;
 
+        float distanciaAPuerta = Vector3.Distance(puntoDestino, posPuerta);
+        puntuacion -= distanciaAPuerta * 5f;
+
+        Vector3 dirHaciaPuerta = (posPuerta - transform.position).normalized;
+        float alineacionConPuerta = Vector3.Dot(direccionEvaluada, dirHaciaPuerta);
+        if (alineacionConPuerta > 0)
+        {
+            puntuacion += alineacionConPuerta * 50f;
+        }
+
         float distanciaAlJugador = Vector3.Distance(puntoDestino, posJugador);
-        puntuacion += distanciaAlJugador * 5f;
-
-        float distBordeX = Mathf.Min(
-            Mathf.Abs(puntoDestino.x - mapa_content.X_minimo),
-            Mathf.Abs(puntoDestino.x - mapa_content.X_maximo)
-        );
-        float distBordeZ = Mathf.Min(
-            Mathf.Abs(puntoDestino.z - mapa_content.Y_minimo),
-            Mathf.Abs(puntoDestino.z - mapa_content.Y_maximo)
-        );
-        puntuacion += Mathf.Min(distBordeX, distBordeZ) * 3f;
-
-        Vector3 dirAlJugador = (posJugador - posRatero).normalized;
-        Vector3 dirDestino = (puntoDestino - posRatero).normalized;
-
-        float similaridad = Vector3.Dot(dirDestino, dirAlJugador);
-        if (similaridad > 0)
-            puntuacion -= similaridad * 20f;
+        if (distanciaAlJugador < distanciaSeguridad)
+        {
+            puntuacion -= (distanciaSeguridad - distanciaAlJugador) * 8f;
+        }
 
         return puntuacion;
     }
-
-    // ----------------------------------------------------------------------
 
     private IEnumerator ContadorDesaparicion()
     {
         if (efectoRobo != null) efectoRobo.Stop();
 
+        // Espera parado en la puerta
         yield return new WaitForSeconds(tiempoAntesDeDesaparecer);
 
+        // DOBLE CHECK: Si ya no estÃ¡ huyendo significa que el robo se frustrÃ³ 
+        // mientras esperaba en la puerta. Â¡No lo desactives!
+        if (!estaHuyendo)
+        {
+            coroutinaDesaparicion = null;
+            yield break;
+        }
+
+        // Si sigue huyendo (el robo NO fue frustrado), entonces sÃ­ tuvo Ã©xito y se va:
         estaHuyendo = false;
         haRobado = false;
         navegador.speed = velocidadNormal;
 
-        yield return new WaitForSeconds(Random.Range(3f, 8f));
+        if (player != null) player.DesactivarSlider();
 
-        Debug.Log("El ratero desaparece con los objetos robados");
-        Destroy(gameObject);
+        coroutinaDesaparicion = null;
+
+        // Avisa al manager para que haga el SetActive(false) y mande al siguiente
+        RateroManager.PublicarTerminoRobo(gameObject);
     }
+
 
     protected override void OnLlegarADestino()
     {
         if (estaHuyendo)
         {
-            ContinuarHuida_PorEvaluacion();
+            float distanciaPuerta = Vector3.Distance(transform.position, posicionPuerta);
+            if (distanciaPuerta <= distanciaLlegadaPuerta)
+            {
+                navegador.isStopped = true;
+                Debug.LogWarning("[RATERO] Â¡LleguÃ© con Ã©xito a la puerta y me detengo de verdad!");
+            }
         }
         else
         {

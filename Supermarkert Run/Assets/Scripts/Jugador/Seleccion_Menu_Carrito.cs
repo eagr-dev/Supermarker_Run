@@ -197,6 +197,7 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
         if(!BuildStructs.Dinero.Set_Compra(comprado.precio))
         {
             StartCoroutine(AnimacionNoDinero());
+            return;
         }
         comprado.precio = 0;
         Cambiar_Carro(Get_Active(), comprado.tipo_Carro);

@@ -20,6 +20,8 @@ public class Obstaculos : MonoBehaviour
 
     private List<GameObject> obj_Seguir = new();
 
+    [SerializeField] private RateroManager rateroManager;
+
     private void Awake()
     {
         mapa_content = BuildStructs.Dinero_Obtenido.Get_Mapa(SceneManager.GetActiveScene().name);
@@ -130,12 +132,15 @@ public class Obstaculos : MonoBehaviour
     {
         int index = 0;
         Debug.Log($"cantidad rateros {cant_rateros}");
+        List<GameObject> raterosCreados = new();
         for (int i = 0; i < cant_rateros; i++)
         {
             GameObject nuevaInstancia = Instantiate(EnemigoRatero);
             Agregar_Informacion_Necesaria_Enemigo(ref nuevaInstancia, index);
             index++;
+            raterosCreados.Add(nuevaInstancia);
         }
+        rateroManager.Inicializar(raterosCreados, 600f);
         for (int i = 0; i < cant_enemigos; i++)
         {
             // 1. GUARDA la referencia de la nueva INSTANCIA
@@ -161,6 +166,8 @@ public class Obstaculos : MonoBehaviour
         for (int i = 0; i < cant_enemigos + cant_rateros; i++)
         {
             GameObject plane = GameObject.CreatePrimitive(PrimitiveType.Plane);
+            Destroy(plane.GetComponent<MeshCollider>());
+            Destroy(plane.GetComponent<Renderer>());
             plane.transform.localScale = new(0.5f, 0.5f, 0.5f);
             plane.transform.position = Posicion_Enemigo(-2);
             obj_Seguir.Add(plane);
