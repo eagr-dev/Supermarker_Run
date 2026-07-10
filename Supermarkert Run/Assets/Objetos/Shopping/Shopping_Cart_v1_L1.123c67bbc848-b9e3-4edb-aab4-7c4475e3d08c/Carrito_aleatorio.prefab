@@ -2131,7 +2131,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: c8b82711b40450b4ea531a94b64d7466, type: 3}
   - {fileID: 21300000, guid: c30d0393126f0554bb8c1c1d69a4a4fb, type: 3}
   - {fileID: 21300000, guid: dc546eee6af857c45af6fb35173cb2ba, type: 3}
-  tiempo_animacion: 1
   nombre_objeto: {fileID: 1729998794914517359}
   objetos_buscados: {fileID: 4840032670694082056}
   sonido_ruleta: {fileID: 442544561317445541}

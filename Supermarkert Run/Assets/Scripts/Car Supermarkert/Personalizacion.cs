@@ -6,17 +6,23 @@ using UnityEngine.UI;
 
 public class Personalizacion : MonoBehaviour
 {
-    [SerializeField] TMP_Text NoMoney;
+    [SerializeField] TMP_Text NoMoney, reintarMañana;
 
     [Header("Otros")]
     [SerializeField] Idioma idioma;
     [SerializeField] Sistema_Guardado guardado;
 
     [SerializeField] ParticleSystem aumento;
-    [SerializeField] AudioSource audio;
+    [SerializeField] AudioSource audio, sonido_ruleta;
 
     [Header("Prefab")]
-    [SerializeField]Prefab peso, velocidad, carga, choque, agarre;
+    [SerializeField] Prefab peso, velocidad, carga, choque, agarre;
+
+    [SerializeField] private GameObject UIRoullete, incierto;
+    [SerializeField] private Image[] images = new Image[5];
+    [SerializeField] private Sprite[] sprites = new Sprite[5];
+    const string NameIntentos = "intentosMejoras", NameHoraGuardada = "horaGuardada";
+    System.DateTime date;
 
     [System.Serializable]
     struct Prefab
@@ -58,6 +64,26 @@ public class Personalizacion : MonoBehaviour
         carga.button.onClick.AddListener(BTNCarga);
         choque.button.onClick.AddListener(BTNBlindaje);
         agarre.button.onClick.AddListener(BTNAgarre);
+
+        string fechaGuardada = PlayerPrefs.GetString(NameHoraGuardada, "");
+
+        if (string.IsNullOrEmpty(fechaGuardada))
+        {
+            incierto.SetActive(true);
+        }
+        else
+        {
+            date = System.DateTime.Parse(fechaGuardada);
+            if (date.Date == System.DateTime.Today.Date)
+            {
+                incierto.SetActive(false);
+            }
+            else
+            {
+                incierto.SetActive(true);
+            }
+        }
+        incierto.GetComponentInChildren<Button>().onClick.AddListener(BTNMejoraAleatoria);
         
     }
 
@@ -234,6 +260,23 @@ public class Personalizacion : MonoBehaviour
         guardado.Guardar_Personalizado();
     }
 
+    void BTNMejoraAleatoria()
+    {
+        Anuncios.Instancia.MostrarAnuncioRecompensa((bool exito) =>
+        {
+            const int mejoras = 5;
+            int mejoraRandom = Random.Range(0, mejoras - 1);
+            Debug.Log($"El indice seleccionado es el {mejoraRandom}");
+            StartCoroutine(AnimacionUIConActualizacion(mejoraRandom));
+
+            incierto.SetActive(false);
+            PlayerPrefs.SetString(NameHoraGuardada, System.DateTime.Today.ToString());
+            PlayerPrefs.Save();
+        });
+    }
+
+
+
     public void MostrarUI()
     {
         var actual = BuildStructs.PCMG.GetOrquestador();
@@ -307,4 +350,170 @@ public class Personalizacion : MonoBehaviour
         isclickeable = true;
         idioma.AsignarLenguajeATextos();
     }
+
+    private IEnumerator AnimacionNoMasIntentos()
+    {
+        reintarMañana.gameObject.SetActive(true);
+        yield return new WaitForSeconds(1);
+        reintarMañana.gameObject.SetActive(false);
+    }
+
+    private IEnumerator AnimacionUIConActualizacion(int index)
+    {
+        yield return AnimacionUI(index);
+        yield return null;
+        var actual = BuildStructs.PCMG.GetOrquestador();
+        uint precioAnterior = 0, precioActual = 0;
+        int levelAnterior = 0, levelActual = 0, levelMax = 0;
+        bool sePuedeMejorar = false;
+        Image image = null;
+        //0 peso, 1 velocidad, 2 carga, 3 blindaje, 4 agarre
+        Debug.Log($"El indice seleccionado es el {index}");
+        switch (index)
+        {
+            case 0:
+                {
+                    Debug.Log($"El mejorar es el peso");
+                    if (!actual.SePuedeMejorarPeso) yield break;
+                    precioAnterior = actual.PrecioPeso();
+                    levelAnterior = actual.CarStatsLevel.peso;
+                    actual.DisminuirPeso();
+                    precioActual = actual.PrecioPeso();
+                    sePuedeMejorar = actual.SePuedeMejorarPeso;
+                    image = peso.porcentajeAvanzado;
+                    levelActual = actual.CarStatsLevel.peso;
+                    levelMax = actual.CarStatsMaxLevel.peso;
+                }
+                break;
+            case 1:
+                {
+                    Debug.Log($"El mejorar es la velocidad");
+                    if (!actual.SePuedeMejorarVelocidad) yield break;
+                    precioAnterior = actual.PrecioVelocidad();
+                    levelAnterior = actual.CarStatsLevel.velocidad;
+                    actual.AumentarVelocidad();
+                    precioActual = actual.PrecioVelocidad();
+                    sePuedeMejorar = actual.SePuedeMejorarVelocidad;
+                    image = peso.porcentajeAvanzado;
+                    levelActual = actual.CarStatsLevel.velocidad;
+                    levelMax = actual.CarStatsMaxLevel.velocidad;
+                }
+                break;
+            case 2:
+                {
+                    Debug.Log($"El mejorar es la capacidad");
+                    if (!actual.SePuedeMejorarCapacidad) yield break;
+                    precioAnterior = actual.PrecioCapacidad();
+                    levelAnterior = actual.CarStatsLevel.capacidad;
+                    actual.AumentarCapacidad();
+                    precioActual = actual.PrecioCapacidad();
+                    sePuedeMejorar = actual.SePuedeMejorarCapacidad;
+                    image = peso.porcentajeAvanzado;
+                    levelActual = actual.CarStatsLevel.capacidad;
+                    levelMax = actual.CarStatsMaxLevel.capacidad;
+                }
+                break;
+            case 3:
+                {
+                    Debug.Log($"El mejorar es el blindaje");
+                    if (!actual.SePuedeMejorarBlindaje) yield break;
+                    precioAnterior = actual.PrecioBlindaje();
+                    levelAnterior = actual.CarStatsLevel.blindaje;
+                    actual.AumentarBlindaje();
+                    precioActual = actual.PrecioBlindaje();
+                    sePuedeMejorar = actual.SePuedeMejorarBlindaje;
+                    image = peso.porcentajeAvanzado;
+                    levelActual = actual.CarStatsLevel.blindaje;
+                    levelMax = actual.CarStatsMaxLevel.blindaje;
+                }
+                break;
+            case 4:
+                {
+                    Debug.Log($"El mejorar es el agarre");
+                    if (!actual.SePuedeMejorarAgarre) yield break;
+                    precioAnterior = actual.PrecioAgarre();
+                    levelAnterior = actual.CarStatsLevel.agarre;
+                    actual.AumentarAgarre();
+                    precioActual = actual.PrecioAgarre();
+                    sePuedeMejorar = actual.SePuedeMejorarAgarre;
+                    image = peso.porcentajeAvanzado;
+                    levelActual = actual.CarStatsLevel.agarre;
+                    levelMax = actual.CarStatsMaxLevel.agarre;
+                }
+                break;
+        }
+        yield return null;
+
+        aumento.Play();
+        audio.Play();
+
+        yield return null;
+
+        yield return ActualizarUI(new PeticionAnimacion
+        {
+            texto = peso.costo,
+            dineroAntes = precioAnterior,
+            dineroAhora = precioActual,
+            esMaximo = sePuedeMejorar,
+            slider = image,
+            levelAnterior = levelAnterior,
+            levelActual = levelActual,
+            levelMax = levelMax
+        });
+
+        guardado.Guardar_Personalizado();
+    }
+
+    public IEnumerator AnimacionUI(int indexTarget)
+    {
+        UIRoullete.SetActive(true);
+        yield return null; // Pequeña espera para asegurar que la UI se ha activado
+        sonido_ruleta.Play();
+
+        // --- Configuración de la Ruleta ---
+        int numSteps = 30; // Cantidad fija de "giros" o cambios que hará la ruleta.
+        int indexPointer = 2; // Supongamos que la imagen CENTRAL es la que tiene el puntero (índice 2 para 5 imágenes).
+        int maxS = sprites.Length; // 7, la cantidad total de sprites.
+
+        // --- MATEMÁTICAS PARA EL ATERRIZAJE NATURAL ---
+        // 1. Calculamos el offset final necesario para que el target sprite quede en el puntero.
+        // La fórmula es: offsetFinal = (indexTarget - indexPointer) MOD maxSprites.
+        // Esto asegura que la imagen en 'indexPointer' sea: sprites[(offsetFinal + indexPointer) % 7] -> sprites[indexTarget].
+        // Usamos esta forma robusta del módulo para manejar resultados negativos.
+        int finalOffset = ((indexTarget - indexPointer) % maxS + maxS) % maxS;
+
+        // 2. Calculamos el offset inicial restando numSteps.
+        // Esto nos da la posición inicial de "virtual" de la ruleta para que después de numSteps incrementos llegue a finalOffset.
+        int currentOffset = ((finalOffset - numSteps) % maxS + maxS) % maxS;
+
+
+        // --- Configuración de Desaceleración (Curva de frenado) ---
+        //float totalTime = tiempo_animacion;
+        float totalTime = sonido_ruleta.clip.length + 0.2f;
+        float T_min = 0.005f; // Tiempo inicial muy rápido (sincronizado con Time.deltaTime es buena opción)
+
+        float T_max = (2.0f * totalTime / numSteps) - T_min;
+        if (T_max < T_min) T_max = T_min; // Seguridad
+
+        float timeAccumulator = 0;
+        for (int step = 0; step < numSteps; step++)
+        {
+            currentOffset = (currentOffset + 1) % maxS;
+
+            for (int i = 0; i < 5; i++)
+            {
+                images[i].sprite = sprites[(currentOffset + i) % maxS];
+            }
+
+            float stepDuration = T_min + (float)step * (T_max - T_min) / (float)(numSteps - 1);
+            timeAccumulator += stepDuration;
+            yield return new WaitForSeconds(stepDuration);
+        }
+
+        yield return new WaitForSeconds(1);
+
+        UIRoullete.SetActive(false);
+        incierto.SetActive(false);
+    }
+
 }

@@ -10,7 +10,7 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     [Header("Joystick_Velocidad")]
-    [SerializeField] private float max_speed_H = 1, max_speed_V = 1, Vertical_Move = 0, Horizontal_Move = 0, speed = 1, resistencia_porcentual = 0, velocidad_porcentual = 0;    private float velocidadResbalon;
+    [SerializeField] private float max_speed_H = 1, max_speed_V = 1, Vertical_Move = 0, Horizontal_Move = 0, speed = 1, resistencia_porcentual = 0.10f, velocidad_porcentual = 0;    private float velocidadResbalon;
     [SerializeField] private Joystick joystick;
 
     [Header("Camara")]
@@ -164,23 +164,23 @@ public class Player : MonoBehaviour
 
     public bool Esta_Protegido()
     {
+        if (carrito.objetos_actuales == 0) return true;
 
         float velocidad = Velocidad_joystick();
+        choque_mayor = velocidad >= resistencia_porcentual;
+        bool retorno = PU == Repartir_power.Power_Up.PROTECCION;
 
-        choque_mayor = velocidad > resistencia_porcentual;
-
-        if (!choque_mayor)
+        if (retorno && (choque_mayor || resbalon))
         {
-            Debug.Log($"El jugador no a chocado {velocidad}");
+            ConsumirProteccion();
             return true;
         }
 
-        if (Efecto == null)
+        if (choque_mayor || resbalon)
+        {
+            Debug.Log($"El jugador choco sin control");
             return false;
-
-        bool retorno = PU == Repartir_power.Power_Up.PROTECCION;
-        if(retorno)
-            ConsumirProteccion();
+        }
         return retorno;
     }
 
@@ -431,24 +431,24 @@ public class Player : MonoBehaviour
     //Collisiones
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Estante") && (!resbalon || !choque))
+        if (other.CompareTag("Estante") && (!resbalon && !choque))
         {
             var estante = other.gameObject.GetComponent<Estante>();
             ProcesarObjetoEncontrado(estante.Get_Object(), other.transform.position,
                 (nombre, pos) => StartCoroutine(mision.AnimacionTomarObjeto(nombre, pos)));
         }
-        else if (other.CompareTag("Carro") && (!resbalon || !choque))
+        else if (other.CompareTag("Carro") && (!resbalon && !choque))
         {
             obtener_Objeto_carro.gameObject.SetActive(true);
             se_tomo_objeto_carro = other.gameObject.GetComponent<Objeto_random_carro>();
         }
-        else if (other.CompareTag("Objeto") && (!resbalon || !choque))
+        else if (other.CompareTag("Objeto") && (!resbalon && !choque))
         {
             se_tomo_objeto_suelo = other.gameObject.GetComponent<Objeto_caido>();
             objetosEnRango.Add(se_tomo_objeto_suelo);
             obtener_Objeto_suelo.gameObject.SetActive(true);
         }
-        else if (other.CompareTag("Caja") && !resbalon)
+        else if (other.CompareTag("Caja") && (!resbalon && !choque))
         {
             Caja caja = other.gameObject.GetComponent<Caja>();
             StartCoroutine(Animacion_Tiempo_Caja(caja));
