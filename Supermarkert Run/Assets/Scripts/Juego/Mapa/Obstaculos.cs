@@ -97,9 +97,13 @@ public class Obstaculos : MonoBehaviour
 
     private Vector3 Posicion_Enemigo(float altura)
     {
-        float X = Random.Range(mapa_content.X_minimo, mapa_content.X_maximo);
-        float Y = Random.Range(mapa_content.Y_minimo, mapa_content.Y_maximo);
-        return new Vector3(X,altura,Y);
+        //float X = Random.Range(mapa_content.X_minimo, mapa_content.X_maximo);
+        //float Y = Random.Range(mapa_content.Y_minimo, mapa_content.Y_maximo);
+        int tamPuntosSpawn = spawn.puntos.Count;
+        int spawnDecidido = Random.Range(0, tamPuntosSpawn - 1);
+        Vector3 retorno = spawn.puntos[spawnDecidido].posicion;
+        retorno.y = altura;
+        return retorno;
     }
 
     private bool PuntoYaUsado(SpawnPointsData.SpawnPoint punto)

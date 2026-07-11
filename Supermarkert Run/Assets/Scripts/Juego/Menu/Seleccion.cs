@@ -35,7 +35,7 @@ public class Seleccion : MonoBehaviour
     [SerializeField] private AudioSource Menu;
 
     static Pase_Conexion_Menu_Gameplay conector;
-    bool estaAjustes = false;
+    bool estaAjustes = false, esClikeable = true;
 
     private void Start()
     {
@@ -44,6 +44,8 @@ public class Seleccion : MonoBehaviour
 
     public void BTN_Regreso()
     {
+        if (!esClikeable) return;
+
         bool rotar_camara = camara.transform.rotation.eulerAngles != new Vector3(0, 0, 0);
         if ((int)(camara.fieldOfView - FOV) != 0)
             IniciarAnimacion(FOVAC, FOV, camara.transform.rotation.x, rotacionOriginal, rotar_camara);
@@ -77,7 +79,7 @@ public class Seleccion : MonoBehaviour
 
     public void BTN_Power_Up()
     {
-
+        if (!esClikeable) return;
         IniciarAnimacion(FOV, FOVAC, camara.transform.rotation.eulerAngles.x, rotacionOriginal, false);
         Click_Botones.Play();
         Animacion_Npc.Caminar(Tiempo_Animacion, Posicion_Ir);
@@ -100,7 +102,7 @@ public class Seleccion : MonoBehaviour
 
     public void BTN_Carro()
     {
-
+        if (!esClikeable) return;
         IniciarAnimacion(FOV, FOVAC, rotacionOriginal, rotacion_carro, true);
         Click_Botones.Play();
         Menu_Canvas.SetActive(false);
@@ -164,6 +166,7 @@ public class Seleccion : MonoBehaviour
 
     private IEnumerator Animacion_Acercar(float FOVA,float FOVB, float rotaciona, float rotacionb,bool rotar_camara)
     {
+        esClikeable = false;
         float tiempo = 1, timer = 0;
 
         while(timer < tiempo)
@@ -180,6 +183,8 @@ public class Seleccion : MonoBehaviour
         }
 
         AplicarEstadoFinal(FOVB, rotacionb, rotar_camara);
+        yield return new WaitForSeconds(0.5f);
+        esClikeable = true;
     }
 
     IEnumerator Jugar(string escena)
