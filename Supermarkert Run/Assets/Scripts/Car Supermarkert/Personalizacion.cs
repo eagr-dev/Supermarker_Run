@@ -351,13 +351,6 @@ public class Personalizacion : MonoBehaviour
         idioma.AsignarLenguajeATextos();
     }
 
-    private IEnumerator AnimacionNoMasIntentos()
-    {
-        reintarMañana.gameObject.SetActive(true);
-        yield return new WaitForSeconds(1);
-        reintarMañana.gameObject.SetActive(false);
-    }
-
     private IEnumerator AnimacionUIConActualizacion(int index)
     {
         yield return AnimacionUI(index);
@@ -394,7 +387,7 @@ public class Personalizacion : MonoBehaviour
                     actual.AumentarVelocidad();
                     precioActual = actual.PrecioVelocidad();
                     sePuedeMejorar = actual.SePuedeMejorarVelocidad;
-                    image = peso.porcentajeAvanzado;
+                    image = velocidad.porcentajeAvanzado;
                     levelActual = actual.CarStatsLevel.velocidad;
                     levelMax = actual.CarStatsMaxLevel.velocidad;
                 }
@@ -408,7 +401,7 @@ public class Personalizacion : MonoBehaviour
                     actual.AumentarCapacidad();
                     precioActual = actual.PrecioCapacidad();
                     sePuedeMejorar = actual.SePuedeMejorarCapacidad;
-                    image = peso.porcentajeAvanzado;
+                    image = carga.porcentajeAvanzado;
                     levelActual = actual.CarStatsLevel.capacidad;
                     levelMax = actual.CarStatsMaxLevel.capacidad;
                 }
@@ -422,7 +415,7 @@ public class Personalizacion : MonoBehaviour
                     actual.AumentarBlindaje();
                     precioActual = actual.PrecioBlindaje();
                     sePuedeMejorar = actual.SePuedeMejorarBlindaje;
-                    image = peso.porcentajeAvanzado;
+                    image = choque.porcentajeAvanzado;
                     levelActual = actual.CarStatsLevel.blindaje;
                     levelMax = actual.CarStatsMaxLevel.blindaje;
                 }
@@ -436,7 +429,7 @@ public class Personalizacion : MonoBehaviour
                     actual.AumentarAgarre();
                     precioActual = actual.PrecioAgarre();
                     sePuedeMejorar = actual.SePuedeMejorarAgarre;
-                    image = peso.porcentajeAvanzado;
+                    image = agarre.porcentajeAvanzado;
                     levelActual = actual.CarStatsLevel.agarre;
                     levelMax = actual.CarStatsMaxLevel.agarre;
                 }
@@ -467,51 +460,67 @@ public class Personalizacion : MonoBehaviour
     public IEnumerator AnimacionUI(int indexTarget)
     {
         UIRoullete.SetActive(true);
-        yield return null; // Pequeña espera para asegurar que la UI se ha activado
+        yield return null;
         sonido_ruleta.Play();
 
-        // --- Configuración de la Ruleta ---
-        int numSteps = 30; // Cantidad fija de "giros" o cambios que hará la ruleta.
-        int indexPointer = 2; // Supongamos que la imagen CENTRAL es la que tiene el puntero (índice 2 para 5 imágenes).
-        int maxS = sprites.Length; // 7, la cantidad total de sprites.
+        int indexPointer = 2;
+        int maxS = sprites.Length;
 
-        // --- MATEMÁTICAS PARA EL ATERRIZAJE NATURAL ---
-        // 1. Calculamos el offset final necesario para que el target sprite quede en el puntero.
-        // La fórmula es: offsetFinal = (indexTarget - indexPointer) MOD maxSprites.
-        // Esto asegura que la imagen en 'indexPointer' sea: sprites[(offsetFinal + indexPointer) % 7] -> sprites[indexTarget].
-        // Usamos esta forma robusta del módulo para manejar resultados negativos.
         int finalOffset = ((indexTarget - indexPointer) % maxS + maxS) % maxS;
 
-        // 2. Calculamos el offset inicial restando numSteps.
-        // Esto nos da la posición inicial de "virtual" de la ruleta para que después de numSteps incrementos llegue a finalOffset.
-        int currentOffset = ((finalOffset - numSteps) % maxS + maxS) % maxS;
+        float totalTime = sonido_ruleta.clip.length - 0.5f;
+        float T_fast = 0.04f;   // Velocidad constante al inicio
+        float T_slow = 0.35f;   // Velocidad al final del frenado
+        float slowFraction = 0.35f; // 35% del tiempo total se usa para frenar (ajustable)
 
+        float timeForSlowing = totalTime * slowFraction;
+        float timeForFast = totalTime - timeForSlowing;
 
-        // --- Configuración de Desaceleración (Curva de frenado) ---
-        //float totalTime = tiempo_animacion;
-        float totalTime = sonido_ruleta.clip.length + 0.2f;
-        float T_min = 0.005f; // Tiempo inicial muy rápido (sincronizado con Time.deltaTime es buena opción)
+        int stepsFast = Mathf.Max(1, (int)(timeForFast / T_fast));
 
-        float T_max = (2.0f * totalTime / numSteps) - T_min;
-        if (T_max < T_min) T_max = T_min; // Seguridad
+        // Calculamos cuántos pasos de frenado caben en timeForSlowing con curva suave
+        // Usamos una curva sinusoidal (ease-out) para que arranque desde T_fast y llegue a T_slow
+        int stepsToSlow = 0;
+        float simulatedTime = 0f;
+        while (simulatedTime < timeForSlowing)
+        {
+            float t = simulatedTime / timeForSlowing; // 0..1
+            float stepDuration = Mathf.Lerp(T_fast, T_slow, 1f - Mathf.Cos(t * Mathf.PI * 0.5f));
+            simulatedTime += stepDuration;
+            stepsToSlow++;
+            if (stepsToSlow > 200) break; // Seguridad
+        }
 
-        float timeAccumulator = 0;
-        for (int step = 0; step < numSteps; step++)
+        int totalSteps = stepsFast + stepsToSlow;
+        int currentOffset = ((finalOffset - totalSteps) % maxS + maxS) % maxS;
+
+        // --- Fase 1: Velocidad constante ---
+        for (int step = 0; step < stepsFast; step++)
         {
             currentOffset = (currentOffset + 1) % maxS;
-
             for (int i = 0; i < 5; i++)
-            {
                 images[i].sprite = sprites[(currentOffset + i) % maxS];
-            }
 
-            float stepDuration = T_min + (float)step * (T_max - T_min) / (float)(numSteps - 1);
-            timeAccumulator += stepDuration;
+            yield return new WaitForSeconds(T_fast);
+        }
+
+        // --- Fase 2: Frenado suave (ease-out sinusoidal) ---
+        float elapsedSlow = 0f;
+        for (int step = 0; step < stepsToSlow; step++)
+        {
+            currentOffset = (currentOffset + 1) % maxS;
+            for (int i = 0; i < 5; i++)
+                images[i].sprite = sprites[(currentOffset + i) % maxS];
+
+            float t = elapsedSlow / timeForSlowing;
+            t = Mathf.Clamp01(t);
+            float stepDuration = Mathf.Lerp(T_fast, T_slow, 1f - Mathf.Cos(t * Mathf.PI * 0.5f));
+
+            elapsedSlow += stepDuration;
             yield return new WaitForSeconds(stepDuration);
         }
 
         yield return new WaitForSeconds(1);
-
         UIRoullete.SetActive(false);
         incierto.SetActive(false);
     }

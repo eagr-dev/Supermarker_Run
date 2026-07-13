@@ -38,57 +38,71 @@ public class Objeto_random_carro : MonoBehaviour, IGuardarObjeto
     {
         UIRoullete.SetActive(true);
 
-        if(position >= maxObjectContains)
+        if (position >= maxObjectContains)
         {
-            //Irse al anuncio
             yield return StartCoroutine(AnimacionUIAnuncios());
             yield break;
         }
 
         objetos_buscados.text = $"{position + 1}/{maxObjectContains}";
-        yield return null; // Pequeña espera para asegurar que la UI se ha activado
+        yield return null;
         sonido_ruleta.Play();
 
-        // --- Configuración de la Ruleta ---
-        int numSteps = 30; // Cantidad fija de "giros" o cambios que hará la ruleta.
-        int indexPointer = 2; // Supongamos que la imagen CENTRAL es la que tiene el puntero (índice 2 para 5 imágenes).
-        int maxS = sprites.Length; // 7, la cantidad total de sprites.
-        int indexTarget = (int)area_Product; // El índice del sprite que debe quedar al final (e.g. Manzana=0, Refri=1, etc.).
+        int indexPointer = 2;
+        int maxS = sprites.Length;
+        int indexTarget = (int)area_Product;
 
-        // --- MATEMÁTICAS PARA EL ATERRIZAJE NATURAL ---
-        // 1. Calculamos el offset final necesario para que el target sprite quede en el puntero.
-        // La fórmula es: offsetFinal = (indexTarget - indexPointer) MOD maxSprites.
-        // Esto asegura que la imagen en 'indexPointer' sea: sprites[(offsetFinal + indexPointer) % 7] -> sprites[indexTarget].
-        // Usamos esta forma robusta del módulo para manejar resultados negativos.
         int finalOffset = ((indexTarget - indexPointer) % maxS + maxS) % maxS;
 
-        // 2. Calculamos el offset inicial restando numSteps.
-        // Esto nos da la posición inicial de "virtual" de la ruleta para que después de numSteps incrementos llegue a finalOffset.
-        int currentOffset = ((finalOffset - numSteps) % maxS + maxS) % maxS;
+        float totalTime = sonido_ruleta.clip.length - 0.5f;
+        float T_fast = 0.04f;
+        float T_slow = 0.35f;
+        float slowFraction = 0.35f;
 
+        float timeForSlowing = totalTime * slowFraction;
+        float timeForFast = totalTime - timeForSlowing;
 
-        // --- Configuración de Desaceleración (Curva de frenado) ---
-        //float totalTime = tiempo_animacion;
-        float totalTime = sonido_ruleta.clip.length + 0.2f;
-        float T_min = 0.005f; // Tiempo inicial muy rápido (sincronizado con Time.deltaTime es buena opción)
-                             
-        float T_max = (2.0f * totalTime / numSteps) - T_min;
-        if (T_max < T_min) T_max = T_min; // Seguridad
+        int stepsFast = Mathf.Max(1, (int)(timeForFast / T_fast));
 
-        float timeAccumulator = 0; 
-        for (int step = 0; step < numSteps; step++)
+        // Calcular cuántos pasos de frenado caben con curva sinusoidal
+        int stepsToSlow = 0;
+        float simulatedTime = 0f;
+        while (simulatedTime < timeForSlowing)
+        {
+            float t = simulatedTime / timeForSlowing;
+            float stepDuration = Mathf.Lerp(T_fast, T_slow, 1f - Mathf.Cos(t * Mathf.PI * 0.5f));
+            simulatedTime += stepDuration;
+            stepsToSlow++;
+            if (stepsToSlow > 200) break;
+        }
+
+        int totalSteps = stepsFast + stepsToSlow;
+        int currentOffset = ((finalOffset - totalSteps) % maxS + maxS) % maxS;
+
+        // --- Fase 1: Velocidad constante ---
+        for (int step = 0; step < stepsFast; step++)
         {
             currentOffset = (currentOffset + 1) % maxS;
-
             for (int i = 0; i < maxImage; i++)
-            {
                 images[i].sprite = sprites[(currentOffset + i) % maxS];
-            }
-
-            float stepDuration = T_min + (float)step * (T_max - T_min) / (float)(numSteps - 1);
-            timeAccumulator += stepDuration;
 
             nombre_objeto.text = objetos[Random.Range(0, maxObjectContains - 1)];
+            yield return new WaitForSeconds(T_fast);
+        }
+
+        // --- Fase 2: Frenado suave sinusoidal ---
+        float elapsedSlow = 0f;
+        for (int step = 0; step < stepsToSlow; step++)
+        {
+            currentOffset = (currentOffset + 1) % maxS;
+            for (int i = 0; i < maxImage; i++)
+                images[i].sprite = sprites[(currentOffset + i) % maxS];
+
+            float t = Mathf.Clamp01(elapsedSlow / timeForSlowing);
+            float stepDuration = Mathf.Lerp(T_fast, T_slow, 1f - Mathf.Cos(t * Mathf.PI * 0.5f));
+
+            nombre_objeto.text = objetos[Random.Range(0, maxObjectContains - 1)];
+            elapsedSlow += stepDuration;
             yield return new WaitForSeconds(stepDuration);
         }
 
@@ -97,7 +111,6 @@ public class Objeto_random_carro : MonoBehaviour, IGuardarObjeto
         nombre_objeto.text = objeto;
 
         iconoFalloAcierto.gameObject.SetActive(true);
-
         iconoFalloAcierto.sprite = acierto ? sprite_Acierto : sprite_Fallo;
 
         AudioSource sonido = acierto ? sonido_acierto : sonido_fallo;
@@ -108,10 +121,8 @@ public class Objeto_random_carro : MonoBehaviour, IGuardarObjeto
         yield return new WaitForSeconds(1f);
 
         iconoFalloAcierto.gameObject.SetActive(false);
-
         UIRoullete.SetActive(false);
 
-        //Asignar nueva posicion
         position++;
         if (position >= maxObjectContains) yield break;
         objeto = objetos[position];

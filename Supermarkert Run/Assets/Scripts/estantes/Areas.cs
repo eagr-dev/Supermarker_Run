@@ -34,7 +34,7 @@ public class Areas : MonoBehaviour
         Limpieza_Casa = new string[] { "Detergent", "Bleach", "Broom", "Mop", "Glass cleaner", "Sponge", "Cleaning gloves", "Cloth", "Disinfectant", "Toilet paper" }, // House cleaning
         Comida = new string[] { "Eggs", "Sausage", "Ham", "Bread", "Milk", "Pasta", "Rice", "Meat", "Yogurt", "Cereal" }, // Food
         Appliances = new string[] { "Microwave", "Stove", "Television", "Radio", "Refrigerator", "Washing machine", "Blender", "Electric oven", "Vacuum cleaner", "Coffee maker" }, // Appliances
-        Bebidas = new string[] { "Water", "Juice", "Fruit juice", "Soda", "Sprite", "Energy drink", "Flavored water", "Pepsi", "Mineral water", "Oral rehydration solution" }, // Drinks and juices
+        Bebidas = new string[] { "Water", "Juice", "Fruit juice", "Soda", "Iced tea", "Energy drink", "Flavored water", "Chocolate milk", "Mineral water", "Oral rehydration solution" }, // Drinks and juices
         Partes_carros = new string[] { "Tires", "Upholstery", "Engine oil", "Coolant", "Brake fluid", "Battery", "Hydraulic jack", "Mirrors", "Tools", "Decorations" }, // Car parts
         Escuela = new string[] { "Pencil", "Notebook", "Book", "Pencil sharpener", "Eraser", "Pens", "Ballpoint pen", "Crayons", "Ruler", "Markers" }, // School supplies
         Higiene_Personal = new string[] { "Soap", "Shampoo", "Toothpaste", "Toothbrush", "Dental floss", "Towels", "Razors", "Deodorant", "Gel", "Shaving foam" }, // Personal hygiene
@@ -47,7 +47,7 @@ public class Areas : MonoBehaviour
         Limpieza_Casa = new string[] { "Detergente", "Blanqueador", "Escoba", "Mopa", "Limpiador de vidrios", "Esponja", "Guantes de limpieza", "Trapo", "Desinfectante", "Papel higiénico" }, // Limpieza Casa
         Comida = new string[] { "Huevos", "Salchicha", "Jamón", "Pan", "Leche", "Pasta", "Arroz", "Carne", "Yogur", "Cereal" }, // Comida
         Appliances = new string[] { "Microondas", "Estufa", "Televisión", "Radio", "Refrigerador", "Lavadora", "Licuadora", "Horno eléctrico", "Aspiradora", "Cafetera" },
-        Bebidas = new string[] { "Agua", "Jugo", "Zumo de fruta", "Refresco", "Sprite", "Bebida energética", "Agua saborizada", "Pepsi", "Agua mineral", "Suero oral" }, // Bebidas
+        Bebidas = new string[] { "Agua", "Jugo", "Zumo de fruta", "Refresco", "Té helado", "Bebida energética", "Agua saborizada", "Batido de chocolate", "Agua mineral", "Suero oral" }, // Bebidas
         Partes_carros = new string[] { "Llantas", "Tapicería", "Aceite de motor", "Refrigerante", "Líquido de frenos", "Batería", "Gato hidráulico", "Espejos", "Herramientas", "Decoraciones" }, // Partes carros
         Escuela = new string[] { "Lápiz", "Cuaderno", "Libro", "Sacapuntas", "Borrador", "Plumas", "Bolígrafo", "Crayones", "Regla", "Marcadores" }, // Escuela
         Higiene_Personal = new string[] { "Jabón", "Champú", "Pasta dental", "Cepillo de dientes", "Hilo dental", "Toallas", "Rastrillos", "Desodorante", "Gel", "Espuma de afeitar" }, // Higiene Personal
@@ -59,7 +59,7 @@ public class Areas : MonoBehaviour
         Limpieza_Casa = new string[] { "Detergente", "Alvejante", "Vassoura", "Esfregão", "Limpador de vidros", "Esponja", "Luvas de limpeza", "Pano", "Desinfetante", "Papel higiênico" }, // House cleaning
         Comida = new string[] { "Ovos", "Linguiça", "Presunto", "Pão", "Leite", "Massa", "Arroz", "Carne", "Iogurte", "Cereal" }, // Food
         Appliances = new string[] { "Micro-ondas", "Fogão", "Televisão", "Rádio", "Geladeira", "Máquina de lavar", "Liquidificador", "Forno elétrico", "Aspirador de pó", "Cafeteira" }, // Appliances
-        Bebidas = new string[] { "Água", "Suco", "Suco de frutas", "Refrigerante", "Sprite", "Bebida energética", "Água saborizada", "Pepsi", "Água mineral", "Soro oral" }, // Drinks and juices
+        Bebidas = new string[] { "Água", "Suco", "Suco de frutas", "Refrigerante", "Chá gelado", "Bebida energética", "Água saborizada", "Achocolatado", "Água mineral", "Soro oral" }, // Drinks and juices
         Partes_carros = new string[] { "Pneus", "Estofamento", "Óleo de motor", "Refrigerante", "Fluido de freio", "Bateria", "Macaco hidráulico", "Espelhos", "Ferramentas", "Decorações" }, // Car parts
         Escuela = new string[] { "Lápis", "Caderno", "Livro", "Apontador", "Borracha", "Canetas", "Caneta esferográfica", "Giz de cera", "Régua", "Marcadores" }, // School supplies
         Higiene_Personal = new string[] { "Sabão", "Shampoo", "Pasta de dente", "Escova de dentes", "Fio dental", "Toalhas", "Lâminas de barbear", "Desodorante", "Gel", "Espuma de barbear" }, // Personal hygiene
