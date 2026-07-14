@@ -54,7 +54,7 @@ public class Objeto_random_carro : MonoBehaviour, IGuardarObjeto
 
         int finalOffset = ((indexTarget - indexPointer) % maxS + maxS) % maxS;
 
-        float totalTime = sonido_ruleta.clip.length - 0.5f;
+        float totalTime = sonido_ruleta.clip.length - 1f;
         float T_fast = 0.04f;
         float T_slow = 0.35f;
         float slowFraction = 0.35f;

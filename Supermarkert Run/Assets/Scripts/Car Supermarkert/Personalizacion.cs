@@ -37,18 +37,9 @@ public class Personalizacion : MonoBehaviour
     internal struct PeticionAnimacion
     {
         public TMP_Text texto;
-        [System.Obsolete]
-        public TMP_Text textoLimite;
         public Image slider;
         public uint dineroAntes;
         public uint dineroAhora;
-        [System.Obsolete("Ahora se usa nivel")]
-        public double statAnterior;
-        [System.Obsolete("Ahora se usa nivel")]
-        public double statActual;
-        [System.Obsolete("Ahora se usa nivel")]
-        public double statMaxima;
-
         public int levelAnterior;
         public int levelActual;
         public int levelMax;
@@ -360,6 +351,7 @@ public class Personalizacion : MonoBehaviour
         int levelAnterior = 0, levelActual = 0, levelMax = 0;
         bool sePuedeMejorar = false;
         Image image = null;
+        TMP_Text text = null;
         //0 peso, 1 velocidad, 2 carga, 3 blindaje, 4 agarre
         Debug.Log($"El indice seleccionado es el {index}");
         switch (index)
@@ -376,6 +368,7 @@ public class Personalizacion : MonoBehaviour
                     image = peso.porcentajeAvanzado;
                     levelActual = actual.CarStatsLevel.peso;
                     levelMax = actual.CarStatsMaxLevel.peso;
+                    text = peso.costo;
                 }
                 break;
             case 1:
@@ -390,6 +383,7 @@ public class Personalizacion : MonoBehaviour
                     image = velocidad.porcentajeAvanzado;
                     levelActual = actual.CarStatsLevel.velocidad;
                     levelMax = actual.CarStatsMaxLevel.velocidad;
+                    text = velocidad.costo;
                 }
                 break;
             case 2:
@@ -404,6 +398,7 @@ public class Personalizacion : MonoBehaviour
                     image = carga.porcentajeAvanzado;
                     levelActual = actual.CarStatsLevel.capacidad;
                     levelMax = actual.CarStatsMaxLevel.capacidad;
+                    text = carga.costo;
                 }
                 break;
             case 3:
@@ -418,6 +413,7 @@ public class Personalizacion : MonoBehaviour
                     image = choque.porcentajeAvanzado;
                     levelActual = actual.CarStatsLevel.blindaje;
                     levelMax = actual.CarStatsMaxLevel.blindaje;
+                    text = choque.costo;
                 }
                 break;
             case 4:
@@ -432,6 +428,7 @@ public class Personalizacion : MonoBehaviour
                     image = agarre.porcentajeAvanzado;
                     levelActual = actual.CarStatsLevel.agarre;
                     levelMax = actual.CarStatsMaxLevel.agarre;
+                    text = agarre.costo;
                 }
                 break;
         }
@@ -444,7 +441,7 @@ public class Personalizacion : MonoBehaviour
 
         yield return ActualizarUI(new PeticionAnimacion
         {
-            texto = peso.costo,
+            texto = text,
             dineroAntes = precioAnterior,
             dineroAhora = precioActual,
             esMaximo = sePuedeMejorar,
@@ -468,7 +465,7 @@ public class Personalizacion : MonoBehaviour
 
         int finalOffset = ((indexTarget - indexPointer) % maxS + maxS) % maxS;
 
-        float totalTime = sonido_ruleta.clip.length - 0.5f;
+        float totalTime = sonido_ruleta.clip.length - 1f;
         float T_fast = 0.04f;   // Velocidad constante al inicio
         float T_slow = 0.35f;   // Velocidad al final del frenado
         float slowFraction = 0.35f; // 35% del tiempo total se usa para frenar (ajustable)

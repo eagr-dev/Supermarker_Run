@@ -1811,7 +1811,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 701d7053e9b97fe49807bc9bee2cc347, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Anuncios
-  DevelopmentBuild: 1
+  DevelopmentBuild: 0
   DevelopmentIDBuild: ca-app-pub-3940256099942544~3347511713
   DeploymentIDBuild: ca-app-pub-3641463045788683~3556593478
 --- !u!1 &119363733
