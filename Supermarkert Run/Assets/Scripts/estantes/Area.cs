@@ -83,6 +83,7 @@ public class Area : BehaviorEnemy
 
     public void OcultarEstante()
     {
+        Debug.Log($"El tipo de estante a hacer invisible es {estanteVisible}");
         transform.GetChild((int)estanteVisible).gameObject.SetActive(false);
     }
 

@@ -120,6 +120,7 @@ Transform:
   - {fileID: 1893702144413394585}
   - {fileID: 4654844693670135817}
   - {fileID: 8217012793574505478}
+  - {fileID: 8004700307326705856}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &9047324126621435556
@@ -1041,6 +1042,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7635826562936255635, guid: 16bf11f076c08f543bc31d0b3776ba92, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 16bf11f076c08f543bc31d0b3776ba92, type: 3}
       propertyPath: m_Name
       value: EstanteriaJugo (1)
@@ -1119,12 +1124,28 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -4187338463551173349, guid: 2fc7ab5dac707ce4a9911456c06c8a99, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 2fc7ab5dac707ce4a9911456c06c8a99, type: 3}
       propertyPath: m_Name
       value: EstanteComida
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 2fc7ab5dac707ce4a9911456c06c8a99, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675698150352272246, guid: 2fc7ab5dac707ce4a9911456c06c8a99, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4630639074013676189, guid: 2fc7ab5dac707ce4a9911456c06c8a99, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6280748322224458136, guid: 2fc7ab5dac707ce4a9911456c06c8a99, type: 3}
+      propertyPath: m_CastShadows
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1316,6 +1337,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7635826562936255635, guid: 9d3799a7634d16c41a47c9492708df68, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 9d3799a7634d16c41a47c9492708df68, type: 3}
       propertyPath: m_Name
       value: EstanteTecnologia (1)
@@ -1392,6 +1417,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1f43c74ab744f92498f6f2360d3dc516, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7635826562936255635, guid: 1f43c74ab744f92498f6f2360d3dc516, type: 3}
+      propertyPath: m_CastShadows
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 1f43c74ab744f92498f6f2360d3dc516, type: 3}
@@ -1472,6 +1501,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7635826562936255635, guid: 0a4407191f8542a4996e1496e71078f4, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 0a4407191f8542a4996e1496e71078f4, type: 3}
       propertyPath: m_Name
       value: EstanteRollo (1)
@@ -1550,6 +1583,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7635826562936255635, guid: 1216a4405274dfd439e78f3f79ff6fc0, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 1216a4405274dfd439e78f3f79ff6fc0, type: 3}
       propertyPath: m_Name
       value: EstanteriaCaja (1)
@@ -1567,6 +1604,88 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1216a4405274dfd439e78f3f79ff6fc0, type: 3}
   m_PrefabInstance: {fileID: 5162493300054163765}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &7538130746659456811
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 6147704254327094511}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 7ac7e76de4d355844a9303d6c2dc1731, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7ac7e76de4d355844a9303d6c2dc1731, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7ac7e76de4d355844a9303d6c2dc1731, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2.340256
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7ac7e76de4d355844a9303d6c2dc1731, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -18.16
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7ac7e76de4d355844a9303d6c2dc1731, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.19
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7ac7e76de4d355844a9303d6c2dc1731, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.09
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7ac7e76de4d355844a9303d6c2dc1731, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7ac7e76de4d355844a9303d6c2dc1731, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7ac7e76de4d355844a9303d6c2dc1731, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7ac7e76de4d355844a9303d6c2dc1731, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7ac7e76de4d355844a9303d6c2dc1731, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7ac7e76de4d355844a9303d6c2dc1731, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7ac7e76de4d355844a9303d6c2dc1731, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 7ac7e76de4d355844a9303d6c2dc1731, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 7ac7e76de4d355844a9303d6c2dc1731, type: 3}
+      propertyPath: m_Name
+      value: EstanteComida 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 7ac7e76de4d355844a9303d6c2dc1731, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7ac7e76de4d355844a9303d6c2dc1731, type: 3}
+--- !u!4 &8004700307326705856 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7ac7e76de4d355844a9303d6c2dc1731, type: 3}
+  m_PrefabInstance: {fileID: 7538130746659456811}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7749939477033058574
 PrefabInstance:
@@ -1626,6 +1745,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 23dad46d7eb1cfb4481a65db6f42c78e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 23dad46d7eb1cfb4481a65db6f42c78e, type: 3}
+      propertyPath: m_CastShadows
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 23dad46d7eb1cfb4481a65db6f42c78e, type: 3}
@@ -1704,6 +1827,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: baea84750f1376f499edb62fae7f2a10, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7635826562936255635, guid: baea84750f1376f499edb62fae7f2a10, type: 3}
+      propertyPath: m_CastShadows
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: baea84750f1376f499edb62fae7f2a10, type: 3}

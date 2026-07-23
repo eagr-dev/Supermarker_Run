@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using GoogleMobileAds.Api;
+using GoogleMobileAds.Ump.Api;
 using System;
 using System.Collections;
 
@@ -13,10 +14,18 @@ public class Anuncios : MonoBehaviour
     [SerializeField] private string DevelopmentIDBuild = "ca-app-pub-3940256099942544~3347511713";
     [SerializeField] private string DeploymentIDBuild = "ca-app-pub-3641463045788683~3556593478";
 
+    /// <summary>
+    /// Activa la geografía de prueba de UMP para simular un usuario en la UE.
+    /// Útil para probar el flujo de consentimiento sin estar físicamente en Europa.
+    /// IMPORTANTE: Desactivar en producción.
+    /// </summary>
+    [Tooltip("Simula geografía de la UE para probar el flujo de consentimiento UMP. Desactivar en producción.")]
+    [SerializeField] private bool testUmpGeography = false;
+
 #if UNITY_EDITOR
     private const string AD_UNIT_ID = "ca-app-pub-3940256099942544/5224354917";
     private const string BANNER_UNIT_ID = "ca-app-pub-3940256099942544/6300978111";
-    private const string INTERSTITIAL_UNIT_ID = "ca-app-pub-3940256099942544/1033173712"; // 
+    private const string INTERSTITIAL_UNIT_ID = "ca-app-pub-3940256099942544/1033173712";
 #elif UNITY_ANDROID
     private string AD_UNIT_ID 
     {
@@ -28,7 +37,6 @@ public class Anuncios : MonoBehaviour
         get { return DevelopmentBuild ? "ca-app-pub-3940256099942544/6300978111" : "ca-app-pub-3641463045788683/2835068977"; }
     }
 
-    // El nuevo ID para los anuncios de pantalla completa (Penalizaciones)
     private string INTERSTITIAL_UNIT_ID 
     {
         get 
@@ -52,7 +60,15 @@ public class Anuncios : MonoBehaviour
     private RewardedAd rewardedAd;
     private BannerView bannerView;
     private InterstitialAd interstitialAd;
+
     public bool Inicializado { get; private set; } = false;
+
+    /// <summary>
+    /// True cuando el flujo UMP ya terminó (sin importar si el usuario aceptó o rechazó).
+    /// Los anuncios solo se cargan después de que esto sea true.
+    /// </summary>
+    public bool ConsentimentoGestionado { get; private set; } = false;
+
     private bool _pendingHide = false;
 
     private void Awake()
@@ -70,7 +86,127 @@ public class Anuncios : MonoBehaviour
 
     void Start()
     {
-        // La inicializaci�n SIEMPRE debe ir en el Start para evitar conflictos de hilos nativos
+        // Paso 1: Gestionar consentimiento UMP antes de inicializar AdMob
+        GestionarConsentimientoUMP();
+    }
+
+
+    // =========================================================================
+    // LÓGICA UMP — CONSENTIMIENTO GDPR
+    // =========================================================================
+
+    /// <summary>
+    /// Punto de entrada del flujo UMP.
+    /// Solicita información de consentimiento y, si aplica, muestra el formulario al usuario.
+    /// Solo inicializa AdMob al finalizar, sin importar la decisión del usuario.
+    /// </summary>
+    private void GestionarConsentimientoUMP()
+    {
+        var parametros = new ConsentRequestParameters();
+
+        // Modo debug: fuerza geografía de la UE y restablece el estado de consentimiento previo
+        // para poder ver el formulario en cada sesión durante pruebas.
+        if (DevelopmentBuild || testUmpGeography)
+        {
+            parametros.ConsentDebugSettings = new ConsentDebugSettings
+            {
+                DebugGeography = DebugGeography.EEA,
+                TestDeviceHashedIds = new System.Collections.Generic.List<string>
+                {
+                    // Agrega aquí el ID de tu dispositivo de prueba (se imprime en logcat
+                    // como "Use new ConsentDebugSettings.TestDeviceHashedIds = ["XXXX"]")
+                    // Ejemplo: "33BE2250B43518CCDA7DE426D04EE231"
+                }
+            };
+        }
+
+        ConsentInformation.Update(parametros, OnConsentInfoActualizado);
+    }
+
+    private void OnConsentInfoActualizado(FormError error)
+    {
+        if (error != null)
+        {
+            // Si falla la solicitud de info, inicializamos AdMob de todas formas
+            // para no bloquear la experiencia del usuario en regiones sin GDPR.
+            Debug.LogWarning($"[UMP] Error al actualizar info de consentimiento: {error.Message}. Inicializando AdMob de todas formas.");
+            InicializarAdMob();
+            return;
+        }
+
+        Debug.Log($"[UMP] Estado de consentimiento: {ConsentInformation.ConsentStatus}");
+        Debug.Log($"[UMP] ¿Se puede mostrar formulario?: {ConsentInformation.IsConsentFormAvailable()}");
+
+        // Si es necesario recopilar consentimiento y hay formulario disponible, mostrarlo.
+        if (ConsentInformation.IsConsentFormAvailable() &&
+            ConsentInformation.ConsentStatus == ConsentStatus.Required)
+        {
+            ConsentForm.LoadAndShowConsentFormIfRequired(OnFormCerrado);
+        }
+        else
+        {
+            // No se requiere consentimiento (fuera de la UE) o ya fue dado anteriormente.
+            InicializarAdMob();
+        }
+    }
+
+    private void OnFormCerrado(FormError error)
+    {
+        if (error != null)
+        {
+            Debug.LogWarning($"[UMP] Error en el formulario de consentimiento: {error.Message}");
+        }
+        else
+        {
+            Debug.Log($"[UMP] Formulario cerrado. Estado final: {ConsentInformation.ConsentStatus}");
+        }
+
+        // Siempre inicializamos AdMob al cerrar el formulario.
+        // Si el usuario rechazó, AdMob simplemente no mostrará anuncios personalizados.
+        InicializarAdMob();
+    }
+
+    /// <summary>
+    /// Permite al usuario revisar o cambiar su consentimiento en cualquier momento
+    /// (por ejemplo, desde un botón en el menú de ajustes del juego).
+    /// </summary>
+    public void MostrarOpcionesPrivacidad()
+    {
+        if (!ConsentInformation.IsConsentFormAvailable())
+        {
+            Debug.LogWarning("[UMP] No hay formulario de privacidad disponible.");
+            return;
+        }
+
+        ConsentForm.ShowPrivacyOptionsForm((FormError error) =>
+        {
+            if (error != null)
+                Debug.LogWarning($"[UMP] Error al mostrar opciones de privacidad: {error.Message}");
+            else
+                Debug.Log("[UMP] Usuario revisó sus opciones de privacidad.");
+        });
+    }
+
+    /// <summary>
+    /// Restablece el estado de consentimiento (solo para pruebas / QA).
+    /// Nunca llamar en producción.
+    /// </summary>
+    [System.Diagnostics.Conditional("UNITY_EDITOR")]
+    public void RestablecerConsentimientoDebug()
+    {
+        ConsentInformation.Reset();
+        Debug.LogWarning("[UMP] Estado de consentimiento restablecido (solo debug).");
+    }
+
+
+    // =========================================================================
+    // INICIALIZACIÓN DE ADMOB
+    // =========================================================================
+
+    private void InicializarAdMob()
+    {
+        ConsentimentoGestionado = true;
+
         MobileAds.Initialize((InitializationStatus init) =>
         {
             Debug.Log("[AdMob] Inicializado correctamente.");
@@ -83,11 +219,11 @@ public class Anuncios : MonoBehaviour
 
 
     // =========================================================================
-    // L�GICA DE RECOMPENSA (REWARDS)
+    // LÓGICA DE RECOMPENSA (REWARDS)
     // =========================================================================
+
     private void CargarAnuncioRecompensa()
     {
-        // Si ya hay uno cargado, lo limpiamos antes de pedir otro
         if (rewardedAd is not null)
         {
             rewardedAd.Destroy();
@@ -100,14 +236,13 @@ public class Anuncios : MonoBehaviour
         {
             if (error is not null)
             {
-                Debug.LogError($"[AdMob] Fall� la carga del anuncio: {error}");
+                Debug.LogError($"[AdMob] Falló la carga del anuncio: {error}");
                 return;
             }
 
             rewardedAd = ad;
             Debug.Log("[AdMob] Anuncio de recompensa cargado y listo.");
 
-            // Suscribirnos al evento por si el anuncio se cierra, cargar el siguiente
             SuscribirEventos(ad);
         });
     }
@@ -116,7 +251,7 @@ public class Anuncios : MonoBehaviour
     {
         if (rewardedAd is not null && rewardedAd.CanShowAd())
         {
-            bool accionRecompensa = false; // Guardamos la recompensa a entregar
+            bool accionRecompensa = false;
 
             rewardedAd.Show((Reward reward) =>
             {
@@ -127,19 +262,17 @@ public class Anuncios : MonoBehaviour
             rewardedAd.OnAdFullScreenContentClosed += () =>
             {
                 Debug.Log("[AdMob] Anuncio cerrado. Enviando resultado a la clase...");
-
                 callbackRecompensa?.Invoke(accionRecompensa);
-
-                CargarAnuncioRecompensa(); // Precargamos el siguiente anuncio
+                CargarAnuncioRecompensa();
             };
         }
         else
         {
-            Debug.LogWarning("[AdMob] El anuncio no est� listo todav�a o fall� la conexi�n.");
+            Debug.LogWarning("[AdMob] El anuncio no está listo todavía o falló la conexión.");
             Notificacion.MostrarAlertaNativa(new NotificacionInformacionStruct(
-            "Anuncio no disponible", "El anuncio no est� listo todav�a o fall� la conexi�n. Intenta de nuevo m�s tarde.",
-            "Ad Unavailable", "The ad is not ready yet or the connection failed. Please try again later.",
-            "An�ncio indispon�vel", "O an�ncio ainda n�o est� pronto ou a conex�o falhou. Tente novamente mais tarde."
+                "Anuncio no disponible", "El anuncio no está listo todavía o falló la conexión. Intenta de nuevo más tarde.",
+                "Ad Unavailable", "The ad is not ready yet or the connection failed. Please try again later.",
+                "Anúncio indisponível", "O anúncio ainda não está pronto ou a conexão falhou. Tente novamente mais tarde."
             ));
         }
     }
@@ -149,18 +282,19 @@ public class Anuncios : MonoBehaviour
         ad.OnAdFullScreenContentClosed += () =>
         {
             Debug.Log("[AdMob] Anuncio cerrado por el usuario. Cargando el siguiente...");
-            CargarAnuncioRecompensa(); // Precargamos el que sigue
+            CargarAnuncioRecompensa();
         };
 
         ad.OnAdFullScreenContentFailed += (AdError error) =>
         {
-            Debug.LogError($"[AdMob] Fall� la reproducci�n del anuncio: {error}");
-            CargarAnuncioRecompensa(); // Intentamos cargar otro si este fall�
+            Debug.LogError($"[AdMob] Falló la reproducción del anuncio: {error}");
+            CargarAnuncioRecompensa();
         };
     }
 
+
     // =========================================================================
-    // L�GICA DEL PANEL DE BANNER
+    // LÓGICA DEL PANEL DE BANNER
     // =========================================================================
 
     public void SolicitudCargarBanner()
@@ -171,13 +305,10 @@ public class Anuncios : MonoBehaviour
             return;
         }
 
-        // Si ya existe uno, destruir antes de crear otro
         DestruirBannerInterno();
 
         bannerView = new BannerView(BANNER_UNIT_ID, AdSize.Banner, AdPosition.Top);
 
-        // ═══ CAPA 2: Suscribir eventos ANTES de cargar ═══
-        // Si se pidió ocultar mientras cargaba, el evento lo detecta al terminar
         bannerView.OnBannerAdLoaded += OnBannerLoaded;
         bannerView.OnBannerAdLoadFailed += OnBannerFailed;
 
@@ -185,8 +316,6 @@ public class Anuncios : MonoBehaviour
         Debug.Log("[AdMob] Solicitando carga de Banner...");
         bannerView.LoadAd(adRequest);
 
-        // ═══ CAPA 3: Coroutine de timeout (fallback de 2s) ═══
-        // Si AdMob nunca dispara el evento (crash interno), este coroutine termina igual
         StartCoroutine(TimeoutDestruccionBanner());
     }
 
@@ -194,8 +323,6 @@ public class Anuncios : MonoBehaviour
     {
         Debug.Log("[AdMob] Banner cargado.");
 
-        // ═══ CAPA 2 en acción ═══
-        // Si mientras cargaba alguien llamó OcultarBanner(), lo destruimos ahora
         if (_pendingHide)
         {
             Debug.Log("[AdMob] Se detectó _pendingHide=true al cargar. Destruyendo banner.");
@@ -207,7 +334,6 @@ public class Anuncios : MonoBehaviour
     {
         Debug.LogError($"[AdMob] Banner falló al cargar: {error}");
 
-        // Misma lógica: si se pidió ocultar, limpiar referencia de todas formas
         if (_pendingHide)
         {
             Debug.Log("[AdMob] Banner falló pero _pendingHide=true. Limpiando referencia.");
@@ -217,8 +343,6 @@ public class Anuncios : MonoBehaviour
 
     private IEnumerator TimeoutDestruccionBanner()
     {
-        // Esperar máximo 2 segundos. Si para entonces _pendingHide sigue true
-        // y bannerView no fue destruido, forzamos la destrucción.
         yield return new WaitForSeconds(2f);
 
         if (_pendingHide && bannerView != null)
@@ -244,23 +368,20 @@ public class Anuncios : MonoBehaviour
         }
         catch (Exception e)
         {
-            // AdMob a veces lanza si el estado nativo es inválido. Ignoramos — ya limpiamos.
             Debug.LogWarning($"[AdMob] Excepción al destruir banner (ignorada): {e.Message}");
         }
         finally
         {
-            // null SIEMPRE, sin importar si Destroy() lanzó o no
             bannerView = null;
             _pendingHide = false;
         }
     }
 
-    [Obsolete("Hasta no encontrar solucion de que realmente se muestra despues de ocultar no usar")]
+    [Obsolete("Hasta no encontrar solución de que realmente se muestra después de ocultar no usar")]
     public void MostrarBanner()
     {
         _pendingHide = false;
 
-        // Si ya existe un banner vivo, solo mostrarlo — no crear otro
         if (bannerView != null)
         {
             Debug.Log("[AdMob] Banner ya existe, mostrando el existente.");
@@ -268,21 +389,17 @@ public class Anuncios : MonoBehaviour
             return;
         }
 
-        // Solo llega aquí si fue destruido (después de un gameplay)
         Debug.Log("[AdMob] Banner no existe, solicitando uno nuevo.");
         SolicitudCargarBanner();
     }
 
-    [Obsolete("Hasta no encontrar solucion de que realmente se oculte no usar")]
+    [Obsolete("Hasta no encontrar solución de que realmente se oculte no usar")]
     public void OcultarBanner()
     {
-        // ═══ CAPA 1: Flag inmediato ═══
-        // Se activa antes de cualquier async — cualquier callback lo verá
         _pendingHide = true;
 
         if (bannerView != null)
         {
-            // Si ya existe y está listo, destruir directo
             DestruirBannerInterno();
         }
         else
@@ -290,9 +407,6 @@ public class Anuncios : MonoBehaviour
             Debug.Log("[AdMob] OcultarBanner llamado pero banner aún no existe. Flag activado, capas 2 y 3 lo manejarán.");
         }
     }
-
-    // Quitar el viejo IEnumerator DestruirBannerSeguro() — ya no se necesita
-    // La lógica está integrada en las 3 capas
 
     private void OnDestroy()
     {
@@ -302,9 +416,11 @@ public class Anuncios : MonoBehaviour
         }
     }
 
+
     // =========================================================================
-    // L�GICA DEL INTERSTICIAL
+    // LÓGICA DEL INTERSTICIAL
     // =========================================================================
+
     private void CargarAnuncioIntersticial()
     {
         if (interstitialAd is not null)
@@ -320,34 +436,33 @@ public class Anuncios : MonoBehaviour
         {
             if (error is not null)
             {
-                Debug.LogError($"[AdMob] Fall� la carga del Intersticial: {error}");
+                Debug.LogError($"[AdMob] Falló la carga del Intersticial: {error}");
                 return;
             }
 
             interstitialAd = ad;
             Debug.Log("[AdMob] Anuncio Intersticial cargado y listo.");
 
-            // Suscribir eventos para cuando el jugador cierre el anuncio
             ad.OnAdFullScreenContentClosed += () =>
             {
                 Debug.Log("[AdMob] Intersticial cerrado. Precargando el siguiente...");
-                CargarAnuncioIntersticial(); // Clave: Precargar el siguiente de inmediato
+                CargarAnuncioIntersticial();
             };
 
             ad.OnAdFullScreenContentFailed += (AdError adError) =>
             {
-                Debug.LogError($"[AdMob] Fall� la reproducci�n del Intersticial: {adError}");
+                Debug.LogError($"[AdMob] Falló la reproducción del Intersticial: {adError}");
                 CargarAnuncioIntersticial();
             };
         });
     }
+
     public void MostrarAnuncioIntersticial(Action onAdClosedCallback)
     {
         if (interstitialAd is not null && interstitialAd.CanShowAd())
         {
-            Debug.Log("[AdMob] Mostrando Intersticial de penalizaci�n.");
+            Debug.Log("[AdMob] Mostrando Intersticial de penalización.");
 
-            // Si el anuncio se muestra, ejecutamos la acci�n del juego en cuanto el usuario lo cierre
             interstitialAd.OnAdFullScreenContentClosed += () =>
             {
                 onAdClosedCallback?.Invoke();
@@ -357,8 +472,7 @@ public class Anuncios : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("[AdMob] El intersticial no estaba listo. Continuando juego sin interrupci�n.");
-            // Si no hay internet o no carg�, dejamos que el juego contin�e al instante para no romper la experiencia
+            Debug.LogWarning("[AdMob] El intersticial no estaba listo. Continuando juego sin interrupción.");
             onAdClosedCallback?.Invoke();
         }
     }
@@ -368,14 +482,13 @@ public class Anuncios : MonoBehaviour
         conteoPartidas++;
         if (conteoPartidas >= 3)
         {
-            Debug.Log($"[AdMob] Se alcanz� el l�mite de 3 partidas. Mostrando 1 anuncio...");
-
-            conteoPartidas = 0; // Reiniciamos contador
+            Debug.Log($"[AdMob] Se alcanzó el límite de 3 partidas. Mostrando 1 anuncio...");
+            conteoPartidas = 0;
             MostrarAnuncioIntersticial(onAdClosedCallback);
         }
         else
         {
-            Debug.Log("[AdMob] A�n no toca anuncio. Continuando flujo...");
+            Debug.Log("[AdMob] Aún no toca anuncio. Continuando flujo...");
             onAdClosedCallback?.Invoke();
         }
     }
