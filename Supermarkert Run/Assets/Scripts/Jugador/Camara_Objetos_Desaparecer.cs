@@ -35,16 +35,19 @@ public class Camara_Objetos_Desaparecer : MonoBehaviour
 
         if (Physics.Raycast(ray, out laser, distanciaRayo) && laser.collider.CompareTag("Area"))
         {
-            Debug.Log("Es un area al que apunta");
             objeto = laser.collider;
-            ComportamientoEstante(objeto.GetComponent<Area>());
+            //float distance = Vector3.Distance(origen, laser.distance);
+            ComportamientoEstante(objeto.GetComponent<Area>(), laser.distance);
         }
         else if(Physics.Raycast(ray, out laser, distanciaRayo) && laser.collider.CompareTag("Estante"))
         {
             //Obtener al padre del estante para obtener el id y su area
-            Debug.Log("Es un estante al que apunta");
             objeto = laser.collider;
-            ComportamientoEstante(objeto.transform.parent.GetComponent<Area>());
+            //float distance = Vector3.Distance(origen, objeto.transform.parent.position);
+            if(objeto.transform.rotation.eulerAngles == new Vector3(0,0,0) 
+                || objeto.transform.rotation.eulerAngles == new Vector3(0, 180, 0)
+                || objeto.transform.rotation.eulerAngles == new Vector3(0, -180, 0)) 
+                ComportamientoEstante(objeto.transform.parent.GetComponent<Area>(), laser.distance);
         }
         else
         {
@@ -56,18 +59,22 @@ public class Camara_Objetos_Desaparecer : MonoBehaviour
         }
     }
 
-    private void ComportamientoEstante(Area _area2)
+    private void ComportamientoEstante(Area _area2, float distance)
     {
         if(area is not null && !IsID(area, _area2))
         {
             area.VisibilizarEstante();
-            _area2.OcultarEstante();
+            _area2.OcultarEstanteProgresivo(distance);
             area = _area2;
         }
         else if(area is null)
         {
             area = _area2;
-            area.OcultarEstante();
+            _area2.OcultarEstanteProgresivo(distance);
+        }
+        else
+        {
+            area.OcultarEstanteProgresivo(distance);
         }
     }
 

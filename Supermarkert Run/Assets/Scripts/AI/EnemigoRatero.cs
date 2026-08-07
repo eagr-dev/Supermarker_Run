@@ -42,7 +42,13 @@ public class EnemigoRatero : IA
 
     private void OnEnable()
     {
-        if (!estaHuyendo && objecto_seguir != null && mapa_content != null)
+        haRobado = false;
+        estaHuyendo = false;
+        enAnimacion = false;
+        coroutinaDesaparicion = null;
+        objetosRobados?.Clear();
+
+        if (objecto_seguir != null && mapa_content != null)
         {
             estaDetenido = false;
             navegador.speed = velocidadNormal;
@@ -131,6 +137,7 @@ public class EnemigoRatero : IA
             estaHuyendo = true;
             StopAllCoroutines();
             estaDetenido = false;
+            RateroManager.PublicarEmpezaRobo(gameObject); 
             StartCoroutine(RobarTodosLosObjetos(player));
             player.ActivarSlider();
         }
@@ -155,7 +162,7 @@ public class EnemigoRatero : IA
         yield return new WaitForSeconds(tiempoEsperaJugadorDetenerse);
 
         if (sonidoRobo != null) sonidoRobo.Play();
-        RateroManager.PublicarEmpezaRobo(gameObject);
+        //RateroManager.PublicarEmpezaRobo(gameObject);
 
         yield return RotarAmbosDeFrente(player.transform);
 
@@ -325,5 +332,19 @@ public class EnemigoRatero : IA
         {
             base.OnLlegarADestino();
         }
+    }
+
+
+    protected override void OnCollisionEnter(Collision collision)
+    {
+        if (!collision.gameObject.CompareTag("Player"))
+            return;
+        if (haRobado && estaHuyendo)
+        {
+            OnColisionConJugador(collision);
+            return;
+        }
+
+        base.OnCollisionEnter(collision);
     }
 }

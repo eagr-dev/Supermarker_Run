@@ -10,6 +10,9 @@ public class Area : BehaviorEnemy
 
     const int primerEstante = 1;
     const int cantidadEstantes = 10;
+    const float distanciaMinima = 1, distanciaMaxima = 10;
+
+    private Material material;
 
     private List<int> Get_List_Rand()
     {
@@ -79,17 +82,34 @@ public class Area : BehaviorEnemy
         }
         Debug.Log($"el estante que se vera es {estanteVisible}");
         transform.GetChild((int)estanteVisible).gameObject.SetActive(true);
+        MeshRenderer meshRenderer = transform.GetChild((int)estanteVisible).GetComponent<MeshRenderer>();
+        if (meshRenderer != null)
+            material = meshRenderer.material;
+        else 
+        {
+            meshRenderer = transform.GetChild((int)estanteVisible).GetComponentInChildren<MeshRenderer>();
+            material = meshRenderer.material;
+        }
     }
 
+    [System.Obsolete("Ahora sera ocultarse de manera progresiva")]
     public void OcultarEstante()
     {
         Debug.Log($"El tipo de estante a hacer invisible es {estanteVisible}");
         transform.GetChild((int)estanteVisible).gameObject.SetActive(false);
     }
 
+    public void OcultarEstanteProgresivo(float distancia)
+    {
+        float visibility = Mathf.InverseLerp(distanciaMinima, distanciaMaxima, distancia);
+        Debug.Log(visibility);
+        material.SetFloat("_Visibility", visibility);
+    }
+
     public void VisibilizarEstante()
     {
         transform.GetChild((int)estanteVisible).gameObject.SetActive(true);
+        material.SetFloat("_Visibility", 1f);
     }
 
     private void Start()

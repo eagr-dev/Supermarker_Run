@@ -10793,6 +10793,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Camara_Objetos_Desaparecer
   personaje: {fileID: 609233200694382074}
+  distanciaRayo: 10
 --- !u!120 &963194232
 LineRenderer:
   serializedVersion: 3
@@ -15634,7 +15635,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 27fde218d1e9a5349a46f8381b0c64da, type: 2}
+  - {fileID: 2100000, guid: 5e2058d7d9853d145bc6d486f51c8a8c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -106,7 +106,7 @@ public class Anuncios : MonoBehaviour
 
         // Modo debug: fuerza geografía de la UE y restablece el estado de consentimiento previo
         // para poder ver el formulario en cada sesión durante pruebas.
-        if (DevelopmentBuild || testUmpGeography)
+        /*if (DevelopmentBuild || testUmpGeography)
         {
             parametros.ConsentDebugSettings = new ConsentDebugSettings
             {
@@ -118,7 +118,7 @@ public class Anuncios : MonoBehaviour
                     // Ejemplo: "33BE2250B43518CCDA7DE426D04EE231"
                 }
             };
-        }
+        }*/
 
         ConsentInformation.Update(parametros, OnConsentInfoActualizado);
     }

@@ -465,7 +465,7 @@ public class Personalizacion : MonoBehaviour
 
         int finalOffset = ((indexTarget - indexPointer) % maxS + maxS) % maxS;
 
-        float totalTime = sonido_ruleta.clip.length - 1f;
+        float totalTime = (sonido_ruleta.clip.length / sonido_ruleta.pitch);
         float T_fast = 0.04f;   // Velocidad constante al inicio
         float T_slow = 0.35f;   // Velocidad al final del frenado
         float slowFraction = 0.35f; // 35% del tiempo total se usa para frenar (ajustable)

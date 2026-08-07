@@ -56,6 +56,7 @@ public class Player : MonoBehaviour
     private Repartir_power RP;
     private Repartir_power.Power_Up PU;
     private Interfaz_PowerUp Efecto;
+    private float tiempoEliminar = 1;
 
     [Header("Sonido")]
     [SerializeField] private AudioSource Choque_sound;
@@ -156,6 +157,7 @@ public class Player : MonoBehaviour
                 break;
             case Repartir_power.Power_Up.PROTECCION: break;
             case Repartir_power.Power_Up.MANOS_RAPIDAS:
+                tiempoEliminar = Efecto.Get_Efecto<float>();
                 Eliminar_Tiempo_Dejar_Objetos();
                 break;
             case Repartir_power.Power_Up.NINGUNO: break;
@@ -181,7 +183,7 @@ public class Player : MonoBehaviour
             Debug.Log($"El jugador choco sin control");
             return false;
         }
-        return retorno;
+        return true;
     }
 
     private void ConsumirProteccion()
@@ -212,7 +214,7 @@ public class Player : MonoBehaviour
 
     private void Eliminar_Tiempo_Dejar_Objetos()
     {
-        float eliminar = Tiempo_Dejar_Objeto * Efecto.Get_Efecto<float>();
+        float eliminar = Tiempo_Dejar_Objeto * tiempoEliminar;//Efecto.Get_Efecto<float>();
         Tiempo_Dejar_Objeto -= eliminar;
         Efecto = null;
     }
