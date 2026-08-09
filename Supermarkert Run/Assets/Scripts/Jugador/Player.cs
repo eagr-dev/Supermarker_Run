@@ -61,6 +61,16 @@ public class Player : MonoBehaviour
     [Header("Sonido")]
     [SerializeField] private AudioSource Choque_sound;
 
+    [Header("Efecto Visual Velocidad")]
+    [SerializeField] private Material speedLinesMaterial;
+    [SerializeField] private float normalFOV = 60f;
+    [SerializeField] private float speedFOV = 75f;
+    [SerializeField] private float suavizadoEfecto = 5f;
+    private float intensidadEfectoActual = 0f;
+
+    [Header("Efecto Visual Proteccion")]
+    [SerializeField] GameObject proteccion_visual;
+
     private void OnEnable()
     {
         Objeto_caido.OnObjetoDestruido += ManejarObjetoDestruido;
@@ -85,7 +95,7 @@ public class Player : MonoBehaviour
         Power_Respective();
         obtener_Objeto_suelo.onClick.AddListener(BTN_Agarrar_Objeto_Suelo);
         obtener_Objeto_carro.onClick.AddListener(BTN_Agarrar_Objeto_Carro);
-
+        speedLinesMaterial.SetFloat("_Intensity", 0f);
     }
 
     private void Start()
@@ -108,12 +118,27 @@ public class Player : MonoBehaviour
     {
         Camera_Move();
         Condicionales();
+        ActualizarEfectoVelocidad();
         mision.posicion_carro = Get_transform_carro().position;
     }
 
     private void FixedUpdate()
     {
         Mover_Player();
+    }
+
+    private void ActualizarEfectoVelocidad()
+    {
+        bool tienePowerUp = (PU == Repartir_power.Power_Up.VELOCIDAD);
+        float factorVelocidad = Velocidad_joystick();
+
+        float targetIntensidad = tienePowerUp ? factorVelocidad : 0f;
+
+        intensidadEfectoActual = Mathf.Lerp(intensidadEfectoActual, targetIntensidad, Time.deltaTime * suavizadoEfecto);
+
+        speedLinesMaterial.SetFloat("_Intensity", intensidadEfectoActual);
+
+        camara.GetComponent<Camera>().fieldOfView = Mathf.Lerp(normalFOV, speedFOV, intensidadEfectoActual);
     }
 
     public void SetDeadZoneJoystick(float deadzone)
@@ -155,7 +180,9 @@ public class Player : MonoBehaviour
             case Repartir_power.Power_Up.VELOCIDAD:
                 Add_Velocidad();
                 break;
-            case Repartir_power.Power_Up.PROTECCION: break;
+            case Repartir_power.Power_Up.PROTECCION:
+                proteccion_visual.SetActive(true);
+                break;
             case Repartir_power.Power_Up.MANOS_RAPIDAS:
                 tiempoEliminar = Efecto.Get_Efecto<float>();
                 Eliminar_Tiempo_Dejar_Objetos();
@@ -166,7 +193,6 @@ public class Player : MonoBehaviour
 
     public bool Esta_Protegido()
     {
-        if (carrito.objetos_actuales == 0) return true;
 
         float velocidad = Velocidad_joystick();
         choque_mayor = velocidad >= resistencia_porcentual;
@@ -177,12 +203,13 @@ public class Player : MonoBehaviour
             ConsumirProteccion();
             return true;
         }
-
-        if (choque_mayor || resbalon)
+        else if (carrito.objetos_actuales == 0) return true;
+        else if (choque_mayor || resbalon)
         {
             Debug.Log($"El jugador choco sin control");
             return false;
         }
+
         return true;
     }
 
@@ -198,6 +225,8 @@ public class Player : MonoBehaviour
         Efecto.Efecto();
         RP.Set_Enum(Repartir_power.Power_Up.NINGUNO);
         Efecto = null;
+        proteccion_visual.SetActive(false);
+        PU = Repartir_power.Power_Up.NINGUNO;
         Debug.Log($"Se protegio la caida de objetos");
         
     }

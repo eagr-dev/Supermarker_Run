@@ -2413,6 +2413,10 @@ PrefabInstance:
       value: 36.09
       objectReference: {fileID: 0}
     - target: {fileID: 1214457975653736139, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
+      propertyPath: speedLinesMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 689d6895256e4934bb1078f8d38c0a64, type: 2}
+    - target: {fileID: 1214457975653736139, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
       propertyPath: velocidad_Rotacion
       value: 50
       objectReference: {fileID: 0}
