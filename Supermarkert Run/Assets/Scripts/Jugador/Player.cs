@@ -37,7 +37,7 @@ public class Player : MonoBehaviour
     [Header("Mision_Caja")]
     private Mision mision;
     [SerializeField] private GameObject Muerte_canvas;
-    [SerializeField] private GameObject UI;
+    //[SerializeField] private GameObject UI;
     [SerializeField] private GameObject Ganar_canvas;
     [SerializeField] private Animator animacion;
     [SerializeField] private TMP_Text Dinero_Text;
@@ -620,7 +620,7 @@ public class Player : MonoBehaviour
     public void Gano()
     {
         joystick.DeadZone = 1000;
-        UI.SetActive(false);
+        //UI.SetActive(false);
         Ganar_canvas.SetActive(true);
         FindFirstObjectByType<Tiempo>().gano = true;
 
