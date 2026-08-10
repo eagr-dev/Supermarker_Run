@@ -462,62 +462,66 @@ public class Personalizacion : MonoBehaviour
 
         int indexPointer = 2;
         int maxS = sprites.Length;
-
         int finalOffset = ((indexTarget - indexPointer) % maxS + maxS) % maxS;
 
         float totalTime = (sonido_ruleta.clip.length / sonido_ruleta.pitch);
-        float T_fast = 0.04f;   // Velocidad constante al inicio
-        float T_slow = 0.35f;   // Velocidad al final del frenado
-        float slowFraction = 0.35f; // 35% del tiempo total se usa para frenar (ajustable)
+        float T_fast = 0.04f;
+        float T_slow = 0.35f;
+        float slowFraction = 0.35f;
 
         float timeForSlowing = totalTime * slowFraction;
         float timeForFast = totalTime - timeForSlowing;
 
-        int stepsFast = Mathf.Max(1, (int)(timeForFast / T_fast));
+        // --- Fase 1: Velocidad constante basada en tiempo real ---
+        float elapsedFast = 0f;
+        float nextStepTimerFast = 0f;
+        int currentOffset = ((finalOffset - 200) % maxS + maxS); // Calculo base de offset inicial
 
-        // Calculamos cuántos pasos de frenado caben en timeForSlowing con curva suave
-        // Usamos una curva sinusoidal (ease-out) para que arranque desde T_fast y llegue a T_slow
-        int stepsToSlow = 0;
-        float simulatedTime = 0f;
-        while (simulatedTime < timeForSlowing)
+        // Recalcular offset inicial exacto basado en el total de pasos estimados
+        int stepsFastApprox = Mathf.Max(1, (int)(timeForFast / T_fast));
+
+        // Simplificamos usando un acumulador de tiempo por frame
+        while (elapsedFast < timeForFast)
         {
-            float t = simulatedTime / timeForSlowing; // 0..1
-            float stepDuration = Mathf.Lerp(T_fast, T_slow, 1f - Mathf.Cos(t * Mathf.PI * 0.5f));
-            simulatedTime += stepDuration;
-            stepsToSlow++;
-            if (stepsToSlow > 200) break; // Seguridad
+            elapsedFast += Time.deltaTime;
+            nextStepTimerFast += Time.deltaTime;
+
+            while (nextStepTimerFast >= T_fast)
+            {
+                nextStepTimerFast -= T_fast;
+                currentOffset = (currentOffset + 1) % maxS;
+                for (int i = 0; i < 5; i++)
+                    images[i].sprite = sprites[(currentOffset + i) % maxS];
+            }
+
+            yield return null;
         }
 
-        int totalSteps = stepsFast + stepsToSlow;
-        int currentOffset = ((finalOffset - totalSteps) % maxS + maxS) % maxS;
-
-        // --- Fase 1: Velocidad constante ---
-        for (int step = 0; step < stepsFast; step++)
-        {
-            currentOffset = (currentOffset + 1) % maxS;
-            for (int i = 0; i < 5; i++)
-                images[i].sprite = sprites[(currentOffset + i) % maxS];
-
-            yield return new WaitForSeconds(T_fast);
-        }
-
-        // --- Fase 2: Frenado suave (ease-out sinusoidal) ---
+        // --- Fase 2: Frenado suave (ease-out sinusoidal) en tiempo real ---
         float elapsedSlow = 0f;
-        for (int step = 0; step < stepsToSlow; step++)
+        float nextStepTimerSlow = 0f;
+
+        while (elapsedSlow < timeForSlowing)
         {
-            currentOffset = (currentOffset + 1) % maxS;
-            for (int i = 0; i < 5; i++)
-                images[i].sprite = sprites[(currentOffset + i) % maxS];
+            float deltaTime = Time.deltaTime;
+            elapsedSlow += deltaTime;
+            nextStepTimerSlow += deltaTime;
 
-            float t = elapsedSlow / timeForSlowing;
-            t = Mathf.Clamp01(t);
-            float stepDuration = Mathf.Lerp(T_fast, T_slow, 1f - Mathf.Cos(t * Mathf.PI * 0.5f));
+            float t = Mathf.Clamp01(elapsedSlow / timeForSlowing);
+            float currentStepDuration = Mathf.Lerp(T_fast, T_slow, 1f - Mathf.Cos(t * Mathf.PI * 0.5f));
 
-            elapsedSlow += stepDuration;
-            yield return new WaitForSeconds(stepDuration);
+            while (nextStepTimerSlow >= currentStepDuration)
+            {
+                nextStepTimerSlow -= currentStepDuration;
+                currentOffset = (currentOffset + 1) % maxS;
+                for (int i = 0; i < 5; i++)
+                    images[i].sprite = sprites[(currentOffset + i) % maxS];
+            }
+
+            yield return null;
         }
 
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(1f);
         UIRoullete.SetActive(false);
         incierto.SetActive(false);
     }

@@ -2326,6 +2326,11 @@ MonoBehaviour:
   tiempoEntreRotaciones: 10
   tiempoMatarRatero: 0
   tiempoTotalJuego: 600
+--- !u!1 &1647808873 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9111111961256064665, guid: 07a4c56f5b9e701468326be94edbb142, type: 3}
+  m_PrefabInstance: {fileID: 3705911046001335272}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1858993475 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2641343785563226394, guid: 07a4c56f5b9e701468326be94edbb142, type: 3}
@@ -2356,6 +2361,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1214457975653736139, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
+      propertyPath: UI
+      value: 
+      objectReference: {fileID: 1647808873}
     - target: {fileID: 1214457975653736139, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
       propertyPath: camara
       value: 

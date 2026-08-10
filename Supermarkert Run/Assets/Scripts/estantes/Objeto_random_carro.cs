@@ -46,6 +46,7 @@ public class Objeto_random_carro : MonoBehaviour, IGuardarObjeto
 
         objetos_buscados.text = $"{position + 1}/{maxObjectContains}";
         yield return null;
+
         sonido_ruleta.Play();
 
         int indexPointer = 2;
@@ -64,13 +65,13 @@ public class Objeto_random_carro : MonoBehaviour, IGuardarObjeto
 
         int stepsFast = Mathf.Max(1, (int)(timeForFast / T_fast));
 
-        // Calcular cuántos pasos de frenado caben con curva sinusoidal
+        // Pasos de frenado
         int stepsToSlow = 0;
         float simulatedTime = 0f;
         while (simulatedTime < timeForSlowing)
         {
-            float t = simulatedTime / timeForSlowing;
-            float stepDuration = Mathf.Lerp(T_fast, T_slow, 1f - Mathf.Cos(t * Mathf.PI * 0.5f));
+            float tSim = simulatedTime / timeForSlowing;
+            float stepDuration = Mathf.Lerp(T_fast, T_slow, 1f - Mathf.Cos(tSim * Mathf.PI * 0.5f));
             simulatedTime += stepDuration;
             stepsToSlow++;
             if (stepsToSlow > 200) break;
@@ -79,38 +80,66 @@ public class Objeto_random_carro : MonoBehaviour, IGuardarObjeto
         int totalSteps = stepsFast + stepsToSlow;
         int currentOffset = ((finalOffset - totalSteps) % maxS + maxS) % maxS;
 
-        // --- Fase 1: Velocidad constante ---
-        for (int step = 0; step < stepsFast; step++)
-        {
-            currentOffset = (currentOffset + 1) % maxS;
-            for (int i = 0; i < maxImage; i++)
-                images[i].sprite = sprites[(currentOffset + i) % maxS];
+        // --- Fase 1: Velocidad constante (Sincronizada por deltaTime) ---
+        float elapsedFast = 0f;
+        float timerFastStep = 0f;
 
-            nombre_objeto.text = objetos[Random.Range(0, maxObjectContains - 1)];
-            yield return new WaitForSeconds(T_fast);
+        while (elapsedFast < timeForFast)
+        {
+            float dt = Time.deltaTime;
+            elapsedFast += dt;
+            timerFastStep += dt;
+
+            while (timerFastStep >= T_fast)
+            {
+                timerFastStep -= T_fast;
+                currentOffset = (currentOffset + 1) % maxS;
+
+                for (int i = 0; i < maxImage; i++)
+                    images[i].sprite = sprites[(currentOffset + i) % maxS];
+
+                if (maxObjectContains > 1)
+                    nombre_objeto.text = objetos[Random.Range(0, maxObjectContains - 1)];
+            }
+
+            yield return null;
         }
 
-        // --- Fase 2: Frenado suave sinusoidal ---
+        // --- Fase 2: Frenado suave sinusoidal (Sincronizado por deltaTime) ---
         float elapsedSlow = 0f;
-        for (int step = 0; step < stepsToSlow; step++)
+        float timerSlowStep = 0f;
+
+        while (elapsedSlow < timeForSlowing)
         {
-            currentOffset = (currentOffset + 1) % maxS;
-            for (int i = 0; i < maxImage; i++)
-                images[i].sprite = sprites[(currentOffset + i) % maxS];
+            float dt = Time.deltaTime;
+            elapsedSlow += dt;
+            timerSlowStep += dt;
 
             float t = Mathf.Clamp01(elapsedSlow / timeForSlowing);
-            float stepDuration = Mathf.Lerp(T_fast, T_slow, 1f - Mathf.Cos(t * Mathf.PI * 0.5f));
+            float currentStepDuration = Mathf.Lerp(T_fast, T_slow, 1f - Mathf.Cos(t * Mathf.PI * 0.5f));
 
-            nombre_objeto.text = objetos[Random.Range(0, maxObjectContains - 1)];
-            elapsedSlow += stepDuration;
-            yield return new WaitForSeconds(stepDuration);
+            while (timerSlowStep >= currentStepDuration)
+            {
+                timerSlowStep -= currentStepDuration;
+                currentOffset = (currentOffset + 1) % maxS;
+
+                for (int i = 0; i < maxImage; i++)
+                    images[i].sprite = sprites[(currentOffset + i) % maxS];
+
+                if (maxObjectContains > 1)
+                    nombre_objeto.text = objetos[Random.Range(0, maxObjectContains - 1)];
+            }
+
+            yield return null;
         }
 
-        yield return null;
+        // Aseguramos la posición final exacta al terminar la simulación de tiempo
+        for (int i = 0; i < maxImage; i++)
+            images[i].sprite = sprites[(finalOffset + i) % maxS];
 
         nombre_objeto.text = objeto;
 
-        yield return new WaitForSeconds(0.1f);
+        yield return null;
 
         iconoFalloAcierto.gameObject.SetActive(true);
         iconoFalloAcierto.sprite = acierto ? sprite_Acierto : sprite_Fallo;

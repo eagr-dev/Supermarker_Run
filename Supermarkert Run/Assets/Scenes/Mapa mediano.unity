@@ -1853,6 +1853,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1214457975653736139, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
+      propertyPath: UI
+      value: 
+      objectReference: {fileID: 581788720}
+    - target: {fileID: 1214457975653736139, guid: df2fa6695d1eb0240ae8d31bf9cedeeb, type: 3}
       propertyPath: camara
       value: 
       objectReference: {fileID: 963194225}
@@ -3851,6 +3855,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 012267cc22ee5bc44abf0052a3e0d444, type: 3}
+--- !u!1 &581788720 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9111111961256064665, guid: 07a4c56f5b9e701468326be94edbb142, type: 3}
+  m_PrefabInstance: {fileID: 114491361}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &661617458
 PrefabInstance:
   m_ObjectHideFlags: 0
