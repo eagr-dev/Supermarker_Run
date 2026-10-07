@@ -132,7 +132,7 @@ public class Seleccion : MonoBehaviour
 
     public void BTN_Privacidad()
     {
-        Application.OpenURL("https://Gatoprogramador888.github.io");
+        Application.OpenURL("https://eagr-dev.github.io/");
     }
 
 

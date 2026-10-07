@@ -109,7 +109,7 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -42457365644445833, guid: 1530c01e893ec924faa7ef1cbcf294ae, type: 3}
-      propertyPath: m_Materials.Array.data[1]
+      propertyPath: 'm_Materials.Array.data[1]'
       value: 
       objectReference: {fileID: 2100000, guid: 032e9d62f5453af47a151d17b4932e4c, type: 2}
     - target: {fileID: 919132149155446097, guid: 1530c01e893ec924faa7ef1cbcf294ae, type: 3}
@@ -127,6 +127,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 6529177171549159459}
   m_SourcePrefab: {fileID: 100100000, guid: 1530c01e893ec924faa7ef1cbcf294ae, type: 3}
+--- !u!33 &702227806927188172 stripped
+MeshFilter:
+  m_CorrespondingSourceObject: {fileID: -7561001260577305011, guid: 1530c01e893ec924faa7ef1cbcf294ae, type: 3}
+  m_PrefabInstance: {fileID: 2211053087740247681}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1328092125715530704 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 1530c01e893ec924faa7ef1cbcf294ae, type: 3}
@@ -145,6 +150,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   r: {fileID: 7045341008025897462}
+  meshFilter: {fileID: 702227806927188172}
+  originalMeshFilter: {fileID: 702227806927188172}
   TC: 0
   posicion: 0
 --- !u!23 &6529177171549159459
@@ -164,6 +171,11 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -185,9 +197,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!23 &7045341008025897462 stripped
 MeshRenderer:

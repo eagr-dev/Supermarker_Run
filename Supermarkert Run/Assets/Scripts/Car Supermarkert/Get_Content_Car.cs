@@ -7,6 +7,8 @@ public class Get_Content_Car : MonoBehaviour
 {
     private CarSkinData skin;
     [SerializeField]MeshRenderer r;
+    [SerializeField]MeshFilter meshFilter;
+    Mesh originalMesh;
     public Pase_Conexion_Menu_Gameplay.Tipo_Carro TC;
     public int posicion = 0;
 
@@ -28,9 +30,13 @@ public class Get_Content_Car : MonoBehaviour
         skin = BuildStructs.PCMG.GetSkin(posicion);
 
         // 1. Validamos el mesh primero
-        if (skin.mesh != null)
+        if (skin.mesh != null && skin.mesh.TryGetComponent(out MeshFilter sourceMeshFilter))
         {
-            r = skin.mesh;
+            meshFilter.sharedMesh = sourceMeshFilter.sharedMesh;
+        }
+        else if(originalMesh != null)
+        {
+            meshFilter.sharedMesh = originalMesh;
         }
 
         // 2. El truco está aquí: si no hay textura, hay que "limpiar" el propertyBlock
@@ -51,5 +57,6 @@ public class Get_Content_Car : MonoBehaviour
     {
         posicion = BuildStructs.PCMG.Get_Eleccion();
         Set_Car(posicion);
+        originalMesh = meshFilter.sharedMesh;
     }
 }
