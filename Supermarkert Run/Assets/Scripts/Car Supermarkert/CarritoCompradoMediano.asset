@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b96dfdea69645b4b97e8c0d0022cf2f, type: 3}
   m_Name: CarritoCompradoMediano
   m_EditorClassIdentifier: Assembly-CSharp::CarritoComprado
-  precio: 250
+  precio: 0
   tipo_Carro: 1

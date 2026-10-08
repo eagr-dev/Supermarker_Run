@@ -55,8 +55,8 @@ public class Get_Content_Car : MonoBehaviour
 
     private void Awake()
     {
+        originalMesh = meshFilter.sharedMesh;
         posicion = BuildStructs.PCMG.Get_Eleccion();
         Set_Car(posicion);
-        originalMesh = meshFilter.sharedMesh;
     }
 }
