@@ -12,6 +12,7 @@ public class Sistema_Guardado : MonoBehaviour
     const string CPOSICION_MATERIAL = "Material";
     const string CTIPO_CARRO = "Carro";
     const string CCARRO_PEQUENIO = "CarroPequenio", CCARRO_MEDIANO = "CarroMediano", CCARRO_GRANDE = "CarroGrande";
+    const string CPOSICION_SOMBREROS = "sombreros";
 
     private string RutaPersonalizado =>
         $"{Application.persistentDataPath}/personalizado.json";
@@ -44,7 +45,7 @@ public class Sistema_Guardado : MonoBehaviour
         uint dinero = uint.Parse(PlayerPrefs.GetString(CDINERO, "0"));
         int tipoCarro = PlayerPrefs.GetInt(CTIPO_CARRO, 0);
         int posicionSkin = PlayerPrefs.GetInt(CPOSICION_MATERIAL, 0);
-
+        int posicionSombrero = PlayerPrefs.GetInt(CPOSICION_SOMBREROS, -1);
 
         // 2. Aplicar a escena
         QualitySettings.SetQualityLevel(calidad);
@@ -56,10 +57,12 @@ public class Sistema_Guardado : MonoBehaviour
 
         CargarSkinsCompradas();
         Cargar_Carros_Comprados();
+        CargarSombrerosComprados();
 
         var tipoCarro_Enum = (Pase_Conexion_Menu_Gameplay.Tipo_Carro)tipoCarro;
         BuildStructs.PCMG.Set_Seleccion_Carro(tipoCarro_Enum);
         BuildStructs.PCMG.Set_Seleccion_Skin(posicionSkin);
+        BuildStructs.PCMG.Set_Eleccion_Sombrero(posicionSombrero);
         BuildStructs.SelCarro.Set_Car_Menu(tipoCarro_Enum, posicionSkin);
 
         // 3. El struct se actualiza solo con la escena ya aplicada
@@ -115,6 +118,15 @@ public class Sistema_Guardado : MonoBehaviour
         }
     }
 
+    void CargarSombrerosComprados()
+    {
+        for (int i = 0; i < BuildStructs.PCMG.GetCountSombreros(); i++)
+        {
+            if (!PlayerPrefs.HasKey(i.ToString())) continue;
+            BuildStructs.PCMG.SetSombreroComprado(i);
+        }
+    }
+
     public void Cargar_Carros_Comprados()
     {
         // Pequeño (siempre existe la key según tu lógica original)
@@ -151,7 +163,9 @@ public class Sistema_Guardado : MonoBehaviour
         PlayerPrefs.SetInt(CCALIDAD, datos.calidad);
         PlayerPrefs.SetInt(CPOSICION_MATERIAL, datos.posicion_skin);
         PlayerPrefs.SetInt(CTIPO_CARRO, datos.tipo_carro);
+        PlayerPrefs.SetInt(CPOSICION_SOMBREROS, datos.posicion_sombrero);
         GuardarSkins();
+        GuardarSombreros();
         Guardar_Carros_Comprados();
         PlayerPrefs.Save();
     }
@@ -169,6 +183,15 @@ public class Sistema_Guardado : MonoBehaviour
         {
             if (PCMG.GetSkin(i).precio != 0) continue;
             PlayerPrefs.SetInt(i.ToString(), 0);
+        }
+    }
+
+    public void GuardarSombreros()
+    {
+        var PCMG = BuildStructs.PCMG;
+        foreach(var item in PCMG.GetSombrerosComprados)
+        {
+            PlayerPrefs.SetInt(item.id.ToString(), 0);
         }
     }
 

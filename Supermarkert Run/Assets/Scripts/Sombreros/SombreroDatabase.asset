@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db1e3b86f0f937449becdb47bd601d75, type: 3}
+  m_Name: SombreroDatabase
+  m_EditorClassIdentifier: Assembly-CSharp::SombreroDatabase
+  sombreros:
+  - id: 0
+    nombre_ingles: Witch
+    nombre_espaniol: Bruja
+    nombre_portugues: Bruxa
+    material: {fileID: 2100000, guid: 75807a192c6c8cb4a801ca4daccb5a3e, type: 2}
+    precio: 0
+    mesh: {fileID: -7511558181221131132, guid: 8be767a77ee45664097f6cdaf3c2b2b5, type: 3}
+    icon: {fileID: 21300000, guid: 7d458d4c2e69ef54b8fbfaf4c18aad72, type: 3}
+  - id: 1
+    nombre_ingles: Straw
+    nombre_espaniol: Paja
+    nombre_portugues: Palha
+    material: {fileID: 2100000, guid: 934c7037a15ba9f4e87e4a1c59165381, type: 2}
+    precio: 0
+    mesh: {fileID: -7511558181221131132, guid: e510249f3c47e0b4aabc4df8774dde24, type: 3}
+    icon: {fileID: 21300000, guid: d96a78688a992de4f8bd068b66bea2e8, type: 3}

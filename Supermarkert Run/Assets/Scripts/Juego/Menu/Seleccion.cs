@@ -10,6 +10,7 @@ public class Seleccion : MonoBehaviour
     [SerializeField] private GameObject Mapas_Canvas;
     [SerializeField] private GameObject Carritos_Canvas;
     [SerializeField] private GameObject Configuracion_Canvas;
+    [SerializeField] private GameObject Sombreros_Canvas;
     [SerializeField] private GameObject PU;
     [SerializeField] private RectTransform PadreCoPoCa;
 
@@ -70,11 +71,12 @@ public class Seleccion : MonoBehaviour
         PowerUp_Canvas.SetActive(false);
         Mapas_Canvas.SetActive(false);
         Carritos_Canvas.SetActive(false);
-        Menu_Canvas.SetActive(true);
+        Sombreros_Canvas.SetActive(false);
         PU.SetActive(false);
         Configuracion_Canvas.SetActive(false);
         if (estaAjustes)
             estaAjustes = false;
+        Menu_Canvas.SetActive(true);
     }
 
     public void BTN_Power_Up()
@@ -117,6 +119,13 @@ public class Seleccion : MonoBehaviour
         Menu_Canvas.SetActive(false);
         Configuracion_Canvas.SetActive(true);
         estaAjustes = true;
+    }
+
+    public void BTN_Sombreros()
+    {
+        Click_Botones.Play();
+        Menu_Canvas.SetActive(false);
+        Sombreros_Canvas.SetActive(true);
     }
 
     public void BTN_Jugar()

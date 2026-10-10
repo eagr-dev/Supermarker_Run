@@ -7,11 +7,12 @@ public class Pase_Conexion_Menu_Gameplay : MonoBehaviour
     static Pase_Conexion_Menu_Gameplay conector;
     public enum Tipo_Carro { PEQUEÑO, MEDIANO, GRANDE }
     Tipo_Carro sel;
-    int ele;
+    int ele, eleccionSombrero;
 
     [SerializeField] private SkinDatabase skinDatabase;
     [SerializeField] private OrquestadorAumentadorNivelCarro pequenio, mediano, grande; 
-    [SerializeField] private CarritoComprado pequenio_comprado ,mediano_comprado, grande_comprado; 
+    [SerializeField] private CarritoComprado pequenio_comprado ,mediano_comprado, grande_comprado;
+    [SerializeField] private SombreroDatabase sombreroDatabase;
 
     private void Awake()
     {
@@ -82,4 +83,21 @@ public class Pase_Conexion_Menu_Gameplay : MonoBehaviour
 
         return null;
     }
+
+
+    public int GetCountSombreros() => sombreroDatabase.sombreros.Count;
+
+    public SombreroData GetSombrero(int i) => sombreroDatabase.sombreros[i];
+
+    public void SetSombreroComprado(int id) => sombreroDatabase.SetComprar(id);
+
+    public List<SombreroData> GetSombrerosComprados => sombreroDatabase.GetComprados();
+
+    public void SetSombrero(int index, SombreroData data)
+    {
+        sombreroDatabase.sombreros[index] = data;
+    }
+
+    public int Get_Eleccion_Sombrero() => eleccionSombrero;
+    public void Set_Eleccion_Sombrero(int new_value) => eleccionSombrero = new_value;
 }

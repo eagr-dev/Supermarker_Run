@@ -92,8 +92,11 @@ public class SistemaGuardadoNube : MonoBehaviour
 
         CarroCompradoEstructura carroComprado = new CarroCompradoEstructura().Capturar(BuildStructs.PCMG);
 
+        SombrerosEstructura sombrerosEstructura = new SombrerosEstructura().Capturar(BuildStructs.PCMG);
+
         // TODO: serializar y subir con SavedGame API
-        MasterSaveInformacion Saveinformacion = new(datos, skinsEstructura, mapas, personalizadoEstructura, carroComprado);
+        MasterSaveInformacion Saveinformacion = new(datos, skinsEstructura, mapas, 
+            personalizadoEstructura, carroComprado, sombrerosEstructura);
         string informacion = JsonUtility.ToJson(Saveinformacion);
 
         //Subir datos del player
@@ -226,6 +229,9 @@ public class SistemaGuardadoNube : MonoBehaviour
                 CarroCompradoEstructura carroComprado = datos.carroComprado;
                 AplicarCarroComprado(carroComprado);
 
+                SombrerosEstructura sombrerosEstructura = datos.sombrerosEstructura;
+                AplicarSombreros(sombrerosEstructura);
+
                 FindFirstObjectByType<Sistema_Guardado>().GuardarLocal();
 
                 FindFirstObjectByType<Idioma>().AsignarLenguajeATextos();
@@ -325,6 +331,12 @@ public class SistemaGuardadoNube : MonoBehaviour
         if (carroComprado.pequenio.precio == 0) BuildStructs.PCMG.GetComprado(Pase_Conexion_Menu_Gameplay.Tipo_Carro.PEQUEÑO).precio = 0;
         if (carroComprado.mediano.precio == 0) BuildStructs.PCMG.GetComprado(Pase_Conexion_Menu_Gameplay.Tipo_Carro.MEDIANO).precio = 0;
         if (carroComprado.grande.precio == 0) BuildStructs.PCMG.GetComprado(Pase_Conexion_Menu_Gameplay.Tipo_Carro.GRANDE).precio = 0;
+    }
+
+    private void AplicarSombreros(SombrerosEstructura sombrerosEstructura)
+    {
+        foreach (int id in sombrerosEstructura.idSombreros)
+            BuildStructs.PCMG.SetSombreroComprado(id);
     }
 
 }

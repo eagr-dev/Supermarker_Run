@@ -9,6 +9,7 @@ public class PlayerInformacionEstructura
     public uint dinero;
     public int tipo_carro;
     public int posicion_skin;
+    public int posicion_sombrero;
 
     /// <summary>Se actualiza solo con el estado actual de escena.</summary>
     public PlayerInformacionEstructura Capturar(DINERO dinero, Pase_Conexion_Menu_Gameplay pcmg)
@@ -18,6 +19,7 @@ public class PlayerInformacionEstructura
         this.dinero = dinero.Get_Dinero();
         tipo_carro = (int)pcmg.Get_Seleccion();
         posicion_skin = pcmg.Get_Eleccion();
+        posicion_sombrero = pcmg.Get_Eleccion_Sombrero();
         return this;
     }
 
@@ -45,6 +47,23 @@ public class SkinsEstructura
     {
         GuardarInformacionSkinsCarro(arg1.GetListSkins(), ref listaNombreSkins);
 
+        return this;
+    }
+}
+
+[System.Serializable]
+public class SombrerosEstructura
+{
+    public List<int> idSombreros = new();
+    private void GuardarInformacionSombreros(List<SombreroData> items)
+    {
+        foreach(SombreroData item in items)
+           idSombreros.Add(item.id);
+    }
+
+    public SombrerosEstructura Capturar(Pase_Conexion_Menu_Gameplay arg1)
+    {
+        GuardarInformacionSombreros(arg1.GetSombrerosComprados);
         return this;
     }
 }
@@ -130,15 +149,18 @@ public class MasterSaveInformacion
     public MapaEstructura mapa = new();
     public PersonalizadoEstructura personalizado = new();
     public CarroCompradoEstructura carroComprado = new();
+    public SombrerosEstructura sombrerosEstructura = new();
 
     public MasterSaveInformacion(PlayerInformacionEstructura _playerInformacion, SkinsEstructura _skins,
-        MapaEstructura _mapa, PersonalizadoEstructura _personalizado, CarroCompradoEstructura _carroComprado)
+        MapaEstructura _mapa, PersonalizadoEstructura _personalizado, CarroCompradoEstructura _carroComprado,
+        SombrerosEstructura _sombreros)
     {
         playerInformacion = _playerInformacion;
         skins = _skins;
         mapa = _mapa;
         personalizado = _personalizado;
         carroComprado = _carroComprado;
+        sombrerosEstructura = _sombreros;
     }
 }
 

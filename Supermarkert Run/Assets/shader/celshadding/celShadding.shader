@@ -23,6 +23,8 @@
         [Header(Lights)]
         _AdditionalLightsStrength("Additional Lights Strength", Range(0, 3)) = 1
         _AmbientInfluence("Ambient Influence", Range(0, 1)) = 0
+        _BakedLightsStrength("Baked Lights Strength", Range(0, 3)) = 1
+        [IntRange] _BakedCelSteps("Baked Cel Steps (0 = smooth)", Range(0, 8)) = 0
 
         [Header(Outline)]
         _OutlineColor("Outline Color", Color) = (0, 0, 0, 1)
@@ -78,6 +80,8 @@
                     float  _SpecularStrength;
                     float  _AdditionalLightsStrength;
                     float  _AmbientInfluence;
+                    float  _BakedLightsStrength;
+                    float  _BakedCelSteps;
                     float  _OutlineWidth;
                     float4 _OutlineColor;
                 CBUFFER_END
@@ -116,6 +120,7 @@
                 #pragma multi_compile_fragment _ _ADDITIONAL_LIGHT_SHADOWS
                 #pragma multi_compile_fragment _ _SHADOWS_SOFT
                 #pragma multi_compile _ _FORWARD_PLUS
+                #pragma multi_compile _ LIGHTMAP_ON
                 #pragma multi_compile_fog
 
                 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
@@ -126,6 +131,7 @@
                     float4 positionOS : POSITION;
                     float3 normalOS   : NORMAL;
                     float2 uv         : TEXCOORD0;
+                    float2 staticLightmapUV : TEXCOORD1;
                 };
 
                 struct Varyings
@@ -135,6 +141,7 @@
                     float3 normalWS    : TEXCOORD1;
                     float3 positionWS  : TEXCOORD2;
                     float4 shadowCoord : TEXCOORD3;
+                    float2 lightmapUV  : TEXCOORD4;
                 };
 
                 TEXTURE2D(_MainTex);
@@ -154,6 +161,8 @@
                     float  _SpecularStrength;
                     float  _AdditionalLightsStrength;
                     float  _AmbientInfluence;
+                    float  _BakedLightsStrength;
+                    float  _BakedCelSteps;
                     float  _OutlineWidth;
                     float4 _OutlineColor;
                 CBUFFER_END
@@ -170,6 +179,12 @@
                     OUT.normalWS = normInputs.normalWS;
                     OUT.uv = TRANSFORM_TEX(IN.uv, _MainTex);
                     OUT.shadowCoord = GetShadowCoord(posInputs);
+
+                    #if defined(LIGHTMAP_ON)
+                        OUT.lightmapUV = IN.staticLightmapUV * unity_LightmapST.xy + unity_LightmapST.zw;
+                    #else
+                        OUT.lightmapUV = float2(0, 0);
+                    #endif
 
                     return OUT;
                 }
@@ -252,8 +267,36 @@
 
                     #endif
 
+                    // ---------- Luz horneada (lightmap) ----------
+                    // Objetos estaticos: las luces en modo Baked llegan por el lightmap
+                    #if defined(LIGHTMAP_ON)
+                        #if defined(UNITY_LIGHTMAP_FULL_HDR)
+                            bool encodedLightmap = false;
+                        #else
+                            bool encodedLightmap = true;
+                        #endif
+                        half4 decodeInstructions = half4(LIGHTMAP_HDR_MULTIPLIER, LIGHTMAP_HDR_EXPONENT, 0.0h, 0.0h);
+                        float3 bakedGI = SampleSingleLightmap(
+                            TEXTURE2D_LIGHTMAP_ARGS(LIGHTMAP_NAME, LIGHTMAP_SAMPLER_NAME),
+                            IN.lightmapUV, float4(1, 1, 0, 0),
+                            encodedLightmap, decodeInstructions);
+
+                        // Cel opcional: cuantiza la luminosidad horneada en escalones
+                        if (_BakedCelSteps > 0.5)
+                        {
+                            float lum = max(dot(bakedGI, float3(0.2126, 0.7152, 0.0722)), 1e-4);
+                            float q   = floor(lum * _BakedCelSteps + 0.5) / _BakedCelSteps;
+                            bakedGI  *= q / lum;
+                        }
+                        litAcc += bakedGI * _BakedLightsStrength;
+                    #endif
+
                     // ---------- Combinar ----------
-                    float3 ambient = lerp(float3(1, 1, 1), SampleSH(normalWS), _AmbientInfluence);
+                    #if defined(LIGHTMAP_ON)
+                        float3 ambient = float3(1, 1, 1);   // el lightmap ya incluye la luz indirecta
+                    #else
+                        float3 ambient = lerp(float3(1, 1, 1), SampleSH(normalWS), _AmbientInfluence);
+                    #endif
                     float3 shadowTerm = _ShadowColor.rgb * ambient;
 
                     // Zona oscura = ShadowColor; zona iluminada = color de las luces
@@ -312,6 +355,80 @@
                         #include "Packages/com.unity.render-pipelines.universal/Shaders/DepthOnlyPass.hlsl"
                         ENDHLSL
                     }
+
+            // ============================================
+            // META: usado por el baker de Unity (albedo para color/rebote de luz)
+            // ============================================
+            Pass
+            {
+                Name "Meta"
+                Tags { "LightMode" = "Meta" }
+                Cull Off
+
+                HLSLPROGRAM
+                #pragma vertex MetaVert
+                #pragma fragment MetaFrag
+
+                #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+                #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/MetaInput.hlsl"
+
+                struct MetaAttributes
+                {
+                    float4 positionOS : POSITION;
+                    float2 uv0        : TEXCOORD0;
+                    float2 uv1        : TEXCOORD1;
+                    float2 uv2        : TEXCOORD2;
+                };
+
+                struct MetaVaryings
+                {
+                    float4 positionCS : SV_POSITION;
+                    float2 uv         : TEXCOORD0;
+                };
+
+                TEXTURE2D(_MainTex);
+                SAMPLER(sampler_MainTex);
+
+                CBUFFER_START(UnityPerMaterial)
+                float4 _MainTex_ST;
+                float4 _Color;
+                float4 _ShadowColor;
+                float  _ShadowThreshold;
+                float  _ShadowSmoothness;
+                float4 _RimColor;
+                float  _RimAmount;
+                float  _RimThreshold;
+                float4 _SpecularColor;
+                float  _Glossiness;
+                float  _SpecularStrength;
+                float  _AdditionalLightsStrength;
+                float  _AmbientInfluence;
+                float  _BakedLightsStrength;
+                float  _BakedCelSteps;
+                float  _OutlineWidth;
+                float4 _OutlineColor;
+                CBUFFER_END
+
+                MetaVaryings MetaVert(MetaAttributes input)
+                {
+                    MetaVaryings output;
+                    output.positionCS = MetaVertexPosition(input.positionOS, input.uv1, input.uv2,
+                                                           unity_LightmapST, unity_DynamicLightmapST);
+                    output.uv = TRANSFORM_TEX(input.uv0, _MainTex);
+                    return output;
+                }
+
+                half4 MetaFrag(MetaVaryings input) : SV_Target
+                {
+                    half4 texColor = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, input.uv) * _Color;
+
+                    MetaInput metaInput = (MetaInput)0;
+                    metaInput.Albedo   = texColor.rgb;
+                    metaInput.Emission = 0;
+                    return MetaFragment(metaInput);
+                }
+                ENDHLSL
+            }
         }
 
             FallBack "Universal Render Pipeline/Lit"
