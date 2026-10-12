@@ -220,6 +220,22 @@ public class Seleccion_Menu_Carrito : MonoBehaviour
         NoMoney.gameObject.SetActive(false);
     }
 
+    void OnApplicationFocus(bool hasFocus)
+    {
+        if (hasFocus) return;
+        Sistema_Guardado sistema_Guardado = FindFirstObjectByType<Sistema_Guardado>();
+        sistema_Guardado.GuardarLocal();
+        sistema_Guardado.Guardar_Personalizado();
+    }
+
+    void OnApplicationPause(bool pauseStatus)
+    {
+        if (!pauseStatus) return;
+        Sistema_Guardado sistema_Guardado = FindFirstObjectByType<Sistema_Guardado>();
+        sistema_Guardado.GuardarLocal();
+        sistema_Guardado.Guardar_Personalizado();
+    }
+
     private void OnApplicationQuit()
     {
         Sistema_Guardado sistema_Guardado = FindFirstObjectByType<Sistema_Guardado>();

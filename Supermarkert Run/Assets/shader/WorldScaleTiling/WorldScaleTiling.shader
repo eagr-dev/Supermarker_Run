@@ -16,11 +16,11 @@ Shader "Custom/WorldCheckerboard_URP"
 
     SubShader
     {
-        Tags 
-        { 
-            "RenderType" = "Opaque" 
+        Tags
+        {
+            "RenderType" = "Opaque"
             "RenderPipeline" = "UniversalPipeline"
-            "Queue" = "Geometry" 
+            "Queue" = "Geometry"
         }
 
         Pass
@@ -32,12 +32,15 @@ Shader "Custom/WorldCheckerboard_URP"
             #pragma vertex vert
             #pragma fragment frag
 
-            #pragma multi_compile _ LIGHTMAP_ON
             #pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
             #pragma multi_compile _ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
             #pragma multi_compile_fragment _ _ADDITIONAL_LIGHT_SHADOWS
             #pragma multi_compile_fragment _ _SHADOWS_SOFT
-            #pragma multi_compile _ _FORWARD_PLUS
+            #pragma multi_compile _ _FORWARD_PLUS _CLUSTER_LIGHT_LOOP
+            #pragma multi_compile _ LIGHTMAP_ON
+            #pragma multi_compile _ DIRLIGHTMAP_COMBINED
+            #pragma multi_compile _ LIGHTMAP_SHADOW_MIXING
+            #pragma multi_compile _ SHADOWS_SHADOWMASK
             #pragma multi_compile_fog
 
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
@@ -109,37 +112,27 @@ Shader "Custom/WorldCheckerboard_URP"
 
                 // 1. Bake / Ambient
                 #if defined(LIGHTMAP_ON)
-                    // Lectura estandar del lightmap de URP (luz horneada: color + rebotes)
-                    #if defined(UNITY_LIGHTMAP_FULL_HDR)
-                        bool encodedLightmap = false;
-                    #else
-                        bool encodedLightmap = true;
-                    #endif
-                    half4 decodeInstructions = half4(LIGHTMAP_HDR_MULTIPLIER, LIGHTMAP_HDR_EXPONENT, 0.0h, 0.0h);
-                    half3 bakedGI = SampleSingleLightmap(
-                        TEXTURE2D_LIGHTMAP_ARGS(LIGHTMAP_NAME, LIGHTMAP_SAMPLER_NAME),
-                        input.staticLightmapUV, float4(1, 1, 0, 0),
-                        encodedLightmap, decodeInstructions);
+                    half3 bakedGI = SampleLightmap(input.staticLightmapUV, 0, input.normalWS);
                 #else
                     half3 bakedGI = SampleSH(up);
                 #endif
 
                 // 2. Luz Principal (con sombras)
-                half4 shadowMask = half4(1, 1, 1, 1);
+                half4 shadowMask = SAMPLE_SHADOWMASK(input.staticLightmapUV);
                 float4 shadowCoord = TransformWorldToShadowCoord(input.worldPos);
                 Light mainLight = GetMainLight(shadowCoord, input.worldPos, shadowMask);
                 half3 directLighting = mainLight.color * saturate(dot(up, mainLight.direction)) * mainLight.shadowAttenuation;
 
                 // 3. Luces Adicionales (velas, spots, points) - rebote sobre el suelo
-                #if defined(_ADDITIONAL_LIGHTS) || defined(_ADDITIONAL_LIGHTS_VERTEX) || defined(_FORWARD_PLUS)
+                #if defined(_ADDITIONAL_LIGHTS) || defined(_ADDITIONAL_LIGHTS_VERTEX) || defined(_FORWARD_PLUS) || defined(_CLUSTER_LIGHT_LOOP)
 
                     InputData inputData = (InputData)0;
                     inputData.positionWS = input.worldPos;
                     inputData.normalWS   = up;
                     inputData.normalizedScreenSpaceUV = GetNormalizedScreenSpaceUV(input.positionCS);
 
-                    #if USE_FORWARD_PLUS || defined(_FORWARD_PLUS)
-                        // Forward+: directionales adicionales
+                    #if USE_FORWARD_PLUS || USE_CLUSTER_LIGHT_LOOP || defined(_FORWARD_PLUS) || defined(_CLUSTER_LIGHT_LOOP)
+                        // Forward+ / Cluster: directionales adicionales
                         for (uint dirIndex = 0; dirIndex < min(URP_FP_DIRECTIONAL_LIGHTS_COUNT, MAX_VISIBLE_LIGHTS); dirIndex++)
                         {
                             Light dirLight = GetAdditionalLight(dirIndex, input.worldPos, shadowMask);
@@ -156,8 +149,8 @@ Shader "Custom/WorldCheckerboard_URP"
                 #endif
 
                 // DEBUG: muestra SOLO el lightmap.
-                //  - magenta  -> este objeto NO esta usando lightmap (no es Static / Receive GI != Lightmaps)
-                //  - negro    -> usa lightmap pero el bake no dejo luz en el suelo (UVs / resolucion / luces)
+                //  - magenta   -> este objeto NO esta usando lightmap (variante eliminada, no es Static, o Receive GI != Lightmaps)
+                //  - negro     -> usa lightmap pero el bake no dejo luz en el suelo (UVs / resolucion / luces)
                 //  - con color -> el bake si guardo la luz
                 if (_DebugBaked > 0.5)
                 {

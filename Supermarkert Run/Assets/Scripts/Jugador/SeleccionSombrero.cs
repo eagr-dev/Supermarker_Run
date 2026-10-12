@@ -23,6 +23,12 @@ public class SeleccionSombrero : MonoBehaviour
     [Header("Datos jugador")]
     [SerializeField] private MeshFilter sombreroUV;
     [SerializeField] private MeshRenderer sombreroTexture;
+    [SerializeField] private Transform transformGorra;
+
+    [Header("Ajustes de Adaptación a la Cabeza")]
+    [SerializeField] Vector3 positionOffset = Vector3.zero; // Desplazamiento local respecto a la cabeza
+    [SerializeField] Vector3 rotationOffset = Vector3.zero; // Rotación extra si el sombrero mira hacia otro lado
+    [SerializeField] Vector3 customScale = Vector3.one;
 
     private int eleccion_actual = 0, eleccion_principio = -1;
 
@@ -116,8 +122,14 @@ public class SeleccionSombrero : MonoBehaviour
     {
         eleccion_actual = id;
         var data = BuildStructs.PCMG.GetSombrero(id);
-        sombreroUV.sharedMesh = data.mesh.GetComponent<MeshFilter>().sharedMesh;
-        sombreroTexture.material = data.material; 
+
+        MeshFilter sourceFilter = data.mesh.GetComponent<MeshFilter>();
+        sombreroUV.sharedMesh = sourceFilter.sharedMesh;
+        sombreroTexture.material = data.material;
+        Transform sourceTransform = data.mesh.transform;
+        transformGorra.localPosition = positionOffset;
+        transformGorra.localRotation = Quaternion.Euler(rotationOffset);
+        transformGorra.localScale = customScale != Vector3.zero ? customScale : sourceTransform.localScale;
         
         comprar.gameObject.SetActive(data.precio != 0);
         aceptar.gameObject.SetActive(data.precio == 0);

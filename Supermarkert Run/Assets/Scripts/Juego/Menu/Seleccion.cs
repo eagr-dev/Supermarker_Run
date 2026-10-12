@@ -212,6 +212,22 @@ public class Seleccion : MonoBehaviour
         AnimacionSP.Cambiar_Escena(escena);
     }
 
+    void OnApplicationFocus(bool hasFocus)
+    {
+        if (hasFocus) return;
+        Sistema_Guardado sistema_Guardado = FindFirstObjectByType<Sistema_Guardado>();
+        sistema_Guardado.GuardarLocal();
+        sistema_Guardado.Guardar_Personalizado();
+    }
+
+    void OnApplicationPause(bool pauseStatus)
+    {
+        if (!pauseStatus) return;
+        Sistema_Guardado sistema_Guardado = FindFirstObjectByType<Sistema_Guardado>();
+        sistema_Guardado.GuardarLocal();
+        sistema_Guardado.Guardar_Personalizado();
+    }
+
 
     private void OnApplicationQuit()
     {

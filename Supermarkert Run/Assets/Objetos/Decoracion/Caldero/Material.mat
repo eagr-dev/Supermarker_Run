@@ -87,6 +87,8 @@ Material:
     - _AlphaClip: 0
     - _AlphaToMask: 0
     - _AmbientInfluence: 1
+    - _BakedCelSteps: 0
+    - _BakedLightsStrength: 1
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
     - _BumpScale: 1
@@ -94,6 +96,7 @@ Material:
     - _ClearCoatSmoothness: 0
     - _Cull: 2
     - _Cutoff: 0.5
+    - _DebugBaked: 0
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0

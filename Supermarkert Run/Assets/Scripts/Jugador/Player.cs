@@ -113,6 +113,7 @@ public class Player : MonoBehaviour
         carrito.Inicializar(BuildStructs.PCMG.GetOrquestador());
         Init(carrito);
         mision.SetTiempo(Tiempo_Dejar_Objeto);
+
     }
 
     void Update()

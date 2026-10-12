@@ -83,7 +83,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 1
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -5198,7 +5198,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 1
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -6055,6 +6055,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4286004505077901343, guid: a161844e415a15f4db30cb19fae5b411, type: 3}
+      propertyPath: m_Lightmapping
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4286004505077901343, guid: a161844e415a15f4db30cb19fae5b411, type: 3}
       propertyPath: m_BounceIntensity
       value: 1
       objectReference: {fileID: 0}
@@ -6229,6 +6233,10 @@ PrefabInstance:
     - target: {fileID: 4286004505077901343, guid: a161844e415a15f4db30cb19fae5b411, type: 3}
       propertyPath: m_Intensity
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4286004505077901343, guid: a161844e415a15f4db30cb19fae5b411, type: 3}
+      propertyPath: m_Lightmapping
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4286004505077901343, guid: a161844e415a15f4db30cb19fae5b411, type: 3}
       propertyPath: m_BounceIntensity
@@ -6820,7 +6828,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: e76a190eeb73f704d9d3d87cdaebc4d9, type: 3}
+  m_Resource: {fileID: 8300000, guid: cce1aeb37c07cf9409977658cae441e4, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -6841,7 +6849,7 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0.05
+      time: 0.036465455
       value: 1
       inSlope: -20.007967
       outSlope: -20.007967
@@ -6849,6 +6857,15 @@ AudioSource:
       weightedMode: 0
       inWeight: 0
       outWeight: 0
+    - serializedVersion: 3
+      time: 0.28087783
+      value: 0
+      inSlope: Infinity
+      outSlope: Infinity
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -6956,6 +6973,10 @@ PrefabInstance:
     - target: {fileID: 4286004505077901343, guid: a161844e415a15f4db30cb19fae5b411, type: 3}
       propertyPath: m_Intensity
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4286004505077901343, guid: a161844e415a15f4db30cb19fae5b411, type: 3}
+      propertyPath: m_Lightmapping
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4286004505077901343, guid: a161844e415a15f4db30cb19fae5b411, type: 3}
       propertyPath: m_BounceIntensity
@@ -7210,6 +7231,10 @@ PrefabInstance:
     - target: {fileID: 4286004505077901343, guid: a161844e415a15f4db30cb19fae5b411, type: 3}
       propertyPath: m_Intensity
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4286004505077901343, guid: a161844e415a15f4db30cb19fae5b411, type: 3}
+      propertyPath: m_Lightmapping
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4286004505077901343, guid: a161844e415a15f4db30cb19fae5b411, type: 3}
       propertyPath: m_BounceIntensity

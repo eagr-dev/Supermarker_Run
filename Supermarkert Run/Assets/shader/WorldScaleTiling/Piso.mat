@@ -31,6 +31,7 @@ Material:
     m_Floats:
     - _AdditionalLightsStrength: 1
     - _BounceWrap: 1
+    - _DebugBaked: 0
     - _Tiling: 1
     m_Colors:
     - _BaseTiling: {r: 1, g: 1, b: 0, a: 0}

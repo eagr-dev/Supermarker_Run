@@ -7,6 +7,7 @@ public class Seleccion_Carrito_Ai : MonoBehaviour
 {
     public GameObject[] Carritos = new GameObject[3];
     [SerializeField] private RigBuilder rigid_animaciones;
+
     private int index = 0;
     private void Awake()
     {
