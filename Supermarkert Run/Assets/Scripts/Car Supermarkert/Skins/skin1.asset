@@ -27,7 +27,7 @@ MonoBehaviour:
     nombre_portugues: Rojo Pastel Oscuro #000
     texture: {fileID: 0}
     color: {r: 0.45, g: 0.2925, b: 0.2925, a: 1}
-    precio: 189
+    precio: 0
     mesh: {fileID: 0}
   - id: 2
     nombre_ingles: "Rojo Pastel Cl\xE1sico #001"
@@ -35,7 +35,7 @@ MonoBehaviour:
     nombre_portugues: "Rojo Pastel Cl\xE1sico #001"
     texture: {fileID: 0}
     color: {r: 0.75, g: 0.4875, b: 0.4875, a: 1}
-    precio: 137
+    precio: 0
     mesh: {fileID: 0}
   - id: 3
     nombre_ingles: Rojo Pastel Brillante #002
@@ -43,7 +43,7 @@ MonoBehaviour:
     nombre_portugues: Rojo Pastel Brillante #002
     texture: {fileID: 0}
     color: {r: 1, g: 0.65, b: 0.65, a: 1}
-    precio: 208
+    precio: 0
     mesh: {fileID: 0}
   - id: 4
     nombre_ingles: Rojo Vivo Oscuro #010
@@ -5062,12 +5062,12 @@ MonoBehaviour:
     precio: 277
     mesh: {fileID: 0}
   - id: 631
-    nombre_ingles: Caldero
-    nombre_espaniol: Cauldron
-    nombre_portugues: Caldeirao
+    nombre_ingles: Cauldron
+    nombre_espaniol: Caldero
+    nombre_portugues: "Caldeir\xE3o"
     texture: {fileID: 2800000, guid: 45549c44bd11c1f44a66f5a808e1b95a, type: 3}
     color: {r: 1, g: 1, b: 1, a: 1}
-    precio: 0
+    precio: 200
     mesh: {fileID: -7511558181221131132, guid: bb3546a077baadb418b4eb12b9a337b5, type: 3}
   - id: 632
     nombre_ingles: coffin
@@ -5075,5 +5075,5 @@ MonoBehaviour:
     nombre_portugues: "caix\xE3o"
     texture: {fileID: 2800000, guid: f86bbe5bdf849c449a9c4091524e6ccb, type: 3}
     color: {r: 1, g: 1, b: 1, a: 1}
-    precio: 0
+    precio: 250
     mesh: {fileID: -7511558181221131132, guid: fc872f1b384934a47a63683a27a08d2a, type: 3}

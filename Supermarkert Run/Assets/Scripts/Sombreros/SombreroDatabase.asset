@@ -18,14 +18,30 @@ MonoBehaviour:
     nombre_espaniol: Bruja
     nombre_portugues: Bruxa
     material: {fileID: 2100000, guid: 75807a192c6c8cb4a801ca4daccb5a3e, type: 2}
-    precio: 0
+    precio: 200
     mesh: {fileID: -7511558181221131132, guid: 8be767a77ee45664097f6cdaf3c2b2b5, type: 3}
-    icon: {fileID: 21300000, guid: 7d458d4c2e69ef54b8fbfaf4c18aad72, type: 3}
+    icon: {fileID: 21300000, guid: 8d0fd5a7db072c14c85d8b49dc97b647, type: 3}
   - id: 1
     nombre_ingles: Straw
     nombre_espaniol: Paja
     nombre_portugues: Palha
     material: {fileID: 2100000, guid: 934c7037a15ba9f4e87e4a1c59165381, type: 2}
-    precio: 5
+    precio: 50
     mesh: {fileID: -7511558181221131132, guid: e510249f3c47e0b4aabc4df8774dde24, type: 3}
-    icon: {fileID: 21300000, guid: d96a78688a992de4f8bd068b66bea2e8, type: 3}
+    icon: {fileID: 21300000, guid: 9dcd159ea60b7ce498f2196dd3f7b06a, type: 3}
+  - id: 2
+    nombre_ingles: Pumpkin
+    nombre_espaniol: Calabaza
+    nombre_portugues: "Ab\xF3bora"
+    material: {fileID: 2100000, guid: 6380eb10d5360ff40b5ae5963758efce, type: 2}
+    precio: 100
+    mesh: {fileID: -7511558181221131132, guid: 26c5d6550dc7f0d4693b73606216abbd, type: 3}
+    icon: {fileID: 21300000, guid: 9899c3decb99f694ebea8be8792bcc87, type: 3}
+  - id: 3
+    nombre_ingles: Cat
+    nombre_espaniol: Gato
+    nombre_portugues: Gato
+    material: {fileID: 2100000, guid: 1bd4ca9d81711bc4586776d1fd14b2d1, type: 2}
+    precio: 50
+    mesh: {fileID: -7511558181221131132, guid: a606450aea3445245a9f14652c836341, type: 3}
+    icon: {fileID: 21300000, guid: 4f960841cdae9b846a25855e1a2a12f1, type: 3}
