@@ -27,7 +27,20 @@ public class Idioma : MonoBehaviour
 
     public enum Lengua { INGLES, ESPANIOL, PORTUGUES};
     static Lengua lengua = Lengua.INGLES;
-    
+
+    private void OnEnable()
+    {
+        // Suscribirse al evento de cambio de idioma y actualizar al activarse
+        OnLenguaChanged += AsignarLenguajeATextos;
+        AsignarLenguajeATextos();
+    }
+
+    private void OnDisable()
+    {
+        // Desuscribirse para evitar fugas de memoria o errores
+        OnLenguaChanged -= AsignarLenguajeATextos;
+    }
+
     private void Awake()
     {
         Debug.Log("Asignando lenguaje");

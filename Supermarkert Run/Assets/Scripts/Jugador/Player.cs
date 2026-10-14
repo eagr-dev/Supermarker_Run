@@ -346,8 +346,9 @@ public class Player : MonoBehaviour
     private IEnumerator Resbalon(Vector3 direccion, float velocidadInicial)
     {
         resbalon = true;
-        joystick.gameObject.SetActive(false);
 
+        // Forzamos el input del joystick a cero manipulando su estado o posición si es necesario, 
+        // o asegurándonos de que al terminar el resbalon el vector se limpie.
         direccion = direccion.normalized;
         velocidadResbalon = velocidadInicial;
 
@@ -359,6 +360,11 @@ public class Player : MonoBehaviour
         }
 
         yield return new WaitForSeconds(0.5f);
+
+        // Al terminar el resbalón, desactivamos y activamos un instante el GameObject 
+        // para obligar al EventSystem a soltar el toque actual ("Touch Up" forzado) 
+        // sin alterar DeadZones lentas ni generar tiempos muertos exagerados.
+        joystick.gameObject.SetActive(false);
         resbalon = false;
         joystick.gameObject.SetActive(true);
     }

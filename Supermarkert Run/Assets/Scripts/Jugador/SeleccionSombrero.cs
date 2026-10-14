@@ -44,11 +44,17 @@ public class SeleccionSombrero : MonoBehaviour
         aceptar.gameObject.SetActive(false);
         eleccion_actual = BuildStructs.PCMG.Get_Eleccion_Sombrero();
         eleccion_principio = eleccion_actual;
+        nombre.text = "";
         if (eleccion_actual != SIN_ELEGIR)
             SetSombrero(eleccion_actual);
     }
 
-    public void RegresarUISombreroOriginal()
+    public void ActivarUISombreroOriginal()
+    {
+        SetSombrero(eleccion_principio != SIN_ELEGIR ? eleccion_principio : 0);
+    }
+
+    private void RegresarUISombreroOriginal()
     {
         BuildStructs.PCMG.Set_Eleccion_Sombrero(eleccion_principio);
         if (eleccion_principio != SIN_ELEGIR)
@@ -133,7 +139,7 @@ public class SeleccionSombrero : MonoBehaviour
         
         comprar.gameObject.SetActive(data.precio != 0);
         aceptar.gameObject.SetActive(data.precio == 0);
-        precio.text = data.precio.ToString();
+        precio.text = $"${data.precio}";
         
         switch(Idioma.GetLengua())
         {

@@ -107,23 +107,45 @@ public class Sistema_Guardado : MonoBehaviour
         }
     }
 
-    void CargarSkinsCompradas()
+    public void CargarSkinsCompradas()
     {
-        for (int i = 0; i < BuildStructs.PCMG.GetCountSkins(); i++)
+        var PCMG = BuildStructs.PCMG;
+        for (int i = 0; i < PCMG.GetCountSkins(); i++)
         {
-            if (!PlayerPrefs.HasKey(i.ToString())) continue;
-            var skin = BuildStructs.PCMG.GetSkin(i);
+            string nuevaLlave = "Skin_" + i.ToString();
+            string viejaLlave = i.ToString();
+
+            // MIGRACIÓN: Si el usuario tiene guardado el formato viejo (numérico puro)
+            if (PlayerPrefs.HasKey(viejaLlave) && !PlayerPrefs.HasKey(nuevaLlave))
+            {
+                // Obtenemos el valor viejo y lo guardamos con la nueva llave
+                int valor = PlayerPrefs.GetInt(viejaLlave);
+                PlayerPrefs.SetInt(nuevaLlave, valor);
+
+                // Borramos la clave vieja para limpiar el registro
+                PlayerPrefs.DeleteKey(viejaLlave);
+            }
+
+            // CARGA NORMAL: Verificamos si existe la nueva clave
+            if (!PlayerPrefs.HasKey(nuevaLlave)) continue;
+
+            var skin = PCMG.GetSkin(i);
             skin.precio = 0;
-            BuildStructs.PCMG.SetSkin(i, skin);
+            PCMG.SetSkin(i, skin);
         }
+        PlayerPrefs.Save();
     }
 
     void CargarSombrerosComprados()
     {
-        for (int i = 0; i < BuildStructs.PCMG.GetCountSombreros(); i++)
+        var PCMG = BuildStructs.PCMG;
+        for (int i = 0; i < PCMG.GetCountSombreros(); i++)
         {
-            if (!PlayerPrefs.HasKey(i.ToString())) continue;
-            BuildStructs.PCMG.SetSombreroComprado(i);
+            // Los sombreros ya usan su estructura limpia o ID independiente
+            string llaveSombrero = "Hat_" + i.ToString(); // O usa item.id si prefieres
+            if (!PlayerPrefs.HasKey(llaveSombrero)) continue;
+
+            PCMG.SetSombreroComprado(i);
         }
     }
 
@@ -182,17 +204,19 @@ public class Sistema_Guardado : MonoBehaviour
         for (int i = 0; i < PCMG.GetCountSkins(); i++)
         {
             if (PCMG.GetSkin(i).precio != 0) continue;
-            PlayerPrefs.SetInt(i.ToString(), 0);
+            PlayerPrefs.SetInt("Skin_" + i.ToString(), 0);
         }
+        PlayerPrefs.Save();
     }
 
     public void GuardarSombreros()
     {
         var PCMG = BuildStructs.PCMG;
-        foreach(var item in PCMG.GetSombrerosComprados)
+        foreach (var item in PCMG.GetSombrerosComprados)
         {
-            PlayerPrefs.SetInt(item.id.ToString(), 0);
+            PlayerPrefs.SetInt("Hat_" + item.id.ToString(), 0);
         }
+        PlayerPrefs.Save();
     }
 
     public void Guardar_Personalizado()

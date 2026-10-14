@@ -15,15 +15,18 @@ public class Calidad : MonoBehaviour
     [SerializeField] GameObject Luz_Dinamica;
 
     [SerializeField] Idioma idioma;
+    List<Idioma> idiomas;
 
     [SerializeField] private AudioSource Click_Botones;
 
-
     private void Start()
     {
+        Idioma[] _idiomas = FindObjectsByType<Idioma>(FindObjectsSortMode.InstanceID);
+        idiomas = new(_idiomas);
         calidad.value = PlayerPrefs.GetInt("Calidad",QualitySettings.GetQualityLevel());
         TMPIdioma.value = PlayerPrefs.GetInt("idioma", 0);
-        idioma.AsignarLenguajeATextos();
+        foreach(Idioma idioma in idiomas)
+            idioma.AsignarLenguajeATextos();
         QualitySettings.shadows = ShadowQuality.Disable;
     }
 
@@ -38,7 +41,6 @@ public class Calidad : MonoBehaviour
         Click_Botones.Play();
         PlayerPrefs.SetInt("idioma", TMPIdioma.value);
         Idioma.SetLengua((Idioma.Lengua)TMPIdioma.value);
-        idioma.AsignarLenguajeATextos();
     }
 
 }

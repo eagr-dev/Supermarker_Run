@@ -123,6 +123,8 @@ public class Seleccion : MonoBehaviour
 
     public void BTN_Sombreros()
     {
+        var seleccionSombrero = GetComponent<SeleccionSombrero>();
+        seleccionSombrero.ActivarUISombreroOriginal();
         Click_Botones.Play();
         Menu_Canvas.SetActive(false);
         Sombreros_Canvas.SetActive(true);

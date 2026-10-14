@@ -27,7 +27,7 @@ MonoBehaviour:
     nombre_portugues: Rojo Pastel Oscuro #000
     texture: {fileID: 0}
     color: {r: 0.45, g: 0.2925, b: 0.2925, a: 1}
-    precio: 0
+    precio: 98
     mesh: {fileID: 0}
   - id: 2
     nombre_ingles: "Rojo Pastel Cl\xE1sico #001"
@@ -35,7 +35,7 @@ MonoBehaviour:
     nombre_portugues: "Rojo Pastel Cl\xE1sico #001"
     texture: {fileID: 0}
     color: {r: 0.75, g: 0.4875, b: 0.4875, a: 1}
-    precio: 0
+    precio: 74
     mesh: {fileID: 0}
   - id: 3
     nombre_ingles: Rojo Pastel Brillante #002
@@ -43,7 +43,7 @@ MonoBehaviour:
     nombre_portugues: Rojo Pastel Brillante #002
     texture: {fileID: 0}
     color: {r: 1, g: 0.65, b: 0.65, a: 1}
-    precio: 0
+    precio: 34
     mesh: {fileID: 0}
   - id: 4
     nombre_ingles: Rojo Vivo Oscuro #010
