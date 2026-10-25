@@ -45,3 +45,27 @@ MonoBehaviour:
     precio: 50
     mesh: {fileID: -7511558181221131132, guid: a606450aea3445245a9f14652c836341, type: 3}
     icon: {fileID: 21300000, guid: 4f960841cdae9b846a25855e1a2a12f1, type: 3}
+  - id: 4
+    nombre_ingles: Rodolfo
+    nombre_espaniol: Rodolfo
+    nombre_portugues: Rodolfo
+    material: {fileID: 2100000, guid: b227bafa5db89d2429ef66990c0ca029, type: 2}
+    precio: 50
+    mesh: {fileID: -7511558181221131132, guid: 781121818876e85419425984caca467e, type: 3}
+    icon: {fileID: 21300000, guid: 4f960841cdae9b846a25855e1a2a12f1, type: 3}
+  - id: 5
+    nombre_ingles: Claus
+    nombre_espaniol: Claus
+    nombre_portugues: Claus
+    material: {fileID: 2100000, guid: aa0c28f818627b74f8baf609698afdd8, type: 2}
+    precio: 50
+    mesh: {fileID: -7511558181221131132, guid: 9e301abc14a84564dae4498b89284ad4, type: 3}
+    icon: {fileID: 21300000, guid: 4f960841cdae9b846a25855e1a2a12f1, type: 3}
+  - id: 6
+    nombre_ingles: Monopoli
+    nombre_espaniol: Monopoli
+    nombre_portugues: Monopoli
+    material: {fileID: 2100000, guid: 1784282c3401d3548be9a2dfb8540c22, type: 2}
+    precio: 50
+    mesh: {fileID: -7511558181221131132, guid: 8e0531658a5664c41b447b51126c65b2, type: 3}
+    icon: {fileID: 21300000, guid: 4f960841cdae9b846a25855e1a2a12f1, type: 3}
