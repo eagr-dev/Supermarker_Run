@@ -8,7 +8,7 @@ public class HatVisualCopierEnemy : MonoBehaviour
     [SerializeField] Vector3 positionOffset = Vector3.zero; // Desplazamiento local respecto a la cabeza
     [SerializeField] Vector3 rotationOffset = Vector3.zero; // Rotación extra si el sombrero mira hacia otro lado
     [SerializeField] Vector3 customScale = Vector3.one;
-    const int NO_ELECCION = 33;
+    const int NO_ELECCION = 80;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -16,7 +16,7 @@ public class HatVisualCopierEnemy : MonoBehaviour
         if (sombreroOrNot > NO_ELECCION) return;
 
         var PCMG = BuildStructs.PCMG;
-        int eleccion = Random.Range(0, BuildStructs.PCMG.GetCountSombreros() - 1);
+        int eleccion = Random.Range(4, BuildStructs.PCMG.GetCountSombreros() - 1);
         var data = PCMG.GetSombrero(eleccion);
 
         MeshFilter sourceFilter = data.mesh.GetComponent<MeshFilter>();
