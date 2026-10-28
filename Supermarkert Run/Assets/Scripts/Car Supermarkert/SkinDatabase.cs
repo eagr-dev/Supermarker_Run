@@ -8,6 +8,7 @@ public struct CarSkinData
     public string nombre_ingles, nombre_espaniol, nombre_portugues;
     public Texture2D texture;
     public Color color;
+    public Sprite icono;
     public uint precio;
     public MeshRenderer mesh;
 }

@@ -13,6 +13,8 @@ public class HalloweebAnimation : MonoBehaviour, IBackgroundAnimation
 
     public bool ShouldRun() => true; // Este corre siempre en bucle
 
+    public void DesactivarRegaloEnRuntime() { }
+
     public void Initialize()
     {
         // Configuración inicial opcional si se requiere

@@ -19,6 +19,9 @@ public class Button_Skin_Item : MonoBehaviour
         // 3. ¡OPTIMIZACIÓN! Pintamos la imagen base con el color estructural
         iconoColorImage.color = datos.color;
 
+        if (datos.icono != null)
+            iconoColorImage.sprite = datos.icono;
+
         // 4. Configurar el evento Click de Unity
         botonSkins.onClick.RemoveAllListeners();
         botonSkins.onClick.AddListener(AlHacerClick);
