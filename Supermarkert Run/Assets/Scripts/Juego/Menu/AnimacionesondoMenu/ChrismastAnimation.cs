@@ -22,6 +22,10 @@ public class ChrismastAnimation : MonoBehaviour, IBackgroundAnimation
     [SerializeField] private float tiempoMinEspera = 4.0f; // Tiempo mínimo de espera aleatoria entre vuelos
     [SerializeField] private float tiempoMaxEspera = 10.0f; // Tiempo máximo de espera aleatoria entre vuelos
 
+    [Header("Audios de la animacion")]
+    [SerializeField] private AudioSource risaSantaClaus;
+    [SerializeField] private AudioSource cascabeles;
+
     private const string LastDateKey = "LastSleighDropDate";
 
     // Variable auxiliar para saber la dirección del próximo viaje en el bucle
@@ -107,11 +111,14 @@ public class ChrismastAnimation : MonoBehaviour, IBackgroundAnimation
     {
         float elapsed = 0f;
         bool giftSpawned = false;
+        bool risaSantaClausEjecutado = false;
         Vector3 giftStartPos = Vector3.zero;
         float giftElapsed = 0f;
 
         Vector3 center = (trineoStartPos + trineoEndPos) / 2f;
         float radiusX = Vector3.Distance(trineoStartPos, trineoEndPos) / 2f;
+
+        cascabeles.Play();
 
         while (elapsed < duration)
         {
@@ -143,6 +150,12 @@ public class ChrismastAnimation : MonoBehaviour, IBackgroundAnimation
                 }
             }
 
+            if(t >= 0.5f && !risaSantaClausEjecutado)
+            {
+                risaSantaClausEjecutado = true;
+                risaSantaClaus.Play();
+            }
+
             elapsed += Time.deltaTime;
             yield return null;
         }
@@ -151,6 +164,7 @@ public class ChrismastAnimation : MonoBehaviour, IBackgroundAnimation
         trineo.position = trineoEndPos;
         regalo.position = regaloEndPos;
         regalo.gameObject.SetActive(true);
+        cascabeles.Stop();
 
         // Guardar que ya se completó el evento de hoy
         PlayerPrefs.SetString(LastDateKey, todayStr);
@@ -174,9 +188,10 @@ public class ChrismastAnimation : MonoBehaviour, IBackgroundAnimation
             // Definir origen y destino basándonos en nuestra variable auxiliar 'movingToEnd'
             Vector3 origen = movingToEnd ? trineoStartPos : trineoEndPos;
             Vector3 destino = movingToEnd ? trineoEndPos : trineoStartPos;
+            Vector3 rotate = movingToEnd ? new(0, 0, 0) : new(0, 180, 0);
             Debug.Log($"El origen: {origen}, el destino {destino}");
             // Ejecutar el movimiento del trineo
-            yield return StartCoroutine(MoverTrineo(origen, destino));
+            yield return StartCoroutine(MoverTrineo(origen, destino, rotate));
 
             // Invertir la dirección para el siguiente viaje
             movingToEnd = !movingToEnd;
@@ -185,9 +200,14 @@ public class ChrismastAnimation : MonoBehaviour, IBackgroundAnimation
 
     // Método auxiliar reutilizable para mover el trineo de un punto a otro usando la elipse
     // Método auxiliar reutilizable para mover el trineo de un punto a otro respetando la dirección
-    private IEnumerator MoverTrineo(Vector3 desde, Vector3 hacia)
+    private IEnumerator MoverTrineo(Vector3 desde, Vector3 hacia, Vector3 rotate)
     {
         float elapsed = 0f;
+
+        cascabeles.Play();
+        Quaternion rotationT = trineo.rotation;
+        rotationT.eulerAngles = rotate;
+        trineo.rotation = rotationT;
 
         while (elapsed < duration)
         {
@@ -209,5 +229,6 @@ public class ChrismastAnimation : MonoBehaviour, IBackgroundAnimation
 
         // Asegurar la posición final exacta
         trineo.position = hacia;
+        cascabeles.Stop();
     }
 }
