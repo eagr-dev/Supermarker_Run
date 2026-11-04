@@ -1,0 +1,19 @@
+plugins {
+    id 'com.android.application' version '8.10.0' apply false
+    id 'com.android.library' version '8.10.0' apply false
+    **BUILD_SCRIPT_DEPS**
+}
+
+tasks.register('clean', Delete) {
+    delete rootProject.layout.buildDirectory
+}
+
+// Añade esto al final del archivo:
+allprojects {
+    configurations.all {
+        resolutionStrategy {
+            force 'androidx.fragment:fragment:1.8.5'
+            force 'androidx.activity:activity:1.9.3'
+        }
+    }
+}

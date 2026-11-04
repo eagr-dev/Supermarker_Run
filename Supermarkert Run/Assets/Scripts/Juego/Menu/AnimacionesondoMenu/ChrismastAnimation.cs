@@ -208,6 +208,7 @@ public class ChrismastAnimation : MonoBehaviour, IBackgroundAnimation
         Quaternion rotationT = trineo.rotation;
         rotationT.eulerAngles = rotate;
         trineo.rotation = rotationT;
+        bool risaSantaClausEjecutado = false;
 
         while (elapsed < duration)
         {
@@ -222,6 +223,12 @@ public class ChrismastAnimation : MonoBehaviour, IBackgroundAnimation
             float y = baseY + Mathf.Sin(t * Mathf.PI) * ellipseHeight;
 
             trineo.position = new Vector3(x, y, z);
+
+            if (t >= 0.5f && !risaSantaClausEjecutado)
+            {
+                risaSantaClausEjecutado = true;
+                risaSantaClaus.Play();
+            }
 
             elapsed += Time.deltaTime;
             yield return null;
