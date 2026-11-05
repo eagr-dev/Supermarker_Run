@@ -26,7 +26,7 @@ public class Mision : MonoBehaviour
     [SerializeField] private Sprite iconObjectInCash, iconClean;
     [SerializeField] private TMP_Text posicion_texto;
     int inicio_lista = 0, final_lista = 10;
-    Color no_tomado = new(0, 0, 0);
+    Color no_tomado = new(1, 1, 1);
     Color tomado = new(1, 0, 0);
     Color en_caja = new(0, 1, 0);
 
