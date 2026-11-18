@@ -29,6 +29,8 @@ public class GiftOpeningUIController : MonoBehaviour
     public static readonly string GiftClaimed = "GiftClaime";
     public static event System.Action OnRecompensaReclamada;
 
+    private bool salir_sin_reclamar = false;
+
     enum TipoRegalo
     { DINERO, SKIN, SOMBRERO }
     TipoRegalo tipo;
@@ -110,6 +112,7 @@ public class GiftOpeningUIController : MonoBehaviour
     private IEnumerator SecuenciaAperturaCofre()
     {
         // Estado inicial: solo se ve el regalo cerrado, ocultamos lo demás
+        salir_sin_reclamar = true;
         imgRegaloCerrado.SetActive(true);
         imgTapa.SetActive(false);
         imgBaseRegalo.SetActive(false);
@@ -284,6 +287,25 @@ public class GiftOpeningUIController : MonoBehaviour
 
     public void OnClickObtenerRecompensa()
     {
+        AddGift();
+        salir_sin_reclamar = false;
+        if (panelPadre != null)
+        {
+            panelPadre.SetActive(false);
+        }
+    }
+
+    public void SaleSinReclamarRegalo()
+    {
+        if (salir_sin_reclamar)
+        {
+            Debug.LogWarning("Se salio sin reclamar regalo");
+            AddGift();
+        }
+    }
+
+    private void AddGift()
+    {
         Debug.Log("[GiftOpeningUIController] Recompensa aceptada. Cerrando interfaz.");
 
         switch (tipo)
@@ -293,7 +315,7 @@ public class GiftOpeningUIController : MonoBehaviour
                 txtDinero.text = BuildStructs.Dinero.Get_Dinero().ToString();
                 break;
             case TipoRegalo.SKIN:
-                 var skin = BuildStructs.PCMG.GetSkin(cantidadRegalo);
+                var skin = BuildStructs.PCMG.GetSkin(cantidadRegalo);
                 skin.precio = 0;
                 BuildStructs.PCMG.SetSkin(cantidadRegalo, skin);
                 break;
@@ -307,10 +329,5 @@ public class GiftOpeningUIController : MonoBehaviour
         FindAnyObjectByType<Sistema_Guardado>().GuardarLocal();
 
         PlayerPrefs.SetInt(GiftClaimed, 1);
-
-        if (panelPadre != null)
-        {
-            panelPadre.SetActive(false);
-        }
     }
 }

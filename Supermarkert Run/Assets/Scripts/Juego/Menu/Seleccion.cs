@@ -226,6 +226,8 @@ public class Seleccion : MonoBehaviour
     {
         if (!pauseStatus) return;
         Sistema_Guardado sistema_Guardado = FindFirstObjectByType<Sistema_Guardado>();
+        GiftOpeningUIController gift = FindFirstObjectByType<GiftOpeningUIController>();
+        gift.SaleSinReclamarRegalo();
         sistema_Guardado.GuardarLocal();
         sistema_Guardado.Guardar_Personalizado();
     }
@@ -237,6 +239,7 @@ public class Seleccion : MonoBehaviour
         {
             BuildStructs.SelCarro.Set_Car_Menu(conector.Get_Seleccion(), conector.Get_Eleccion());
         }
+        FindFirstObjectByType<GiftOpeningUIController>().SaleSinReclamarRegalo();
         FindFirstObjectByType<Sistema_Guardado>().GuardarLocal();
     }
 
