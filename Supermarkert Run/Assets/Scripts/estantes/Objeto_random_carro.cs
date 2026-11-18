@@ -14,8 +14,8 @@ public class Objeto_random_carro : MonoBehaviour, IGuardarObjeto
     [SerializeField] private Sprite[] sprites = new Sprite[maxSprite];
     [SerializeField] private TMP_Text nombre_objeto, objetos_buscados;
     [SerializeField] private AudioSource sonido_ruleta, sonido_acierto, sonido_fallo;
-    [SerializeField] private Image iconoFalloAcierto;
-    [SerializeField] private Sprite sprite_Acierto, sprite_Fallo;
+    [SerializeField] private Image iconoFalloAcierto, iconoParaFalloAcierto;
+    [SerializeField] private Sprite sprite_Acierto, sprite_Fallo, sprite_check, sprite_cross;
     [SerializeField] private Button Aceptar, Cancelar;
     private List<string> objetos = new();
     private readonly int maxObjectContains = 10;
@@ -143,6 +143,7 @@ public class Objeto_random_carro : MonoBehaviour, IGuardarObjeto
 
         iconoFalloAcierto.gameObject.SetActive(true);
         iconoFalloAcierto.sprite = acierto ? sprite_Acierto : sprite_Fallo;
+        iconoParaFalloAcierto.sprite = acierto ? sprite_check : sprite_cross;
 
         AudioSource sonido = acierto ? sonido_acierto : sonido_fallo;
         sonido.Play();
